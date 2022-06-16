@@ -2,8 +2,11 @@ import React from 'react';
 import logo from './logo.svg';
 import { Box, Button } from '@mui/material';
 import Dashboard from 'components/Dashboard';
+import { Trans, useTranslation } from 'react-i18next';
 
 function App() {
+  const { t } = useTranslation();
+
   return (
     <div className="App">
       <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
@@ -14,7 +17,8 @@ function App() {
         <Button color="warning">warning</Button>
         <Button color="error">error</Button>
       </Box>
-      <span>Regular text here</span>
+      <span>{t('test.key')}</span>
+      <Trans i18nKey="another.test.key" />
       <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
         <Button variant="contained" color="primary">
           primary
