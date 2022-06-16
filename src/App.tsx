@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import { Box, Typography } from '@mui/material';
 import { Rocket } from '@mui/icons-material';
+import Dashboard from 'components/Dashboard';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           Learn React
         </a>
       </header>
+      <Dashboard />
     </div>
   );
 }
