@@ -1,0 +1,10 @@
+{
+  "test": {
+    "key": "translations by t() function work!"
+  },
+  "another": {
+    "test": {
+      "key": "Trans component works as well!"
+    }
+  }
+}

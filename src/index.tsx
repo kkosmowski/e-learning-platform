@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ThemeProvider } from '@mui/material';
 import theme from './theme';
+import './i18n/i18next';
 
 const root = document.getElementById('root') as HTMLElement;
 
