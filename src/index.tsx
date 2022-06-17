@@ -6,13 +6,16 @@ import reportWebVitals from './reportWebVitals';
 import { ThemeProvider } from '@mui/material';
 import theme from './theme';
 import './i18n/i18next';
+import { BrowserRouter } from 'react-router-dom';
 
 const root = document.getElementById('root') as HTMLElement;
 
 ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </ThemeProvider>
   </React.StrictMode>,
   root

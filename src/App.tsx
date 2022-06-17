@@ -1,5 +1,8 @@
-import ApplicationLayout from './layouts/Application';
+import { useRoutes } from 'react-router-dom';
+import routes from 'routes';
 
 export default function App() {
-  return <ApplicationLayout>Siemanko</ApplicationLayout>;
+  const router = useRoutes(routes);
+
+  return router;
 }
