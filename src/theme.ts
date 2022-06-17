@@ -1,6 +1,11 @@
 import { createMuiTheme, ThemeOptions } from '@mui/material';
 import colors from './colors';
 
+export const consts = {
+  navbarHeight: 64,
+  menuWidth: 200,
+};
+
 const baseThemeOptions: ThemeOptions = {
   components: {
     MuiButton: {
@@ -15,9 +20,25 @@ const baseThemeOptions: ThemeOptions = {
         },
       },
     },
+    MuiIconButton: {
+      styleOverrides: {
+        root: {
+          color: 'inherit',
+        },
+      },
+    },
+    MuiToolbar: {
+      styleOverrides: {
+        root: {},
+      },
+    },
   },
   typography: {
     fontFamily: 'Lato, sans-serif',
+    h1: {
+      fontSize: 18,
+      fontWeight: 400,
+    },
   },
   palette: {
     background: colors.background,
