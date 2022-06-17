@@ -1,16 +1,10 @@
-import { ReactNode } from 'react';
 import { Box, Drawer, styled, Toolbar } from '@mui/material';
 import { Menu, Navbar } from './components';
-import { background } from '../../colors';
-import { consts } from '../../theme';
+import { background } from 'colors';
+import { consts } from 'theme';
+import { Outlet } from 'react-router-dom';
 
-interface ApplicationLayoutProps {
-  children: ReactNode;
-}
-
-export default function ApplicationLayout({
-  children,
-}: ApplicationLayoutProps) {
+export default function ApplicationLayout() {
   return (
     <>
       <Navbar />
@@ -20,7 +14,9 @@ export default function ApplicationLayout({
         <Menu />
       </Drawer>
 
-      <MainContainer component="main">{children}</MainContainer>
+      <MainContainer component="main">
+        <Outlet />
+      </MainContainer>
     </>
   );
 }
@@ -29,7 +25,9 @@ const MainContainer = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column',
   flex: 1,
-  paddingTop: consts.navbarHeight + 16,
-  paddingLeft: consts.menuWidth + 16,
+  paddingTop: consts.navbarHeight + consts.containerPadding,
+  paddingLeft: consts.menuWidth + consts.containerPadding,
+  paddingRight: consts.containerPadding,
+  paddingBottom: consts.containerPadding,
   backgroundColor: background[100],
 }));

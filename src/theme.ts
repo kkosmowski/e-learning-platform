@@ -1,9 +1,10 @@
-import { createMuiTheme, ThemeOptions } from '@mui/material';
+import { createTheme, ThemeOptions } from '@mui/material';
 import colors from './colors';
 
 export const consts = {
   navbarHeight: 64,
   menuWidth: 200,
+  containerPadding: 16,
 };
 
 const baseThemeOptions: ThemeOptions = {
@@ -17,6 +18,22 @@ const baseThemeOptions: ThemeOptions = {
         },
         contained: {
           boxShadow: 'none',
+        },
+      },
+    },
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          borderRadius: 0,
+        },
+      },
+    },
+    MuiCardContent: {
+      styleOverrides: {
+        root: {
+          ':last-child': {
+            padding: 16,
+          },
         },
       },
     },
@@ -39,6 +56,10 @@ const baseThemeOptions: ThemeOptions = {
       fontSize: 18,
       fontWeight: 400,
     },
+    h2: {
+      fontSize: 18,
+      fontWeight: 400,
+    },
   },
   palette: {
     background: colors.background,
@@ -53,6 +74,6 @@ const baseThemeOptions: ThemeOptions = {
   },
 };
 
-const theme = createMuiTheme(baseThemeOptions);
+const theme = createTheme(baseThemeOptions);
 
 export default theme;
