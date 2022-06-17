@@ -45,9 +45,13 @@ export default function NoticeCard(props: NoticeCardProps) {
     <Card {...(onClick && { onClick })}>
       <WrapperElement>
         <CardContent>
-          <Typography component="h2">{title}</Typography>
+          <Typography component="h2" mb={1}>
+            {title}
+          </Typography>
 
-          <Typography color="text.secondary">{contentToRender}</Typography>
+          <Typography fontSize={15} color="text.secondary">
+            {contentToRender}
+          </Typography>
         </CardContent>
       </WrapperElement>
     </Card>

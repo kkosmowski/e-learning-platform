@@ -19,12 +19,30 @@ const baseThemeOptions: ThemeOptions = {
         contained: {
           boxShadow: 'none',
         },
+        sizeSmall: {
+          minWidth: 0,
+          paddingTop: 0,
+          paddingBottom: 0,
+          paddingLeft: 6,
+          paddingRIght: 6,
+        },
       },
     },
     MuiCard: {
       styleOverrides: {
         root: {
           borderRadius: 0,
+          display: 'flex',
+          flexDirection: 'column',
+        },
+      },
+    },
+    MuiCardActionArea: {
+      styleOverrides: {
+        root: {
+          flex: 1,
+          display: 'flex',
+          alignItems: 'flex-start',
         },
       },
     },
@@ -59,6 +77,10 @@ const baseThemeOptions: ThemeOptions = {
     },
     h2: {
       fontSize: 22,
+      fontWeight: 700,
+    },
+    h3: {
+      fontSize: 18,
       fontWeight: 400,
     },
     allVariants: {

@@ -21,7 +21,7 @@ export default function Subjects() {
     <Container>
       <Grid container spacing={2}>
         {subjects.map((subject) => (
-          <Grid item key={subject.id} xs={12} sm={12} md={6} lg={4} xl={3}>
+          <Grid item key={subject.id} xs={12} md={6} lg={4} xl={3}>
             <Card onClick={() => handleSubjectClick(subject.id)}>
               <CardActionArea>
                 <CardContent>
