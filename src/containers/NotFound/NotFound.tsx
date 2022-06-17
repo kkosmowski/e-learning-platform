@@ -1,13 +1,23 @@
-import { Box, Button, Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
+import { useNavigate } from 'react-router';
+import Container from 'shared/components/Container';
 
 export default function NotFound() {
+  const navigate = useNavigate();
+
+  const navigateHome = (): void => {
+    navigate('/');
+  };
+
   return (
-    <Box>
-      <Typography sx={{ fontSize: 72 }} component="h2">
+    <Container
+      sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+    >
+      <Typography sx={{ fontSize: 72, fontWeight: 300 }} component="h2">
         404
       </Typography>
 
-      <Button href="/">Take me home</Button>
-    </Box>
+      <Button onClick={navigateHome}>Take me home</Button>
+    </Container>
   );
 }

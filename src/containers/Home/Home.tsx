@@ -1,3 +1,5 @@
+import Container from 'shared/components/Container';
+
 export default function Home() {
-  return <>Siemanko w HOME</>;
+  return <Container>Siemanko w HOME</Container>;
 }

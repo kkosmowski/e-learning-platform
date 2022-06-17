@@ -1,5 +1,9 @@
 import { useNavigate, useParams } from 'react-router';
+import { Box } from '@mui/material';
+
 import { subjects } from 'shared/consts/subject';
+import Container from 'shared/components/Container';
+import SubjectHeader from './components/SubjectHeader';
 
 export default function Subject() {
   const { subjectId } = useParams<{ subjectId: string }>();
@@ -11,5 +15,10 @@ export default function Subject() {
     return null;
   }
 
-  return <>{currentSubject.label}</>;
+  return (
+    <Box>
+      <SubjectHeader title={currentSubject.label} />
+      <Container>hehe</Container>
+    </Box>
+  );
 }

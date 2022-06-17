@@ -57,7 +57,7 @@ const baseThemeOptions: ThemeOptions = {
       fontWeight: 400,
     },
     h2: {
-      fontSize: 18,
+      fontSize: 22,
       fontWeight: 400,
     },
   },
