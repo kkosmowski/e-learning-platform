@@ -1,5 +1,5 @@
 import { createTheme, ThemeOptions } from '@mui/material';
-import colors from './colors';
+import colors, { text } from 'colors';
 
 export const consts = {
   navbarHeight: 64,
@@ -55,10 +55,14 @@ const baseThemeOptions: ThemeOptions = {
     h1: {
       fontSize: 18,
       fontWeight: 400,
+      color: text[1000],
     },
     h2: {
       fontSize: 22,
       fontWeight: 400,
+    },
+    allVariants: {
+      color: colors.text.primary,
     },
   },
   palette: {

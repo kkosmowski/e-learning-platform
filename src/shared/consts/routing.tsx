@@ -1,6 +1,8 @@
 import Home from 'containers/Home';
 import Subjects from 'containers/Subjects';
 import Subject from 'containers/Subject';
+import NoticeBoard from 'containers/NoticeBoard';
+import Notice from 'containers/Notice';
 import { RouteObjectWithLabel } from 'shared/types/routing';
 
 export const features: RouteObjectWithLabel[] = [
@@ -19,7 +21,25 @@ export const features: RouteObjectWithLabel[] = [
       },
       {
         path: ':subjectId',
-        element: <Subject />,
+        children: [
+          {
+            path: '',
+            element: <Subject />,
+          },
+          {
+            path: 'notices',
+            children: [
+              {
+                path: '',
+                element: <NoticeBoard />,
+              },
+              {
+                path: ':noticeId',
+                element: <Notice />,
+              },
+            ],
+          },
+        ],
       },
     ],
   },
