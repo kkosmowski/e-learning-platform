@@ -3,6 +3,8 @@ import Subjects from 'containers/Subjects';
 import Subject, { SubjectLayout } from 'containers/Subject';
 import NoticeBoard from 'containers/NoticeBoard';
 import Notice from 'containers/Notice';
+import TaskList from 'containers/TaskList';
+import Task from 'containers/Task';
 import { RouteObjectWithLabel } from 'shared/types/routing';
 
 export const features: RouteObjectWithLabel[] = [
@@ -37,6 +39,19 @@ export const features: RouteObjectWithLabel[] = [
               {
                 path: ':noticeId',
                 element: <Notice />,
+              },
+            ],
+          },
+          {
+            path: 'tasks',
+            children: [
+              {
+                path: '',
+                element: <TaskList />,
+              },
+              {
+                path: ':taskId',
+                element: <Task />,
               },
             ],
           },

@@ -55,8 +55,8 @@ export default function NoticeCard(props: NoticeCardProps) {
   return (
     <Card {...(onClick && { onClick })} sx={{ overflow: 'visible' }}>
       <WrapperElement>
-        <CardContent>
-          <Typography component="h2" mb={1}>
+        <CardContent component="article">
+          <Typography component="h3" mb={1}>
             {title}
           </Typography>
 

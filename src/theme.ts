@@ -3,7 +3,7 @@ import colors, { text } from 'colors';
 
 export const consts = {
   navbarHeight: 64,
-  menuWidth: 200,
+  menuWidth: 300,
   containerPadding: 16,
 };
 

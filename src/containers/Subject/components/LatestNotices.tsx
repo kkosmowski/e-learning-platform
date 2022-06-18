@@ -8,6 +8,7 @@ import {
 } from 'shared/consts/notice';
 import SectionTitle from 'shared/components/SectionTitle';
 import NoticeCard from 'shared/components/NoticeCard';
+import TextButton from 'shared/components/TextButton';
 
 interface LatestNoticesProps {
   notices: Notice[];
@@ -19,28 +20,26 @@ export default function LatestNotices(props: LatestNoticesProps) {
   const { notices, onNoticeClick, onMoreClick } = props;
   return (
     <>
-      <SectionTitle>Latest notices</SectionTitle>
+      <SectionTitle>
+        <span>Latest notices</span>
+
+        <TextButton sx={{ ml: 2 }} onClick={onMoreClick}>
+          View more
+        </TextButton>
+      </SectionTitle>
 
       <NoticesBox length={notices.length}>
         {notices.length ? (
-          <>
-            {notices.slice(0, VISIBLE_LATEST_NOTICES).map((notice, index) => (
+          notices
+            .slice(0, VISIBLE_LATEST_NOTICES)
+            .map((notice, index) => (
               <NoticeCard
                 key={notice.id}
                 notice={notice}
                 {...(index ? { longerPreview: true } : { preview: true })}
                 onClick={() => onNoticeClick(notice.id)}
               />
-            ))}
-
-            <Button
-              variant="contained"
-              sx={{ flex: '0 0', whiteSpace: 'nowrap', alignSelf: 'center' }}
-              onClick={onMoreClick}
-            >
-              View more
-            </Button>
-          </>
+            ))
         ) : (
           <Typography color="text.secondary">
             There are no notices yet.
