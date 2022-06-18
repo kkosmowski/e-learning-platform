@@ -2,6 +2,7 @@ import { Card, CardActionArea, CardContent, Typography } from '@mui/material';
 import { Fragment } from 'react';
 
 import {
+  BOARD_NOTICE_CONTENT_LENGTH,
   NOTICE_CONTENT_RATIO,
   PREVIEW_NOTICE_CONTENT_LENGTH,
 } from 'shared/consts/notice';
@@ -11,19 +12,23 @@ interface NoticeCardProps {
   notice: Notice;
   preview?: boolean;
   longerPreview?: boolean;
+  boardPreview?: boolean;
   onClick?: () => void;
 }
 
 const getContentToRender = (
   content: string,
+  preview?: boolean,
   longerPreview?: boolean,
-  preview?: boolean
+  boardPreview?: boolean
 ): string => {
-  if (!longerPreview && !preview) {
+  if (!boardPreview && !longerPreview && !preview) {
     return content;
   }
 
-  const sliceTo = longerPreview
+  const sliceTo = boardPreview
+    ? BOARD_NOTICE_CONTENT_LENGTH
+    : longerPreview
     ? PREVIEW_NOTICE_CONTENT_LENGTH
     : PREVIEW_NOTICE_CONTENT_LENGTH * NOTICE_CONTENT_RATIO;
   return content.slice(0, sliceTo) + '...';
@@ -34,22 +39,34 @@ export default function NoticeCard(props: NoticeCardProps) {
     notice: { title, content },
     preview,
     longerPreview,
+    boardPreview,
     onClick,
   } = props;
 
-  const contentToRender = getContentToRender(content, longerPreview, preview);
+  const contentToRender = getContentToRender(
+    content,
+    longerPreview,
+    preview,
+    boardPreview
+  );
 
   const WrapperElement = onClick ? CardActionArea : Fragment;
 
   return (
-    <Card {...(onClick && { onClick })}>
+    <Card {...(onClick && { onClick })} sx={{ overflow: 'visible' }}>
       <WrapperElement>
         <CardContent>
           <Typography component="h2" mb={1}>
             {title}
           </Typography>
 
-          <Typography fontSize={15} color="text.secondary">
+          <Typography
+            sx={{
+              color: 'text.secondary',
+              fontSize: 15,
+              whiteSpace: 'pre-wrap',
+            }}
+          >
             {contentToRender}
           </Typography>
         </CardContent>

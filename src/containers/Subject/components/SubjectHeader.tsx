@@ -1,17 +1,19 @@
-import { Box, Button, Divider, Typography } from '@mui/material';
+import { Box, Divider, Typography } from '@mui/material';
 import { useNavigate } from 'react-router';
 
 import { background } from 'colors';
 import Container from 'shared/components/Container';
+import TextButton from 'shared/components/TextButton';
 import StyledLink from 'shared/components/StyledLink';
-import TextButton from '../../../shared/components/TextButton';
 
 interface SubjectHeaderProps {
-  title: string;
+  subject: { id: string; label: string };
 }
 
 export default function SubjectHeader(props: SubjectHeaderProps) {
-  const { title } = props;
+  const {
+    subject: { id, label },
+  } = props;
   const navigate = useNavigate();
 
   const navigateBack = (): void => {
@@ -24,10 +26,12 @@ export default function SubjectHeader(props: SubjectHeaderProps) {
         backgroundColor: background[50],
       }}
     >
-      <Container sx={{ display: 'flex', alignItems: 'center' }}>
-        <Typography component="h2" variant="h2">
-          {title}
-        </Typography>
+      <Container sx={{ flexDirection: 'row', alignItems: 'center' }}>
+        <StyledLink to={`/subjects/${id}`} sx={{ textDecoration: 'none' }}>
+          <Typography component="h2" variant="h2" sx={{ color: 'inherit' }}>
+            {label}
+          </Typography>
+        </StyledLink>
 
         <TextButton sx={{ ml: 2 }} onClick={navigateBack}>
           Back

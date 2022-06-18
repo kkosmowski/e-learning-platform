@@ -1,6 +1,6 @@
 import { useNavigate, useParams, Outlet } from 'react-router';
-import { Box } from '@mui/material';
 
+import Container from 'shared/components/Container';
 import { subjects } from 'shared/consts/subject';
 import SubjectHeader from './components/SubjectHeader';
 
@@ -15,9 +15,9 @@ export default function Subject() {
   }
 
   return (
-    <Box>
-      <SubjectHeader title={currentSubject.label} />
+    <Container sx={{ p: 0, overflow: 'hidden', flex: 1 }}>
+      <SubjectHeader subject={currentSubject} />
       <Outlet />
-    </Box>
+    </Container>
   );
 }

@@ -15,6 +15,9 @@ export default function Container(props: ContainerProps) {
   return (
     <Box
       sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'auto',
         p: typeof p !== 'undefined' ? p : 2,
         ...(bg && { backgroundColor: bg }),
         ...sx,

@@ -1,7 +1,8 @@
 import { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { SxProps, Typography } from '@mui/material';
-import { primary } from '../../colors';
+
+import { primary } from 'colors';
 
 interface StyledLinkProps {
   children: ReactNode;
@@ -16,11 +17,10 @@ export default function StyledLink(props: StyledLinkProps) {
       component={Link}
       to={to}
       sx={{
-        color: primary[300],
         textDecoration: 'none',
         ':hover': {
-          color: primary[500],
           textDecoration: 'underline',
+          color: primary[500],
         },
         ...sx,
       }}
