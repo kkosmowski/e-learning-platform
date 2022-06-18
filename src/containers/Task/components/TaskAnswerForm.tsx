@@ -3,10 +3,10 @@ import {
   Button,
   Card,
   CardContent,
-  IconButton,
   TextField,
   Typography,
 } from '@mui/material';
+import { ChangeEvent, useMemo, useRef } from 'react';
 import { AttachFile } from '@mui/icons-material';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -16,6 +16,8 @@ import {
   TASK_MAX_FILE_SIZE,
   TASK_MAX_MESSAGE_LENGTH,
 } from 'shared/consts/task';
+import { bytesToKilobytesOrMegabytes } from 'shared/utils/file.utils';
+import { MEGABYTE } from 'shared/consts/file';
 
 interface TaskAnswerFormProps {
   task: Task;
@@ -26,25 +28,58 @@ interface TaskAnswerFormProps {
 export default function TaskAnswerForm(props: TaskAnswerFormProps) {
   //@todo use `task` later to choose what options to display, like attaching an images, files and so on
   const { task, onCancel, onSubmit } = props;
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const formik = useFormik({
     initialValues: {
       textMessage: '',
-      file: '',
+      file: null,
     },
     validationSchema: yup.object().shape({
       textMessage: yup.string().max(TASK_MAX_MESSAGE_LENGTH),
       file: yup
         .mixed()
-        .test('fileSize', 'The file is too large', (value) => {
-          if (!value?.length) return true; // file is optional
-          return value[0].size <= TASK_MAX_FILE_SIZE;
-        })
+        .nullable()
+        .test(
+          'fileSize',
+          `The file is too large. Max size allowed is ${bytesToKilobytesOrMegabytes(
+            TASK_MAX_FILE_SIZE,
+            MEGABYTE,
+            0,
+            true
+          )}.`,
+          (file) => {
+            console.log(file);
+            if (!file) return true; // file is optional
+            console.log(file.size);
+            console.log(file.size <= TASK_MAX_FILE_SIZE);
+            return file.size <= TASK_MAX_FILE_SIZE;
+          }
+        )
         .nullable(),
     }),
     onSubmit,
   });
-  const { handleChange, handleSubmit, values } = formik;
+  const { errors, handleChange, handleSubmit, isValid, setFieldValue, values } =
+    formik;
+
+  const fileNameAndSize = useMemo(() => {
+    if (values.file) {
+      const { name, size } = values.file as File;
+      console.log(values.file);
+      return `${name} (${bytesToKilobytesOrMegabytes(
+        size,
+        MEGABYTE,
+        2,
+        true
+      )})`;
+    }
+    return '';
+  }, [values.file]);
+
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    setFieldValue('file', event.target.files ? event.target.files[0] : null);
+  };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -53,9 +88,9 @@ export default function TaskAnswerForm(props: TaskAnswerFormProps) {
           <TextField
             placeholder="Type your answer or leave additional comment..."
             rows={4}
-            sx={{ mb: 1 }}
             multiline
             fullWidth
+            autoFocus
             name="textMessage"
             inputProps={{
               maxLength: TASK_MAX_MESSAGE_LENGTH,
@@ -64,20 +99,48 @@ export default function TaskAnswerForm(props: TaskAnswerFormProps) {
             onChange={handleChange}
           />
 
+          <Typography color="error" sx={{ fontSize: 14, my: 1 }}>
+            {errors.file}
+          </Typography>
+
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <IconButton>
+            <Button
+              component="label"
+              variant="outlined"
+              sx={{
+                minWidth: 36,
+                maxWidth: 36,
+                minHeight: 36,
+                maxHeight: 36,
+                padding: 0,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: '50%',
+              }}
+            >
               <AttachFile />
-            </IconButton>
+              <input
+                ref={fileInputRef}
+                type="file"
+                name="file"
+                onChange={handleFileChange}
+                hidden
+              />
+            </Button>
 
             <Typography>
               {values.textMessage.length}/{TASK_MAX_MESSAGE_LENGTH}
             </Typography>
 
+            <Typography>{fileNameAndSize}</Typography>
+
             <Button color="secondary" sx={{ ml: 'auto' }} onClick={onCancel}>
               Cancel
             </Button>
 
-            <Button type="submit" variant="contained">
+            {/* @todo make button valid only when there is at least one of: text message and file */}
+            <Button type="submit" variant="contained" disabled={!isValid}>
               Submit
             </Button>
           </Box>

@@ -1,24 +1,30 @@
-import { Button, Typography } from '@mui/material';
+import { Grid } from '@mui/material';
 import { useNavigate } from 'react-router';
 
 import Container from 'shared/components/Container';
+import TaskCard from 'shared/components/TaskCard';
+import { tasks } from 'shared/consts/task';
 
 export default function TaskList() {
   const navigate = useNavigate();
 
-  const navigateHome = (): void => {
-    navigate('/');
+  const navigateToTask = (taskId: string) => {
+    navigate(taskId);
   };
 
   return (
-    <Container
-      sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
-    >
-      <Typography sx={{ fontSize: 72, fontWeight: 300 }} component="h2">
-        404
-      </Typography>
-
-      <Button onClick={navigateHome}>Take me home</Button>
+    <Container>
+      <Grid container spacing={2}>
+        {tasks.map((task) => (
+          <Grid item key={task.id} xs={12} sm={6} lg={4} xl={3}>
+            <TaskCard
+              task={task}
+              short
+              onClick={() => navigateToTask(task.id)}
+            />
+          </Grid>
+        ))}
+      </Grid>
     </Container>
   );
 }

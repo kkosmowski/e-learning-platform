@@ -1,4 +1,5 @@
 import { Task, TaskStatus } from 'shared/types/task';
+import { MEGABYTE } from './file';
 
 export const tasks: Task[] = [
   {
@@ -38,4 +39,4 @@ We will be manipulating DOM in order to make the Tic-Tac-Toe game playable with 
 ];
 
 export const TASK_MAX_MESSAGE_LENGTH = 500;
-export const TASK_MAX_FILE_SIZE = 2000000;
+export const TASK_MAX_FILE_SIZE = 5 * MEGABYTE;
