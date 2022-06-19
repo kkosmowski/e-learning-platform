@@ -5,17 +5,17 @@ import NoticeBoard from 'containers/NoticeBoard';
 import Notice from 'containers/Notice';
 import TaskList from 'containers/TaskList';
 import Task from 'containers/Task';
-import { RouteObjectWithLabel } from 'shared/types/routing';
+import { RouteObjectWithId } from 'shared/types/routing';
 
-export const features: RouteObjectWithLabel[] = [
+export const features: RouteObjectWithId[] = [
   {
     path: '/',
+    id: 'home',
     element: <Home />,
-    label: 'Home',
   },
   {
     path: 'subjects',
-    label: 'Subjects',
+    id: 'subjects',
     children: [
       {
         path: '',

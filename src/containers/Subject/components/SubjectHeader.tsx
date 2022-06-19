@@ -1,5 +1,6 @@
 import { Box, Divider, Typography } from '@mui/material';
 import { useNavigate } from 'react-router';
+import { useTranslation } from 'react-i18next';
 
 import { background } from 'colors';
 import Container from 'shared/components/Container';
@@ -15,6 +16,7 @@ export default function SubjectHeader(props: SubjectHeaderProps) {
     subject: { id, label },
   } = props;
   const navigate = useNavigate();
+  const { t } = useTranslation('common');
 
   const navigateBack = (): void => {
     navigate(-1);
@@ -34,7 +36,7 @@ export default function SubjectHeader(props: SubjectHeaderProps) {
         </StyledLink>
 
         <TextButton sx={{ ml: 2 }} onClick={navigateBack}>
-          Back
+          {t('back')}
         </TextButton>
       </Container>
       <Divider />

@@ -18,6 +18,7 @@ import {
 } from 'shared/consts/task';
 import { bytesToKilobytesOrMegabytes } from 'shared/utils/file.utils';
 import { MEGABYTE } from 'shared/consts/file';
+import { useTranslation } from 'react-i18next';
 
 interface TaskAnswerFormProps {
   task: Task;
@@ -29,6 +30,7 @@ export default function TaskAnswerForm(props: TaskAnswerFormProps) {
   //@todo use `task` later to choose what options to display, like attaching an images, files and so on
   const { task, onCancel, onSubmit } = props;
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const { t } = useTranslation('task');
 
   const formik = useFormik({
     initialValues: {
@@ -40,22 +42,13 @@ export default function TaskAnswerForm(props: TaskAnswerFormProps) {
       file: yup
         .mixed()
         .nullable()
-        .test(
-          'fileSize',
-          `The file is too large. Max size allowed is ${bytesToKilobytesOrMegabytes(
-            TASK_MAX_FILE_SIZE,
-            MEGABYTE,
-            0,
-            true
-          )}.`,
-          (file) => {
-            console.log(file);
-            if (!file) return true; // file is optional
-            console.log(file.size);
-            console.log(file.size <= TASK_MAX_FILE_SIZE);
-            return file.size <= TASK_MAX_FILE_SIZE;
-          }
-        )
+        .test('fileSize', 'error:fileTooBig', (file) => {
+          console.log(file);
+          if (!file) return true; // file is optional
+          console.log(file.size);
+          console.log(file.size <= TASK_MAX_FILE_SIZE);
+          return file.size <= TASK_MAX_FILE_SIZE;
+        })
         .nullable(),
     }),
     onSubmit,
@@ -86,8 +79,9 @@ export default function TaskAnswerForm(props: TaskAnswerFormProps) {
       <Card>
         <CardContent>
           <TextField
-            placeholder="Type your answer or leave additional comment..."
+            placeholder={t('taskMessagePlaceholder')}
             rows={4}
+            sx={{ mb: 0.5 }}
             multiline
             fullWidth
             autoFocus
@@ -99,11 +93,20 @@ export default function TaskAnswerForm(props: TaskAnswerFormProps) {
             onChange={handleChange}
           />
 
-          <Typography color="error" sx={{ fontSize: 14, my: 1 }}>
-            {errors.file}
-          </Typography>
+          {errors.file && (
+            <Typography color="error" sx={{ fontSize: 14 }}>
+              {t(errors.file, {
+                maxSize: bytesToKilobytesOrMegabytes(
+                  TASK_MAX_FILE_SIZE,
+                  MEGABYTE,
+                  0,
+                  true
+                ),
+              })}
+            </Typography>
+          )}
 
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mt: 0.5 }}>
             <Button
               component="label"
               variant="outlined"
@@ -136,12 +139,12 @@ export default function TaskAnswerForm(props: TaskAnswerFormProps) {
             <Typography>{fileNameAndSize}</Typography>
 
             <Button color="secondary" sx={{ ml: 'auto' }} onClick={onCancel}>
-              Cancel
+              {t('common:cancel')}
             </Button>
 
             {/* @todo make button valid only when there is at least one of: text message and file */}
             <Button type="submit" variant="contained" disabled={!isValid}>
-              Submit
+              {t('common:submit')}
             </Button>
           </Box>
         </CardContent>

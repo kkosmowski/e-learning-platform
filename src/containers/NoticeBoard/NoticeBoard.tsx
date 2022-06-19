@@ -1,13 +1,15 @@
-import { Grid } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
+import { useNavigate } from 'react-router';
+import { useTranslation } from 'react-i18next';
 
 import Container from 'shared/components/Container';
 import SectionTitle from 'shared/components/SectionTitle';
 import NoticeCard from 'shared/components/NoticeCard';
 import { notices } from 'shared/consts/notice';
-import { useNavigate } from 'react-router';
 
 export default function NoticeBoard() {
   const navigate = useNavigate();
+  const { t } = useTranslation('notice');
 
   const navigateToNotice = (noticeId: string): void => {
     navigate(noticeId);
@@ -15,19 +17,23 @@ export default function NoticeBoard() {
 
   return (
     <Container sx={{ display: 'flex', flexDirection: 'column' }}>
-      <SectionTitle>Notice board</SectionTitle>
+      <SectionTitle>{t('noticeBoard')}</SectionTitle>
 
-      <Grid container spacing={2}>
-        {notices.map((notice) => (
-          <Grid item key={notice.id} xs={12} md={6} lg={4}>
-            <NoticeCard
-              notice={notice}
-              boardPreview
-              onClick={() => navigateToNotice(notice.id)}
-            />
-          </Grid>
-        ))}
-      </Grid>
+      {notices.length ? (
+        <Grid container spacing={2}>
+          {notices.map((notice) => (
+            <Grid item key={notice.id} xs={12} md={6} lg={4}>
+              <NoticeCard
+                notice={notice}
+                boardPreview
+                onClick={() => navigateToNotice(notice.id)}
+              />
+            </Grid>
+          ))}
+        </Grid>
+      ) : (
+        <Typography color="text.secondary">{t('common:noNotices')}</Typography>
+      )}
     </Container>
   );
 }

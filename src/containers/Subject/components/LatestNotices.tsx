@@ -1,4 +1,5 @@
-import { Box, Button, styled, Typography } from '@mui/material';
+import { Box, styled, Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 import { Notice } from 'shared/types/notice';
 import {
@@ -18,14 +19,18 @@ interface LatestNoticesProps {
 
 export default function LatestNotices(props: LatestNoticesProps) {
   const { notices, onNoticeClick, onMoreClick } = props;
+  const { t } = useTranslation('subject');
+
   return (
     <>
       <SectionTitle>
-        <span>Latest notices</span>
+        <span>{t('general.latestNotices')}</span>
 
-        <TextButton sx={{ ml: 2 }} onClick={onMoreClick}>
-          View more
-        </TextButton>
+        {!!notices.length && (
+          <TextButton sx={{ ml: 2 }} onClick={onMoreClick}>
+            {t('common:viewMore')}
+          </TextButton>
+        )}
       </SectionTitle>
 
       <NoticesBox length={notices.length}>
@@ -42,7 +47,7 @@ export default function LatestNotices(props: LatestNoticesProps) {
             ))
         ) : (
           <Typography color="text.secondary">
-            There are no notices yet.
+            {t('common:noNotices')}
           </Typography>
         )}
       </NoticesBox>

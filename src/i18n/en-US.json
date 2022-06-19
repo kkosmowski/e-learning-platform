@@ -1,10 +1,43 @@
 {
-  "test": {
-    "key": "translations by t() function work!"
+  "nav": {
+    "home": "Home",
+    "subjects": "Subjects"
   },
-  "another": {
-    "test": {
-      "key": "Trans component works as well!"
+  "subject": {
+    "general": {
+      "latestNotices": "Latest notices",
+      "latestTasks": "Latest tasks",
+      "latestHomework": "Latest homework"
     }
+  },
+  "task": {
+    "task": "Task",
+    "homework": "Homework",
+    "statuses": {
+      "TODO": "To be submitted",
+      "SUBMITTED": "Submitted",
+      "GRADED": "Graded"
+    },
+    "submitSolution": "Submit a solution",
+    "taskMessagePlaceholder": "Type your answer or leave additional comment..."
+  },
+  "notice": {
+    "noticeBoard": "Notice board"
+  },
+  "common": {
+    "back": "Back",
+    "viewMore": "View more",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "noNotices": "There are no notices yet.",
+    "noTasks": "There are no tasks yet.",
+    "noHomework": "There is no homework yet."
+  },
+  "404": {
+    "title": "404",
+    "goHome": "Take me home"
+  },
+  "error": {
+    "fileTooBig": "The file is too large. Max size allowed is {{ maxSize }}"
   }
 }

@@ -17,6 +17,7 @@ import {
   SvgIconComponent,
 } from '@mui/icons-material';
 import format from 'date-fns/format';
+import { useTranslation } from 'react-i18next';
 
 import { Task, TaskStatus } from 'shared/types/task';
 
@@ -26,21 +27,22 @@ interface TaskCardProps {
   onClick?: () => void;
 }
 
-const getStatus = (status: TaskStatus): [SvgIconComponent, string] => {
+const getStatusIcon = (status: TaskStatus): SvgIconComponent => {
   switch (status) {
     case TaskStatus.Todo:
-      return [CheckBoxOutlineBlank, 'To be submitted'];
+      return CheckBoxOutlineBlank;
     case TaskStatus.Submitted:
-      return [CheckBoxOutlined, 'Submitted'];
+      return CheckBoxOutlined;
     case TaskStatus.Graded:
-      return [CheckBox, 'Graded'];
+      return CheckBox;
   }
 };
 
 export default function TaskCard(props: TaskCardProps) {
   const { task, short, onClick } = props;
+  const { t } = useTranslation('task');
 
-  const [StatusIcon, statusText] = getStatus(task.status);
+  const StatusIcon = getStatusIcon(task.status);
   const CardWrapper = onClick ? CardActionArea : Fragment;
 
   return (
@@ -75,7 +77,7 @@ export default function TaskCard(props: TaskCardProps) {
           >
             <Stack spacing={0.5}>
               <Box sx={{ display: 'flex', alignItems: 'center', columnGap: 1 }}>
-                <Assignment sx={{ fontSize: 16 }} /> <span>Task</span>
+                <Assignment sx={{ fontSize: 16 }} /> <span>{t('task')}</span>
               </Box>
 
               <Box sx={{ display: 'flex', alignItems: 'center', columnGap: 1 }}>
@@ -86,7 +88,8 @@ export default function TaskCard(props: TaskCardProps) {
               </Box>
 
               <Box sx={{ display: 'flex', alignItems: 'center', columnGap: 1 }}>
-                <StatusIcon sx={{ fontSize: 16 }} /> <span>{statusText}</span>
+                <StatusIcon sx={{ fontSize: 16 }} />{' '}
+                <span>{t(`statuses.${task.status}`)}</span>
               </Box>
             </Stack>
           </Typography>

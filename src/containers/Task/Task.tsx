@@ -7,13 +7,15 @@ import TaskCard from 'shared/components/TaskCard';
 import { tasks } from 'shared/consts/task';
 import { TaskStatus } from 'shared/types/task';
 import TaskAnswerForm from './components/TaskAnswerForm';
+import { useTranslation } from 'react-i18next';
 
 export default function Task() {
   const navigate = useNavigate();
   const { taskId } = useParams<{ taskId: string }>();
-  const currentTask = tasks.find((task) => task.id === taskId);
-
+  const { t } = useTranslation('task');
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const currentTask = tasks.find((task) => task.id === taskId);
 
   if (!currentTask) {
     navigate('/404');
@@ -32,7 +34,7 @@ export default function Task() {
       {currentTask.status === TaskStatus.Todo && !isSubmitting && (
         <Box>
           <Button variant="contained" onClick={() => setIsSubmitting(true)}>
-            Submit a solution
+            {t('submitSolution')}
           </Button>
         </Box>
       )}
