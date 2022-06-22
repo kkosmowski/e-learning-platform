@@ -19,7 +19,14 @@
       "GRADED": "Graded"
     },
     "submitSolution": "Submit a solution",
-    "taskMessagePlaceholder": "Type your answer or leave additional comment..."
+    "taskMessagePlaceholder": "Type your answer or leave additional comment...",
+    "pastDeadline": "past deadline",
+    "daysLeft": "days left",
+    "hoursLeft": "hours left",
+    "minutesLeft": "minutes left",
+    "tooltip": {
+      "cannotSubmitPastDeadline": "Deadline has passed, you can no longer submit a solution."
+    }
   },
   "notice": {
     "noticeBoard": "Notice board"

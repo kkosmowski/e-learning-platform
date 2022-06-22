@@ -1,28 +1,33 @@
 import { Box, Grid, Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 import SectionTitle from 'shared/components/SectionTitle';
 import TextButton from 'shared/components/TextButton';
 import TaskCard from 'shared/components/TaskCard';
-import { Task } from 'shared/types/task';
-import { useTranslation } from 'react-i18next';
+import { Task, TaskType } from 'shared/types/task';
 
 interface LatestTasksProps {
   tasks: Task[];
-  onTaskClick: (taskId: string) => void;
-  onMoreClick: () => void;
+  type: TaskType;
+  onTaskClick: (type: TaskType, taskId: string) => void;
+  onMoreClick: (type: TaskType) => void;
 }
 
 export default function LatestTasks(props: LatestTasksProps) {
-  const { tasks, onTaskClick, onMoreClick } = props;
+  const { tasks, type, onTaskClick, onMoreClick } = props;
   const { t } = useTranslation('subject');
 
   return (
     <>
       <SectionTitle>
-        <span>{t('general.latestTasks')}</span>
+        <span>
+          {type === TaskType.Task
+            ? t('general.latestTasks')
+            : t('general.latestHomework')}
+        </span>
 
         {!!tasks.length && (
-          <TextButton sx={{ ml: 2 }} onClick={onMoreClick}>
+          <TextButton sx={{ ml: 2 }} onClick={() => onMoreClick(type)}>
             {t('common:viewMore')}
           </TextButton>
         )}
@@ -36,7 +41,7 @@ export default function LatestTasks(props: LatestTasksProps) {
                 <TaskCard
                   task={task}
                   short
-                  onClick={() => onTaskClick(task.id)}
+                  onClick={() => onTaskClick(type, task.id)}
                 />
               </Grid>
             ))}

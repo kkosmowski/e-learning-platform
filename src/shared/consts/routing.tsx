@@ -6,6 +6,7 @@ import Notice from 'containers/Notice';
 import TaskList from 'containers/TaskList';
 import Task from 'containers/Task';
 import { RouteObjectWithId } from 'shared/types/routing';
+import { TaskType } from '../types/task';
 
 export const features: RouteObjectWithId[] = [
   {
@@ -47,11 +48,24 @@ export const features: RouteObjectWithId[] = [
             children: [
               {
                 path: '',
-                element: <TaskList />,
+                element: <TaskList type={TaskType.Task} />,
               },
               {
                 path: ':taskId',
-                element: <Task />,
+                element: <Task type={TaskType.Task} />,
+              },
+            ],
+          },
+          {
+            path: 'homework',
+            children: [
+              {
+                path: '',
+                element: <TaskList type={TaskType.Homework} />,
+              },
+              {
+                path: ':taskId',
+                element: <Task type={TaskType.Homework} />,
               },
             ],
           },

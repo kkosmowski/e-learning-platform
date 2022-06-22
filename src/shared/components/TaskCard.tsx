@@ -19,7 +19,9 @@ import {
 import format from 'date-fns/format';
 import { useTranslation } from 'react-i18next';
 
-import { Task, TaskStatus } from 'shared/types/task';
+import { Task, TaskStatus, TaskType } from 'shared/types/task';
+import { timeLeft } from 'shared/utils/date.utils';
+import { getTimeLeftTextColor } from 'shared/utils/task.utils';
 
 interface TaskCardProps {
   task: Task;
@@ -42,6 +44,14 @@ export default function TaskCard(props: TaskCardProps) {
   const { task, short, onClick } = props;
   const { t } = useTranslation('task');
 
+  let timeLeftString = '';
+  let diffInMinutes = 0;
+  let timeLeftTextColor = '';
+
+  if (task.status === TaskStatus.Todo) {
+    [timeLeftString, diffInMinutes] = timeLeft(t, new Date(task.deadline));
+    timeLeftTextColor = getTimeLeftTextColor(task.type, diffInMinutes);
+  }
   const StatusIcon = getStatusIcon(task.status);
   const CardWrapper = onClick ? CardActionArea : Fragment;
 
@@ -77,18 +87,31 @@ export default function TaskCard(props: TaskCardProps) {
           >
             <Stack spacing={0.5}>
               <Box sx={{ display: 'flex', alignItems: 'center', columnGap: 1 }}>
-                <Assignment sx={{ fontSize: 16 }} /> <span>{t('task')}</span>
-              </Box>
-
-              <Box sx={{ display: 'flex', alignItems: 'center', columnGap: 1 }}>
-                <AccessTime sx={{ fontSize: 16 }} />{' '}
+                <Assignment sx={{ fontSize: 16 }} />
                 <span>
-                  {format(new Date(task.deadline), 'dd.MM.yyy HH:mm')}
+                  {task.type === TaskType.Task ? t('task') : t('homework')}
                 </span>
               </Box>
 
               <Box sx={{ display: 'flex', alignItems: 'center', columnGap: 1 }}>
-                <StatusIcon sx={{ fontSize: 16 }} />{' '}
+                <AccessTime sx={{ fontSize: 16 }} />
+                <span>
+                  {format(new Date(task.deadline), 'dd.MM.yyy HH:mm')}
+                </span>
+                {task.status === TaskStatus.Todo &&
+                  timeLeftTextColor &&
+                  timeLeftString && (
+                    <Typography
+                      color={timeLeftTextColor}
+                      sx={{ fontSize: 'inherit' }}
+                    >
+                      ({timeLeftString})
+                    </Typography>
+                  )}
+              </Box>
+
+              <Box sx={{ display: 'flex', alignItems: 'center', columnGap: 1 }}>
+                <StatusIcon sx={{ fontSize: 16 }} />
                 <span>{t(`statuses.${task.status}`)}</span>
               </Box>
             </Stack>

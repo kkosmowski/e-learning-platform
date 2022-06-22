@@ -2,9 +2,13 @@ import { useNavigate } from 'react-router';
 
 import Container from 'shared/components/Container';
 import { notices } from 'shared/consts/notice';
-import { tasks } from 'shared/consts/task';
+import { homework, tasks } from 'shared/consts/task';
+import { TaskType } from 'shared/types/task';
 import LatestNotices from './components/LatestNotices';
 import LatestTasks from './components/LatestTasks';
+
+const getTaskRoute = (type: TaskType): string =>
+  type === TaskType.Task ? 'tasks' : 'homework';
 
 export default function Subject() {
   const navigate = useNavigate();
@@ -17,12 +21,12 @@ export default function Subject() {
     navigate(`notices/${noticeId}`);
   };
 
-  const navigateToTasks = (): void => {
-    navigate('tasks');
+  const navigateToTasks = (type: TaskType): void => {
+    navigate(getTaskRoute(type));
   };
 
-  const navigateToTask = (taskId: string): void => {
-    navigate(`tasks/${taskId}`);
+  const navigateToTask = (type: TaskType, taskId: string): void => {
+    navigate(`${getTaskRoute(type)}/${taskId}`);
   };
 
   return (
@@ -34,7 +38,15 @@ export default function Subject() {
       />
 
       <LatestTasks
+        type={TaskType.Task}
         tasks={tasks}
+        onTaskClick={navigateToTask}
+        onMoreClick={navigateToTasks}
+      />
+
+      <LatestTasks
+        type={TaskType.Homework}
+        tasks={homework}
         onTaskClick={navigateToTask}
         onMoreClick={navigateToTasks}
       />

@@ -1,26 +1,30 @@
 import { useNavigate, useParams } from 'react-router';
 import { useState } from 'react';
-import { Box, Button } from '@mui/material';
+import { Box, Button, Tooltip } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 import Container from 'shared/components/Container';
 import TaskCard from 'shared/components/TaskCard';
-import { tasks } from 'shared/consts/task';
-import { TaskStatus } from 'shared/types/task';
+import { tasks, homework } from 'shared/consts/task';
+import { TaskStatus, TaskType } from 'shared/types/task';
 import TaskAnswerForm from './components/TaskAnswerForm';
-import { useTranslation } from 'react-i18next';
+import { isPastDate } from '../../shared/utils/date.utils';
 
-export default function Task() {
+export default function Task({ type }: { type: TaskType }) {
   const navigate = useNavigate();
   const { taskId } = useParams<{ taskId: string }>();
   const { t } = useTranslation('task');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const items = type === TaskType.Task ? tasks : homework;
 
-  const currentTask = tasks.find((task) => task.id === taskId);
+  const currentTask = items.find((task) => task.id === taskId);
 
   if (!currentTask) {
     navigate('/404');
     return null;
   }
+
+  const isPastDeadline = isPastDate(new Date(currentTask.deadline));
 
   const handleAnswerSubmit = (): void => {
     console.log('submitted');
@@ -33,9 +37,19 @@ export default function Task() {
 
       {currentTask.status === TaskStatus.Todo && !isSubmitting && (
         <Box>
-          <Button variant="contained" onClick={() => setIsSubmitting(true)}>
-            {t('submitSolution')}
-          </Button>
+          <Tooltip
+            title={isPastDeadline ? t('tooltip.cannotSubmitPastDeadline') : ''}
+          >
+            <span>
+              <Button
+                variant="contained"
+                disabled={isPastDeadline}
+                onClick={() => setIsSubmitting(true)}
+              >
+                {t('submitSolution')}
+              </Button>
+            </span>
+          </Tooltip>
         </Box>
       )}
 
