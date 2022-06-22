@@ -33,7 +33,7 @@ export default function LatestNotices(props: LatestNoticesProps) {
         )}
       </SectionTitle>
 
-      <NoticesBox length={notices.length}>
+      <NoticesBox>
         {notices.length ? (
           notices
             .slice(0, VISIBLE_LATEST_NOTICES)
@@ -55,21 +55,8 @@ export default function LatestNotices(props: LatestNoticesProps) {
   );
 }
 
-const NoticesBox = styled(Box)(({ length }: { length: number }) => ({
+const NoticesBox = styled(Box)(() => ({
   display: 'grid',
-  gridTemplateColumns: generateGridTemplateColumns(length),
+  gridTemplateColumns: `${LONGER_PREVIEW_CONTENT_RATIO}fr repeat(2, ${PREVIEW_CONTENT_RATIO}fr)`,
   gap: 16,
 }));
-
-const generateGridTemplateColumns = (length: number): string => {
-  switch (length) {
-    case 0:
-      return '1fr';
-    case 1:
-      return `${LONGER_PREVIEW_CONTENT_RATIO}fr auto repeat(2, ${PREVIEW_CONTENT_RATIO}fr)`;
-    case 2:
-      return `${LONGER_PREVIEW_CONTENT_RATIO}fr ${PREVIEW_CONTENT_RATIO}fr auto ${PREVIEW_CONTENT_RATIO}fr`;
-    default:
-      return `${LONGER_PREVIEW_CONTENT_RATIO}fr repeat(2, ${PREVIEW_CONTENT_RATIO}fr) auto`;
-  }
-};
