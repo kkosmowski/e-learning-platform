@@ -1,27 +1,27 @@
 import { TFunction } from 'i18next';
-import { differenceInMinutes, minutesToHours } from 'date-fns';
-
 import {
-  DAY,
-  HOUR,
-  HOURS_IN_A_DAY,
-  MINUTES_IN_AN_HOUR,
-} from 'shared/consts/date';
+  differenceInMinutes,
+  differenceInSeconds,
+  minutesToHours,
+} from 'date-fns';
+
+import { HOURS_IN_A_DAY, MINUTES_IN_AN_HOUR } from 'shared/consts/date';
 
 export const timeLeft = (t: TFunction, deadline: Date): [string, number] => {
+  const diffInSeconds = differenceInSeconds(deadline, new Date());
   const diffInMinutes = differenceInMinutes(deadline, new Date());
   let timeLeftString;
 
-  if (diffInMinutes < 0) {
+  if (diffInSeconds <= 0) {
     timeLeftString = t('pastDeadline');
-  } else if (diffInMinutes > DAY / 1000) {
+  } else if (diffInMinutes > MINUTES_IN_AN_HOUR * HOURS_IN_A_DAY) {
     timeLeftString = `${Math.ceil(
       minutesToHours(diffInMinutes) / HOURS_IN_A_DAY
     )} ${t('daysLeft')}`;
-  } else if (diffInMinutes > HOUR / 1000) {
-    timeLeftString = `${Math.ceil(
-      minutesToHours(diffInMinutes) / MINUTES_IN_AN_HOUR
-    )} ${t('hoursLeft')}`;
+  } else if (diffInMinutes > MINUTES_IN_AN_HOUR) {
+    timeLeftString = `${Math.ceil(minutesToHours(diffInMinutes))} ${t(
+      'hoursLeft'
+    )}`;
   } else {
     timeLeftString = `${diffInMinutes} ${t('minutesLeft')}`;
   }
