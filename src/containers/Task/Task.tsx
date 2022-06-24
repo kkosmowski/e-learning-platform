@@ -6,9 +6,10 @@ import { useTranslation } from 'react-i18next';
 import Container from 'shared/components/Container';
 import TaskCard from 'shared/components/TaskCard';
 import { tasks, homework } from 'shared/consts/task';
-import { TaskStatus, TaskType } from 'shared/types/task';
+import { TaskType } from 'shared/types/task';
+import { Status } from 'shared/types/shared';
+import { isPastDate } from 'shared/utils/date.utils';
 import TaskAnswerForm from './components/TaskAnswerForm';
-import { isPastDate } from '../../shared/utils/date.utils';
 
 export default function Task({ type }: { type: TaskType }) {
   const navigate = useNavigate();
@@ -35,7 +36,7 @@ export default function Task({ type }: { type: TaskType }) {
     <Container sx={{ flex: 1, gap: 2 }}>
       <TaskCard task={currentTask} />
 
-      {currentTask.status === TaskStatus.Todo && !isSubmitting && (
+      {currentTask.status === Status.Todo && !isSubmitting && (
         <Box>
           <Tooltip
             title={isPastDeadline ? t('tooltip.cannotSubmitPastDeadline') : ''}
@@ -60,8 +61,6 @@ export default function Task({ type }: { type: TaskType }) {
           onSubmit={handleAnswerSubmit}
         />
       )}
-
-      {}
     </Container>
   );
 }

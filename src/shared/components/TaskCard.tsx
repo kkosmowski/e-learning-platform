@@ -10,7 +10,6 @@ import {
 import { Fragment } from 'react';
 import {
   AccessTime,
-  Assignment,
   CheckBox,
   CheckBoxOutlineBlank,
   CheckBoxOutlined,
@@ -19,9 +18,11 @@ import {
 import format from 'date-fns/format';
 import { useTranslation } from 'react-i18next';
 
-import { Task, TaskStatus, TaskType } from 'shared/types/task';
+import { Task } from 'shared/types/task';
+import { Status } from 'shared/types/shared';
 import { timeLeft } from 'shared/utils/date.utils';
 import { getTimeLeftTextColor } from 'shared/utils/task.utils';
+import ItemCategory from './ItemCategory';
 
 interface TaskCardProps {
   task: Task;
@@ -29,13 +30,13 @@ interface TaskCardProps {
   onClick?: () => void;
 }
 
-const getStatusIcon = (status: TaskStatus): SvgIconComponent => {
+const getStatusIcon = (status: Status): SvgIconComponent => {
   switch (status) {
-    case TaskStatus.Todo:
+    case Status.Todo:
       return CheckBoxOutlineBlank;
-    case TaskStatus.Submitted:
+    case Status.Submitted:
       return CheckBoxOutlined;
-    case TaskStatus.Graded:
+    case Status.Graded:
       return CheckBox;
   }
 };
@@ -48,7 +49,7 @@ export default function TaskCard(props: TaskCardProps) {
   let diffInMinutes = 0;
   let timeLeftTextColor = '';
 
-  if (task.status === TaskStatus.Todo) {
+  if (task.status === Status.Todo) {
     [timeLeftString, diffInMinutes] = timeLeft(t, new Date(task.deadline));
     timeLeftTextColor = getTimeLeftTextColor(task.type, diffInMinutes);
   }
@@ -87,10 +88,7 @@ export default function TaskCard(props: TaskCardProps) {
           >
             <Stack spacing={0.5}>
               <Box sx={{ display: 'flex', alignItems: 'center', columnGap: 1 }}>
-                <Assignment sx={{ fontSize: 16 }} />
-                <span>
-                  {task.type === TaskType.Task ? t('task') : t('homework')}
-                </span>
+                <ItemCategory type={task.type} />
               </Box>
 
               <Box sx={{ display: 'flex', alignItems: 'center', columnGap: 1 }}>
@@ -98,7 +96,7 @@ export default function TaskCard(props: TaskCardProps) {
                 <span>
                   {format(new Date(task.deadline), 'dd.MM.yyy HH:mm')}
                 </span>
-                {task.status === TaskStatus.Todo &&
+                {task.status === Status.Todo &&
                   timeLeftTextColor &&
                   timeLeftString && (
                     <Typography

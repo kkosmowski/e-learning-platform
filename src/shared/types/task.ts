@@ -1,19 +1,15 @@
+import { Status } from './shared';
+
 export interface Task {
   id: string;
   type: TaskType;
   title: string;
   content: string;
   deadline: string;
-  status: TaskStatus;
-}
-
-export enum TaskStatus {
-  Todo = 'TODO',
-  Submitted = 'SUBMITTED',
-  Graded = 'GRADED',
+  status: Status;
 }
 
 export enum TaskType {
-  Task = 'Task',
-  Homework = 'Homework',
+  Task = 'task',
+  Homework = 'homework',
 }

@@ -1,4 +1,5 @@
-import { Task, TaskStatus, TaskType } from 'shared/types/task';
+import { Status } from 'shared/types/shared';
+import { Task, TaskType } from 'shared/types/task';
 import { MEGABYTE } from './file';
 
 export const tasks: Task[] = [
@@ -13,7 +14,7 @@ It would be great if the page contained various content.
 
 Mobile view is not necessary.`,
     deadline: '2022-06-20T13:59:59.000Z',
-    status: TaskStatus.Todo,
+    status: Status.Todo,
   },
   {
     id: 'y4ge',
@@ -25,7 +26,7 @@ Make sure to not use too many colors, 3 should be a maximum, of course the usage
 
 Try to make a simple, flat logo.`,
     deadline: '2022-06-13T13:59:59.000Z',
-    status: TaskStatus.Submitted,
+    status: Status.Submitted,
   },
   {
     id: '24sd',
@@ -37,7 +38,7 @@ JS games can be made a lot of ways, but today we will make a game that uses DOM 
 
 We will be manipulating DOM in order to make the Tic-Tac-Toe game playable with just ten buttons.`,
     deadline: '2022-06-06T13:59:59.000Z',
-    status: TaskStatus.Graded,
+    status: Status.Graded,
   },
 ];
 
@@ -52,7 +53,7 @@ The genre can be anything except documentaries. We're talking about feature film
 Make sure to add few sentences about stuff such as actors performance, music, sound, image and the plot itself.
 Deadline is Sunday!`,
     deadline: '2022-06-26T22:59:59.000Z',
-    status: TaskStatus.Todo,
+    status: Status.Todo,
   },
   {
     id: 'r12g',
@@ -60,7 +61,7 @@ Deadline is Sunday!`,
     title: 'Uninteresting homework',
     content: `Bla bla bla.`,
     deadline: '2022-06-21T13:59:59.000Z',
-    status: TaskStatus.Submitted,
+    status: Status.Submitted,
   },
   {
     id: '34tt',
@@ -72,7 +73,7 @@ Even though the title says "small" web application, this is still a bit of requi
 The app should be written in React, though if your justification will be good enough, you can use other solutions.
 Your deadline is 2 weeks, which is 28th of June, noon.`,
     deadline: '2022-06-28T11:59:59.000Z',
-    status: TaskStatus.Graded,
+    status: Status.Graded,
   },
 ];
 

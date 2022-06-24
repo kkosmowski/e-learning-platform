@@ -1,3 +1,6 @@
+import { Grade } from '../types/subject';
+import { homework, tasks } from './task';
+
 export const subjects = [
   {
     label: 'Math',
@@ -18,5 +21,19 @@ export const subjects = [
   {
     label: 'Biology',
     id: 'fm93',
+  },
+];
+
+// @todo temporary, remove after grades are fetched from the backend
+export const grades: Grade[] = [
+  {
+    id: 'mv42',
+    source: tasks.find(({ id }) => id === '24sd')!,
+    value: 4,
+  },
+  {
+    id: '23tm',
+    source: homework.find(({ id }) => id === '34tt')!,
+    value: 5,
   },
 ];

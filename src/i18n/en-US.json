@@ -6,13 +6,12 @@
   "subject": {
     "general": {
       "latestNotices": "Latest notices",
+      "yourGrades": "Your grades",
       "latestTasks": "Latest tasks",
       "latestHomework": "Latest homework"
     }
   },
   "task": {
-    "task": "Task",
-    "homework": "Homework",
     "statuses": {
       "TODO": "To be submitted",
       "SUBMITTED": "Submitted",
@@ -38,7 +37,10 @@
     "cancel": "Cancel",
     "noNotices": "There are no notices yet.",
     "noTasks": "There are no tasks yet.",
-    "noHomework": "There is no homework yet."
+    "noHomework": "There is no homework yet.",
+    "task": "Task",
+    "homework": "Homework",
+    "test": "Test"
   },
   "404": {
     "title": "404",

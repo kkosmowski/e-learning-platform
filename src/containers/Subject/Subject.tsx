@@ -4,6 +4,7 @@ import Container from 'shared/components/Container';
 import { notices } from 'shared/consts/notice';
 import { homework, tasks } from 'shared/consts/task';
 import { TaskType } from 'shared/types/task';
+import YourGrades from './components/YourGrades';
 import LatestNotices from './components/LatestNotices';
 import LatestTasks from './components/LatestTasks';
 
@@ -36,6 +37,8 @@ export default function Subject() {
         onNoticeClick={navigateToNotice}
         onMoreClick={navigateToNotices}
       />
+
+      <YourGrades />
 
       <LatestTasks
         type={TaskType.Task}
