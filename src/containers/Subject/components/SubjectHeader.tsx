@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
 
 import { background } from 'colors';
-import Container from 'shared/components/Container';
+import { Centered } from 'shared/components/Container';
 import TextButton from 'shared/components/TextButton';
 import StyledLink from 'shared/components/StyledLink';
 
@@ -23,12 +23,11 @@ export default function SubjectHeader(props: SubjectHeaderProps) {
   };
 
   return (
-    <Box
-      sx={{
-        backgroundColor: background[50],
-      }}
-    >
-      <Container sx={{ flexDirection: 'row', alignItems: 'center' }}>
+    <>
+      <Centered
+        sx={{ flexShrink: 0, backgroundColor: background[50] }}
+        innerSx={{ flexDirection: 'row' }}
+      >
         <StyledLink to={`/subjects/${id}`} sx={{ textDecoration: 'none' }}>
           <Typography component="h2" variant="h2" sx={{ color: 'inherit' }}>
             {label}
@@ -38,8 +37,9 @@ export default function SubjectHeader(props: SubjectHeaderProps) {
         <TextButton sx={{ ml: 2 }} onClick={navigateBack}>
           {t('back')}
         </TextButton>
-      </Container>
+      </Centered>
+
       <Divider />
-    </Box>
+    </>
   );
 }

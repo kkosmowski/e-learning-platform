@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router';
 
-import Container from 'shared/components/Container';
+import Container, { Centered } from 'shared/components/Container';
 import NoticeCard from 'shared/components/NoticeCard';
 import { notices } from 'shared/consts/notice';
 
@@ -15,8 +15,8 @@ export default function Notice() {
   }
 
   return (
-    <Container sx={{ flex: 1 }}>
+    <Centered>
       <NoticeCard notice={currentNotice} />
-    </Container>
+    </Centered>
   );
 }

@@ -1,7 +1,7 @@
 import { Grid } from '@mui/material';
 import { useNavigate } from 'react-router';
 
-import Container from 'shared/components/Container';
+import { Centered } from 'shared/components/Container';
 import TaskCard from 'shared/components/TaskCard';
 import { tasks, homework } from 'shared/consts/task';
 import { TaskType } from 'shared/types/task';
@@ -16,7 +16,7 @@ export default function TaskList({ type }: { type: TaskType }) {
   };
 
   return (
-    <Container>
+    <Centered>
       <Grid container spacing={2}>
         {items.map((task) => (
           <Grid item key={task.id} xs={12} sm={6} lg={4} xl={3}>
@@ -28,6 +28,6 @@ export default function TaskList({ type }: { type: TaskType }) {
           </Grid>
         ))}
       </Grid>
-    </Container>
+    </Centered>
   );
 }

@@ -2,7 +2,7 @@ import { Grid, Typography } from '@mui/material';
 import { useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
 
-import Container from 'shared/components/Container';
+import { Centered } from 'shared/components/Container';
 import SectionTitle from 'shared/components/SectionTitle';
 import NoticeCard from 'shared/components/NoticeCard';
 import { notices } from 'shared/consts/notice';
@@ -16,7 +16,7 @@ export default function NoticeBoard() {
   };
 
   return (
-    <Container sx={{ display: 'flex', flexDirection: 'column' }}>
+    <Centered>
       <SectionTitle>{t('noticeBoard')}</SectionTitle>
 
       {notices.length ? (
@@ -34,6 +34,6 @@ export default function NoticeBoard() {
       ) : (
         <Typography color="text.secondary">{t('common:noNotices')}</Typography>
       )}
-    </Container>
+    </Centered>
   );
 }

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Box, Button, Tooltip } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-import Container from 'shared/components/Container';
+import { Centered } from 'shared/components/Container';
 import TaskCard from 'shared/components/TaskCard';
 import { tasks, homework } from 'shared/consts/task';
 import { TaskType } from 'shared/types/task';
@@ -33,7 +33,7 @@ export default function Task({ type }: { type: TaskType }) {
 
   // @todo when status is Submitted or Graded, fetch the answer and display it
   return (
-    <Container sx={{ flex: 1, gap: 2 }}>
+    <Centered innerSx={{ gap: 2 }}>
       <TaskCard task={currentTask} />
 
       {currentTask.status === Status.Todo && !isSubmitting && (
@@ -61,6 +61,6 @@ export default function Task({ type }: { type: TaskType }) {
           onSubmit={handleAnswerSubmit}
         />
       )}
-    </Container>
+    </Centered>
   );
 }

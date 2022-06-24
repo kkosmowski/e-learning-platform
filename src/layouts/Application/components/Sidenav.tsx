@@ -7,9 +7,12 @@ export default function Sidenav() {
     <Drawer
       anchor="left"
       variant="permanent"
-      sx={{ gridArea: 'sidenav' }}
+      sx={{ gridArea: 'sidenav', overflow: 'hidden' }}
       PaperProps={{
-        sx: { position: 'static' },
+        sx: {
+          position: 'static',
+          overflowX: 'hidden',
+        },
       }}
       open
     >

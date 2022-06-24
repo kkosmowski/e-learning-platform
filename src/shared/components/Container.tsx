@@ -9,6 +9,10 @@ interface ContainerProps extends SystemProps<Theme> {
   sx?: SxProps;
 }
 
+interface CenteredProps extends ContainerProps {
+  innerSx?: SxProps;
+}
+
 export default function Container(props: ContainerProps) {
   const { children, bg, p, sx, ...systemProps } = props;
 
@@ -26,5 +30,24 @@ export default function Container(props: ContainerProps) {
     >
       {children}
     </Box>
+  );
+}
+
+export function Centered(props: CenteredProps) {
+  const { children, innerSx, ...containerProps } = props;
+  const centeredSx = {
+    width: '100%',
+    maxWidth: 1000,
+    padding: 0,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    overflow: 'visible',
+    ...innerSx,
+  };
+
+  return (
+    <Container {...containerProps}>
+      <Container sx={centeredSx}>{children}</Container>
+    </Container>
   );
 }

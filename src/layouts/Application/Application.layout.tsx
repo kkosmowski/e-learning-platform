@@ -25,6 +25,7 @@ const Wrapper = styled(Box)(() => ({
   gridTemplateRows: `${consts.navbarHeight}px 1fr`,
   gridTemplateColumns: `${consts.menuWidth}px 1fr`,
   flex: 1,
+  overflow: 'hidden',
 }));
 
 const Main = styled(Box)(() => ({

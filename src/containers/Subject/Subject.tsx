@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router';
 
-import Container from 'shared/components/Container';
+import { Centered } from 'shared/components/Container';
 import { notices } from 'shared/consts/notice';
 import { homework, tasks } from 'shared/consts/task';
 import { TaskType } from 'shared/types/task';
@@ -31,7 +31,7 @@ export default function Subject() {
   };
 
   return (
-    <Container>
+    <Centered>
       <LatestNotices
         notices={notices}
         onNoticeClick={navigateToNotice}
@@ -53,6 +53,6 @@ export default function Subject() {
         onTaskClick={navigateToTask}
         onMoreClick={navigateToTasks}
       />
-    </Container>
+    </Centered>
   );
 }
