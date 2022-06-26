@@ -1,6 +1,6 @@
 import { Box, Card, CardContent, SxProps } from '@mui/material';
 
-import { Grade } from 'shared/types/subject';
+import { Grade } from 'shared/types/grade';
 import GradeRow from './GradeRow';
 
 interface GradeCardProps {

@@ -5,7 +5,7 @@ import NoticeBoard from 'containers/NoticeBoard';
 import Notice from 'containers/Notice';
 import TaskList from 'containers/TaskList';
 import Task from 'containers/Task';
-import Grades from 'containers/Grades';
+import SubjectGrades from 'containers/SubjectGrades';
 import { RouteObjectWithId } from 'shared/types/routing';
 import { TaskType } from 'shared/types/task';
 
@@ -75,7 +75,7 @@ export const features: RouteObjectWithId[] = [
             children: [
               {
                 path: '',
-                element: <Grades />,
+                element: <SubjectGrades />,
               },
             ],
           },

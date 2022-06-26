@@ -3,34 +3,24 @@ import { Box } from '@mui/material';
 
 import SectionTitle from 'shared/components/SectionTitle';
 import TextButton from 'shared/components/TextButton';
-import { Grade } from 'shared/types/subject';
-import GradeCard from './GradeCard';
+import GradeCard from 'shared/components/GradeCard';
+import { divideGrades } from 'shared/utils/grade.utils';
+import { Grade } from 'shared/types/grade';
+import { YOUR_GRADES_VISIBLE_COUNT } from 'shared/consts/grade';
 
 interface YourGradesProps {
   grades: Grade[];
   onMoreClick: () => void;
 }
 
-const divideGrades = (grades: Grade[]): [Grade[], Grade[]] => {
-  const assignmentGrades: Grade[] = [];
-  const nonAssignmentGrades: Grade[] = [];
-
-  for (const grade of grades) {
-    if (grade.source) {
-      assignmentGrades.push(grade);
-    } else {
-      nonAssignmentGrades.push(grade);
-    }
-  }
-
-  return [assignmentGrades, nonAssignmentGrades];
-};
-
 export default function YourGrades(props: YourGradesProps) {
   const { grades, onMoreClick } = props;
   const { t } = useTranslation('subject');
 
-  const [assignmentGrades, nonAssignmentGrades] = divideGrades(grades);
+  const { assignmentGrades, nonAssignmentGrades } = divideGrades(
+    grades,
+    YOUR_GRADES_VISIBLE_COUNT
+  );
 
   return (
     <>

@@ -12,7 +12,15 @@
     },
     "grades": {
       "activity": "Activity",
-      "behaviour": "Behaviour"
+      "average": "Average grade",
+      "behaviour": "Behaviour",
+      "proposed": "Proposed",
+      "final": "Final grade",
+      "tooltip": {
+        "average": "Automatically calculated, average grade of all assignment grades assessed. Teacher may adjust this grade depending on activity and behaviour grades.",
+        "proposed": "Manually selected by the teacher, proposed grade for this subject. It was selected based on the average assignment grade visible above as well as activity and behaviour grades.",
+        "final": "Manually selected by the teacher, final grade for this subject. This grade is definitive and cannot be modified."
+      }
     }
   },
   "task": {

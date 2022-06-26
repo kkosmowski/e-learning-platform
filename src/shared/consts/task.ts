@@ -40,6 +40,22 @@ We will be manipulating DOM in order to make the Tic-Tac-Toe game playable with 
     deadline: '2022-06-06T13:59:59.000Z',
     status: Status.Graded,
   },
+  {
+    id: 'y244',
+    type: TaskType.Task,
+    title: 'Simple JavaScript algorithm',
+    content: `Bla bla bla`,
+    deadline: '2022-05-23T16:59:59.000Z',
+    status: Status.Graded,
+  },
+  {
+    id: 'yh2y',
+    type: TaskType.Task,
+    title: 'Difficult task to do',
+    content: `Bla bla bla`,
+    deadline: '2022-05-16T21:59:59.000Z',
+    status: Status.Graded,
+  },
 ];
 
 export const homework: Task[] = [
@@ -73,6 +89,22 @@ Even though the title says "small" web application, this is still a bit of requi
 The app should be written in React, though if your justification will be good enough, you can use other solutions.
 Your deadline is 2 weeks, which is 28th of June, noon.`,
     deadline: '2022-06-28T11:59:59.000Z',
+    status: Status.Graded,
+  },
+  {
+    id: 'h244',
+    type: TaskType.Homework,
+    title: 'Some old homework',
+    content: `Bla bla bla.`,
+    deadline: '2022-05-30T21:59:59.000Z',
+    status: Status.Graded,
+  },
+  {
+    id: 'rt32',
+    type: TaskType.Homework,
+    title: 'Difficult homework',
+    content: `Bla bla bla.`,
+    deadline: '2022-05-23T21:59:59.000Z',
     status: Status.Graded,
   },
 ];

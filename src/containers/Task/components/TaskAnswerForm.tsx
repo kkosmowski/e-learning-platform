@@ -42,13 +42,11 @@ export default function TaskAnswerForm(props: TaskAnswerFormProps) {
       file: yup
         .mixed()
         .nullable()
-        .test('fileSize', 'error:fileTooBig', (file) => {
-          console.log(file);
-          if (!file) return true; // file is optional
-          console.log(file.size);
-          console.log(file.size <= TASK_MAX_FILE_SIZE);
-          return file.size <= TASK_MAX_FILE_SIZE;
-        })
+        .test(
+          'fileSize',
+          'error:fileTooBig',
+          (file) => !file || file.size <= TASK_MAX_FILE_SIZE
+        )
         .nullable(),
     }),
     onSubmit,

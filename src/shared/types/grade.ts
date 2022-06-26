@@ -6,11 +6,14 @@ export interface Grade {
   source?: Task | Test;
   type: GradeType;
   value: number;
-  createdAt: string;
+  createdAt?: string;
 }
 
 export enum GradeType {
   Assignment = 'assignment',
   Activity = 'activity',
+  Average = 'average',
   Behaviour = 'behaviour',
+  Proposed = 'proposed',
+  Final = 'final',
 }
