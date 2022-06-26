@@ -7,8 +7,8 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router';
 
+import { Centered } from 'shared/components/Container';
 import { subjects } from 'shared/consts/subject';
-import Container from 'shared/components/Container';
 
 export default function Subjects() {
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ export default function Subjects() {
   };
 
   return (
-    <Container>
+    <Centered>
       <Grid container spacing={2}>
         {subjects.map((subject) => (
           <Grid item key={subject.id} xs={12} md={6} lg={4} xl={3}>
@@ -32,6 +32,6 @@ export default function Subjects() {
           </Grid>
         ))}
       </Grid>
-    </Container>
+    </Centered>
   );
 }

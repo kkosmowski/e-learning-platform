@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router';
 import { Centered } from 'shared/components/Container';
 import { notices } from 'shared/consts/notice';
 import { homework, tasks } from 'shared/consts/task';
+import { grades } from 'shared/consts/subject';
 import { TaskType } from 'shared/types/task';
 import YourGrades from './components/YourGrades';
 import LatestNotices from './components/LatestNotices';
@@ -30,6 +31,10 @@ export default function Subject() {
     navigate(`${getTaskRoute(type)}/${taskId}`);
   };
 
+  const navigateToGrades = (): void => {
+    navigate('grades');
+  };
+
   return (
     <Centered>
       <LatestNotices
@@ -38,7 +43,7 @@ export default function Subject() {
         onMoreClick={navigateToNotices}
       />
 
-      <YourGrades />
+      <YourGrades grades={grades} onMoreClick={navigateToGrades} />
 
       <LatestTasks
         type={TaskType.Task}

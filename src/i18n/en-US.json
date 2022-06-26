@@ -9,6 +9,10 @@
       "yourGrades": "Your grades",
       "latestTasks": "Latest tasks",
       "latestHomework": "Latest homework"
+    },
+    "grades": {
+      "activity": "Activity",
+      "behaviour": "Behaviour"
     }
   },
   "task": {

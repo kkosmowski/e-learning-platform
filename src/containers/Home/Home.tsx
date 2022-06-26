@@ -1,5 +1,5 @@
-import Container from 'shared/components/Container';
+import { Centered } from 'shared/components/Container';
 
 export default function Home() {
-  return <Container>Siemanko w HOME</Container>;
+  return <Centered>Siemanko w HOME</Centered>;
 }
