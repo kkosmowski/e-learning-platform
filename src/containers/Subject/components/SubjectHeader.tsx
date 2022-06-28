@@ -1,4 +1,4 @@
-import { Box, Divider, Typography } from '@mui/material';
+import { Divider, Typography } from '@mui/material';
 import { useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
 

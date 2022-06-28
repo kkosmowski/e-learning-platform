@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router';
 
-import Container, { Centered } from 'shared/components/Container';
+import { Centered } from 'shared/components/Container';
 import NoticeCard from 'shared/components/NoticeCard';
 import { notices } from 'shared/consts/notice';
 
