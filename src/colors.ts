@@ -94,12 +94,12 @@ export const text = {
   100: '#0f0f0f',
   200: '#161616',
   300: '#1f1f1f',
-  400: '#242424',
-  500: '#2b2b2b',
-  600: '#323232',
-  700: '#393939',
-  800: '#484848',
-  900: '#5a5a5a',
+  400: '#323232',
+  500: '#424242',
+  600: '#585858',
+  700: '#686868',
+  800: '#747474',
+  900: '#848484',
   1000: '#fff',
 };
 
@@ -129,8 +129,8 @@ const colors = {
     contrastText: text[1000],
   },
   text: {
-    primary: primary[500],
-    secondary: secondary[500],
+    primary: text[300],
+    secondary: text[800],
     disabled: text[900],
   },
   warning: {

@@ -1,6 +1,7 @@
 import { RouteObject } from 'react-router';
 
 import ApplicationLayout from 'layouts/Application';
+import NotFound from './containers/NotFound';
 import { features } from 'shared/consts/routing';
 
 const routes: RouteObject[] = [
@@ -15,13 +16,11 @@ const routes: RouteObject[] = [
       ...features,
       {
         path: '404',
-        // element: <NotFound />
-        element: <>Not found</>,
+        element: <NotFound />,
       },
       {
         path: '*',
-        // element: <NotFound />
-        element: <>Not found</>,
+        element: <NotFound />,
       },
     ],
   },
@@ -41,13 +40,11 @@ const routes: RouteObject[] = [
   // }
   {
     path: '*',
-    // element: <NotFound />
-    element: <>Not found</>,
+    element: <NotFound />,
   },
   {
     path: '*/*',
-    // element: <NotFound />
-    element: <>Not found</>,
+    element: <NotFound />,
   },
 ];
 

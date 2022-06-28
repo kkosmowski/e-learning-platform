@@ -1,10 +1,64 @@
 {
-  "test": {
-    "key": "translations by t() function work!"
+  "nav": {
+    "home": "Home",
+    "subjects": "Subjects"
   },
-  "another": {
-    "test": {
-      "key": "Trans component works as well!"
+  "subject": {
+    "general": {
+      "latestNotices": "Latest notices",
+      "yourGrades": "Your grades",
+      "latestTasks": "Latest tasks",
+      "latestHomework": "Latest homework"
+    },
+    "grades": {
+      "activity": "Activity",
+      "average": "Average grade",
+      "behaviour": "Behaviour",
+      "proposed": "Proposed",
+      "final": "Final grade",
+      "tooltip": {
+        "average": "Automatically calculated, average grade of all assignment grades assessed. Teacher may adjust this grade depending on activity and behaviour grades.",
+        "proposed": "Manually selected by the teacher, proposed grade for this subject. It was selected based on the average assignment grade visible above as well as activity and behaviour grades.",
+        "final": "Manually selected by the teacher, final grade for this subject. This grade is definitive and cannot be modified."
+      }
     }
+  },
+  "task": {
+    "statuses": {
+      "TODO": "To be submitted",
+      "SUBMITTED": "Submitted",
+      "GRADED": "Graded"
+    },
+    "submitSolution": "Submit a solution",
+    "taskMessagePlaceholder": "Type your answer or leave additional comment...",
+    "pastDeadline": "past deadline",
+    "daysLeft": "days left",
+    "hoursLeft": "hours left",
+    "minutesLeft": "minutes left",
+    "tooltip": {
+      "cannotSubmitPastDeadline": "Deadline has passed, you can no longer submit a solution."
+    }
+  },
+  "notice": {
+    "noticeBoard": "Notice board"
+  },
+  "common": {
+    "back": "Back",
+    "viewMore": "View more",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "noNotices": "There are no notices yet.",
+    "noTasks": "There are no tasks yet.",
+    "noHomework": "There is no homework yet.",
+    "task": "Task",
+    "homework": "Homework",
+    "test": "Test"
+  },
+  "404": {
+    "title": "404",
+    "goHome": "Take me home"
+  },
+  "error": {
+    "fileTooBig": "The file is too large. Max size allowed is {{ maxSize }}"
   }
 }

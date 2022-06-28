@@ -1,9 +1,9 @@
 import { createTheme, ThemeOptions } from '@mui/material';
-import colors from './colors';
+import colors, { text } from 'colors';
 
 export const consts = {
   navbarHeight: 64,
-  menuWidth: 200,
+  menuWidth: 300,
   containerPadding: 16,
 };
 
@@ -19,12 +19,30 @@ const baseThemeOptions: ThemeOptions = {
         contained: {
           boxShadow: 'none',
         },
+        sizeSmall: {
+          minWidth: 0,
+          paddingTop: 0,
+          paddingBottom: 0,
+          paddingLeft: 6,
+          paddingRIght: 6,
+        },
       },
     },
     MuiCard: {
       styleOverrides: {
         root: {
           borderRadius: 0,
+          display: 'flex',
+          flexDirection: 'column',
+        },
+      },
+    },
+    MuiCardActionArea: {
+      styleOverrides: {
+        root: {
+          flex: 1,
+          display: 'flex',
+          alignItems: 'flex-start',
         },
       },
     },
@@ -55,10 +73,18 @@ const baseThemeOptions: ThemeOptions = {
     h1: {
       fontSize: 18,
       fontWeight: 400,
+      color: text[1000],
     },
     h2: {
+      fontSize: 22,
+      fontWeight: 700,
+    },
+    h3: {
       fontSize: 18,
       fontWeight: 400,
+    },
+    allVariants: {
+      color: colors.text.primary,
     },
   },
   palette: {

@@ -1,15 +1,63 @@
-import { useNavigate, useParams } from 'react-router';
-import { subjects } from 'shared/consts/subject';
+import { useNavigate } from 'react-router';
+
+import { Centered } from 'shared/components/Container';
+import { notices } from 'shared/consts/notice';
+import { homework, tasks } from 'shared/consts/task';
+import { grades } from 'shared/consts/grade';
+import { TaskType } from 'shared/types/task';
+import YourGrades from './components/YourGrades';
+import LatestNotices from './components/LatestNotices';
+import LatestTasks from './components/LatestTasks';
+
+const getTaskRoute = (type: TaskType): string =>
+  type === TaskType.Task ? 'tasks' : 'homework';
 
 export default function Subject() {
-  const { subjectId } = useParams<{ subjectId: string }>();
   const navigate = useNavigate();
-  const currentSubject = subjects.find((subject) => subject.id === subjectId);
 
-  if (!currentSubject) {
-    navigate('/404');
-    return null;
-  }
+  const navigateToNotices = (): void => {
+    navigate('notices');
+  };
 
-  return <>{currentSubject.label}</>;
+  const navigateToNotice = (noticeId: string): void => {
+    navigate(`notices/${noticeId}`);
+  };
+
+  const navigateToTasks = (type: TaskType): void => {
+    navigate(getTaskRoute(type));
+  };
+
+  const navigateToTask = (type: TaskType, taskId: string): void => {
+    navigate(`${getTaskRoute(type)}/${taskId}`);
+  };
+
+  const navigateToGrades = (): void => {
+    navigate('grades');
+  };
+
+  return (
+    <Centered>
+      <LatestNotices
+        notices={notices}
+        onNoticeClick={navigateToNotice}
+        onMoreClick={navigateToNotices}
+      />
+
+      <YourGrades grades={grades} onMoreClick={navigateToGrades} />
+
+      <LatestTasks
+        type={TaskType.Task}
+        tasks={tasks}
+        onTaskClick={navigateToTask}
+        onMoreClick={navigateToTasks}
+      />
+
+      <LatestTasks
+        type={TaskType.Homework}
+        tasks={homework}
+        onTaskClick={navigateToTask}
+        onMoreClick={navigateToTasks}
+      />
+    </Centered>
+  );
 }

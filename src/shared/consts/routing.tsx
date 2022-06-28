@@ -1,17 +1,23 @@
 import Home from 'containers/Home';
 import Subjects from 'containers/Subjects';
-import Subject from 'containers/Subject';
-import { RouteObjectWithLabel } from 'shared/types/routing';
+import Subject, { SubjectLayout } from 'containers/Subject';
+import NoticeBoard from 'containers/NoticeBoard';
+import Notice from 'containers/Notice';
+import TaskList from 'containers/TaskList';
+import Task from 'containers/Task';
+import SubjectGrades from 'containers/SubjectGrades';
+import { RouteObjectWithId } from 'shared/types/routing';
+import { TaskType } from 'shared/types/task';
 
-export const features: RouteObjectWithLabel[] = [
+export const features: RouteObjectWithId[] = [
   {
     path: '/',
+    id: 'home',
     element: <Home />,
-    label: 'Home',
   },
   {
     path: 'subjects',
-    label: 'Subjects',
+    id: 'subjects',
     children: [
       {
         path: '',
@@ -19,7 +25,61 @@ export const features: RouteObjectWithLabel[] = [
       },
       {
         path: ':subjectId',
-        element: <Subject />,
+        element: <SubjectLayout />,
+        children: [
+          {
+            path: '',
+            element: <Subject />,
+          },
+          {
+            path: 'notices',
+            children: [
+              {
+                path: '',
+                element: <NoticeBoard />,
+              },
+              {
+                path: ':noticeId',
+                element: <Notice />,
+              },
+            ],
+          },
+          {
+            path: 'tasks',
+            children: [
+              {
+                path: '',
+                element: <TaskList type={TaskType.Task} />,
+              },
+              {
+                path: ':taskId',
+                element: <Task type={TaskType.Task} />,
+              },
+            ],
+          },
+          {
+            path: 'homework',
+            children: [
+              {
+                path: '',
+                element: <TaskList type={TaskType.Homework} />,
+              },
+              {
+                path: ':taskId',
+                element: <Task type={TaskType.Homework} />,
+              },
+            ],
+          },
+          {
+            path: 'grades',
+            children: [
+              {
+                path: '',
+                element: <SubjectGrades />,
+              },
+            ],
+          },
+        ],
       },
     ],
   },

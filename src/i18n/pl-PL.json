@@ -1,0 +1,43 @@
+{
+  "nav": {
+    "home": "Strona główna",
+    "subjects": "Przedmioty"
+  },
+  "subject": {
+    "general": {
+      "latestNotices": "Ostatnie ogłoszenia",
+      "latestTasks": "Ostatnie zadania",
+      "latestHomework": "Ostatnie zadania domowe"
+    }
+  },
+  "task": {
+    "task": "Zadanie",
+    "homework": "Zadanie domowe",
+    "statuses": {
+      "TODO": "Do wysłania",
+      "SUBMITTED": "Wysłane",
+      "GRADED": "Ocenione"
+    },
+    "submitSolution": "Prześlij rozwiązanie",
+    "taskMessagePlaceholder": "Napisz odpowiedź bądź opcjonalny komentarz..."
+  },
+  "notice": {
+    "noticeBoard": "Tablica ogłoszeń"
+  },
+  "common": {
+    "back": "Wróć",
+    "viewMore": "Więcej",
+    "submit": "Wyślij",
+    "cancel": "Anuluj",
+    "noNotices": "Brak ogłoszeń.",
+    "noTasks": "Brak zadań.",
+    "noHomework": "Brak zadań domowych."
+  },
+  "404": {
+    "title": "404",
+    "goHome": "Powrót do strony głównej"
+  },
+  "error": {
+    "fileTooBig": "Zbyt duży plik. Maksymalny dopuszczalny rozmiar to {{ maxSize }}"
+  }
+}
