@@ -52,7 +52,9 @@
     "noHomework": "There is no homework yet.",
     "task": "Task",
     "homework": "Homework",
-    "test": "Test"
+    "test": "Test",
+    "writtenBy": "Written by <1>{{ author }}</1>",
+    "publishedOn": "Published on <1>{{ date }}</1>"
   },
   "404": {
     "title": "404",

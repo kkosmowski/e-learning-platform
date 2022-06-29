@@ -6,7 +6,7 @@ export interface Grade extends BaseItem {
   source?: Task | Test;
   type: GradeType;
   value: number;
-  createdAt: string; // ISOString // @todo remove after BaseItem createdAt is implemented
+  createdOn: string; // ISOString // @todo remove after BaseItem createdOn is implemented
 }
 
 export enum GradeType {

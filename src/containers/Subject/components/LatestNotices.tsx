@@ -41,7 +41,7 @@ export default function LatestNotices(props: LatestNoticesProps) {
               <NoticeCard
                 key={notice.id}
                 notice={notice}
-                {...(index ? { longerPreview: true } : { preview: true })}
+                {...(index ? { preview: true } : { longerPreview: true })}
                 onClick={() => onNoticeClick(notice.id)}
               />
             ))

@@ -16,10 +16,12 @@ export const notices: Notice[] = [
     id: 'm39f',
     title: 'Looking for Journalistic Circle members!',
     content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus non justo ornare, fringilla lorem non, elementum sapien. Nulla vitae tellus velit. Morbi tempus lectus est, ut laoreet urna sodales at. Fusce et molestie felis. Suspendisse potenti. Pellentesque tellus enim, varius ac ultricies in, tincidunt eu erat. Donec vitae nisl ac mi semper ornare vitae nec elit. Proin sed convallis libero. Curabitur tincidunt mollis blandit.',
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. ' +
+      '\n' +
+      'Vivamus non justo ornare, fringilla lorem non, elementum sapien. Nulla vitae tellus velit. Morbi tempus lectus est, ut laoreet urna sodales at. Fusce et molestie felis. Suspendisse potenti. Pellentesque tellus enim, varius ac ultricies in, tincidunt eu erat. Donec vitae nisl ac mi semper ornare vitae nec elit. Proin sed convallis libero. Curabitur tincidunt mollis blandit.',
     author: TEACHER,
     published: true,
-    publishTime: '2022-06-28T09:12:59.000Z`',
+    publishTime: '2022-06-28T09:12:59.000Z',
   },
   {
     id: 'k342',
