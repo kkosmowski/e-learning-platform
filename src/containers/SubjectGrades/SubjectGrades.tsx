@@ -17,6 +17,7 @@ export default function SubjectGrades() {
       2
     ),
     type: GradeType.Average,
+    createdAt: new Date().toISOString(),
   };
   const proposedSubjectGrade: Grade = {
     id: 'proposed-grade',
@@ -28,6 +29,7 @@ export default function SubjectGrades() {
     id: 'final-grade',
     value: 0,
     type: GradeType.Final,
+    createdAt: new Date().toISOString(),
   };
 
   return (

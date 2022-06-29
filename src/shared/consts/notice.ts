@@ -1,4 +1,5 @@
 import { Notice } from 'shared/types/notice';
+import { TEACHER } from './user';
 
 export const BOARD_NOTICE_CONTENT_LENGTH = 500;
 export const PREVIEW_NOTICE_CONTENT_LENGTH = 240;
@@ -16,18 +17,27 @@ export const notices: Notice[] = [
     title: 'Looking for Journalistic Circle members!',
     content:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus non justo ornare, fringilla lorem non, elementum sapien. Nulla vitae tellus velit. Morbi tempus lectus est, ut laoreet urna sodales at. Fusce et molestie felis. Suspendisse potenti. Pellentesque tellus enim, varius ac ultricies in, tincidunt eu erat. Donec vitae nisl ac mi semper ornare vitae nec elit. Proin sed convallis libero. Curabitur tincidunt mollis blandit.',
+    author: TEACHER,
+    published: true,
+    publishTime: '2022-06-28T09:12:59.000Z`',
   },
   {
     id: 'k342',
     title: 'Extra biology classes are opened!',
     content:
       'Pellentesque sagittis sapien felis, ac varius massa gravida a. Pellentesque maximus tristique convallis. Cras convallis, diam quis varius feugiat, ex turpis porttitor elit, id hendrerit libero nibh non massa. Quisque quis lacinia est, et lacinia quam. Suspendisse id nulla non justo luctus semper. Praesent et feugiat purus, sit amet eleifend metus. Etiam eu congue nulla. Nunc at nulla enim. Curabitur at massa nec ante tempor pretium ut et nulla.',
+    author: TEACHER,
+    published: true,
+    publishTime: '2022-06-24T11:42:59.000Z',
   },
   {
     id: 'hm55',
     title: 'PE is going outdoors for the next two months',
     content:
       'Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Quisque sit amet ornare lacus. Quisque id pulvinar justo. Sed dictum non eros et varius. Curabitur vitae ligula massa. Fusce tellus tortor, congue a molestie in, varius sit amet arcu. Cras auctor magna tortor, vel commodo purus hendrerit eget. Nam tempor accumsan mi. Pellentesque quis bibendum eros. Praesent dapibus auctor odio vitae tristique. Fusce id suscipit est, id pharetra quam. Aliquam mollis vitae quam vel faucibus. Curabitur commodo erat ut volutpat aliquam. Donec lobortis tortor sed justo semper laoreet. Curabitur semper nisi rhoncus iaculis viverra.',
+    author: TEACHER,
+    published: true,
+    publishTime: '2022-06-20T13:52:59.000Z',
   },
   {
     id: '2n1t',
@@ -86,11 +96,17 @@ export const notices: Notice[] = [
       'Donec vitae quam lectus. Integer interdum augue semper, sollicitudin dui ac, dapibus neque. Pellentesque vitae tortor sit amet velit maximus fringilla. Sed congue ante a neque elementum aliquam. Quisque facilisis leo ac ipsum convallis faucibus. Praesent dui tortor, ullamcorper eu urna et, aliquet elementum urna. Aenean ullamcorper fermentum metus, ac blandit dui. Sed sit amet dignissim urna. In augue ipsum, maximus vel ante in, ultrices aliquet felis. Curabitur porta in lectus auctor finibus.\n' +
       '\n' +
       'Sed ac mauris et enim mollis mollis. Etiam eget mauris in enim hendrerit interdum. Vestibulum nec auctor dui, id lobortis lacus. Aenean egestas ipsum leo. Quisque sit amet lacus pharetra, rutrum sapien quis, consectetur orci. Maecenas a blandit lacus, vitae porttitor metus. Nam non consectetur nulla. In quis elit malesuada, ornare quam ac, molestie ante. Vestibulum in enim vestibulum, vulputate lorem et, dictum massa.',
+    author: TEACHER,
+    published: true,
+    publishTime: '2022-06-11T08:03:59.000Z',
   },
   {
     id: '123t',
     title: 'New teacher joins starting November',
     content:
       'Etiam a arcu ut risus rutrum blandit. Maecenas consequat maximus mauris vitae consectetur. Morbi finibus nunc sapien, et vulputate sapien finibus id. Morbi in est at eros tempus scelerisque. Donec dictum mattis nulla, et dignissim magna semper et. Etiam vel neque diam. Nam tincidunt efficitur lorem, et luctus felis fermentum eu. Aliquam tempor tellus ac dui ornare, at dictum ligula feugiat. Quisque ipsum dolor, ornare id condimentum sed, posuere ac quam. Cras sodales consequat turpis, a lobortis odio hendrerit at. Aenean laoreet sollicitudin erat, eu fermentum nunc tempus et. Nunc tempus metus eget mi fermentum bibendum. Vivamus aliquet tincidunt arcu ut auctor. Morbi convallis bibendum magna, nec vestibulum lorem aliquam sit amet. Ut consectetur neque eu metus varius porta.',
+    author: TEACHER,
+    published: true,
+    publishTime: '2022-06-05T12:25:59.000Z',
   },
 ];
