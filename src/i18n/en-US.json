@@ -54,7 +54,8 @@
     "homework": "Homework",
     "test": "Test",
     "writtenBy": "Written by <1>{{ author }}</1>",
-    "publishedOn": "Published on <1>{{ date }}</1>"
+    "publishedOn": "Published on <1>{{ date }}</1>",
+    "welcome": "Welcome"
   },
   "404": {
     "title": "404",
