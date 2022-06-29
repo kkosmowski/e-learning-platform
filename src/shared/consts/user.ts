@@ -19,3 +19,5 @@ export const STUDENT: Student = {
   role: Role.Student,
   // subjectInstanceIds: [],
 };
+
+export const CURRENT_USER = TEACHER;

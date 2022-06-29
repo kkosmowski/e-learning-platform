@@ -81,7 +81,6 @@ const baseThemeOptions: ThemeOptions = {
     h1: {
       fontSize: 18,
       fontWeight: 400,
-      color: text[1000],
     },
     h2: {
       fontSize: 22,
@@ -91,8 +90,11 @@ const baseThemeOptions: ThemeOptions = {
       fontSize: 18,
       fontWeight: 400,
     },
-    allVariants: {
+    body1: {
       color: colors.text.primary,
+    },
+    body2: {
+      color: text[1000],
     },
   },
   palette: {
