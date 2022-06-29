@@ -16,7 +16,7 @@ const gradeTooltips = [GradeType.Average, GradeType.Proposed, GradeType.Final];
 
 export default function GradeRow(props: GradeRowProps) {
   const {
-    grade: { value, source, type, createdAt },
+    grade: { value, source, type, createdOn },
     showDivider,
     hideDate = false,
   } = props;
@@ -40,12 +40,12 @@ export default function GradeRow(props: GradeRowProps) {
             </Tooltip>
           )}
 
-          {!hideDate && createdAt && (
+          {!hideDate && createdOn && (
             <Typography
               component="span"
               sx={{ ml: 2, color: 'text.secondary', fontSize: 13 }}
             >
-              {format(new Date(createdAt), 'dd-MM-yyyy')}
+              {format(new Date(createdOn), 'dd-MM-yyyy')}
             </Typography>
           )}
         </Typography>

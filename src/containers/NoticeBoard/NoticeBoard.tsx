@@ -22,7 +22,7 @@ export default function NoticeBoard() {
       {notices.length ? (
         <Grid container spacing={2}>
           {notices.map((notice) => (
-            <Grid item key={notice.id} sm={12} md={6} lg={4}>
+            <Grid item key={notice.id} sm={12} lg={6}>
               <NoticeCard
                 notice={notice}
                 boardPreview
