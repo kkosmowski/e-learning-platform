@@ -1,11 +1,9 @@
-import { Status } from './shared';
+import { PublishableItem, Status } from './shared';
 
-export interface Task {
-  id: string;
+export interface Task extends PublishableItem {
+  mandatory: boolean;
+  deadline: string; // ISOString
   type: TaskType;
-  title: string;
-  content: string;
-  deadline: string;
   status: Status;
 }
 

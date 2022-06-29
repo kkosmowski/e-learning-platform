@@ -15,6 +15,9 @@ It would be great if the page contained various content.
 Mobile view is not necessary.`,
     deadline: '2022-06-20T13:59:59.000Z',
     status: Status.Todo,
+    mandatory: true,
+    published: true,
+    publishTime: '2022-06-19T16:44:24.000Z',
   },
   {
     id: 'y4ge',
@@ -25,8 +28,11 @@ Mobile view is not necessary.`,
 Make sure to not use too many colors, 3 should be a maximum, of course the usage of gray shades is unlimited.
 
 Try to make a simple, flat logo.`,
-    deadline: '2022-06-13T13:59:59.000Z',
+    deadline: '2022-06-13T19:59:59.000Z',
     status: Status.Submitted,
+    mandatory: true,
+    published: true,
+    publishTime: '2022-06-03T08:32:24.000Z',
   },
   {
     id: '24sd',
@@ -37,8 +43,11 @@ Try to make a simple, flat logo.`,
 JS games can be made a lot of ways, but today we will make a game that uses DOM as its fundamentals.
 
 We will be manipulating DOM in order to make the Tic-Tac-Toe game playable with just ten buttons.`,
-    deadline: '2022-06-06T13:59:59.000Z',
+    deadline: '2022-06-06T15:59:59.000Z',
     status: Status.Graded,
+    mandatory: true,
+    published: true,
+    publishTime: '2022-06-06T14:00:24.000Z',
   },
   {
     id: 'y244',
@@ -47,6 +56,9 @@ We will be manipulating DOM in order to make the Tic-Tac-Toe game playable with 
     content: `Bla bla bla`,
     deadline: '2022-05-23T16:59:59.000Z',
     status: Status.Graded,
+    mandatory: true,
+    published: true,
+    publishTime: '2022-05-23T10:44:24.000Z',
   },
   {
     id: 'yh2y',
@@ -55,6 +67,9 @@ We will be manipulating DOM in order to make the Tic-Tac-Toe game playable with 
     content: `Bla bla bla`,
     deadline: '2022-05-16T21:59:59.000Z',
     status: Status.Graded,
+    mandatory: true,
+    published: true,
+    publishTime: '2022-05-16T15:54:24.000Z',
   },
 ];
 
@@ -70,6 +85,9 @@ Make sure to add few sentences about stuff such as actors performance, music, so
 Deadline is Sunday!`,
     deadline: '2022-06-26T22:59:59.000Z',
     status: Status.Todo,
+    mandatory: false,
+    published: true,
+    publishTime: '2022-06-22T20:14:52.000Z',
   },
   {
     id: 'r12g',
@@ -78,6 +96,9 @@ Deadline is Sunday!`,
     content: `Bla bla bla.`,
     deadline: '2022-06-21T13:59:59.000Z',
     status: Status.Submitted,
+    mandatory: true,
+    published: true,
+    publishTime: '2022-06-15T07:44:52.000Z',
   },
   {
     id: '34tt',
@@ -90,6 +111,9 @@ The app should be written in React, though if your justification will be good en
 Your deadline is 2 weeks, which is 28th of June, noon.`,
     deadline: '2022-06-28T11:59:59.000Z',
     status: Status.Graded,
+    mandatory: true,
+    published: true,
+    publishTime: '2022-06-14T13:45:52.000Z',
   },
   {
     id: 'h244',
@@ -98,6 +122,9 @@ Your deadline is 2 weeks, which is 28th of June, noon.`,
     content: `Bla bla bla.`,
     deadline: '2022-05-30T21:59:59.000Z',
     status: Status.Graded,
+    mandatory: true,
+    published: true,
+    publishTime: '2022-05-23T18:23:52.000Z',
   },
   {
     id: 'rt32',
@@ -106,6 +133,9 @@ Your deadline is 2 weeks, which is 28th of June, noon.`,
     content: `Bla bla bla.`,
     deadline: '2022-05-23T21:59:59.000Z',
     status: Status.Graded,
+    mandatory: true,
+    published: true,
+    publishTime: '2022-05-13T11:37:52.000Z',
   },
 ];
 
