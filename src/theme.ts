@@ -67,6 +67,14 @@ const baseThemeOptions: ThemeOptions = {
         root: {},
       },
     },
+    MuiTooltip: {
+      styleOverrides: {
+        tooltip: {
+          // backgroundColor: 'rgb(86 98 164 / 84%)',
+          lineHeight: 1.44,
+        },
+      },
+    },
   },
   typography: {
     fontFamily: 'Lato, sans-serif',
