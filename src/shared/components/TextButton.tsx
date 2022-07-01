@@ -14,6 +14,11 @@ export default function TextButton(props: TextButtonProps) {
         ':hover': {
           backgroundColor: 'transparent',
         },
+        '.MuiTouchRipple-root': {
+          left: -8,
+          right: 8,
+          width: 'calc(100% + 16px)',
+        },
         ...(!uppercase && { textTransform: 'none' }),
         ...sx,
       }}

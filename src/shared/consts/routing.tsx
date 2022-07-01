@@ -6,8 +6,12 @@ import Notice from 'containers/Notice';
 import TaskList from 'containers/TaskList';
 import Task from 'containers/Task';
 import SubjectGrades from 'containers/SubjectGrades';
+import CreateNewNotice from 'containers/teacher/CreateNewNotice';
+import TeacherGuard from 'shared/components/TeacherGuard';
 import { RouteObjectWithId } from 'shared/types/routing';
 import { TaskType } from 'shared/types/task';
+import AssignNewGrade from 'containers/teacher/AssignNewGrade';
+import CreateNewTask from 'containers/teacher/CreateNewTask';
 
 export const features: RouteObjectWithId[] = [
   {
@@ -39,6 +43,14 @@ export const features: RouteObjectWithId[] = [
                 element: <NoticeBoard />,
               },
               {
+                path: 'new',
+                element: (
+                  <TeacherGuard redirectTo="..">
+                    <CreateNewNotice />
+                  </TeacherGuard>
+                ),
+              },
+              {
                 path: ':noticeId',
                 element: <Notice />,
               },
@@ -50,6 +62,14 @@ export const features: RouteObjectWithId[] = [
               {
                 path: '',
                 element: <TaskList type={TaskType.Task} />,
+              },
+              {
+                path: 'new',
+                element: (
+                  <TeacherGuard redirectTo="..">
+                    <CreateNewTask type={TaskType.Task} />
+                  </TeacherGuard>
+                ),
               },
               {
                 path: ':taskId',
@@ -65,6 +85,14 @@ export const features: RouteObjectWithId[] = [
                 element: <TaskList type={TaskType.Homework} />,
               },
               {
+                path: 'new',
+                element: (
+                  <TeacherGuard redirectTo="..">
+                    <CreateNewTask type={TaskType.Homework} />
+                  </TeacherGuard>
+                ),
+              },
+              {
                 path: ':taskId',
                 element: <Task type={TaskType.Homework} />,
               },
@@ -76,6 +104,14 @@ export const features: RouteObjectWithId[] = [
               {
                 path: '',
                 element: <SubjectGrades />,
+              },
+              {
+                path: 'new',
+                element: (
+                  <TeacherGuard redirectTo="..">
+                    <AssignNewGrade />
+                  </TeacherGuard>
+                ),
               },
             ],
           },

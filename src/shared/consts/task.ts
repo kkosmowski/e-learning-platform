@@ -141,3 +141,4 @@ Your deadline is 2 weeks, which is 28th of June, noon.`,
 
 export const TASK_MAX_MESSAGE_LENGTH = 500;
 export const TASK_MAX_FILE_SIZE = 5 * MEGABYTE;
+export const VISIBLE_LATEST_TASKS = 3;

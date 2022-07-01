@@ -23,6 +23,10 @@ export default function Subject() {
     navigate(`notices/${noticeId}`);
   };
 
+  const navigateToNoticeCreation = (): void => {
+    navigate(`notices/new`);
+  };
+
   const navigateToTasks = (type: TaskType): void => {
     navigate(getTaskRoute(type));
   };
@@ -31,8 +35,16 @@ export default function Subject() {
     navigate(`${getTaskRoute(type)}/${taskId}`);
   };
 
+  const navigateToTaskCreation = (type: TaskType): void => {
+    navigate(`${getTaskRoute(type)}/new`);
+  };
+
   const navigateToGrades = (): void => {
     navigate('grades');
+  };
+
+  const navigateToGradeAssignment = (): void => {
+    navigate('grades/new');
   };
 
   return (
@@ -41,15 +53,21 @@ export default function Subject() {
         notices={notices}
         onNoticeClick={navigateToNotice}
         onMoreClick={navigateToNotices}
+        onCreateNotice={navigateToNoticeCreation}
       />
 
-      <YourGrades grades={grades} onMoreClick={navigateToGrades} />
+      <YourGrades
+        grades={grades}
+        onMoreClick={navigateToGrades}
+        onAssignGrade={navigateToGradeAssignment}
+      />
 
       <LatestTasks
         type={TaskType.Task}
         tasks={tasks}
         onTaskClick={navigateToTask}
         onMoreClick={navigateToTasks}
+        onCreateTask={navigateToTaskCreation}
       />
 
       <LatestTasks
@@ -57,6 +75,7 @@ export default function Subject() {
         tasks={homework}
         onTaskClick={navigateToTask}
         onMoreClick={navigateToTasks}
+        onCreateTask={navigateToTaskCreation}
       />
     </Centered>
   );

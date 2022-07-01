@@ -20,4 +20,4 @@ export const STUDENT: Student = {
   // subjectInstanceIds: [],
 };
 
-export const CURRENT_USER = TEACHER;
+export const CURRENT_USER = STUDENT;

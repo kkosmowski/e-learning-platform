@@ -7,14 +7,17 @@ import GradeCard from 'shared/components/GradeCard';
 import { divideGrades } from 'shared/utils/grade.utils';
 import { Grade } from 'shared/types/grade';
 import { YOUR_GRADES_VISIBLE_COUNT } from 'shared/consts/grade';
+import { isTeacher } from 'shared/utils/user.utils';
+import { CURRENT_USER } from 'shared/consts/user';
 
 interface YourGradesProps {
   grades: Grade[];
   onMoreClick: () => void;
+  onAssignGrade: () => void;
 }
 
 export default function YourGrades(props: YourGradesProps) {
-  const { grades, onMoreClick } = props;
+  const { grades, onMoreClick, onAssignGrade } = props;
   const { t } = useTranslation('subject');
 
   const { assignmentGrades, nonAssignmentGrades } = divideGrades(
@@ -30,6 +33,12 @@ export default function YourGrades(props: YourGradesProps) {
         {!!grades.length && (
           <TextButton sx={{ ml: 2 }} onClick={onMoreClick}>
             {t('common:viewMore')}
+          </TextButton>
+        )}
+
+        {isTeacher(CURRENT_USER) && (
+          <TextButton sx={{ ml: 2 }} onClick={onAssignGrade}>
+            {t('createNew.grade')}
           </TextButton>
         )}
       </SectionTitle>
