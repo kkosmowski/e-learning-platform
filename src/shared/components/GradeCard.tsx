@@ -5,20 +5,24 @@ import GradeRow from './GradeRow';
 
 interface GradeCardProps {
   grades: Grade[];
+  showNames?: boolean;
+  keepEmptyColumns?: boolean; // maintains alignment of different grade types
   sx?: SxProps;
 }
 
 export default function GradeCard(props: GradeCardProps) {
-  const { grades, sx } = props;
+  const { grades, showNames, keepEmptyColumns, sx } = props;
 
   return (
     <Card sx={sx}>
-      <CardContent>
+      <CardContent sx={{ overflow: 'auto' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           {grades.map((grade, index) => (
             <GradeRow
               key={grade.id}
               grade={grade}
+              showNames={showNames}
+              keepEmptyColumns={keepEmptyColumns}
               showDivider={index !== grades.length - 1}
             />
           ))}

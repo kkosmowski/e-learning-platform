@@ -3,9 +3,11 @@ import { useNavigate } from 'react-router';
 import { Centered } from 'shared/components/Container';
 import { notices } from 'shared/consts/notice';
 import { homework, tasks } from 'shared/consts/task';
-import { grades } from 'shared/consts/grade';
+import { studentGrades, teacherGrades } from 'shared/consts/grade';
 import { TaskType } from 'shared/types/task';
-import YourGrades from './components/YourGrades';
+import { isTeacher } from 'shared/utils/user.utils';
+import { CURRENT_USER } from 'shared/consts/user';
+import LatestGrades from './components/LatestGrades';
 import LatestNotices from './components/LatestNotices';
 import LatestTasks from './components/LatestTasks';
 
@@ -56,8 +58,8 @@ export default function Subject() {
         onCreateNotice={navigateToNoticeCreation}
       />
 
-      <YourGrades
-        grades={grades}
+      <LatestGrades
+        grades={isTeacher(CURRENT_USER) ? teacherGrades : studentGrades}
         onMoreClick={navigateToGrades}
         onAssignGrade={navigateToGradeAssignment}
       />

@@ -20,4 +20,23 @@ export const STUDENT: Student = {
   // subjectInstanceIds: [],
 };
 
-export const CURRENT_USER = STUDENT;
+export const fakeStudents: [Student, Student] = [
+  {
+    id: '42g4',
+    firstName: 'Rose',
+    lastName: 'Davis',
+    fullName: 'Rose Davis',
+    role: Role.Student,
+    // subjectInstanceIds: [],
+  },
+  {
+    id: '2jg9',
+    firstName: 'Andrew',
+    lastName: 'Bernard',
+    fullName: 'Andrew Bernard',
+    role: Role.Student,
+    // subjectInstanceIds: [],
+  },
+];
+
+export const CURRENT_USER = TEACHER;
