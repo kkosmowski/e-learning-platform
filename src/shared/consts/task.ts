@@ -1,6 +1,7 @@
 import { Status } from 'shared/types/shared';
-import { Task, TaskType } from 'shared/types/task';
+import { Task, TaskSubmission, TaskType } from 'shared/types/task';
 import { MEGABYTE } from './file';
+import { fakeStudents, STUDENT } from './user';
 
 export const tasks: Task[] = [
   {
@@ -139,5 +140,75 @@ Your deadline is 2 weeks, which is 28th of June, noon.`,
   },
 ];
 
+export const taskSubmissions: TaskSubmission[] = [
+  {
+    id: '2ngo',
+    taskId: 'nv4i',
+    status: Status.Submitted,
+    studentId: fakeStudents[0].id,
+  },
+  {
+    id: 'gm24',
+    taskId: 'y4ge',
+    status: Status.Submitted,
+    studentId: STUDENT.id,
+  },
+  {
+    id: '1gnm',
+    taskId: '24sd',
+    status: Status.Graded,
+    studentId: STUDENT.id,
+  },
+  {
+    id: '2g4s',
+    taskId: '24sd',
+    status: Status.Graded,
+    studentId: fakeStudents[0].id,
+  },
+  {
+    id: '565h',
+    taskId: '24sd',
+    status: Status.Graded,
+    studentId: fakeStudents[1].id,
+  },
+  {
+    id: 'vn56',
+    taskId: 'y244',
+    status: Status.Graded,
+    studentId: STUDENT.id,
+  },
+  {
+    id: 'j54d',
+    taskId: 'y244',
+    status: Status.Graded,
+    studentId: fakeStudents[0].id,
+  },
+  {
+    id: '4hjw',
+    taskId: 'y244',
+    status: Status.Graded,
+    studentId: fakeStudents[1].id,
+  },
+  {
+    id: 'z0di',
+    taskId: 'yh2y',
+    status: Status.Graded,
+    studentId: STUDENT.id,
+  },
+  {
+    id: '34ew',
+    taskId: 'yh2y',
+    status: Status.Graded,
+    studentId: fakeStudents[0].id,
+  },
+  {
+    id: '65hj',
+    taskId: 'yh2y',
+    status: Status.Graded,
+    studentId: fakeStudents[1].id,
+  },
+];
+
 export const TASK_MAX_MESSAGE_LENGTH = 500;
 export const TASK_MAX_FILE_SIZE = 5 * MEGABYTE;
+export const VISIBLE_LATEST_TASKS = 3;

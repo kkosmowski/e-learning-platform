@@ -7,6 +7,8 @@ import {
   PREVIEW_CONTENT_RATIO,
   VISIBLE_LATEST_NOTICES,
 } from 'shared/consts/notice';
+import { CURRENT_USER } from 'shared/consts/user';
+import { isTeacher } from 'shared/utils/user.utils';
 import SectionTitle from 'shared/components/SectionTitle';
 import NoticeCard from 'shared/components/NoticeCard';
 import TextButton from 'shared/components/TextButton';
@@ -15,10 +17,11 @@ interface LatestNoticesProps {
   notices: Notice[];
   onNoticeClick: (noticeId: string) => void;
   onMoreClick: () => void;
+  onCreateNotice: () => void;
 }
 
 export default function LatestNotices(props: LatestNoticesProps) {
-  const { notices, onNoticeClick, onMoreClick } = props;
+  const { notices, onNoticeClick, onMoreClick, onCreateNotice } = props;
   const { t } = useTranslation('subject');
 
   return (
@@ -31,9 +34,22 @@ export default function LatestNotices(props: LatestNoticesProps) {
             {t('common:viewMore')}
           </TextButton>
         )}
+
+        {isTeacher(CURRENT_USER) && (
+          <TextButton sx={{ ml: 2 }} onClick={onCreateNotice}>
+            {t('createNew.notice')}
+          </TextButton>
+        )}
       </SectionTitle>
 
-      <NoticesBox>
+      <NoticesBox
+        sx={{
+          gridTemplateColumns: {
+            xs: '1fr',
+            lg: `${LONGER_PREVIEW_CONTENT_RATIO}fr repeat(2, ${PREVIEW_CONTENT_RATIO}fr)`,
+          },
+        }}
+      >
         {notices.length ? (
           notices
             .slice(0, VISIBLE_LATEST_NOTICES)
@@ -57,6 +73,5 @@ export default function LatestNotices(props: LatestNoticesProps) {
 
 const NoticesBox = styled(Box)(() => ({
   display: 'grid',
-  gridTemplateColumns: `${LONGER_PREVIEW_CONTENT_RATIO}fr repeat(2, ${PREVIEW_CONTENT_RATIO}fr)`,
   gap: 16,
 }));

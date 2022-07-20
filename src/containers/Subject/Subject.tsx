@@ -3,9 +3,11 @@ import { useNavigate } from 'react-router';
 import { Centered } from 'shared/components/Container';
 import { notices } from 'shared/consts/notice';
 import { homework, tasks } from 'shared/consts/task';
-import { grades } from 'shared/consts/grade';
+import { studentGrades, teacherGrades } from 'shared/consts/grade';
 import { TaskType } from 'shared/types/task';
-import YourGrades from './components/YourGrades';
+import { isTeacher } from 'shared/utils/user.utils';
+import { CURRENT_USER } from 'shared/consts/user';
+import LatestGrades from './components/LatestGrades';
 import LatestNotices from './components/LatestNotices';
 import LatestTasks from './components/LatestTasks';
 
@@ -23,6 +25,10 @@ export default function Subject() {
     navigate(`notices/${noticeId}`);
   };
 
+  const navigateToNoticeCreation = (): void => {
+    navigate(`notices/new`);
+  };
+
   const navigateToTasks = (type: TaskType): void => {
     navigate(getTaskRoute(type));
   };
@@ -31,8 +37,16 @@ export default function Subject() {
     navigate(`${getTaskRoute(type)}/${taskId}`);
   };
 
+  const navigateToTaskCreation = (type: TaskType): void => {
+    navigate(`${getTaskRoute(type)}/new`);
+  };
+
   const navigateToGrades = (): void => {
     navigate('grades');
+  };
+
+  const navigateToGradeAssignment = (): void => {
+    navigate('grades/new');
   };
 
   return (
@@ -41,15 +55,21 @@ export default function Subject() {
         notices={notices}
         onNoticeClick={navigateToNotice}
         onMoreClick={navigateToNotices}
+        onCreateNotice={navigateToNoticeCreation}
       />
 
-      <YourGrades grades={grades} onMoreClick={navigateToGrades} />
+      <LatestGrades
+        grades={isTeacher(CURRENT_USER) ? teacherGrades : studentGrades}
+        onMoreClick={navigateToGrades}
+        onAssignGrade={navigateToGradeAssignment}
+      />
 
       <LatestTasks
         type={TaskType.Task}
         tasks={tasks}
         onTaskClick={navigateToTask}
         onMoreClick={navigateToTasks}
+        onCreateTask={navigateToTaskCreation}
       />
 
       <LatestTasks
@@ -57,6 +77,7 @@ export default function Subject() {
         tasks={homework}
         onTaskClick={navigateToTask}
         onMoreClick={navigateToTasks}
+        onCreateTask={navigateToTaskCreation}
       />
     </Centered>
   );

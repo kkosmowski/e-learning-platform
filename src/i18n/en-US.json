@@ -7,6 +7,7 @@
     "general": {
       "latestNotices": "Latest notices",
       "yourGrades": "Your grades",
+      "assignedGrades": "Assigned grades",
       "latestTasks": "Latest tasks",
       "latestHomework": "Latest homework"
     },
@@ -21,6 +22,12 @@
         "proposed": "Manually selected by the teacher, proposed grade for this subject. It was selected based on the average assignment grade visible above as well as activity and behaviour grades.",
         "final": "Manually selected by the teacher, final grade for this subject. This grade is definitive and cannot be modified."
       }
+    },
+    "createNew": {
+      "notice": "Create new notice",
+      "grade": "Assign a grade",
+      "task": "Create new task",
+      "homework": "Create new homework"
     }
   },
   "task": {

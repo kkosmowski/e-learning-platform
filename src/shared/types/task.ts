@@ -1,4 +1,4 @@
-import { PublishableItem, Status } from './shared';
+import { BaseItem, PublishableItem, Status } from './shared';
 
 export interface Task extends PublishableItem {
   mandatory: boolean;
@@ -10,4 +10,10 @@ export interface Task extends PublishableItem {
 export enum TaskType {
   Task = 'task',
   Homework = 'homework',
+}
+
+export interface TaskSubmission extends BaseItem {
+  taskId: string; // @todo consider full task data
+  studentId: string; // @todo consider full student data
+  status: Status;
 }

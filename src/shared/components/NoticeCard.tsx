@@ -16,7 +16,7 @@ import {
 } from 'shared/consts/notice';
 import { Notice } from 'shared/types/notice';
 import format from 'date-fns/format';
-import { primary } from '../../colors';
+import { primary } from 'colors';
 
 interface NoticeCardProps {
   notice: Notice;

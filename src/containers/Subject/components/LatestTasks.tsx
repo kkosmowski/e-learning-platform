@@ -5,17 +5,23 @@ import SectionTitle from 'shared/components/SectionTitle';
 import TextButton from 'shared/components/TextButton';
 import TaskCard from 'shared/components/TaskCard';
 import { Task, TaskType } from 'shared/types/task';
+import { isTeacher } from 'shared/utils/user.utils';
+import { CURRENT_USER } from 'shared/consts/user';
+import { taskSubmissions, VISIBLE_LATEST_TASKS } from 'shared/consts/task';
+import { subjectStudents } from 'shared/consts/subject';
 
 interface LatestTasksProps {
   tasks: Task[];
   type: TaskType;
   onTaskClick: (type: TaskType, taskId: string) => void;
   onMoreClick: (type: TaskType) => void;
+  onCreateTask: (type: TaskType) => void;
 }
 
 export default function LatestTasks(props: LatestTasksProps) {
-  const { tasks, type, onTaskClick, onMoreClick } = props;
+  const { tasks, type, onTaskClick, onMoreClick, onCreateTask } = props;
   const { t } = useTranslation('subject');
+  const isUserTeacher = isTeacher(CURRENT_USER);
 
   return (
     <>
@@ -31,15 +37,25 @@ export default function LatestTasks(props: LatestTasksProps) {
             {t('common:viewMore')}
           </TextButton>
         )}
+
+        {isUserTeacher && (
+          <TextButton sx={{ ml: 2 }} onClick={() => onCreateTask(type)}>
+            {t(`createNew.${type}`)}
+          </TextButton>
+        )}
       </SectionTitle>
 
       <Box>
         {tasks.length ? (
           <Grid container spacing={2}>
-            {tasks.map((task) => (
+            {tasks.slice(0, VISIBLE_LATEST_TASKS).map((task) => (
               <Grid item key={task.id} xs={12} md={6} lg={4}>
                 <TaskCard
                   task={task}
+                  submissions={taskSubmissions.filter(
+                    (submission) => submission.taskId === task.id
+                  )}
+                  subjectStudents={subjectStudents}
                   short
                   onClick={() => onTaskClick(type, task.id)}
                 />
