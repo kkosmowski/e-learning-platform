@@ -7,7 +7,8 @@ import TaskCard from 'shared/components/TaskCard';
 import { Task, TaskType } from 'shared/types/task';
 import { isTeacher } from 'shared/utils/user.utils';
 import { CURRENT_USER } from 'shared/consts/user';
-import { VISIBLE_LATEST_TASKS } from 'shared/consts/task';
+import { taskSubmissions, VISIBLE_LATEST_TASKS } from 'shared/consts/task';
+import { subjectStudents } from 'shared/consts/subject';
 
 interface LatestTasksProps {
   tasks: Task[];
@@ -20,6 +21,7 @@ interface LatestTasksProps {
 export default function LatestTasks(props: LatestTasksProps) {
   const { tasks, type, onTaskClick, onMoreClick, onCreateTask } = props;
   const { t } = useTranslation('subject');
+  const isUserTeacher = isTeacher(CURRENT_USER);
 
   return (
     <>
@@ -36,7 +38,7 @@ export default function LatestTasks(props: LatestTasksProps) {
           </TextButton>
         )}
 
-        {isTeacher(CURRENT_USER) && (
+        {isUserTeacher && (
           <TextButton sx={{ ml: 2 }} onClick={() => onCreateTask(type)}>
             {t(`createNew.${type}`)}
           </TextButton>
@@ -50,6 +52,10 @@ export default function LatestTasks(props: LatestTasksProps) {
               <Grid item key={task.id} xs={12} md={6} lg={4}>
                 <TaskCard
                   task={task}
+                  submissions={taskSubmissions.filter(
+                    (submission) => submission.taskId === task.id
+                  )}
+                  subjectStudents={subjectStudents}
                   short
                   onClick={() => onTaskClick(type, task.id)}
                 />

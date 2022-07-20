@@ -1,3 +1,6 @@
+import { Student } from 'shared/types/user';
+import { fakeStudents, STUDENT } from './user';
+
 export const subjects = [
   {
     label: 'Math',
@@ -20,3 +23,5 @@ export const subjects = [
     id: 'fm93',
   },
 ];
+
+export const subjectStudents: Student[] = [...fakeStudents, STUDENT];

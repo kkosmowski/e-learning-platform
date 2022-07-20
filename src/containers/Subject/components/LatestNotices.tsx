@@ -42,7 +42,14 @@ export default function LatestNotices(props: LatestNoticesProps) {
         )}
       </SectionTitle>
 
-      <NoticesBox>
+      <NoticesBox
+        sx={{
+          gridTemplateColumns: {
+            xs: '1fr',
+            lg: `${LONGER_PREVIEW_CONTENT_RATIO}fr repeat(2, ${PREVIEW_CONTENT_RATIO}fr)`,
+          },
+        }}
+      >
         {notices.length ? (
           notices
             .slice(0, VISIBLE_LATEST_NOTICES)
@@ -66,6 +73,5 @@ export default function LatestNotices(props: LatestNoticesProps) {
 
 const NoticesBox = styled(Box)(() => ({
   display: 'grid',
-  gridTemplateColumns: `${LONGER_PREVIEW_CONTENT_RATIO}fr repeat(2, ${PREVIEW_CONTENT_RATIO}fr)`,
   gap: 16,
 }));
