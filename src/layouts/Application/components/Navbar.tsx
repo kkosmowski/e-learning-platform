@@ -1,12 +1,15 @@
 import { AppBar, Toolbar, Typography } from '@mui/material';
 import { School } from '@mui/icons-material';
 
+import { useAuth } from 'contexts/auth';
 import { text } from 'colors';
-import { CURRENT_USER } from 'shared/consts/user';
 import NavbarMenu from './NavbarMenu';
 import UserToolbar from './UserToolbar';
 
 export default function Navbar() {
+  const { currentUser } = useAuth();
+  if (!currentUser) return null;
+
   return (
     <AppBar
       sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, gridArea: 'navbar' }}
@@ -21,7 +24,7 @@ export default function Navbar() {
 
         <NavbarMenu />
 
-        <UserToolbar user={CURRENT_USER} />
+        <UserToolbar user={currentUser} />
       </Toolbar>
     </AppBar>
   );

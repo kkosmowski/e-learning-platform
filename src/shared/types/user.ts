@@ -9,21 +9,18 @@ export interface Person {
 export interface User extends Person {
   email: string;
   active: boolean;
-  admin?: boolean;
+  // admin?: boolean;
+  createdAt: string;
+  lastLoginAt: string;
 }
 
 export enum Role {
-  Student = 'Student',
-  Teacher = 'Teacher',
-  Admin = 'Admin',
+  Student = 'student',
+  Teacher = 'teacher',
+  Admin = 'admin',
 }
 
-export interface Student extends Person {
-  role: Role.Student;
-  // subjectInstanceIds: string[];
-}
-
-export interface Teacher extends Person {
-  role: Role.Teacher;
-  // subjectInstanceIds: string[];
-}
+export type FirestoreUser = Omit<
+  User,
+  'id' | 'fullName' | 'createdAt' | 'lastLoginAt' | 'email'
+>;

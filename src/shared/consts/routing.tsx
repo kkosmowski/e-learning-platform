@@ -7,7 +7,7 @@ import TaskList from 'containers/TaskList';
 import Task from 'containers/Task';
 import SubjectGrades from 'containers/SubjectGrades';
 import CreateNewNotice from 'containers/teacher/CreateNewNotice';
-import TeacherGuard from 'shared/components/TeacherGuard';
+import TeacherGuard from 'shared/guards/TeacherGuard';
 import { RouteObjectWithId } from 'shared/types/routing';
 import { TaskType } from 'shared/types/task';
 import AssignNewGrade from 'containers/teacher/AssignNewGrade';

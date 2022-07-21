@@ -2,15 +2,17 @@ import { Box, IconButton, Typography } from '@mui/material';
 import { AccountCircle } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 
-import { Student, Teacher } from 'shared/types/user';
+import { User } from 'shared/types/user';
 
 interface UserToolbarProps {
-  user: Teacher | Student;
+  user: User;
 }
 
 export default function UserToolbar(props: UserToolbarProps) {
   const { user } = props;
   const { t } = useTranslation('common');
+
+  console.log(user);
 
   return (
     <Box sx={{ display: 'inline-flex', alignItems: 'center' }}>
