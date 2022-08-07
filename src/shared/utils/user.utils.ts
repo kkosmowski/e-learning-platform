@@ -14,3 +14,13 @@ export const mapUserDtoToUser = (userDto: UserDto): User => ({
   active: userDto.is_active,
   fullName: `${userDto.first_name} ${userDto.last_name}`,
 });
+
+export const isUserPermitted = (
+  user: User | null,
+  limitedTo?: Role
+): boolean => {
+  if (!user) return false;
+  if (!limitedTo) return true;
+
+  return limitedTo === user.role;
+};
