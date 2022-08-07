@@ -7,6 +7,7 @@ import TabPanel from 'shared/components/TabPanel';
 import SectionTitle from 'shared/components/SectionTitle';
 import { divideGrades } from 'shared/utils/grade.utils';
 import { teacherGrades } from 'shared/consts/grade';
+import { useTranslation } from 'react-i18next';
 
 enum TeacherGradesTab {
   Assignment = 'assignment',
@@ -18,6 +19,7 @@ export default function SubjectGradesTeacher() {
   const [currentTab, setCurrentTab] = useState<TeacherGradesTab>(
     TeacherGradesTab.Assignment
   );
+  const { t } = useTranslation('subject', { keyPrefix: 'grades' });
 
   const handleTabChange = (event: SyntheticEvent, tab: TeacherGradesTab) => {
     setCurrentTab(tab);
@@ -25,7 +27,7 @@ export default function SubjectGradesTeacher() {
 
   return (
     <Centered>
-      <SectionTitle>Grades</SectionTitle>
+      <SectionTitle>{t('title')}</SectionTitle>
 
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs
@@ -33,9 +35,12 @@ export default function SubjectGradesTeacher() {
           onChange={handleTabChange}
           aria-label="Grade tabs"
         >
-          <Tab label="Assignments" value={TeacherGradesTab.Assignment} />
           <Tab
-            label="Behaviour and activity"
+            label={t('assignmentGrades')}
+            value={TeacherGradesTab.Assignment}
+          />
+          <Tab
+            label={t('nonAssignmentGrades')}
             value={TeacherGradesTab.NonAssignment}
           />
         </Tabs>

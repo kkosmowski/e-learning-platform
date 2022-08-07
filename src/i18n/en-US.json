@@ -1,7 +1,21 @@
 {
+  "auth": {
+    "signIn": "Sign in",
+    "forgotPassword": "Forgot password?",
+    "resetPassword": "Reset",
+    "tooltip": {
+      "fillDataToSignIn": "Fill out the inputs to sign in"
+    },
+    "placeholder": {
+      "email": "Email address",
+      "password": "Password"
+    }
+  },
   "nav": {
     "home": "Home",
-    "subjects": "Subjects"
+    "subjects": "Subjects",
+    "settings": "Settings",
+    "signOut": "Sign out"
   },
   "subject": {
     "general": {
@@ -12,6 +26,7 @@
       "latestHomework": "Latest homework"
     },
     "grades": {
+      "title": "Grades",
       "activity": "Activity",
       "average": "Average grade",
       "behaviour": "Behaviour",
@@ -21,7 +36,9 @@
         "average": "Automatically calculated, average grade of all assignment grades assessed. Teacher may adjust this grade depending on activity and behaviour grades.",
         "proposed": "Manually selected by the teacher, proposed grade for this subject. It was selected based on the average assignment grade visible above as well as activity and behaviour grades.",
         "final": "Manually selected by the teacher, final grade for this subject. This grade is definitive and cannot be modified."
-      }
+      },
+      "assignmentGrades": "Assignments",
+      "nonAssignmentGrades": "Behaviour and activity"
     },
     "createNew": {
       "notice": "Create new notice",
@@ -31,6 +48,8 @@
     }
   },
   "task": {
+    "task": "Task",
+    "homework": "Homework",
     "statuses": {
       "TODO": "To be submitted",
       "SUBMITTED": "Submitted",
@@ -67,14 +86,39 @@
     "teacher": "Teacher",
     "admin": "Administrator"
   },
+  "settings": {
+    "title": "Settings",
+    "tabs": {
+      "students": "Students",
+      "teachers": "Teachers",
+      "create": "Add new user"
+    },
+    "createUser": {
+      "placeholder": {
+        "email": "Email address",
+        "firstName": "First name",
+        "lastName": "Last name"
+      },
+      "submitButton": "Create user",
+      "userCreated": "User created successfully"
+    }
+  },
   "404": {
     "title": "404",
     "goHome": "Take me home"
   },
   "error": {
     "UNKNOWN_ERROR": "Unknown error occurred.",
+    "INVALID_FORM": "Form contains errors.",
     "FILE_TOO_BIG": "The file is too large. Max size allowed is {{ maxSize }}/",
     "SESSION_EXPIRED": "You have been logged out.",
-    "EMAIL_TAKEN": "This e-mail is already in use."
+    "EMAIL_TAKEN": "This email is already in use.",
+    "INCORRECT_EMAIL": "Incorrect email format.",
+    "EMAIL_REQUIRED": "Email address is required.",
+    "PASSWORD_REQUIRED": "Password cannot be empty.",
+    "PASSWORD_TOO_SHORT": "Password is too short.",
+    "PASSWORD_TOO_LONG": "Password is too long.",
+    "FIRST_NAME_REQUIRED": "Cannot create a user without first name",
+    "ROLE_REQUIRED": "User's role must be selected"
   }
 }

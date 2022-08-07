@@ -15,8 +15,8 @@ import { RouteObjectWithId } from 'shared/types/routing';
 import { TaskType } from 'shared/types/task';
 import { Role } from 'shared/types/user';
 import SettingsLayout from 'containers/Settings/Settings.layout';
-import Users from '../../containers/Settings/features/Users';
-import CreateUser from '../../containers/Settings/features/CreateUser';
+import Users from 'containers/Settings/features/Users';
+import CreateUser from 'containers/Settings/features/CreateUser';
 
 export const features: RouteObjectWithId[] = [
   {
