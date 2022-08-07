@@ -19,3 +19,7 @@ export interface PublishableItem extends BaseItem {
   publishTime: string; // ISOString
   content: string;
 }
+
+export interface ErrorData {
+  detail?: string;
+}

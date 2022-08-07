@@ -27,7 +27,7 @@ export default function AuthHome() {
           backgroundColor: primary[500],
           color: text[1000],
         }}
-      ></Box>
+      />
 
       <AuthWrapper>
         <Outlet />

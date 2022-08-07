@@ -13,13 +13,12 @@ export default function Login() {
   return (
     <Formik
       initialValues={{
-        email: '',
+        username: '',
         password: '',
       }}
-      validateOnMount
       validateOnBlur
       validationSchema={yup.object().shape({
-        email: yup
+        username: yup
           .string()
           .email('Niepoprawny format adresu email')
           .required('Adres email jest wymagany'),
@@ -35,11 +34,11 @@ export default function Login() {
         <form onSubmit={handleSubmit}>
           <Stack spacing={2}>
             <TextField
-              name="email"
+              name="username"
               placeholder="Email..."
-              value={values.email}
-              error={touched.email && Boolean(errors.email)}
-              helperText={touched.email && errors.email}
+              value={values.username}
+              error={touched.username && Boolean(errors.username)}
+              helperText={touched.username && errors.username}
               InputProps={{
                 startAdornment: <Mail color="secondary" />,
               }}
@@ -61,8 +60,10 @@ export default function Login() {
               fullWidth
             />
 
-            {((touched.email && touched.password && !isValid) || error) && (
-              <Typography color="error">Niepoprawne dane logowania</Typography>
+            {((touched.username && touched.password && !isValid) || error) && (
+              <Typography color="error">
+                {error || 'Niepoprawne dane'}
+              </Typography>
             )}
 
             <Button variant="contained" disabled={!isValid} type="submit">
@@ -70,7 +71,7 @@ export default function Login() {
             </Button>
 
             <Typography align="center">
-              Zapomniane hasło? <Link to="/auth/register">Resetuj</Link>
+              Nie pamiętasz hasła? <Link to="/auth/register">Resetuj</Link>
               <br />
               Nie masz konta? <Link to="/auth/register">Zarejestruj się</Link>
             </Typography>

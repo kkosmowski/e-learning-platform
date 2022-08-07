@@ -5,33 +5,29 @@ import {
   useEffect,
   useState,
 } from 'react';
-import {
-  getAuth,
-  onAuthStateChanged,
-  signInWithEmailAndPassword,
-  signOut,
-  User as FirebaseUser,
-} from '@firebase/auth';
-import {
-  doc,
-  DocumentReference,
-  getDoc,
-  getFirestore,
-} from 'firebase/firestore';
+import { AxiosError } from 'axios';
 
-import app from 'firebaseApp';
+import { authenticate, fetchMe } from 'api/auth';
+import { setToken } from 'api/axios';
 import { LoginCredentials } from 'shared/types/auth';
-import { FirestoreUser, User } from 'shared/types/user';
+import { User } from 'shared/types/user';
+import { ErrorData } from 'shared/types/shared';
+import {
+  clearLocalAuthSession,
+  getLocalAuthSession,
+  isSessionExpired,
+  setLocalAuthSession,
+} from 'shared/utils/auth.utils';
 
 interface AuthContextState {
   currentUser: User | null;
-  error: Error | null;
+  error: string;
   logIn: (credentials: LoginCredentials) => void;
 }
 
 export const AuthContext = createContext<AuthContextState>({
   currentUser: null,
-  error: null,
+  error: '',
   logIn: () => {},
 });
 
@@ -47,49 +43,56 @@ export function AuthProvider(props: AuthProviderProps) {
   const { children } = props;
   const [currentUser, setCurrentUser] =
     useState<AuthContextState['currentUser']>(null);
-  const [error, setError] = useState<AuthContextState['error']>(null);
-  const auth = getAuth(app);
-  const firestore = getFirestore(app);
+  const [error, setError] = useState<AuthContextState['error']>('');
 
-  const logIn = ({ email, password }: LoginCredentials): void => {
-    void signInWithEmailAndPassword(auth, email, password);
+  const logIn = async (credentials: LoginCredentials): Promise<void> => {
+    try {
+      const { data } = await authenticate(credentials);
+
+      if (data.user && data.access_token) {
+        setCurrentUser(data.user);
+        setLocalAuthSession(data.access_token);
+        setToken(data.access_token);
+      }
+    } catch (err: unknown) {
+      const error = err as AxiosError;
+
+      if (error.response?.data) {
+        const errorText =
+          (error.response.data as ErrorData).detail || 'Unknown error';
+        setError(errorText);
+      }
+    }
+  };
+
+  const fetchCurrentUser = async (token: string): Promise<void> => {
+    setToken(token);
+    try {
+      const { data } = await fetchMe();
+      setCurrentUser(data);
+    } catch (err: unknown) {
+      const error = err as AxiosError;
+
+      if (error.response?.data) {
+        const errorText =
+          (error.response.data as ErrorData).detail || 'Unknown error';
+        setError(errorText);
+      }
+    }
   };
 
   useEffect(() => {
-    return onAuthStateChanged(
-      auth,
-      async (user: FirebaseUser | null) => {
-        console.log('test');
-        if (!user || !user.email) {
-          setCurrentUser(null);
-          return;
-        }
+    const localAuthSession = getLocalAuthSession();
 
-        const userReference = doc(
-          firestore,
-          `users/${user.uid}`
-        ) as DocumentReference<FirestoreUser>;
-        const userSnapshot = await getDoc(userReference);
-
-        if (!userSnapshot.exists()) {
-          setCurrentUser(null);
-          return;
-        }
-
-        const firestoreUser = userSnapshot.data();
-
-        setCurrentUser({
-          ...firestoreUser,
-          id: user.uid,
-          email: user.email,
-          fullName: `${firestoreUser.firstName} ${firestoreUser.lastName}`,
-          createdAt: new Date(user.metadata.creationTime!).toISOString(),
-          lastLoginAt: new Date(user.metadata.lastSignInTime!).toISOString(),
-        });
-      },
-      (e) => setError(e)
-    );
-  }, [auth, firestore]);
+    if (localAuthSession) {
+      // if (!isSessionExpired(localAuthSession.expires_at)) {
+      void fetchCurrentUser(localAuthSession);
+      // } else {
+      //   setError('You\'ve been logged out');
+      //   clearLocalAuthSession();
+      // }
+    }
+  }, []);
 
   const value: AuthContextState = {
     currentUser,

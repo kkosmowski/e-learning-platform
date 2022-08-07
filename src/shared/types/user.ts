@@ -11,7 +11,6 @@ export interface User extends Person {
   active: boolean;
   // admin?: boolean;
   createdAt: string;
-  lastLoginAt: string;
 }
 
 export enum Role {

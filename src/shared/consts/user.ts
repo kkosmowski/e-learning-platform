@@ -11,7 +11,6 @@ export const TEACHER: User = {
   fullName: 'John Williams',
   role: Role.Teacher,
   createdAt: 'today',
-  lastLoginAt: 'today',
   // subjectInstanceIds: [],
 };
 
@@ -24,7 +23,6 @@ export const STUDENT: User = {
   fullName: 'Michael Young',
   role: Role.Student,
   createdAt: 'today',
-  lastLoginAt: 'today',
   // subjectInstanceIds: [],
 };
 
@@ -38,7 +36,6 @@ export const fakeStudents: [User, User] = [
     fullName: 'Rose Davis',
     role: Role.Student,
     createdAt: 'today',
-    lastLoginAt: 'today',
     // subjectInstanceIds: [],
   },
   {
@@ -50,7 +47,6 @@ export const fakeStudents: [User, User] = [
     fullName: 'Andrew Bernard',
     role: Role.Student,
     createdAt: 'today',
-    lastLoginAt: 'today',
     // subjectInstanceIds: [],
   },
 ];
