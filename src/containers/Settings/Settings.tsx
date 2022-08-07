@@ -1,12 +1,14 @@
 import { SyntheticEvent, useEffect, useState } from 'react';
 import { Tab, Tabs, Typography } from '@mui/material';
+import { useNavigate, Outlet } from 'react-router';
+import { useTranslation } from 'react-i18next';
 
 import { Centered } from 'shared/components/Container';
-import { useNavigate, Outlet } from 'react-router';
 
 export default function Settings() {
   const [tab, setTab] = useState('users/students');
   const navigate = useNavigate();
+  const { t } = useTranslation('settings');
 
   const handleTabChange = (event: SyntheticEvent, value: string) => {
     setTab(value);
@@ -19,13 +21,13 @@ export default function Settings() {
   return (
     <>
       <Typography component="h2" variant="h2">
-        Settings
+        {t('title')}
       </Typography>
 
       <Tabs value={tab} onChange={handleTabChange}>
-        <Tab value="users/students" label="Students" />
-        <Tab value="users/teachers" label="Teachers" />
-        <Tab value="users/create" label="Create user" />
+        <Tab value="users/students" label={t('tabs.students')} />
+        <Tab value="users/teachers" label={t('tabs.teachers')} />
+        <Tab value="users/create" label={t('tabs.create')} />
       </Tabs>
 
       <Centered innerSx={{ marginLeft: 0 }}>

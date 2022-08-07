@@ -10,6 +10,7 @@ import { ChangeEvent, useMemo, useRef } from 'react';
 import { AttachFile } from '@mui/icons-material';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import { useTranslation } from 'react-i18next';
 
 import { Task } from 'shared/types/task';
 import {
@@ -18,7 +19,7 @@ import {
 } from 'shared/consts/task';
 import { bytesToKilobytesOrMegabytes } from 'shared/utils/file.utils';
 import { MEGABYTE } from 'shared/consts/file';
-import { useTranslation } from 'react-i18next';
+import { fileTooBigError } from 'shared/consts/error';
 
 interface TaskAnswerFormProps {
   task: Task;
@@ -44,7 +45,7 @@ export default function TaskAnswerForm(props: TaskAnswerFormProps) {
         .nullable()
         .test(
           'fileSize',
-          'error:FILE_TOO_BIG',
+          fileTooBigError,
           (file) => !file || file.size <= TASK_MAX_FILE_SIZE
         )
         .nullable(),

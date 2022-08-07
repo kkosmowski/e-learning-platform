@@ -1,7 +1,9 @@
 import { Role, User } from 'shared/types/user';
 
 // @todo temporary
+export const SCHOOL_DOMAIN = 'school.com';
 
+// @todo temporary
 export const TEACHER: User = {
   id: '1g3j',
   active: true,
