@@ -28,7 +28,7 @@ export default function Settings() {
         <Tab value="users/create" label="Create user" />
       </Tabs>
 
-      <Centered>
+      <Centered innerSx={{ marginLeft: 0 }}>
         <Outlet />
       </Centered>
     </>

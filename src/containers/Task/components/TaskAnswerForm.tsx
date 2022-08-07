@@ -44,7 +44,7 @@ export default function TaskAnswerForm(props: TaskAnswerFormProps) {
         .nullable()
         .test(
           'fileSize',
-          'error:fileTooBig',
+          'error:FILE_TOO_BIG',
           (file) => !file || file.size <= TASK_MAX_FILE_SIZE
         )
         .nullable(),

@@ -6,20 +6,20 @@ import {
   useEffect,
   useState,
 } from 'react';
-import { AxiosError } from 'axios';
 
 import { authenticate, fetchMe } from 'api/auth';
 import { clearToken, setToken } from 'api/axios';
 import { LoginCredentials } from 'shared/types/auth';
 import { User, UserDto } from 'shared/types/user';
-import { ErrorData } from 'shared/types/shared';
 import {
   clearLocalAuthSession,
   getLocalAuthSession,
   isSessionExpired,
   setLocalAuthSession,
 } from 'shared/utils/auth.utils';
-import { mapUserDtoToUser } from '../shared/utils/user.utils';
+import { mapUserDtoToUser } from 'shared/utils/user.utils';
+import { getErrorDetail } from 'shared/utils/common.utils';
+import { sessionExpiredError } from 'shared/consts/error';
 
 interface AuthContextState {
   currentUser: User | null;
@@ -59,13 +59,7 @@ export function AuthProvider(props: AuthProviderProps) {
         setToken(data.access_token.token);
       }
     } catch (err: unknown) {
-      const error = err as AxiosError;
-
-      if (error.response?.data) {
-        const errorText =
-          (error.response.data as ErrorData).detail || 'Unknown error';
-        setError(errorText);
-      }
+      setError(getErrorDetail(err));
     }
   };
 
@@ -86,13 +80,7 @@ export function AuthProvider(props: AuthProviderProps) {
       const { data: userDto } = await fetchMe();
       setUser(userDto);
     } catch (err: unknown) {
-      const error = err as AxiosError;
-
-      if (error.response?.data) {
-        const errorText =
-          (error.response.data as ErrorData).detail || 'Unknown error';
-        setError(errorText);
-      }
+      setError(getErrorDetail(err));
     }
   }, []);
 
@@ -103,7 +91,7 @@ export function AuthProvider(props: AuthProviderProps) {
       if (!isSessionExpired(localAuthSession.expires_at)) {
         void fetchCurrentUser(localAuthSession.token);
       } else {
-        setError("You've been logged out");
+        setError(sessionExpiredError);
         clearLocalAuthSession();
       }
     }

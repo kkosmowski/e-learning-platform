@@ -15,6 +15,7 @@ import { createUser } from 'api/user';
 import { error, success } from 'colors';
 import { CreateUserForm, Role } from 'shared/types/user';
 import { mapCreateUserFormToCreateUserPayload } from 'shared/utils/user.utils';
+import { getErrorDetail } from 'shared/utils/common.utils';
 
 export default function CreateUser() {
   const { t } = useTranslation('common');
@@ -27,8 +28,8 @@ export default function CreateUser() {
       setErrorText('');
       setCreated(true);
       formik.resetForm();
-    } catch (error) {
-      setErrorText('Wystąpił błąd');
+    } catch (err: unknown) {
+      setErrorText(getErrorDetail(err));
       setCreated(false);
     }
   };
@@ -62,7 +63,7 @@ export default function CreateUser() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <Stack spacing={2}>
+      <Stack spacing={2} sx={{ maxWidth: 600 }}>
         <TextField
           name="email"
           placeholder="Email..."
@@ -119,7 +120,7 @@ export default function CreateUser() {
         )}
 
         {errorText && (
-          <Typography sx={{ color: error[500] }}>{errorText}</Typography>
+          <Typography sx={{ color: error[500] }}>{t(errorText)}</Typography>
         )}
       </Stack>
     </form>

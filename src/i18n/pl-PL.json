@@ -41,6 +41,9 @@
     "goHome": "Powrót do strony głównej"
   },
   "error": {
-    "fileTooBig": "Zbyt duży plik. Maksymalny dopuszczalny rozmiar to {{ maxSize }}"
+    "UNKNOWN_ERROR": "Nieznany błąd.",
+    "FILE_TOO_BIG": "Zbyt duży plik. Maksymalny dopuszczalny rozmiar to {{ maxSize }}.",
+    "SESSION_EXPIRED": "Sesja wygasła, zaloguj się ponownie.",
+    "EMAIL_TAKEN": "Ten adres e-mail istnieje już w bazie danych."
   }
 }
