@@ -3,10 +3,13 @@ import { useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
 
 import { text } from 'colors';
+import { useAuth } from 'contexts/auth';
 import { features } from 'shared/consts/routing';
+import { isUserPermitted } from 'shared/utils/user.utils';
 
 export default function NavbarMenu() {
   const navigate = useNavigate();
+  const { currentUser } = useAuth();
   const { t } = useTranslation('nav');
 
   const handleButtonClick = (path?: string): void => {
@@ -15,15 +18,17 @@ export default function NavbarMenu() {
 
   return (
     <Box sx={{ flexGrow: 1, display: 'flex', gap: 1, mx: 6 }}>
-      {features.map((feature) => (
-        <Button
-          key={feature.id}
-          sx={{ color: text[1000] }}
-          onClick={() => handleButtonClick(feature.path)}
-        >
-          {t(feature.id)}
-        </Button>
-      ))}
+      {features
+        .filter((feature) => isUserPermitted(currentUser, feature.limitedTo))
+        .map((feature) => (
+          <Button
+            key={feature.id}
+            sx={{ color: text[1000] }}
+            onClick={() => handleButtonClick(feature.path)}
+          >
+            {t(feature.id)}
+          </Button>
+        ))}
     </Box>
   );
 }

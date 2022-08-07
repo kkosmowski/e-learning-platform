@@ -1,4 +1,4 @@
-import { Button, Stack, TextField, Typography } from '@mui/material';
+import { Button, Stack, TextField, Tooltip, Typography } from '@mui/material';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import { Key, Mail } from '@mui/icons-material';
@@ -6,9 +6,11 @@ import { Link } from 'react-router-dom';
 
 import { useAuth } from 'contexts/auth';
 import { PASSWORD_MAX_LENGTH, PASSWORD_MIN_LENGTH } from 'shared/consts/auth';
+import { useTranslation } from 'react-i18next';
 
 export default function SignIn() {
   const { error, signIn } = useAuth();
+  const { t } = useTranslation();
 
   return (
     <Formik
@@ -16,6 +18,7 @@ export default function SignIn() {
         username: '',
         password: '',
       }}
+      validateOnMount
       validateOnBlur
       validationSchema={yup.object().shape({
         username: yup
@@ -42,7 +45,6 @@ export default function SignIn() {
               InputProps={{
                 startAdornment: <Mail color="secondary" />,
               }}
-              fullWidth
               onChange={handleChange}
             />
 
@@ -57,18 +59,19 @@ export default function SignIn() {
                 type: 'password',
               }}
               onChange={handleChange}
-              fullWidth
             />
 
             {((touched.username && touched.password && !isValid) || error) && (
-              <Typography color="error">
-                {error || 'Niepoprawne dane'}
-              </Typography>
+              <Typography color="error">{t(error)}</Typography>
             )}
 
-            <Button variant="contained" disabled={!isValid} type="submit">
-              Zaloguj się
-            </Button>
+            <Tooltip title="Uzupełnij brakujące dane aby się zalogować">
+              <Stack>
+                <Button variant="contained" disabled={!isValid} type="submit">
+                  Zaloguj się
+                </Button>
+              </Stack>
+            </Tooltip>
 
             <Typography align="center">
               Nie pamiętasz hasła? <Link to="/auth/register">Resetuj</Link>

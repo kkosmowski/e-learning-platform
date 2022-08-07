@@ -62,13 +62,19 @@
     "test": "Test",
     "writtenBy": "Written by <1>{{ author }}</1>",
     "publishedOn": "Published on <1>{{ date }}</1>",
-    "welcome": "Welcome"
+    "welcome": "Welcome",
+    "student": "Student",
+    "teacher": "Teacher",
+    "admin": "Administrator"
   },
   "404": {
     "title": "404",
     "goHome": "Take me home"
   },
   "error": {
-    "fileTooBig": "The file is too large. Max size allowed is {{ maxSize }}"
+    "UNKNOWN_ERROR": "Unknown error occurred.",
+    "FILE_TOO_BIG": "The file is too large. Max size allowed is {{ maxSize }}/",
+    "SESSION_EXPIRED": "You have been logged out.",
+    "EMAIL_TAKEN": "This e-mail is already in use."
   }
 }

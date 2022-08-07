@@ -4,7 +4,7 @@ import Container from 'shared/components/Container';
 import { subjects } from 'shared/consts/subject';
 import SubjectHeader from './components/SubjectHeader';
 
-export default function Subject() {
+export default function SubjectLayout() {
   const navigate = useNavigate();
   const { subjectId } = useParams<{ subjectId: string }>();
   const currentSubject = subjects.find((subject) => subject.id === subjectId);

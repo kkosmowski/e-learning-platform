@@ -31,6 +31,19 @@ export interface UserDto {
   role: Role;
 }
 
+export type CreateUserForm = Pick<
+  User,
+  'email' | 'firstName' | 'lastName' | 'role'
+>;
+
+// payloads
+
+export type CreateUserPayload = Pick<
+  UserDto,
+  'email' | 'first_name' | 'last_name' | 'role'
+>;
+
 // responses
 
 export type FetchMeResponse = AxiosResponse<UserDto>;
+export type CreateUserResponse = AxiosResponse<UserDto>;

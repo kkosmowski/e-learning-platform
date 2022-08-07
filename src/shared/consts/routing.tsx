@@ -1,5 +1,6 @@
 import Home from 'containers/Home';
 import Subjects from 'containers/Subjects';
+import Settings from 'containers/Settings';
 import Subject, { SubjectLayout } from 'containers/Subject';
 import NoticeBoard from 'containers/NoticeBoard';
 import Notice from 'containers/Notice';
@@ -7,11 +8,15 @@ import TaskList from 'containers/TaskList';
 import Task from 'containers/Task';
 import SubjectGrades from 'containers/SubjectGrades';
 import CreateNewNotice from 'containers/teacher/CreateNewNotice';
+import AssignNewGrade from 'containers/teacher/AssignNewGrade';
+import CreateNewTask from 'containers/teacher/CreateNewTask';
 import TeacherGuard from 'shared/guards/TeacherGuard';
 import { RouteObjectWithId } from 'shared/types/routing';
 import { TaskType } from 'shared/types/task';
-import AssignNewGrade from 'containers/teacher/AssignNewGrade';
-import CreateNewTask from 'containers/teacher/CreateNewTask';
+import { Role } from 'shared/types/user';
+import SettingsLayout from 'containers/Settings/Settings.layout';
+import Users from '../../containers/Settings/features/Users';
+import CreateUser from '../../containers/Settings/features/CreateUser';
 
 export const features: RouteObjectWithId[] = [
   {
@@ -122,11 +127,27 @@ export const features: RouteObjectWithId[] = [
   // {
   //   path: 'profile',
   //   element: <Profile />,
-  //   label: "Profile"
   // },
-  // {
-  //   path: 'settings',
-  //   element: <Settings />,
-  //   label: "Settings"
-  // }
+  {
+    path: 'settings',
+    element: <SettingsLayout limitedTo={Role.Admin} />,
+    id: 'settings',
+    limitedTo: Role.Admin,
+    children: [
+      {
+        path: '',
+        element: <Settings />,
+        children: [
+          {
+            path: 'users/create',
+            element: <CreateUser />,
+          },
+          {
+            path: 'users/:type',
+            element: <Users />,
+          },
+        ],
+      },
+    ],
+  },
 ];
