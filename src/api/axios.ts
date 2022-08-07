@@ -12,7 +12,7 @@ export const setToken = (token: string): void => {
   api.defaults.headers.common.Authorization = `Bearer ${token}`;
 };
 
-export const clearToken = (token: string): void => {
+export const clearToken = (): void => {
   delete api.defaults.headers.common.Authorization;
 };
 

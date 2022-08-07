@@ -9,7 +9,7 @@ import {
 import { AxiosError } from 'axios';
 
 import { authenticate, fetchMe } from 'api/auth';
-import { setToken } from 'api/axios';
+import { clearToken, setToken } from 'api/axios';
 import { LoginCredentials } from 'shared/types/auth';
 import { User, UserDto } from 'shared/types/user';
 import { ErrorData } from 'shared/types/shared';
@@ -75,6 +75,7 @@ export function AuthProvider(props: AuthProviderProps) {
 
   const signOut = () => {
     clearLocalAuthSession();
+    clearToken();
     setCurrentUser(null);
   };
 

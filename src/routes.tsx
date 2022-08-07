@@ -5,7 +5,7 @@ import Root from 'containers/Root';
 import ApplicationLayout from 'layouts/Application';
 import NotFound from 'containers/NotFound';
 import AuthHome from 'containers/Auth';
-import SignIn from 'containers/Auth/Login';
+import SignIn from 'containers/Auth/SignIn';
 import AuthGuard from 'shared/guards/AuthGuard';
 import { features } from 'shared/consts/routing';
 
