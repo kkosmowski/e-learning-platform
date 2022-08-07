@@ -1,4 +1,4 @@
-import { authorized, unauthorized } from './axios';
+import { authorized, unauthorized } from 'api/axios';
 import { AuthenticateResponse, LoginCredentials } from 'shared/types/auth';
 import { FetchMeResponse } from 'shared/types/user';
 

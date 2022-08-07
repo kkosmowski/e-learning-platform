@@ -62,7 +62,10 @@
     "test": "Test",
     "writtenBy": "Written by <1>{{ author }}</1>",
     "publishedOn": "Published on <1>{{ date }}</1>",
-    "welcome": "Welcome"
+    "welcome": "Welcome",
+    "student": "Student",
+    "teacher": "Teacher",
+    "admin": "Administrator"
   },
   "404": {
     "title": "404",

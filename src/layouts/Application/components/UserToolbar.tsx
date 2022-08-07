@@ -16,8 +16,6 @@ export default function UserToolbar(props: UserToolbarProps) {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const menuOpened = Boolean(anchorEl);
 
-  console.log(user);
-
   const handleMenuOpen = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };

@@ -31,7 +31,10 @@
     "cancel": "Anuluj",
     "noNotices": "Brak ogłoszeń.",
     "noTasks": "Brak zadań.",
-    "noHomework": "Brak zadań domowych."
+    "noHomework": "Brak zadań domowych.",
+    "student": "Uczeń",
+    "teacher": "Nauczyciel",
+    "admin": "Administrator"
   },
   "404": {
     "title": "404",
