@@ -27,12 +27,12 @@ import { getTimeLeftTextColor } from 'shared/utils/task.utils';
 import ItemCategory from './ItemCategory';
 import { isStudent, isTeacher } from 'shared/utils/user.utils';
 import { CURRENT_USER } from 'shared/consts/user';
-import { Student } from '../types/user';
+import { User } from 'shared/types/user';
 
 interface TaskCardProps {
   task: Task;
   submissions?: TaskSubmission[];
-  subjectStudents?: Student[];
+  subjectStudents?: User[];
   short?: boolean;
   onClick?: () => void;
 }

@@ -1,5 +1,5 @@
 import { createTheme, ThemeOptions } from '@mui/material';
-import colors, { text } from 'colors';
+import colors, { background, text } from 'colors';
 
 export const consts = {
   navbarHeight: 64,
@@ -13,8 +13,6 @@ const baseThemeOptions: ThemeOptions = {
       styleOverrides: {
         root: {
           borderRadius: 0,
-          paddingTop: 4,
-          paddingBottom: 4,
         },
         contained: {
           boxShadow: 'none',
@@ -24,7 +22,7 @@ const baseThemeOptions: ThemeOptions = {
           paddingTop: 0,
           paddingBottom: 0,
           paddingLeft: 6,
-          paddingRIght: 6,
+          paddingRight: 6,
         },
       },
     },
@@ -62,9 +60,23 @@ const baseThemeOptions: ThemeOptions = {
         },
       },
     },
-    MuiToolbar: {
+    MuiOutlinedInput: {
       styleOverrides: {
-        root: {},
+        root: {
+          borderRadius: 0,
+        },
+        adornedStart: {
+          gap: '14px',
+          backgroundColor: background[200],
+        },
+      },
+    },
+    MuiInputBase: {
+      styleOverrides: {
+        inputAdornedStart: {
+          '&': { paddingLeft: '14px' },
+          backgroundColor: background[50],
+        },
       },
     },
     MuiTooltip: {

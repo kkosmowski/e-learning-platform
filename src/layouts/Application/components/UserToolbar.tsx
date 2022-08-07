@@ -1,16 +1,30 @@
-import { Box, IconButton, Typography } from '@mui/material';
+import { useState, MouseEvent } from 'react';
+import { Box, IconButton, Menu, MenuItem, Typography } from '@mui/material';
 import { AccountCircle } from '@mui/icons-material';
-import { useTranslation } from 'react-i18next';
 
-import { Student, Teacher } from 'shared/types/user';
+import { useTranslation } from 'react-i18next';
+import { User } from 'shared/types/user';
 
 interface UserToolbarProps {
-  user: Teacher | Student;
+  user: User;
+  onSignOut: () => void;
 }
 
 export default function UserToolbar(props: UserToolbarProps) {
-  const { user } = props;
+  const { user, onSignOut } = props;
   const { t } = useTranslation('common');
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  const menuOpened = Boolean(anchorEl);
+
+  console.log(user);
+
+  const handleMenuOpen = (event: MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <Box sx={{ display: 'inline-flex', alignItems: 'center' }}>
@@ -25,9 +39,30 @@ export default function UserToolbar(props: UserToolbarProps) {
         </Typography>
       </Typography>
 
-      <IconButton size="large">
+      <IconButton
+        id="user-menu-button"
+        size="large"
+        aria-haspopup={true}
+        {...(menuOpened && {
+          'aria-controls': 'user-menu',
+          'aria-expanded': 'true',
+        })}
+        onClick={handleMenuOpen}
+      >
         <AccountCircle />
       </IconButton>
+
+      <Menu
+        id="user-menu"
+        anchorEl={anchorEl}
+        open={menuOpened}
+        onClose={handleMenuClose}
+        MenuListProps={{
+          'aria-labelledby': 'user-menu-button',
+        }}
+      >
+        <MenuItem onClick={onSignOut}>Sign out</MenuItem>
+      </Menu>
     </Box>
   );
 }

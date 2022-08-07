@@ -1,4 +1,4 @@
-import { Student } from 'shared/types/user';
+import { User } from 'shared/types/user';
 import { fakeStudents, STUDENT } from './user';
 
 export const subjects = [
@@ -24,4 +24,4 @@ export const subjects = [
   },
 ];
 
-export const subjectStudents: Student[] = [...fakeStudents, STUDENT];
+export const subjectStudents: User[] = [...fakeStudents, STUDENT];
