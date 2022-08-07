@@ -7,8 +7,8 @@ import { Link } from 'react-router-dom';
 import { useAuth } from 'contexts/auth';
 import { PASSWORD_MAX_LENGTH, PASSWORD_MIN_LENGTH } from 'shared/consts/auth';
 
-export default function Login() {
-  const { error, logIn } = useAuth();
+export default function SignIn() {
+  const { error, signIn } = useAuth();
 
   return (
     <Formik
@@ -28,7 +28,7 @@ export default function Login() {
           .max(PASSWORD_MAX_LENGTH, 'Hasło jest zbyt długie')
           .required('Hasło jest wymagane'),
       })}
-      onSubmit={logIn}
+      onSubmit={signIn}
     >
       {({ errors, isValid, handleSubmit, handleChange, touched, values }) => (
         <form onSubmit={handleSubmit}>

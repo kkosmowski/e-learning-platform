@@ -7,7 +7,7 @@ import NavbarMenu from './NavbarMenu';
 import UserToolbar from './UserToolbar';
 
 export default function Navbar() {
-  const { currentUser } = useAuth();
+  const { currentUser, signOut } = useAuth();
   if (!currentUser) return null;
 
   return (
@@ -24,7 +24,7 @@ export default function Navbar() {
 
         <NavbarMenu />
 
-        <UserToolbar user={currentUser} />
+        <UserToolbar user={currentUser} onSignOut={signOut} />
       </Toolbar>
     </AppBar>
   );

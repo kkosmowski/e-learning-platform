@@ -1,9 +1,6 @@
 import { authorized, unauthorized } from './axios';
-import {
-  AuthenticateResponse,
-  FetchMeResponse,
-  LoginCredentials,
-} from 'shared/types/auth';
+import { AuthenticateResponse, LoginCredentials } from 'shared/types/auth';
+import { FetchMeResponse } from 'shared/types/user';
 
 export const authenticate = ({
   username,

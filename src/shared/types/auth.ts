@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { User } from './user';
+import { UserDto } from './user';
 
 export interface LoginCredentials {
   username: string;
@@ -12,11 +12,10 @@ export interface AccessTokenData {
 }
 
 export interface AuthenticationData {
-  user: User;
-  access_token: string;
+  user: UserDto;
+  access_token: AccessTokenData;
 }
 
 // responses
 
 export type AuthenticateResponse = AxiosResponse<AuthenticationData>;
-export type FetchMeResponse = AxiosResponse<User>;

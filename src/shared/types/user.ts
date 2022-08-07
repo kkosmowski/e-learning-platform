@@ -1,3 +1,5 @@
+import { AxiosResponse } from 'axios';
+
 export interface Person {
   id: string;
   firstName: string;
@@ -19,7 +21,14 @@ export enum Role {
   Admin = 'admin',
 }
 
-export type FirestoreUser = Omit<
-  User,
-  'id' | 'fullName' | 'createdAt' | 'lastLoginAt' | 'email'
->;
+export interface UserDto {
+  id: string;
+  created_at: string;
+  is_active: boolean;
+  email: string;
+  first_name: string;
+  last_name: string;
+  role: Role;
+}
+
+export type FetchMeResponse = AxiosResponse<UserDto>;
