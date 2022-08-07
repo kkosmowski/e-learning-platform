@@ -31,4 +31,6 @@ export interface UserDto {
   role: Role;
 }
 
+// responses
+
 export type FetchMeResponse = AxiosResponse<UserDto>;

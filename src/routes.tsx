@@ -50,7 +50,6 @@ const routes: RouteObject[] = [
       },
     ],
   },
-  // @todo add Auth page
   {
     path: '*',
     element: <NotFound />,
