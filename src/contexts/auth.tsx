@@ -59,6 +59,7 @@ export function AuthProvider(props: AuthProviderProps) {
         setToken(data.access_token.token);
       }
     } catch (err: unknown) {
+      console.log(err);
       setError(getErrorDetail(err));
     }
   };

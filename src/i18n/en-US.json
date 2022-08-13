@@ -110,15 +110,18 @@
   "error": {
     "UNKNOWN_ERROR": "Unknown error occurred.",
     "INVALID_FORM": "Form contains errors.",
-    "FILE_TOO_BIG": "The file is too large. Max size allowed is {{ maxSize }}/",
+    "FILE_TOO_BIG": "The file is too large. Max size allowed is {{ maxSize }}.",
     "SESSION_EXPIRED": "You have been logged out.",
-    "EMAIL_TAKEN": "This email is already in use.",
     "INCORRECT_EMAIL": "Incorrect email format.",
     "EMAIL_REQUIRED": "Email address is required.",
     "PASSWORD_REQUIRED": "Password cannot be empty.",
     "PASSWORD_TOO_SHORT": "Password is too short.",
     "PASSWORD_TOO_LONG": "Password is too long.",
     "FIRST_NAME_REQUIRED": "Cannot create a user without first name",
-    "ROLE_REQUIRED": "User's role must be selected"
+    "ROLE_REQUIRED": "User's role must be selected",
+    "EMAIL_TAKEN": "This email is already in use.",
+    "INCORRECT CREDENTIALS": "Incorrect email or password.",
+    "USER_NOT_FOUND": "User not found.",
+    "USER_INACTIVE": "Inactive account."
   }
 }
