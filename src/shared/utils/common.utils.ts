@@ -5,11 +5,11 @@ import { unknownError } from 'shared/consts/error';
 
 export const getErrorDetail = (err: unknown): string => {
   const error = err as AxiosError;
-  let errorDetail = unknownError;
+  let apiError: string | undefined;
 
   if (error.response?.data) {
-    errorDetail = (error.response.data as ErrorData).detail || unknownError;
+    apiError = (error.response.data as ErrorData).detail;
   }
 
-  return `error:${errorDetail}`;
+  return apiError ? `error:${apiError}` : unknownError;
 };

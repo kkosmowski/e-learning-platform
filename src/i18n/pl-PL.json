@@ -112,13 +112,16 @@
     "INVALID_FORM": "Formularz zawiera błędy.",
     "FILE_TOO_BIG": "Zbyt duży plik. Maksymalny dopuszczalny rozmiar to {{ maxSize }}.",
     "SESSION_EXPIRED": "Sesja wygasła, zaloguj się ponownie.",
-    "EMAIL_TAKEN": "Ten adres e-mail istnieje już w bazie danych.",
     "INCORRECT_EMAIL": "Niepoprawny format adresu email.",
     "EMAIL_REQUIRED": "Adres e-mail jest wymagany.",
     "PASSWORD_REQUIRED": "Pole hasło nie może być puste.",
     "PASSWORD_TOO_SHORT": "Hasło jest zbyt krótkie.",
     "PASSWORD_TOO_LONG": "Hasło jest zbyt długie.",
     "FIRST_NAME_REQUIRED": "Nie można utworzyć użytkownika bez imienia.",
-    "ROLE_REQUIRED": "Rodzaj użytkownika musi zostać określony"
+    "ROLE_REQUIRED": "Rodzaj użytkownika musi zostać określony",
+    "EMAIL_TAKEN": "Ten adres e-mail istnieje już w bazie danych.",
+    "INCORRECT CREDENTIALS": "Niepoprawny e-mail bądź hasło.",
+    "USER_NOT_FOUND": "Nie znaleziono użytkownika.",
+    "USER_INACTIVE": "To konto nie jest aktywne."
   }
 }
