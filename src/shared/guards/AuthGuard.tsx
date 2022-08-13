@@ -11,7 +11,7 @@ export default function AuthGuard(props: AuthGuardProps) {
   const { children } = props;
   const { currentUser } = useAuth();
 
-  if (!currentUser) {
+  if (currentUser === null) {
     return <Navigate to="/auth" replace />;
   }
 
