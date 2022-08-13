@@ -88,19 +88,37 @@
   },
   "settings": {
     "title": "Ustawienia",
-    "tabs": {
-      "students": "Uczniowie",
-      "teachers": "Nauczyciele",
-      "create": "Dodaj użytkownika"
+    "categories": {
+      "subjectCategories": "Zarządzanie kategoriami przedmiotów",
+      "classrooms": "Zarządzanie klasami",
+      "subjects": "Zarządzanie przedmiotami",
+      "users": "Zarządzanie użytkownikami"
     },
-    "createUser": {
-      "placeholder": {
-        "email": "Adres e-mail",
-        "firstName": "Imię",
-        "lastName": "Nazwisko"
+    "subjectCategories": {
+      "title": "Zarządzanie kategoriami przedmiotów"
+    },
+    "classrooms": {
+      "title": "Zarządzanie klasami"
+    },
+    "subjects": {
+      "title": "Zarządzanie przedmiotami"
+    },
+    "users": {
+      "title": "Zarządzanie użytkownikami",
+      "tabs": {
+        "students": "Uczniowie",
+        "teachers": "Nauczyciele",
+        "create": "Dodaj użytkownika"
       },
-      "submitButton": "Utwórz użytkownika",
-      "userCreated": "Użytkownik pomyślnie utworzony"
+      "createUser": {
+        "placeholder": {
+          "email": "Adres e-mail",
+          "firstName": "Imię",
+          "lastName": "Nazwisko"
+        },
+        "submitButton": "Utwórz użytkownika",
+        "userCreated": "Użytkownik pomyślnie utworzony"
+      }
     }
   },
   "404": {

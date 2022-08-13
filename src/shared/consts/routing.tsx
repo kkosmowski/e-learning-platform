@@ -17,6 +17,7 @@ import { Role } from 'shared/types/user';
 import SettingsLayout from 'containers/Settings/Settings.layout';
 import Users from 'containers/Settings/features/Users';
 import CreateUser from 'containers/Settings/features/CreateUser';
+import SettingsUsers from 'containers/Settings/components/SettingsUsers';
 
 export const features: RouteObjectWithId[] = [
   {
@@ -66,19 +67,19 @@ export const features: RouteObjectWithId[] = [
             children: [
               {
                 path: '',
-                element: <TaskList type={TaskType.Task} />,
+                element: <TaskList type={ TaskType.Task } />,
               },
               {
                 path: 'new',
                 element: (
                   <TeacherGuard redirectTo="..">
-                    <CreateNewTask type={TaskType.Task} />
+                    <CreateNewTask type={ TaskType.Task } />
                   </TeacherGuard>
                 ),
               },
               {
                 path: ':taskId',
-                element: <Task type={TaskType.Task} />,
+                element: <Task type={ TaskType.Task } />,
               },
             ],
           },
@@ -87,19 +88,19 @@ export const features: RouteObjectWithId[] = [
             children: [
               {
                 path: '',
-                element: <TaskList type={TaskType.Homework} />,
+                element: <TaskList type={ TaskType.Homework } />,
               },
               {
                 path: 'new',
                 element: (
                   <TeacherGuard redirectTo="..">
-                    <CreateNewTask type={TaskType.Homework} />
+                    <CreateNewTask type={ TaskType.Homework } />
                   </TeacherGuard>
                 ),
               },
               {
                 path: ':taskId',
-                element: <Task type={TaskType.Homework} />,
+                element: <Task type={ TaskType.Homework } />,
               },
             ],
           },
@@ -130,21 +131,30 @@ export const features: RouteObjectWithId[] = [
   // },
   {
     path: 'settings',
-    element: <SettingsLayout limitedTo={Role.Admin} />,
+    element: <SettingsLayout limitedTo={ Role.Admin } />,
     id: 'settings',
     limitedTo: Role.Admin,
     children: [
       {
         path: '',
-        element: <Settings />,
         children: [
           {
-            path: 'users/create',
-            element: <CreateUser />,
+            path: '',
+            element: <Settings />,
           },
           {
-            path: 'users/:type',
-            element: <Users />,
+            path: 'users',
+            element: <SettingsUsers />,
+            children: [
+              {
+                path: 'create',
+                element: <CreateUser />,
+              },
+              {
+                path: ':type',
+                element: <Users />,
+              },
+            ],
           },
         ],
       },

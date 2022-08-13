@@ -4,6 +4,8 @@ import { useAuth } from 'contexts/auth';
 import Container from 'shared/components/Container';
 import { Role } from 'shared/types/user';
 import { isUserPermitted } from 'shared/utils/user.utils';
+import ViewHeader from '../../layouts/Application/components/ViewHeader';
+import { useTranslation } from 'react-i18next';
 
 interface SettingsLayoutProps {
   limitedTo: Role;

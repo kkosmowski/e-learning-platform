@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import { Box, SxProps } from '@mui/material';
 import { SystemProps } from '@mui/system';
 import { Theme } from '@mui/material/styles';
+import { consts } from '../../theme';
 
 interface ContainerProps extends SystemProps<Theme> {
   children: ReactNode;
@@ -37,7 +38,7 @@ export function Centered(props: CenteredProps) {
   const { children, innerSx, ...containerProps } = props;
   const centeredSx = {
     width: '100%',
-    maxWidth: 1000,
+    maxWidth: consts.centeredLayoutMaxWidth,
     padding: 0,
     marginLeft: 'auto',
     marginRight: 'auto',

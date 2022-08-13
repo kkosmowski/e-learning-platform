@@ -88,19 +88,37 @@
   },
   "settings": {
     "title": "Settings",
-    "tabs": {
-      "students": "Students",
-      "teachers": "Teachers",
-      "create": "Add new user"
+    "categories": {
+      "subjectCategories": "Subject categories management",
+      "classrooms": "Classrooms management",
+      "subjects": "Subjects managements",
+      "users": "Users management"
     },
-    "createUser": {
-      "placeholder": {
-        "email": "Email address",
-        "firstName": "First name",
-        "lastName": "Last name"
+    "subjectCategories": {
+      "title": "Subject categories management"
+    },
+    "classrooms": {
+      "title": "Classrooms management"
+    },
+    "subjects": {
+      "title": "Subjects managements"
+    },
+    "users": {
+      "title": "Users management",
+      "tabs": {
+        "students": "Students",
+        "teachers": "Teachers",
+        "create": "Add new user"
       },
-      "submitButton": "Create user",
-      "userCreated": "User created successfully"
+      "createUser": {
+        "placeholder": {
+          "email": "Email address",
+          "firstName": "First name",
+          "lastName": "Last name"
+        },
+        "submitButton": "Create user",
+        "userCreated": "User created successfully"
+      }
     }
   },
   "404": {
