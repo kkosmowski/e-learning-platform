@@ -22,14 +22,14 @@ import { getErrorDetail } from 'shared/utils/common.utils';
 import { sessionExpiredError } from 'shared/consts/error';
 
 interface AuthContextState {
-  currentUser: User | null;
+  currentUser: User | null | undefined;
   error: string;
   signIn: (credentials: LoginCredentials) => void;
   signOut: () => void;
 }
 
 export const AuthContext = createContext<AuthContextState>({
-  currentUser: null,
+  currentUser: undefined,
   error: '',
   signIn: () => {},
   signOut: () => {},
@@ -46,7 +46,7 @@ export function useAuth() {
 export function AuthProvider(props: AuthProviderProps) {
   const { children } = props;
   const [currentUser, setCurrentUser] =
-    useState<AuthContextState['currentUser']>(null);
+    useState<AuthContextState['currentUser']>(undefined);
   const [error, setError] = useState<AuthContextState['error']>('');
 
   const signIn = async (credentials: LoginCredentials): Promise<void> => {
@@ -59,7 +59,6 @@ export function AuthProvider(props: AuthProviderProps) {
         setToken(data.access_token.token);
       }
     } catch (err: unknown) {
-      console.log(err);
       setError(getErrorDetail(err));
     }
   };
@@ -94,7 +93,10 @@ export function AuthProvider(props: AuthProviderProps) {
       } else {
         setError(sessionExpiredError);
         clearLocalAuthSession();
+        setCurrentUser(null);
       }
+    } else {
+      setCurrentUser(null);
     }
   }, [fetchCurrentUser]);
 
