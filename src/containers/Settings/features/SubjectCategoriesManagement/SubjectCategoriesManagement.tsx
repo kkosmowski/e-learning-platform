@@ -48,7 +48,6 @@ export default function SubjectCategoriesManagement() {
       confirmColor: 'error',
     });
 
-    console.log('shouldDelete', shouldDelete);
     if (shouldDelete) {
       handleDelete(category);
     }
