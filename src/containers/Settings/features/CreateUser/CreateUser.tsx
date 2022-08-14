@@ -1,5 +1,5 @@
 import { useFormik } from 'formik';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as yup from 'yup';
 import {
   Button,
@@ -12,7 +12,7 @@ import {
 import { useTranslation } from 'react-i18next';
 
 import { createUser } from 'api/user';
-import { error, success } from 'colors';
+import { error } from 'colors';
 import { CreateUserForm, Role } from 'shared/types/user';
 import { mapCreateUserFormToCreateUserPayload } from 'shared/utils/user.utils';
 import { getErrorDetail } from 'shared/utils/common.utils';
@@ -22,23 +22,24 @@ import {
   incorrectEmailError,
   invalidFormError,
   roleRequiredError,
-  unknownError,
 } from 'shared/consts/error';
+import toast from 'react-hot-toast';
 
 export default function CreateUser() {
   const { t } = useTranslation('settings');
-  const [created, setCreated] = useState(false);
   const [errorText, setErrorText] = useState('');
 
   const onSubmit = async (userData: CreateUserForm) => {
     try {
       await createUser(mapCreateUserFormToCreateUserPayload(userData));
       setErrorText('');
-      setCreated(true);
+      toast.success(t('createUser.userCreated'));
       formik.resetForm();
+      await formik.validateForm();
     } catch (err: unknown) {
-      setErrorText(getErrorDetail(err));
-      setCreated(false);
+      const errorDetail = getErrorDetail(err);
+      setErrorText(errorDetail);
+      toast.error(t(errorDetail));
     }
   };
 
@@ -72,6 +73,10 @@ export default function CreateUser() {
     touched,
     values,
   } = formik;
+
+  useEffect(() => {
+    setErrorText('');
+  }, [values]);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -124,18 +129,14 @@ export default function CreateUser() {
         </Select>
 
         {touched.email && touched.firstName && touched.lastName && !isValid && (
-          <Typography sx={{ color: error[500] }}>{invalidFormError}</Typography>
+          <Typography sx={{ color: error[500] }}>
+            {t(invalidFormError)}
+          </Typography>
         )}
 
         <Button variant="contained" disabled={!isValid} type="submit">
           {t('createUser.submitButton')}
         </Button>
-
-        {created && (
-          <Typography sx={{ color: success[600] }}>
-            {t('createUser.userCreated')}
-          </Typography>
-        )}
 
         {errorText && (
           <Typography sx={{ color: error[500] }}>{t(errorText)}</Typography>

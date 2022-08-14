@@ -1,8 +1,10 @@
 import { Box, styled } from '@mui/material';
 import { Outlet } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 
 import { background } from 'colors';
 import { consts } from 'theme';
+import { defaultToastDuration } from 'shared/consts/shared';
 import { Navbar, Sidenav } from './components';
 
 export default function ApplicationLayout() {
@@ -15,6 +17,16 @@ export default function ApplicationLayout() {
       <Main component="main">
         <Outlet />
       </Main>
+
+      <Toaster
+        position="bottom-right"
+        toastOptions={{
+          duration: defaultToastDuration,
+          style: {
+            borderRadius: 0,
+          },
+        }}
+      />
     </Wrapper>
   );
 }
