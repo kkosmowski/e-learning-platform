@@ -10,14 +10,16 @@ import SubjectGrades from 'containers/SubjectGrades';
 import CreateNewNotice from 'containers/teacher/CreateNewNotice';
 import AssignNewGrade from 'containers/teacher/AssignNewGrade';
 import CreateNewTask from 'containers/teacher/CreateNewTask';
+import SettingsLayout from 'containers/Settings/Settings.layout';
+import Users from 'containers/Settings/features/Users';
+import CreateUser from 'containers/Settings/features/CreateUser';
+import UsersManagement from 'containers/Settings/components/UsersManagement';
+import SubjectCategoriesManagement from 'containers/Settings/features/SubjectCategoriesManagement';
+
 import TeacherGuard from 'shared/guards/TeacherGuard';
 import { RouteObjectWithId } from 'shared/types/routing';
 import { TaskType } from 'shared/types/task';
 import { Role } from 'shared/types/user';
-import SettingsLayout from 'containers/Settings/Settings.layout';
-import Users from 'containers/Settings/features/Users';
-import CreateUser from 'containers/Settings/features/CreateUser';
-import SettingsUsers from 'containers/Settings/components/SettingsUsers';
 
 export const features: RouteObjectWithId[] = [
   {
@@ -143,8 +145,12 @@ export const features: RouteObjectWithId[] = [
             element: <Settings />,
           },
           {
+            path: 'subject-categories',
+            element: <SubjectCategoriesManagement />,
+          },
+          {
             path: 'users',
-            element: <SettingsUsers />,
+            element: <UsersManagement />,
             children: [
               {
                 path: 'create',

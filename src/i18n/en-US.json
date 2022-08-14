@@ -84,7 +84,9 @@
     "welcome": "Welcome",
     "student": "Student",
     "teacher": "Teacher",
-    "admin": "Administrator"
+    "admin": "Administrator",
+    "edit": "Edit",
+    "delete": "Delete"
   },
   "settings": {
     "title": "Settings",
@@ -95,7 +97,8 @@
       "users": "Users management"
     },
     "subjectCategories": {
-      "title": "Subject categories management"
+      "title": "Subject categories management",
+      "createNew": "Create new category"
     },
     "classrooms": {
       "title": "Classrooms management"

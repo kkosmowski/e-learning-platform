@@ -84,7 +84,9 @@
     "welcome": "Witaj",
     "student": "Uczeń",
     "teacher": "Nauczyciel",
-    "admin": "Administrator"
+    "admin": "Administrator",
+    "edit": "Zmień",
+    "delete": "Usuń"
   },
   "settings": {
     "title": "Ustawienia",
@@ -95,7 +97,8 @@
       "users": "Zarządzanie użytkownikami"
     },
     "subjectCategories": {
-      "title": "Zarządzanie kategoriami przedmiotów"
+      "title": "Zarządzanie kategoriami przedmiotów",
+      "createNew": "Utwórz nową kategorię"
     },
     "classrooms": {
       "title": "Zarządzanie klasami"

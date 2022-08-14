@@ -45,6 +45,7 @@ export default function UserToolbar(props: UserToolbarProps) {
           'aria-controls': 'user-menu',
           'aria-expanded': 'true',
         })}
+        color="inherit"
         onClick={handleMenuOpen}
       >
         <AccountCircle />

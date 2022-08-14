@@ -53,13 +53,6 @@ const baseThemeOptions: ThemeOptions = {
         },
       },
     },
-    MuiIconButton: {
-      styleOverrides: {
-        root: {
-          color: 'inherit',
-        },
-      },
-    },
     MuiPaper: {
       defaultProps: {
         square: true,

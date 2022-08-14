@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import ViewHeader from 'layouts/Application/components/ViewHeader';
 import { Centered } from 'shared/components/Container';
 
-export default function SettingsUsers() {
+export default function UsersManagement() {
   const [tab, setTab] = useState('students');
   const navigate = useNavigate();
   const { t } = useTranslation('settings', { keyPrefix: 'users' });
