@@ -86,6 +86,7 @@
     "teacher": "Teacher",
     "admin": "Administrator",
     "edit": "Edit",
+    "save": "Save",
     "delete": "Delete"
   },
   "settings": {
@@ -98,7 +99,11 @@
     },
     "subjectCategories": {
       "title": "Subject categories management",
-      "createNew": "Create new category"
+      "addNew": "Add new category",
+      "categoryNamePlaceholder": "Category name...",
+      "create": "Create category",
+      "nameCannotBeEmptyTooltip": "You need to define a category name in order to create it",
+      "nothingToSaveTooltip": "No change to the name was made"
     },
     "classrooms": {
       "title": "Classrooms management"

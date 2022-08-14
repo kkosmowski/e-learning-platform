@@ -85,7 +85,8 @@
     "student": "Uczeń",
     "teacher": "Nauczyciel",
     "admin": "Administrator",
-    "edit": "Zmień",
+    "edit": "Edytuj",
+    "save": "Zapisz",
     "delete": "Usuń"
   },
   "settings": {
@@ -98,7 +99,11 @@
     },
     "subjectCategories": {
       "title": "Zarządzanie kategoriami przedmiotów",
-      "createNew": "Utwórz nową kategorię"
+      "addNew": "Dodaj nową kategorię",
+      "categoryNamePlaceholder": "Nazwa kategorii...",
+      "create": "Utwórz kategorię",
+      "nameCannotBeEmptyTooltip": "Aby utworzyć kategorię musisz nadać jej nazwę",
+      "nothingToSaveTooltip": "Brak zmian w nazwie kategorii"
     },
     "classrooms": {
       "title": "Zarządzanie klasami"
