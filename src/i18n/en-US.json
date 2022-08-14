@@ -72,6 +72,7 @@
     "back": "Back",
     "viewMore": "View more",
     "submit": "Submit",
+    "confirm": "Confirm",
     "cancel": "Cancel",
     "noNotices": "There are no notices yet.",
     "noTasks": "There are no tasks yet.",
@@ -106,7 +107,9 @@
       "nothingToSaveTooltip": "No change to the name was made",
       "createSuccessToast": "Successfully created \"{{name}}\" subject category.",
       "updateSuccessToast": "Successfully renamed \"{{oldName}}\" category to \"{{newName}}\".",
-      "deleteSuccessToast": "Successfully delete \"{{name}}\" subject category."
+      "deleteSuccessToast": "Successfully delete \"{{name}}\" subject category.",
+      "confirmDeleteTitle": "Deleting a subject category",
+      "confirmDeleteMessage": "Are you sure you want to delete \"{{name}}\" category? This operation cannot be undone."
     },
     "classrooms": {
       "title": "Classrooms management"

@@ -3,14 +3,15 @@ import { useTranslation } from 'react-i18next';
 import { Box, Button, IconButton, List, ListItem } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import toast from 'react-hot-toast';
 
 import ViewHeader from 'layouts/Application/components/ViewHeader';
 import { Centered } from 'shared/components/Container';
 import CreateNewCategoryForm from './components/CreateNewCategoryForm';
 import EditCategoryForm from './components/EditCategoryForm';
-import toast from 'react-hot-toast';
-import { getErrorDetail } from '../../../../shared/utils/common.utils';
+import { getErrorDetail } from 'shared/utils/common.utils';
 import { SubjectCategory } from 'shared/types/subject';
+import { useConfirmationDialog } from 'shared/hooks';
 
 const fakeList: SubjectCategory[] = [
   { name: 'Math', id: 'mc3g342j' },
@@ -26,6 +27,7 @@ export default function SubjectCategoriesManagement() {
   const [editedCategory, setEditedCategory] = useState<SubjectCategory | null>(
     null
   );
+  const { confirmAction, confirmationDialog } = useConfirmationDialog();
 
   const isEditMode = (categoryId: string): boolean =>
     categoryId === editedCategory?.id;
@@ -33,6 +35,23 @@ export default function SubjectCategoriesManagement() {
   const showCreateNewCategoryForm = () => {
     setIsCreateMode(true);
     setEditedCategory(null);
+  };
+
+  const showConfirmationDialog = async (category: SubjectCategory) => {
+    const shouldDelete = await confirmAction({
+      title: 'settings:subjectCategories.confirmDeleteTitle',
+      message: {
+        key: 'settings:subjectCategories.confirmDeleteMessage',
+        props: { name: category.name },
+      },
+      confirmLabel: 'common:delete',
+      confirmColor: 'error',
+    });
+
+    console.log('shouldDelete', shouldDelete);
+    if (shouldDelete) {
+      handleDelete(category);
+    }
   };
 
   const showEditCategoryForm = (category: SubjectCategory) => {
@@ -115,7 +134,7 @@ export default function SubjectCategoriesManagement() {
                   <IconButton
                     color="error"
                     aria-label={t('common:delete')}
-                    onClick={() => handleDelete(category)}
+                    onClick={() => showConfirmationDialog(category)}
                   >
                     <DeleteIcon />
                   </IconButton>
@@ -139,6 +158,8 @@ export default function SubjectCategoriesManagement() {
           ))}
         </List>
       </Centered>
+
+      {confirmationDialog}
     </>
   );
 }

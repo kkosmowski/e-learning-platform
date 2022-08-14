@@ -72,6 +72,7 @@
     "back": "Wróć",
     "viewMore": "Więcej",
     "submit": "Wyślij",
+    "confirm": "Potwierdź",
     "cancel": "Anuluj",
     "noNotices": "Brak ogłoszeń.",
     "noTasks": "Brak zadań.",
@@ -106,7 +107,9 @@
       "nothingToSaveTooltip": "Brak zmian w nazwie kategorii",
       "createSuccessToast": "Utworzono kategorię \"{{name}}\".",
       "updateSuccessToast": "Nazwa kategorii \"{{oldName}}\" pomyślnie zmieniona na \"{{newName}}\".",
-      "deleteSuccessToast": "Usunięto kategorię \"{{name}}\"."
+      "deleteSuccessToast": "Usunięto kategorię \"{{name}}\".",
+      "confirmDeleteTitle": "Usuwanie kategorii przedmiotu",
+      "confirmDeleteMessage": "Czy na pewno usunąć kategorię \"{{name}}\"? Tej operacji nie da się cofnąć."
     },
     "classrooms": {
       "title": "Zarządzanie klasami"
