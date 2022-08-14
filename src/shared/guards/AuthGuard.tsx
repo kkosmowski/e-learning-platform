@@ -1,7 +1,7 @@
-import { ReactNode } from 'react';
-import { Navigate } from 'react-router-dom';
+import { ReactNode, useEffect } from 'react';
 
 import { useAuth } from 'contexts/auth';
+import { useNavigate } from 'react-router';
 
 interface AuthGuardProps {
   children: ReactNode;
@@ -9,11 +9,14 @@ interface AuthGuardProps {
 
 export default function AuthGuard(props: AuthGuardProps) {
   const { children } = props;
+  const navigate = useNavigate();
   const { currentUser } = useAuth();
 
-  if (currentUser === null) {
-    return <Navigate to="/auth" replace />;
-  }
+  useEffect(() => {
+    if (currentUser === null) {
+      navigate('/auth', { replace: true });
+    }
+  }, [currentUser, navigate]);
 
   return <>{children}</>;
 }

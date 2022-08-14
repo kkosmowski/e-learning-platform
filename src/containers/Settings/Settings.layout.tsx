@@ -1,3 +1,4 @@
+import { useEffect, useMemo } from 'react';
 import { Outlet, useNavigate } from 'react-router';
 
 import { useAuth } from 'contexts/auth';
@@ -13,9 +14,18 @@ export default function SettingsLayout(props: SettingsLayoutProps) {
   const { limitedTo } = props;
   const { currentUser } = useAuth();
   const navigate = useNavigate();
+  const userPermitted = useMemo(
+    () => isUserPermitted(currentUser, limitedTo),
+    [currentUser, limitedTo]
+  );
 
-  if (!isUserPermitted(currentUser, limitedTo)) {
-    navigate('/404');
+  useEffect(() => {
+    if (userPermitted === false) {
+      navigate('/404');
+    }
+  }, [userPermitted, navigate]);
+
+  if (userPermitted === false) {
     return null;
   }
 

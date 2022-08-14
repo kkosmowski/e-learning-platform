@@ -1,3 +1,5 @@
+import { AxiosResponse } from 'axios';
+
 export enum Status {
   Todo = 'TODO',
   Submitted = 'SUBMITTED',
@@ -23,3 +25,5 @@ export interface PublishableItem extends BaseItem {
 export interface ErrorData {
   detail?: string;
 }
+
+export type EmptyResponse = AxiosResponse<null>;

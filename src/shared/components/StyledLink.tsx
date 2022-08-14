@@ -7,11 +7,12 @@ import { primary } from 'colors';
 interface StyledLinkProps {
   children: ReactNode;
   to: string;
+  hoverUnderline?: boolean;
   sx?: SxProps;
 }
 
 export default function StyledLink(props: StyledLinkProps) {
-  const { to, children, sx } = props;
+  const { to, children, hoverUnderline = true, sx } = props;
   return (
     <Typography
       component={Link}
@@ -19,7 +20,7 @@ export default function StyledLink(props: StyledLinkProps) {
       sx={{
         textDecoration: 'none',
         ':hover': {
-          textDecoration: 'underline',
+          ...(hoverUnderline && { textDecoration: 'underline' }),
           color: primary[500],
         },
         ...sx,

@@ -5,6 +5,7 @@ export const consts = {
   navbarHeight: 64,
   menuWidth: 300,
   containerPadding: 16,
+  centeredLayoutMaxWidth: 1000,
 };
 
 const baseThemeOptions: ThemeOptions = {
@@ -49,13 +50,6 @@ const baseThemeOptions: ThemeOptions = {
           ':last-child': {
             padding: 16,
           },
-        },
-      },
-    },
-    MuiIconButton: {
-      styleOverrides: {
-        root: {
-          color: 'inherit',
         },
       },
     },

@@ -72,6 +72,7 @@
     "back": "Back",
     "viewMore": "View more",
     "submit": "Submit",
+    "confirm": "Confirm",
     "cancel": "Cancel",
     "noNotices": "There are no notices yet.",
     "noTasks": "There are no tasks yet.",
@@ -84,23 +85,54 @@
     "welcome": "Welcome",
     "student": "Student",
     "teacher": "Teacher",
-    "admin": "Administrator"
+    "admin": "Administrator",
+    "edit": "Edit",
+    "save": "Save",
+    "delete": "Delete"
   },
   "settings": {
     "title": "Settings",
-    "tabs": {
-      "students": "Students",
-      "teachers": "Teachers",
-      "create": "Add new user"
+    "categories": {
+      "subjectCategories": "Subject categories management",
+      "classrooms": "Classrooms management",
+      "subjects": "Subjects managements",
+      "users": "Users management"
     },
-    "createUser": {
-      "placeholder": {
-        "email": "Email address",
-        "firstName": "First name",
-        "lastName": "Last name"
+    "subjectCategories": {
+      "title": "Subject categories management",
+      "addNew": "Add new category",
+      "categoryNamePlaceholder": "Category name...",
+      "create": "Create category",
+      "nameCannotBeEmptyTooltip": "You need to define a category name in order to create it",
+      "nothingToSaveTooltip": "No change to the name was made",
+      "createSuccessToast": "Successfully created \"{{name}}\" subject category.",
+      "updateSuccessToast": "Successfully renamed \"{{oldName}}\" category to \"{{newName}}\".",
+      "deleteSuccessToast": "Successfully delete \"{{name}}\" subject category.",
+      "confirmDeleteTitle": "Deleting a subject category",
+      "confirmDeleteMessage": "Are you sure you want to delete \"{{name}}\" category? This operation cannot be undone."
+    },
+    "classrooms": {
+      "title": "Classrooms management"
+    },
+    "subjects": {
+      "title": "Subjects managements"
+    },
+    "users": {
+      "title": "Users management",
+      "tabs": {
+        "students": "Students",
+        "teachers": "Teachers",
+        "create": "Add new user"
       },
-      "submitButton": "Create user",
-      "userCreated": "User created successfully"
+      "createUser": {
+        "placeholder": {
+          "email": "Email address",
+          "firstName": "First name",
+          "lastName": "Last name"
+        },
+        "submitButton": "Create user",
+        "userCreated": "User created successfully"
+      }
     }
   },
   "404": {
