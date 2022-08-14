@@ -29,7 +29,6 @@ const baseThemeOptions: ThemeOptions = {
     MuiCard: {
       styleOverrides: {
         root: {
-          borderRadius: 0,
           display: 'flex',
           flexDirection: 'column',
         },
@@ -58,6 +57,11 @@ const baseThemeOptions: ThemeOptions = {
         root: {
           color: 'inherit',
         },
+      },
+    },
+    MuiPaper: {
+      defaultProps: {
+        square: true,
       },
     },
     MuiOutlinedInput: {
