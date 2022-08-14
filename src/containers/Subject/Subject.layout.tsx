@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useNavigate, useParams, Outlet } from 'react-router';
 
 import Container from 'shared/components/Container';
@@ -9,8 +10,13 @@ export default function SubjectLayout() {
   const { subjectId } = useParams<{ subjectId: string }>();
   const currentSubject = subjects.find((subject) => subject.id === subjectId);
 
+  useEffect(() => {
+    if (!currentSubject) {
+      navigate('/404');
+    }
+  }, [currentSubject, navigate]);
+
   if (!currentSubject) {
-    navigate('/404');
     return null;
   }
 

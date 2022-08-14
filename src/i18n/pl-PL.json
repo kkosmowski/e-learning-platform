@@ -103,7 +103,10 @@
       "categoryNamePlaceholder": "Nazwa kategorii...",
       "create": "Utwórz kategorię",
       "nameCannotBeEmptyTooltip": "Aby utworzyć kategorię musisz nadać jej nazwę",
-      "nothingToSaveTooltip": "Brak zmian w nazwie kategorii"
+      "nothingToSaveTooltip": "Brak zmian w nazwie kategorii",
+      "createSuccessToast": "Utworzono kategorię \"{{name}}\".",
+      "updateSuccessToast": "Nazwa kategorii \"{{oldName}}\" pomyślnie zmieniona na \"{{newName}}\".",
+      "deleteSuccessToast": "Usunięto kategorię \"{{name}}\"."
     },
     "classrooms": {
       "title": "Zarządzanie klasami"

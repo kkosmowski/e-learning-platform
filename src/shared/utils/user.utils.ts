@@ -34,8 +34,9 @@ export const mapCreateUserFormToCreateUserPayload = (
 export const isUserPermitted = (
   user: User | null | undefined,
   limitedTo?: Role
-): boolean => {
-  if (!user) return false;
+): boolean | undefined => {
+  if (user === undefined) return undefined;
+  if (user === null) return false;
   if (!limitedTo) return true;
 
   return limitedTo === user.role;

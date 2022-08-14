@@ -103,7 +103,10 @@
       "categoryNamePlaceholder": "Category name...",
       "create": "Create category",
       "nameCannotBeEmptyTooltip": "You need to define a category name in order to create it",
-      "nothingToSaveTooltip": "No change to the name was made"
+      "nothingToSaveTooltip": "No change to the name was made",
+      "createSuccessToast": "Successfully created \"{{name}}\" subject category.",
+      "updateSuccessToast": "Successfully renamed \"{{oldName}}\" category to \"{{newName}}\".",
+      "deleteSuccessToast": "Successfully delete \"{{name}}\" subject category."
     },
     "classrooms": {
       "title": "Classrooms management"

@@ -8,8 +8,11 @@ import ViewHeader from 'layouts/Application/components/ViewHeader';
 import { Centered } from 'shared/components/Container';
 import CreateNewCategoryForm from './components/CreateNewCategoryForm';
 import EditCategoryForm from './components/EditCategoryForm';
+import toast from 'react-hot-toast';
+import { getErrorDetail } from '../../../../shared/utils/common.utils';
+import { SubjectCategory } from 'shared/types/subject';
 
-const fakeList = [
+const fakeList: SubjectCategory[] = [
   { name: 'Math', id: 'mc3g342j' },
   { name: 'PE', id: 'k34ji5t' },
   { name: 'English', id: '13gonjmd' },
@@ -20,18 +23,20 @@ const fakeList = [
 export default function SubjectCategoriesManagement() {
   const { t } = useTranslation('settings', { keyPrefix: 'subjectCategories' });
   const [isCreateMode, setIsCreateMode] = useState(false);
-  const [editedCategory, setEditedCategory] = useState<string | null>(null);
+  const [editedCategory, setEditedCategory] = useState<SubjectCategory | null>(
+    null
+  );
 
   const isEditMode = (categoryId: string): boolean =>
-    categoryId === editedCategory;
+    categoryId === editedCategory?.id;
 
   const showCreateNewCategoryForm = () => {
     setIsCreateMode(true);
     setEditedCategory(null);
   };
 
-  const showEditCategoryForm = (categoryId: string) => {
-    setEditedCategory(categoryId);
+  const showEditCategoryForm = (category: SubjectCategory) => {
+    setEditedCategory(category);
     setIsCreateMode(false);
   };
 
@@ -40,24 +45,39 @@ export default function SubjectCategoriesManagement() {
     setEditedCategory(null);
   };
 
-  const handleCreateNew = () => {
-    console.log('create');
+  const handleCreateNew = (name: string) => {
+    try {
+      // @todo call backend
+      toast.success(t('createSuccessToast', { name }));
+    } catch (err: unknown) {
+      const error = getErrorDetail(err);
+      toast.error(t(error));
+    }
   };
 
   const handleUpdate = (newName: string) => {
-    console.log(
-      fakeList.find(({ id }) => id === editedCategory)?.name,
-      'was renamed to',
-      newName
-    );
+    if (editedCategory) {
+      try {
+        // @todo call backend
+        toast.success(
+          t('updateSuccessToast', { oldName: editedCategory.name, newName })
+        );
+      } catch (err: unknown) {
+        const error = getErrorDetail(err);
+        toast.error(t(error));
+      }
+    }
   };
 
-  const handleDelete = (categoryId: string) => {
+  const handleDelete = (category: SubjectCategory) => {
     // @todo: confirmation dialog
-    console.log(
-      'delete category',
-      fakeList.find(({ id }) => id === categoryId)?.name
-    );
+    try {
+      // @todo call backend
+      toast.success(t('deleteSuccessToast', { name: category.name }));
+    } catch (err: unknown) {
+      const error = getErrorDetail(err);
+      toast.error(t(error));
+    }
   };
 
   return (
@@ -79,41 +99,41 @@ export default function SubjectCategoriesManagement() {
         )}
 
         <List sx={{ width: '100%' }}>
-          {fakeList.map(({ id, name }) => (
+          {fakeList.map((category) => (
             <ListItem
-              key={id}
+              key={category.id}
               divider
               secondaryAction={
                 <>
                   <IconButton
                     color="primary"
                     aria-label={t('common:edit')}
-                    onClick={() => showEditCategoryForm(id)}
+                    onClick={() => showEditCategoryForm(category)}
                   >
                     <EditIcon />
                   </IconButton>
                   <IconButton
                     color="error"
                     aria-label={t('common:delete')}
-                    onClick={() => handleDelete(id)}
+                    onClick={() => handleDelete(category)}
                   >
                     <DeleteIcon />
                   </IconButton>
                 </>
               }
               sx={{
-                py: isEditMode(id) ? 0.5 : 1.5,
+                py: isEditMode(category.id) ? 0.5 : 1.5,
                 pr: 16,
               }}
             >
-              {isEditMode(id) ? (
+              {isEditMode(category.id) ? (
                 <EditCategoryForm
-                  value={name}
+                  value={category.name}
                   onSubmit={handleUpdate}
                   onCancel={handleCancel}
                 />
               ) : (
-                name
+                category.name
               )}
             </ListItem>
           ))}
