@@ -1,28 +1,29 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, Button, IconButton, List, ListItem } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import toast from 'react-hot-toast';
 
+import {
+  createSubjectCategory,
+  deleteSubjectCategory,
+  getSubjectCategories,
+  updateSubjectCategory,
+} from 'api/subject';
 import ViewHeader from 'layouts/Application/components/ViewHeader';
 import { Centered } from 'shared/components/Container';
-import CreateNewCategoryForm from './components/CreateNewCategoryForm';
-import EditCategoryForm from './components/EditCategoryForm';
 import { getErrorDetail } from 'shared/utils/common.utils';
 import { SubjectCategory } from 'shared/types/subject';
 import { useConfirmationDialog } from 'shared/hooks';
-
-const fakeList: SubjectCategory[] = [
-  { name: 'Math', id: 'mc3g342j' },
-  { name: 'PE', id: 'k34ji5t' },
-  { name: 'English', id: '13gonjmd' },
-  { name: 'Physics', id: 'hg54prks' },
-  { name: 'Biology', id: 'myo543ko' },
-];
+import CreateNewCategoryForm from './components/CreateNewCategoryForm';
+import EditCategoryForm from './components/EditCategoryForm';
 
 export default function SubjectCategoriesManagement() {
   const { t } = useTranslation('settings', { keyPrefix: 'subjectCategories' });
+  const [subjectCategories, setSubjectCategories] = useState<SubjectCategory[]>(
+    []
+  );
   const [isCreateMode, setIsCreateMode] = useState(false);
   const [editedCategory, setEditedCategory] = useState<SubjectCategory | null>(
     null
@@ -63,9 +64,10 @@ export default function SubjectCategoriesManagement() {
     setEditedCategory(null);
   };
 
-  const handleCreateNew = (name: string) => {
+  const handleCreateNew = async (name: string) => {
     try {
-      // @todo call backend
+      const { data } = await createSubjectCategory(name);
+      setSubjectCategories([...subjectCategories, data]);
       toast.success(t('createSuccessToast', { name }));
     } catch (err: unknown) {
       const error = getErrorDetail(err);
@@ -73,10 +75,18 @@ export default function SubjectCategoriesManagement() {
     }
   };
 
-  const handleUpdate = (newName: string) => {
+  const handleUpdate = async (newName: string) => {
     if (editedCategory) {
       try {
-        // @todo call backend
+        const { data } = await updateSubjectCategory({
+          id: editedCategory.id,
+          name: newName,
+        });
+        setSubjectCategories(
+          subjectCategories.map((category) =>
+            category.id === data.id ? data : category
+          )
+        );
         toast.success(
           t('updateSuccessToast', { oldName: editedCategory.name, newName })
         );
@@ -87,16 +97,26 @@ export default function SubjectCategoriesManagement() {
     }
   };
 
-  const handleDelete = (category: SubjectCategory) => {
-    // @todo: confirmation dialog
+  const handleDelete = async (category: SubjectCategory) => {
     try {
-      // @todo call backend
+      await deleteSubjectCategory(category.id);
       toast.success(t('deleteSuccessToast', { name: category.name }));
+      setSubjectCategories(
+        subjectCategories.filter(({ id }) => category.id !== id)
+      );
     } catch (err: unknown) {
       const error = getErrorDetail(err);
       toast.error(t(error));
     }
   };
+
+  useEffect(() => {
+    // @todo use TanStack Query
+    (async () => {
+      const { data } = await getSubjectCategories();
+      setSubjectCategories(data);
+    })();
+  }, []);
 
   return (
     <>
@@ -117,7 +137,7 @@ export default function SubjectCategoriesManagement() {
         )}
 
         <List sx={{ width: '100%' }}>
-          {fakeList.map((category) => (
+          {subjectCategories.map((category) => (
             <ListItem
               key={category.id}
               divider
