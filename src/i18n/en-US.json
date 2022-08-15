@@ -56,7 +56,7 @@
       "GRADED": "Graded"
     },
     "submitSolution": "Submit a solution",
-    "taskMessagePlaceholder": "Type your answer or leave additional comment...",
+    "taskMessagePlaceholder": "Type your answer or leave additional comment",
     "pastDeadline": "past deadline",
     "daysLeft": "days left",
     "hoursLeft": "hours left",
@@ -88,6 +88,7 @@
     "admin": "Administrator",
     "edit": "Edit",
     "save": "Save",
+    "create": "Create",
     "delete": "Delete"
   },
   "settings": {
@@ -101,7 +102,7 @@
     "subjectCategories": {
       "title": "Subject categories management",
       "addNew": "Add new category",
-      "categoryNamePlaceholder": "Category name...",
+      "categoryNamePlaceholder": "Category name",
       "create": "Create category",
       "nameCannotBeEmptyTooltip": "You need to define a category name in order to create it",
       "nothingToSaveTooltip": "No change to the name was made",
@@ -112,7 +113,16 @@
       "confirmDeleteMessage": "Are you sure you want to delete \"{{name}}\" category? This operation cannot be undone."
     },
     "classrooms": {
-      "title": "Classrooms management"
+      "title": "Classrooms management",
+      "create": {
+        "title": "New class",
+        "placeholder": {
+          "name": "Classroom name",
+          "teacherId": "Teacher (supervising)",
+          "studentIds": "Students"
+        },
+        "createAndShow": "Create and show"
+      }
     },
     "subjects": {
       "title": "Subjects managements"
@@ -154,6 +164,8 @@
     "EMAIL_TAKEN": "This email is already in use.",
     "INCORRECT CREDENTIALS": "Incorrect email or password.",
     "USER_NOT_FOUND": "User not found.",
-    "USER_INACTIVE": "Inactive account."
+    "USER_INACTIVE": "Inactive account.",
+    "CLASSROOM_NAME_REQUIRED": "Classroom name is required.",
+    "CLASSROOM_TEACHER_REQUIRED": "Select supervising teacher."
   }
 }
