@@ -56,7 +56,7 @@
       "GRADED": "Ocenione"
     },
     "submitSolution": "Prześlij rozwiązanie",
-    "taskMessagePlaceholder": "Napisz odpowiedź bądź opcjonalny komentarz...",
+    "taskMessagePlaceholder": "Napisz odpowiedź bądź opcjonalny komentarz",
     "pastDeadline": "czas minął",
     "daysLeft": "dni",
     "hoursLeft": "godziny",
@@ -88,6 +88,7 @@
     "admin": "Administrator",
     "edit": "Edytuj",
     "save": "Zapisz",
+    "create": "Utwórz",
     "delete": "Usuń"
   },
   "settings": {
@@ -101,7 +102,7 @@
     "subjectCategories": {
       "title": "Zarządzanie kategoriami przedmiotów",
       "addNew": "Dodaj nową kategorię",
-      "categoryNamePlaceholder": "Nazwa kategorii...",
+      "categoryNamePlaceholder": "Nazwa kategorii",
       "create": "Utwórz kategorię",
       "nameCannotBeEmptyTooltip": "Aby utworzyć kategorię musisz nadać jej nazwę",
       "nothingToSaveTooltip": "Brak zmian w nazwie kategorii",
@@ -112,7 +113,18 @@
       "confirmDeleteMessage": "Czy na pewno usunąć kategorię \"{{name}}\"? Tej operacji nie da się cofnąć."
     },
     "classrooms": {
-      "title": "Zarządzanie klasami"
+      "title": "Zarządzanie klasami",
+      "addNew": "Dodaj nową klasę",
+      "noItems": "Brak istniejących klas.",
+      "create": {
+        "title": "Nowa klasa",
+        "placeholder": {
+          "name": "Nazwa klasy",
+          "teacher": "Nauczyciel (wychowawca)",
+          "students": "Uczniowie"
+        },
+        "createAndShow": "Utwórz i wyświetl"
+      }
     },
     "subjects": {
       "title": "Zarządzanie przedmiotami"
@@ -154,6 +166,9 @@
     "EMAIL_TAKEN": "Ten adres e-mail istnieje już w bazie danych.",
     "INCORRECT CREDENTIALS": "Niepoprawny e-mail bądź hasło.",
     "USER_NOT_FOUND": "Nie znaleziono użytkownika.",
-    "USER_INACTIVE": "To konto nie jest aktywne."
+    "USER_INACTIVE": "To konto nie jest aktywne.",
+    "CLASSROOM_NAME_REQUIRED": "Nazwa klasy jest wymagana.",
+    "CLASSROOM_NAME_TAKEN": "Ta nazwa klasy jest już zajęta.",
+    "CLASSROOM_TEACHER_REQUIRED": "Wybierz wychowawcę klasy."
   }
 }

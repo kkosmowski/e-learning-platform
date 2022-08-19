@@ -1,6 +1,5 @@
-import { authorized, unauthorized } from 'api/axios';
+import { unauthorized } from 'api/axios';
 import { AuthenticateResponse, LoginCredentials } from 'shared/types/auth';
-import { FetchMeResponse } from 'shared/types/user';
 
 export const authenticate = ({
   username,
@@ -10,8 +9,4 @@ export const authenticate = ({
   formData.append('username', username);
   formData.append('password', password);
   return unauthorized((api) => api.post('auth/login', formData));
-};
-
-export const fetchMe = (): Promise<FetchMeResponse> => {
-  return authorized((api) => api.get('auth/me'));
 };

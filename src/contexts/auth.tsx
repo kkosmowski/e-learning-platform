@@ -7,7 +7,8 @@ import {
   useState,
 } from 'react';
 
-import { authenticate, fetchMe } from 'api/auth';
+import { authenticate } from 'api/auth';
+import { fetchMe } from 'api/user';
 import { clearToken, setToken } from 'api/axios';
 import { LoginCredentials } from 'shared/types/auth';
 import { User, UserDto } from 'shared/types/user';

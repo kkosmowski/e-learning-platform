@@ -15,5 +15,9 @@ export const firstNameRequiredError = 'error:FIRST_NAME_REQUIRED';
 export const roleRequiredError = 'error:ROLE_REQUIRED';
 
 // user errors
-
 export const emailTakenError = 'error:EMAIL_TAKEN';
+
+// classroom errors
+export const classroomNameRequiredError = 'error:CLASSROOM_NAME_REQUIRED';
+export const classroomNameTakenError = 'error:CLASSROOM_NAME_TAKEN';
+export const classroomTeacherRequiredError = 'error:CLASSROOM_TEACHER_REQUIRED';
