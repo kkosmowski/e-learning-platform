@@ -114,12 +114,14 @@
     },
     "classrooms": {
       "title": "Zarządzanie klasami",
+      "addNew": "Dodaj nową klasę",
+      "noItems": "Brak istniejących klas.",
       "create": {
         "title": "Nowa klasa",
         "placeholder": {
           "name": "Nazwa klasy",
-          "teacherId": "Nauczyciel (wychowawca)",
-          "studentIds": "Uczniowie"
+          "teacher": "Nauczyciel (wychowawca)",
+          "students": "Uczniowie"
         },
         "createAndShow": "Utwórz i wyświetl"
       }
@@ -166,6 +168,7 @@
     "USER_NOT_FOUND": "Nie znaleziono użytkownika.",
     "USER_INACTIVE": "To konto nie jest aktywne.",
     "CLASSROOM_NAME_REQUIRED": "Nazwa klasy jest wymagana.",
+    "CLASSROOM_NAME_TAKEN": "Ta nazwa klasy jest już zajęta.",
     "CLASSROOM_TEACHER_REQUIRED": "Wybierz wychowawcę klasy."
   }
 }

@@ -114,12 +114,14 @@
     },
     "classrooms": {
       "title": "Classrooms management",
+      "addNew": "Add new classroom",
+      "noItems": "There are no classrooms yet.",
       "create": {
-        "title": "New class",
+        "title": "New classroom",
         "placeholder": {
           "name": "Classroom name",
-          "teacherId": "Teacher (supervising)",
-          "studentIds": "Students"
+          "teacher": "Teacher (supervising)",
+          "students": "Students"
         },
         "createAndShow": "Create and show"
       }
@@ -166,6 +168,7 @@
     "USER_NOT_FOUND": "User not found.",
     "USER_INACTIVE": "Inactive account.",
     "CLASSROOM_NAME_REQUIRED": "Classroom name is required.",
+    "CLASSROOM_NAME_TAKEN": "This classroom name is already taken.",
     "CLASSROOM_TEACHER_REQUIRED": "Select supervising teacher."
   }
 }

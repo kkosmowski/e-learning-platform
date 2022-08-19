@@ -20,8 +20,8 @@ export interface Classroom extends Omit<SimpleClassroom, 'studentsCount'> {
 
 export interface CreateClassroomForm {
   name: string;
-  teacherId: string | null;
-  studentIds: string[];
+  teacher: User | null;
+  students: User[];
 }
 
 // payloads
@@ -35,3 +35,4 @@ export interface CreateClassroomPayload {
 // responses
 
 export type CreateClassroomResponse = AxiosResponse<SimpleClassroom>;
+export type GetClassroomsResponse = AxiosResponse<SimpleClassroom[]>;

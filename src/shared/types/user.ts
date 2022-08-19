@@ -47,3 +47,5 @@ export type CreateUserPayload = Pick<
 
 export type FetchMeResponse = AxiosResponse<UserDto>;
 export type CreateUserResponse = AxiosResponse<UserDto>;
+export type GetUsersResponse = AxiosResponse<UserDto[]>;
+export type ValidateGroupNameResponse = AxiosResponse<boolean>;

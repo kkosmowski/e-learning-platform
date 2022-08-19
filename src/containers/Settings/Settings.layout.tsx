@@ -25,7 +25,7 @@ export default function SettingsLayout(props: SettingsLayoutProps) {
     }
   }, [userPermitted, navigate]);
 
-  if (userPermitted === false) {
+  if (!currentUser || userPermitted === false) {
     return null;
   }
 
