@@ -1,7 +1,7 @@
 import {
   CreateClassroomForm,
   CreateClassroomPayload,
-} from '../types/classroom';
+} from 'shared/types/classroom';
 
 export const mapCreateClassroomFormToPayload = (
   form: CreateClassroomForm

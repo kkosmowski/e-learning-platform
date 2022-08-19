@@ -9,7 +9,7 @@ export interface SimpleClassroom {
   studentsCount: number;
 }
 
-export interface SimpleClassromDto
+export interface SimpleClassroomDto
   extends Omit<SimpleClassroom, 'studentsCount'> {
   students_count: number;
 }
@@ -34,5 +34,7 @@ export interface CreateClassroomPayload {
 
 // responses
 
-export type CreateClassroomResponse = AxiosResponse<SimpleClassroom>;
+export type CreateClassroomResponse = AxiosResponse<SimpleClassroomDto>;
 export type GetClassroomsResponse = AxiosResponse<SimpleClassroom[]>;
+export type ValidateClassroomNameResponse = AxiosResponse<boolean>;
+export type GetClassroomResponse = AxiosResponse<Classroom>;

@@ -11,8 +11,7 @@ import {
   useState,
 } from 'react';
 
-import ViewHeader from 'layouts/Application/components/ViewHeader';
-import { Centered } from 'shared/components/Container';
+import CommonViewLayout from 'layouts/CommonView';
 import { CreateClassroomForm } from 'shared/types/classroom';
 import {
   classroomNameRequiredError,
@@ -23,7 +22,7 @@ import { getErrorDetail } from 'shared/utils/common.utils';
 import { mapUserDtoToUser } from 'shared/utils/user.utils';
 import { Role, User } from 'shared/types/user';
 import { getUsers } from 'api/user';
-import { createClassroom, validateClassromName } from 'api/group';
+import { createClassroom, validateClassroomName } from 'api/classroom';
 import { defaultDebounce } from 'shared/consts/shared';
 
 export default function CreateClassroom() {
@@ -96,7 +95,7 @@ export default function CreateClassroom() {
 
   const validateName = useCallback(
     debounce(async (name: string) => {
-      const { data: isNameValid } = await validateClassromName(name);
+      const { data: isNameValid } = await validateClassroomName(name);
 
       if (!isNameValid) {
         setFieldError('name', classroomNameTakenError);
@@ -129,88 +128,83 @@ export default function CreateClassroom() {
   };
 
   return (
-    <>
-      <ViewHeader title={t('classrooms.create.title')} />
+    <CommonViewLayout headerTitle={t('classrooms.create.title')} maxWidth={600}>
+      <form
+        onSubmit={handleSubmit}
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 16,
+        }}
+      >
+        <TextField
+          name="name"
+          placeholder={t('classrooms.create.placeholder.name')}
+          value={values.name}
+          error={touched.name && Boolean(errors.name)}
+          helperText={touched.name && errors.name && t(errors.name)}
+          autoFocus
+          onBlur={handleBlur}
+          onChange={handleChange}
+        />
 
-      <Centered>
-        <form
-          onSubmit={handleSubmit}
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 16,
-            maxWidth: 600,
-          }}
-        >
-          <TextField
-            name="name"
-            placeholder={t('classrooms.create.placeholder.name')}
-            value={values.name}
-            error={touched.name && Boolean(errors.name)}
-            helperText={touched.name && errors.name && t(errors.name)}
-            autoFocus
-            onBlur={handleBlur}
-            onChange={handleChange}
-          />
+        <Autocomplete
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              name="teacher"
+              placeholder={t('classrooms.create.placeholder.teacher')}
+              value={values.teacher}
+              error={touched.teacher && Boolean(errors.teacher)}
+              helperText={
+                touched.teacher && errors.teacher && t(errors.teacher)
+              }
+              onBlur={handleBlur}
+            />
+          )}
+          options={teachersList}
+          getOptionLabel={(teacher) => teacher.fullName}
+          onChange={handleTeacherChange}
+        />
 
-          <Autocomplete
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                name="teacher"
-                placeholder={t('classrooms.create.placeholder.teacher')}
-                value={values.teacher}
-                error={touched.teacher && Boolean(errors.teacher)}
-                helperText={
-                  touched.teacher && errors.teacher && t(errors.teacher)
-                }
-                onBlur={handleBlur}
-              />
-            )}
-            options={teachersList}
-            getOptionLabel={(teacher) => teacher.fullName}
-            onChange={handleTeacherChange}
-          />
+        <Autocomplete
+          multiple
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              name="students"
+              placeholder={t('classrooms.create.placeholder.students')}
+              value={values.students}
+              error={touched.students && Boolean(errors.students)}
+              helperText={
+                touched.students &&
+                errors.students &&
+                t(errors.students.toString())
+              }
+              onBlur={handleBlur}
+            />
+          )}
+          options={studentsList}
+          getOptionLabel={(student) => student.fullName}
+          onChange={handleStudentsChange}
+        />
 
-          <Autocomplete
-            multiple
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                name="students"
-                placeholder={t('classrooms.create.placeholder.students')}
-                value={values.students}
-                error={touched.students && Boolean(errors.students)}
-                helperText={
-                  touched.students &&
-                  errors.students &&
-                  t(errors.students.toString())
-                }
-                onBlur={handleBlur}
-              />
-            )}
-            options={studentsList}
-            getOptionLabel={(student) => student.fullName}
-            onChange={handleStudentsChange}
-          />
+        <Box sx={{ display: 'flex', gap: 3, '*': { flex: 1 } }}>
+          <Button type="submit" variant="contained" disabled={!isValid}>
+            {t('common:create')}
+          </Button>
 
-          <Box sx={{ display: 'flex', gap: 3, '*': { flex: 1 } }}>
-            <Button type="submit" variant="contained" disabled={!isValid}>
-              {t('common:create')}
-            </Button>
-
-            <Button
-              type="button"
-              variant="contained"
-              disabled={!isValid}
-              color="secondary"
-              onClick={handleCreateAndShow}
-            >
-              {t('classrooms.create.createAndShow')}
-            </Button>
-          </Box>
-        </form>
-      </Centered>
-    </>
+          <Button
+            type="button"
+            variant="contained"
+            disabled={!isValid}
+            color="secondary"
+            onClick={handleCreateAndShow}
+          >
+            {t('classrooms.create.createAndShow')}
+          </Button>
+        </Box>
+      </form>
+    </CommonViewLayout>
   );
 }

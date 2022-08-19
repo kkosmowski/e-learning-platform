@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { MouseEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import {
@@ -6,15 +6,14 @@ import {
   Button,
   IconButton,
   List,
-  ListItem,
+  ListItemButton,
   Typography,
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 
-import ViewHeader from 'layouts/Application/components/ViewHeader';
-import { Centered } from 'shared/components/Container';
+import CommonViewLayout from 'layouts/CommonView';
 import { SimpleClassroom } from 'shared/types/classroom';
-import { getClassrooms } from 'api/group';
+import { getClassrooms } from 'api/classroom';
 
 export default function ClassroomsManagement() {
   const [classrooms, setClassrooms] = useState<SimpleClassroom[]>([]);
@@ -23,6 +22,18 @@ export default function ClassroomsManagement() {
 
   const navigateToClassroomCreatePage = () => {
     navigate('./create');
+  };
+
+  const navigateToClassroomEditPage = (
+    classroomId: string,
+    event: MouseEvent<HTMLButtonElement>
+  ) => {
+    event.stopPropagation();
+    navigate(`./${classroomId}/edit`);
+  };
+
+  const navigateToClassroomViewPage = (classroomId: string) => {
+    navigate(`./${classroomId}`);
   };
 
   const fetchClassrooms = async () => {
@@ -35,51 +46,41 @@ export default function ClassroomsManagement() {
   }, []);
 
   return (
-    <>
-      <ViewHeader title={t('title')} />
+    <CommonViewLayout headerTitle={t('title')} maxWidth={600}>
+      <Box sx={{ height: 40, display: 'flex', alignItems: 'center' }}>
+        <Button variant="contained" onClick={navigateToClassroomCreatePage}>
+          {t('addNew')}
+        </Button>
+      </Box>
 
-      <Centered innerSx={{ alignItems: 'flex-start', maxWidth: 800, gap: 3 }}>
-        <Box sx={{ height: 40, display: 'flex', alignItems: 'center' }}>
-          <Button variant="contained" onClick={navigateToClassroomCreatePage}>
-            {t('addNew')}
-          </Button>
-        </Box>
-
-        {classrooms.length ? (
-          <List sx={{ width: '100%' }}>
-            {classrooms.map((classroom) => (
-              <ListItem
-                key={classroom.id}
-                divider
-                secondaryAction={
-                  <>
-                    <IconButton
-                      color="primary"
-                      aria-label={t('common:edit')}
-                      disabled // @todo temporary
-                      // onClick={() => showEditClassroomForm(classroom)}
-                    >
-                      <EditIcon />
-                    </IconButton>
-                    {/*<IconButton*/}
-                    {/*  color="error"*/}
-                    {/*  aria-label={t('common:delete')}*/}
-                    {/*  onClick={() => showConfirmationDialog(classroom)}*/}
-                    {/*>*/}
-                    {/*  <DeleteIcon />*/}
-                    {/*</IconButton>*/}
-                  </>
+      {classrooms.length ? (
+        <List sx={{ width: '100%' }}>
+          {classrooms.map((classroom) => (
+            <ListItemButton
+              key={classroom.id}
+              dense={true}
+              divider
+              sx={{ py: 1.5 }}
+              onClick={() => navigateToClassroomViewPage(classroom.id)}
+            >
+              {classroom.name}
+              <IconButton
+                color="primary"
+                size="small"
+                sx={{ ml: 2 }}
+                aria-label={t('common:edit')}
+                onClick={(event) =>
+                  navigateToClassroomEditPage(classroom.id, event)
                 }
-                sx={{ py: 1.5 }}
               >
-                {classroom.name}
-              </ListItem>
-            ))}
-          </List>
-        ) : (
-          <Typography>{t('noItems')}</Typography>
-        )}
-      </Centered>
-    </>
+                <EditIcon />
+              </IconButton>
+            </ListItemButton>
+          ))}
+        </List>
+      ) : (
+        <Typography>{t('noItems')}</Typography>
+      )}
+    </CommonViewLayout>
   );
 }

@@ -18,6 +18,7 @@ import { SubjectCategory } from 'shared/types/subject';
 import { useConfirmationDialog } from 'shared/hooks';
 import CreateNewCategoryForm from './components/CreateNewCategoryForm';
 import EditCategoryForm from './components/EditCategoryForm';
+import CommonViewLayout from '../../../../layouts/CommonView';
 
 export default function SubjectCategoriesManagement() {
   const { t } = useTranslation('settings', { keyPrefix: 'subjectCategories' });
@@ -119,66 +120,66 @@ export default function SubjectCategoriesManagement() {
   }, []);
 
   return (
-    <>
-      <ViewHeader title={t('title')} />
+    <CommonViewLayout
+      headerTitle={t('title')}
+      maxWidth={600}
+      CenteredProps={{ innerSx: { gap: 3 } }}
+    >
+      {isCreateMode ? (
+        <CreateNewCategoryForm
+          onSubmit={handleCreateNew}
+          onCancel={handleCancel}
+        />
+      ) : (
+        <Box sx={{ height: 40, display: 'flex', alignItems: 'center' }}>
+          <Button variant="contained" onClick={showCreateNewCategoryForm}>
+            {t('addNew')}
+          </Button>
+        </Box>
+      )}
 
-      <Centered innerSx={{ alignItems: 'flex-start', maxWidth: 600, gap: 3 }}>
-        {isCreateMode ? (
-          <CreateNewCategoryForm
-            onSubmit={handleCreateNew}
-            onCancel={handleCancel}
-          />
-        ) : (
-          <Box sx={{ height: 40, display: 'flex', alignItems: 'center' }}>
-            <Button variant="contained" onClick={showCreateNewCategoryForm}>
-              {t('addNew')}
-            </Button>
-          </Box>
-        )}
-
-        <List sx={{ width: '100%' }}>
-          {subjectCategories.map((category) => (
-            <ListItem
-              key={category.id}
-              divider
-              secondaryAction={
-                <>
-                  <IconButton
-                    color="primary"
-                    aria-label={t('common:edit')}
-                    onClick={() => showEditCategoryForm(category)}
-                  >
-                    <EditIcon />
-                  </IconButton>
-                  <IconButton
-                    color="error"
-                    aria-label={t('common:delete')}
-                    onClick={() => showConfirmationDialog(category)}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </>
-              }
-              sx={{
-                py: isEditMode(category.id) ? 0.5 : 1.5,
-                pr: 16,
-              }}
-            >
-              {isEditMode(category.id) ? (
-                <EditCategoryForm
-                  value={category.name}
-                  onSubmit={handleUpdate}
-                  onCancel={handleCancel}
-                />
-              ) : (
-                category.name
-              )}
-            </ListItem>
-          ))}
-        </List>
-      </Centered>
+      <List sx={{ width: '100%' }}>
+        {subjectCategories.map((category) => (
+          <ListItem
+            key={category.id}
+            divider
+            secondaryAction={
+              <>
+                <IconButton
+                  color="primary"
+                  aria-label={t('common:edit')}
+                  onClick={() => showEditCategoryForm(category)}
+                >
+                  <EditIcon />
+                </IconButton>
+                <IconButton
+                  color="error"
+                  aria-label={t('common:delete')}
+                  onClick={() => showConfirmationDialog(category)}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </>
+            }
+            sx={{
+              py: isEditMode(category.id) ? 0.5 : 1.5,
+              pr: 16,
+            }}
+          >
+            {isEditMode(category.id) ? (
+              <EditCategoryForm
+                value={category.name}
+                onSubmit={handleUpdate}
+                onCancel={handleCancel}
+              />
+            ) : (
+              category.name
+            )}
+          </ListItem>
+        ))}
+      </List>
 
       {confirmationDialog}
-    </>
+    </CommonViewLayout>
   );
 }
