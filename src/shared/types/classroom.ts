@@ -28,7 +28,7 @@ export interface Classroom {
   students: User[];
 }
 
-export interface CreateClassroomForm {
+export interface ClassroomForm {
   name: string;
   teacher: User | null;
   students: User[];

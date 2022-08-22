@@ -1,21 +1,21 @@
 import { authorized } from './axios';
 import {
-  CreateClassroomForm,
+  ClassroomForm,
   CreateClassroomResponse,
   GetClassroomResponse,
   GetClassroomsResponse,
   ValidateClassroomNameResponse,
 } from 'shared/types/classroom';
-import { mapCreateClassroomFormToPayload } from 'shared/utils/classroom.utils';
+import { mapClassroomFormToCreateClassroomPayload } from 'shared/utils/classroom.utils';
 
 export const getClassrooms = (): Promise<GetClassroomsResponse> =>
   authorized((api) => api.get('group'));
 
 export const createClassroom = (
-  formValues: CreateClassroomForm
+  formValues: ClassroomForm
 ): Promise<CreateClassroomResponse> =>
   authorized((api) =>
-    api.post('group', mapCreateClassroomFormToPayload(formValues))
+    api.post('group', mapClassroomFormToCreateClassroomPayload(formValues))
   );
 
 export const validateClassroomName = (

@@ -1,13 +1,13 @@
 import {
   Classroom,
   ClassroomDto,
-  CreateClassroomForm,
+  ClassroomForm,
   CreateClassroomPayload,
 } from 'shared/types/classroom';
 import { mapUserDtoToUser } from './user.utils';
 
-export const mapCreateClassroomFormToPayload = (
-  form: CreateClassroomForm
+export const mapClassroomFormToCreateClassroomPayload = (
+  form: ClassroomForm
 ): CreateClassroomPayload => {
   if (form.teacher === null) {
     throw Error('Form does not contain Teacher.');

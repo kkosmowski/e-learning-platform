@@ -116,6 +116,9 @@
       "title": "Classrooms management",
       "addNew": "Add new classroom",
       "noItems": "There are no classrooms yet.",
+      "name": "Name",
+      "teacher": "Supervising teacher",
+      "students": "Students",
       "create": {
         "title": "New classroom",
         "placeholder": {
@@ -124,6 +127,9 @@
           "students": "Students"
         },
         "createAndShow": "Create and show"
+      },
+      "edit": {
+        "editThisClassroom": "Edit this classroom"
       }
     },
     "subjects": {
