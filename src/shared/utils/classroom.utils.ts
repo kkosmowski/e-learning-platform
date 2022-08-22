@@ -1,7 +1,10 @@
 import {
+  Classroom,
+  ClassroomDto,
   CreateClassroomForm,
   CreateClassroomPayload,
 } from 'shared/types/classroom';
+import { mapUserDtoToUser } from './user.utils';
 
 export const mapCreateClassroomFormToPayload = (
   form: CreateClassroomForm
@@ -16,3 +19,10 @@ export const mapCreateClassroomFormToPayload = (
     student_ids: form.students.map(({ id }) => id),
   };
 };
+
+export const mapClassroomDtoToClassroom = (dto: ClassroomDto): Classroom => ({
+  id: dto.id,
+  name: dto.name,
+  teacher: mapUserDtoToUser(dto.teacher),
+  students: dto.students.map(mapUserDtoToUser),
+});

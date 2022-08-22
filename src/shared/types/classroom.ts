@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 
-import { User } from 'shared/types/user';
+import { User, UserDto } from 'shared/types/user';
 
 export interface SimpleClassroom {
   id: string;
@@ -14,7 +14,17 @@ export interface SimpleClassroomDto
   students_count: number;
 }
 
-export interface Classroom extends Omit<SimpleClassroom, 'studentsCount'> {
+export interface ClassroomDto {
+  id: string;
+  name: string;
+  teacher: UserDto;
+  students: UserDto[];
+}
+
+export interface Classroom {
+  id: string;
+  name: string;
+  teacher: User;
   students: User[];
 }
 
@@ -37,4 +47,4 @@ export interface CreateClassroomPayload {
 export type CreateClassroomResponse = AxiosResponse<SimpleClassroomDto>;
 export type GetClassroomsResponse = AxiosResponse<SimpleClassroom[]>;
 export type ValidateClassroomNameResponse = AxiosResponse<boolean>;
-export type GetClassroomResponse = AxiosResponse<Classroom>;
+export type GetClassroomResponse = AxiosResponse<ClassroomDto>;
