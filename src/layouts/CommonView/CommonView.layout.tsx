@@ -4,6 +4,7 @@ import ViewHeader from 'layouts/Application/components/ViewHeader';
 import { Centered, CenteredProps } from 'shared/components/Container';
 import { Box, BoxTypeMap } from '@mui/material';
 import { DefaultComponentProps } from '@mui/material/OverridableComponent';
+import { useNavigate } from 'react-router';
 
 interface CommonViewLayoutProps {
   headerTitle: string;
@@ -14,6 +15,7 @@ interface CommonViewLayoutProps {
 
 export default function CommonViewLayout(props: CommonViewLayoutProps) {
   const { headerTitle, CenteredProps, maxWidth, children } = props;
+  const navigate = useNavigate();
   const actualCenteredProps: Partial<CenteredProps> = { ...CenteredProps };
 
   const Wrapper = typeof maxWidth === 'number' ? Box : Fragment;
@@ -36,9 +38,13 @@ export default function CommonViewLayout(props: CommonViewLayoutProps) {
     delete actualCenteredProps.innerSx;
   }
 
+  const navigateBack = () => {
+    navigate('./..');
+  };
+
   return (
     <>
-      <ViewHeader title={headerTitle} />
+      <ViewHeader title={headerTitle} onBack={navigateBack} />
 
       <Centered {...actualCenteredProps}>
         <Wrapper {...WrapperProps}>{children}</Wrapper>

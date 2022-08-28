@@ -21,7 +21,7 @@ export default function ClassroomsManagement() {
   const navigate = useNavigate();
 
   const navigateToClassroomCreatePage = () => {
-    navigate('./create');
+    navigate('create');
   };
 
   const navigateToClassroomEditPage = (
@@ -29,11 +29,11 @@ export default function ClassroomsManagement() {
     event: MouseEvent<HTMLButtonElement>
   ) => {
     event.stopPropagation();
-    navigate(`./${classroomId}/edit`);
+    navigate(`${classroomId}/edit`);
   };
 
   const navigateToClassroomViewPage = (classroomId: string) => {
-    navigate(`./${classroomId}`);
+    navigate(`${classroomId}`);
   };
 
   const fetchClassrooms = async () => {

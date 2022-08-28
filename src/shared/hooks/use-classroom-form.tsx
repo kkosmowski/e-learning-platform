@@ -122,8 +122,6 @@ export default function useClassroomForm(props: UseClassroomFormProps) {
     setFieldValue('students', value);
   };
 
-  console.log(formik.values);
-
   const Form = (
     <form
       onSubmit={handleSubmit}
@@ -159,6 +157,7 @@ export default function useClassroomForm(props: UseClassroomFormProps) {
         getOptionLabel={(teacher) => teacher.fullName}
         onBlur={handleBlur}
         onChange={handleTeacherChange}
+        isOptionEqualToValue={(option, value) => option.id === value.id}
       />
 
       <Autocomplete

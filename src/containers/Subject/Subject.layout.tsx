@@ -3,7 +3,7 @@ import { useNavigate, useParams, Outlet } from 'react-router';
 
 import Container from 'shared/components/Container';
 import { subjects } from 'shared/consts/subject';
-import SubjectHeader from './components/SubjectHeader';
+import ViewHeader from 'layouts/Application/components/ViewHeader';
 
 export default function SubjectLayout() {
   const navigate = useNavigate();
@@ -20,9 +20,18 @@ export default function SubjectLayout() {
     return null;
   }
 
+  const navigateBack = () => {
+    navigate(-1);
+  };
+
   return (
     <Container sx={{ p: 0, overflow: 'hidden', flex: 1 }}>
-      <SubjectHeader subject={currentSubject} />
+      <ViewHeader
+        title={currentSubject.label}
+        isLink
+        linkTo={`/subjects/${currentSubject.id}`}
+        onBack={navigateBack}
+      />
       <Outlet />
     </Container>
   );

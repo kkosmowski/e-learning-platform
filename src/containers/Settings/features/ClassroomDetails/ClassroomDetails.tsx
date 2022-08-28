@@ -29,16 +29,16 @@ export default function ClassroomDetails(props: ClassroomDetailsProps) {
   };
 
   const handleCancel = () => {
-    navigate('..');
+    navigate('..', { replace: false });
   };
 
   const handleSave = () => {
     console.log('Save');
-    navigate('..');
+    navigate('..', { replace: false });
   };
 
   const navigateToEdit = () => {
-    navigate('./edit');
+    navigate('./edit', { replace: false });
   };
 
   useEffect(() => {
