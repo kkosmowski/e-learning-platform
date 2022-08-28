@@ -8,7 +8,14 @@ import {
 } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { Autocomplete, Box, Button, debounce, TextField } from '@mui/material';
+import {
+  Autocomplete,
+  Box,
+  Button,
+  debounce,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { TFunction } from 'i18next';
 
 import { getUsers } from 'api/user';
@@ -31,11 +38,18 @@ export interface UseClassroomFormProps {
   ) => ReactNode;
   onSubmit: (form: ClassroomForm) => void;
   t: TFunction;
+  error?: string;
 }
 
 export default function useClassroomForm(props: UseClassroomFormProps) {
-  const { initialValues, submitButtonLabel, secondaryButton, t, onSubmit } =
-    props;
+  const {
+    initialValues,
+    submitButtonLabel,
+    secondaryButton,
+    t,
+    error,
+    onSubmit,
+  } = props;
   const [studentsList, setStudentsList] = useState<User[]>([]);
   const [teachersList, setTeachersList] = useState<User[]>([]);
   const initialRun = useRef(true);
@@ -176,6 +190,8 @@ export default function useClassroomForm(props: UseClassroomFormProps) {
         onBlur={handleBlur}
         onChange={handleStudentsChange}
       />
+
+      {error && <Typography color="error">{t(error)}</Typography>}
 
       <Box sx={{ display: 'flex', gap: 3, '*': { flex: 1 } }}>
         <Button type="submit" variant="contained" disabled={!isValid}>

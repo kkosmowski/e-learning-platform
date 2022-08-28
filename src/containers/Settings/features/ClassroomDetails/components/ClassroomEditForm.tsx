@@ -6,12 +6,13 @@ import useClassroomForm from 'shared/hooks/use-classroom-form';
 
 interface ClassroomEditFormProps {
   classroom: Classroom;
+  error: string;
   onSubmit: (form: ClassroomForm) => void;
   onCancel: () => void;
 }
 
 export default function ClassroomEditForm(props: ClassroomEditFormProps) {
-  const { classroom, onSubmit, onCancel } = props;
+  const { classroom, error, onSubmit, onCancel } = props;
   const { t } = useTranslation('settings');
   const { Form } = useClassroomForm({
     initialValues: {
@@ -25,6 +26,7 @@ export default function ClassroomEditForm(props: ClassroomEditFormProps) {
     ),
     onSubmit,
     t,
+    error,
   });
 
   return Form;

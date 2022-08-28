@@ -42,6 +42,13 @@ export interface CreateClassroomPayload {
   student_ids: string[];
 }
 
+export interface UpdateClassroomPayload {
+  id: string;
+  name: string;
+  teacher_id: string;
+  student_ids: string[];
+}
+
 // responses
 
 export type CreateClassroomResponse = AxiosResponse<SimpleClassroomDto>;
