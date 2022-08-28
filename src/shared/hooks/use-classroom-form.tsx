@@ -189,6 +189,7 @@ export default function useClassroomForm(props: UseClassroomFormProps) {
         getOptionLabel={(student) => student.fullName}
         onBlur={handleBlur}
         onChange={handleStudentsChange}
+        isOptionEqualToValue={(option, value) => option.id === value.id}
       />
 
       {error && <Typography color="error">{t(error)}</Typography>}

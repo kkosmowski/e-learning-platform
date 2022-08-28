@@ -40,7 +40,7 @@ export default function ClassroomDetails(props: ClassroomDetailsProps) {
   const handleSave = async (values: ClassroomForm) => {
     if (currentClassroom && values.teacher) {
       try {
-        await updateClassroom(
+        const { data: updatedClassroom } = await updateClassroom(
           mapClassroomToUpdateClassroomPayload({
             id: currentClassroom.id,
             name: values.name,
@@ -48,7 +48,7 @@ export default function ClassroomDetails(props: ClassroomDetailsProps) {
             students: values.students,
           })
         );
-        await fetchClassroomDetails(currentClassroom.id);
+        setCurrentClassroom(mapClassroomDtoToClassroom(updatedClassroom));
         navigate('..', { replace: false });
       } catch (e) {
         setError(getErrorDetail(e));
