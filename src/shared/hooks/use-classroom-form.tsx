@@ -56,7 +56,10 @@ export default function useClassroomForm(props: UseClassroomFormProps) {
 
   const fetchUsers = useCallback(async () => {
     // @todo: fetch only users that have no classroom assigned
-    const { data } = await getUsers([Role.Student, Role.Teacher]);
+    const { data } = await getUsers({
+      role: [Role.Student, Role.Teacher],
+      withoutGroups: true,
+    });
     const teachers: User[] = [];
     const students: User[] = [];
 

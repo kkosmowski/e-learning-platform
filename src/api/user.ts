@@ -3,7 +3,7 @@ import {
   CreateUserPayload,
   CreateUserResponse,
   FetchMeResponse,
-  Role,
+  GetUsersProps,
   GetUsersResponse,
 } from 'shared/types/user';
 
@@ -17,16 +17,24 @@ export const fetchMe = (): Promise<FetchMeResponse> => {
   return authorized((api) => api.get('user/me'));
 };
 
-export const getUsers = (role?: Role | Role[]): Promise<GetUsersResponse> => {
+export const getUsers = (props: GetUsersProps): Promise<GetUsersResponse> => {
   let roleParam = '';
+  let groupParam = '';
 
-  if (role) {
-    if (role instanceof Array) {
-      roleParam = '?role=' + role.join('&role=');
+  if (props.role) {
+    if (props.role instanceof Array) {
+      roleParam = '?role=' + props.role.join('&role=');
     } else {
-      roleParam = '?role=' + role;
+      roleParam = '?role=' + props.role;
     }
   }
+  if (props.withoutGroups) {
+    groupParam = roleParam ? '&' : '?';
+    groupParam += 'without_group=true';
+  } else if (props.group !== undefined) {
+    groupParam = roleParam ? '&' : '?';
+    groupParam += 'group=' + props.group;
+  }
 
-  return authorized((api) => api.get(`user${roleParam}`));
+  return authorized((api) => api.get(`user${roleParam}${groupParam}`));
 };

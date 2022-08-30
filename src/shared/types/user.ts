@@ -36,6 +36,12 @@ export type CreateUserForm = Pick<
   'email' | 'firstName' | 'lastName' | 'role'
 >;
 
+export interface GetUsersProps {
+  role?: Role | Role[];
+  withoutGroups?: boolean;
+  group?: string;
+}
+
 // payloads
 
 export type CreateUserPayload = Pick<
