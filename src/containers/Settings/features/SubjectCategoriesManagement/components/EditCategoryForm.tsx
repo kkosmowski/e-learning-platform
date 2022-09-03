@@ -1,5 +1,5 @@
 import { Box, Button, TextField, Tooltip } from '@mui/material';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 interface EditCategoryFormProps {
@@ -17,13 +17,16 @@ export default function EditCategoryForm(props: EditCategoryFormProps) {
     setCategoryName(e.target.value);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: FormEvent<HTMLDivElement>) => {
+    e.preventDefault();
     onSubmit(categoryName);
     onCancel();
   };
 
   return (
     <Box
+      component="form"
+      onSubmit={handleSubmit}
       sx={{
         width: '100%',
         display: 'flex',
@@ -55,17 +58,22 @@ export default function EditCategoryForm(props: EditCategoryFormProps) {
       >
         <span>
           <Button
+            type="submit"
             variant="contained"
             disabled={!categoryName || categoryName === value}
             sx={{ py: '5.25px' }}
-            onClick={handleSubmit}
           >
             {t('common:save')}
           </Button>
         </span>
       </Tooltip>
 
-      <Button color="secondary" sx={{ py: '5.25px' }} onClick={onCancel}>
+      <Button
+        type="button"
+        color="secondary"
+        sx={{ py: '5.25px' }}
+        onClick={onCancel}
+      >
         {t('common:cancel')}
       </Button>
     </Box>

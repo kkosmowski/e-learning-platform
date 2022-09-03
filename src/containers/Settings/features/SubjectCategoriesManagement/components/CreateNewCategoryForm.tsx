@@ -1,5 +1,5 @@
 import { Box, Button, TextField, Tooltip } from '@mui/material';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 interface CreateNewCategoryFormProps {
@@ -18,13 +18,16 @@ export default function CreateNewCategoryForm(
     setNewCategoryName(e.target.value);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: FormEvent<HTMLDivElement>) => {
+    e.preventDefault();
     onSubmit(newCategoryName);
-    onCancel();
+    setNewCategoryName('');
   };
 
   return (
     <Box
+      component="form"
+      onSubmit={handleSubmit}
       sx={{
         width: '100%',
         display: 'flex',
@@ -50,15 +53,15 @@ export default function CreateNewCategoryForm(
         <span>
           <Button
             variant="contained"
+            type="submit"
             disabled={!newCategoryName.trim()}
-            onClick={handleSubmit}
           >
             {t('subjectCategories.create')}
           </Button>
         </span>
       </Tooltip>
 
-      <Button color="secondary" onClick={onCancel}>
+      <Button type="button" color="secondary" onClick={onCancel}>
         {t('common:cancel')}
       </Button>
     </Box>
