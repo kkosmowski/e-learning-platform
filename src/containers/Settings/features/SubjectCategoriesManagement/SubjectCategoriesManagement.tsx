@@ -50,7 +50,7 @@ export default function SubjectCategoriesManagement() {
     });
 
     if (shouldDelete) {
-      handleDelete(category);
+      await handleDelete(category);
     }
   };
 
