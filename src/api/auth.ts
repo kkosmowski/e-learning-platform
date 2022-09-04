@@ -1,4 +1,4 @@
-import { unauthorized } from 'api/axios';
+import { authorized, unauthorized } from 'api/axios';
 import { AuthenticateResponse, LoginCredentials } from 'shared/types/auth';
 
 export const authenticate = ({
@@ -10,3 +10,6 @@ export const authenticate = ({
   formData.append('password', password);
   return unauthorized((api) => api.post('auth/login', formData));
 };
+
+export const refreshToken = () =>
+  authorized((api) => api.get('auth/refresh-token'));
