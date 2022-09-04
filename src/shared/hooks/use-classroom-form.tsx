@@ -60,8 +60,10 @@ export default function useClassroomForm(props: UseClassroomFormProps) {
       role: [Role.Student, Role.Teacher],
       withoutGroups: true,
     });
-    const teachers: User[] = [];
-    const students: User[] = [];
+    const teachers: User[] = initialValues.teacher
+      ? [initialValues.teacher]
+      : [];
+    const students: User[] = [...initialValues.students];
 
     for (const userDto of data) {
       const user = mapUserDtoToUser(userDto);
@@ -72,9 +74,10 @@ export default function useClassroomForm(props: UseClassroomFormProps) {
         teachers.push(user);
       }
     }
+
     setTeachersList(teachers);
     setStudentsList(students);
-  }, []);
+  }, [initialValues.teacher, initialValues.students]);
 
   useEffect(() => {
     void fetchUsers();
@@ -103,12 +106,6 @@ export default function useClassroomForm(props: UseClassroomFormProps) {
     touched,
     values,
   } = formik;
-
-  useEffect(() => {
-    if (initialValues.teacher) {
-      setFieldValue('teacher', initialValues.teacher);
-    }
-  }, [initialValues.teacher, setFieldValue]);
 
   const validateName = useCallback(
     debounce(async (name: string) => {
