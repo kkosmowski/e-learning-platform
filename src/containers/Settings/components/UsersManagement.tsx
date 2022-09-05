@@ -3,8 +3,7 @@ import { Tab, Tabs } from '@mui/material';
 import { useNavigate, Outlet } from 'react-router';
 import { useTranslation } from 'react-i18next';
 
-import ViewHeader from 'layouts/Application/components/ViewHeader';
-import { Centered } from 'shared/components/Container';
+import CommonViewLayout from 'layouts/CommonView';
 
 export default function UsersManagement() {
   const [tab, setTab] = useState('students');
@@ -20,18 +19,20 @@ export default function UsersManagement() {
   }, [navigate, tab]);
 
   return (
-    <>
-      <ViewHeader title={t('title')} />
-
-      <Tabs value={tab} onChange={handleTabChange}>
+    <CommonViewLayout
+      headerTitle={t('title')}
+      maxWidth={600}
+      CenteredProps={{
+        sx: { pt: 0 },
+      }}
+    >
+      <Tabs value={tab} onChange={handleTabChange} sx={{ mb: 2 }}>
         <Tab value="students" label={t('tabs.students')} />
         <Tab value="teachers" label={t('tabs.teachers')} />
         <Tab value="create" label={t('tabs.create')} />
       </Tabs>
 
-      <Centered innerSx={{ marginLeft: 0 }}>
-        <Outlet />
-      </Centered>
-    </>
+      <Outlet />
+    </CommonViewLayout>
   );
 }

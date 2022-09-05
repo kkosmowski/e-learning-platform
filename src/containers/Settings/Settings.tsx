@@ -2,8 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Box, Card, CardContent, styled } from '@mui/material';
 
 import { consts } from 'theme';
-import ViewHeader from 'layouts/Application/components/ViewHeader';
-import { Centered } from 'shared/components/Container';
+import CommonViewLayout from 'layouts/CommonView';
 import StyledLink from 'shared/components/StyledLink';
 import { categories } from './consts/categories';
 
@@ -11,32 +10,28 @@ export default function Settings() {
   const { t } = useTranslation('settings');
 
   return (
-    <>
-      <ViewHeader title={t('title')} />
-
-      <Centered>
-        <SettingsCategoriesContainer>
-          {categories.map(({ label, Icon, route }) => (
-            <SettingsCategoryCard key={route}>
-              <StyledLink
-                to={route}
-                hoverUnderline={false}
-                sx={{
-                  flex: 1,
-                  display: 'flex',
-                  flexDirection: 'column',
-                }}
-              >
-                <SettingsCategoryCardContent>
-                  <Icon sx={{ fontSize: 36 }} />
-                  {t(label)}
-                </SettingsCategoryCardContent>
-              </StyledLink>
-            </SettingsCategoryCard>
-          ))}
-        </SettingsCategoriesContainer>
-      </Centered>
-    </>
+    <CommonViewLayout headerTitle={t('title')}>
+      <SettingsCategoriesContainer>
+        {categories.map(({ label, Icon, route }) => (
+          <SettingsCategoryCard key={route}>
+            <StyledLink
+              to={route}
+              hoverUnderline={false}
+              sx={{
+                flex: 1,
+                display: 'flex',
+                flexDirection: 'column',
+              }}
+            >
+              <SettingsCategoryCardContent>
+                <Icon sx={{ fontSize: 36 }} />
+                {t(label)}
+              </SettingsCategoryCardContent>
+            </StyledLink>
+          </SettingsCategoryCard>
+        ))}
+      </SettingsCategoriesContainer>
+    </CommonViewLayout>
   );
 }
 

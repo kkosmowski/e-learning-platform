@@ -116,6 +116,9 @@
       "title": "Zarządzanie klasami",
       "addNew": "Dodaj nową klasę",
       "noItems": "Brak istniejących klas.",
+      "name": "Nazwa",
+      "teacher": "Wychowawca",
+      "students": "Uczniowie",
       "create": {
         "title": "Nowa klasa",
         "placeholder": {
@@ -124,6 +127,9 @@
           "students": "Uczniowie"
         },
         "createAndShow": "Utwórz i wyświetl"
+      },
+      "edit": {
+        "editThisClassroom": "Modyfikuj tę klasę"
       }
     },
     "subjects": {

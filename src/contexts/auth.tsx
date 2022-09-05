@@ -21,7 +21,7 @@ import {
 import { mapUserDtoToUser } from 'shared/utils/user.utils';
 import { getErrorDetail } from 'shared/utils/common.utils';
 import { sessionExpiredError } from 'shared/consts/error';
-import { MINUTE } from '../shared/consts/date';
+import { MINUTE } from 'shared/consts/date';
 
 interface AuthContextState {
   currentUser: User | null | undefined;
