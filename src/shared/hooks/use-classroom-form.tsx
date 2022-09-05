@@ -60,10 +60,18 @@ export default function useClassroomForm(props: UseClassroomFormProps) {
       role: [Role.Student, Role.Teacher],
       withoutGroups: true,
     });
-    const teachers: User[] = initialValues.teacher
-      ? [initialValues.teacher]
-      : [];
-    const students: User[] = [...initialValues.students];
+    let teachers: User[] = [];
+    let students: User[] = [];
+
+    if (initialValues) {
+      if (initialValues.teacher) {
+        teachers = [initialValues.teacher];
+      }
+
+      if (initialValues.students.length) {
+        students = [...initialValues.students];
+      }
+    }
 
     for (const userDto of data) {
       const user = mapUserDtoToUser(userDto);
@@ -77,11 +85,11 @@ export default function useClassroomForm(props: UseClassroomFormProps) {
 
     setTeachersList(teachers);
     setStudentsList(students);
-  }, [initialValues.teacher, initialValues.students]);
+  }, [initialValues]);
 
   useEffect(() => {
     void fetchUsers();
-  }, [fetchUsers]);
+  }, []);
 
   const formik = useFormik<ClassroomForm>({
     initialValues,
@@ -123,7 +131,7 @@ export default function useClassroomForm(props: UseClassroomFormProps) {
       void validateName(values.name);
     }
     initialRun.current = false;
-  }, [validateName, values]);
+  }, [validateName, values.name]);
 
   const handleTeacherChange = (event: SyntheticEvent, value: User | null) => {
     setFieldValue('teacher', value);
