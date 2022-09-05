@@ -124,19 +124,16 @@ const colors = {
     main: secondary[500],
     contrastText: text[1000],
   },
-  success: {
-    main: success[500],
-    contrastText: text[1000],
-  },
+  success,
   text: {
     primary: text[300],
     secondary: text[800],
     disabled: text[900],
+    success: success[600],
+    warning: warning[600],
+    error: error[600],
   },
-  warning: {
-    main: warning[500],
-    contrastText: text[1000],
-  },
+  warning,
 };
 
 export default colors;
