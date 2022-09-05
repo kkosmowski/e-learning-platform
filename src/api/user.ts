@@ -6,6 +6,7 @@ import {
   GetUsersProps,
   GetUsersResponse,
 } from 'shared/types/user';
+import { AxiosResponse } from 'axios';
 
 export const createUser = (
   data: CreateUserPayload
@@ -38,3 +39,6 @@ export const getUsers = (props: GetUsersProps): Promise<GetUsersResponse> => {
 
   return authorized((api) => api.get(`user${roleParam}${groupParam}`));
 };
+
+export const deleteUser = (userId: string): Promise<AxiosResponse<void>> =>
+  authorized((api) => api.delete(`user/${userId}`));

@@ -89,7 +89,9 @@
     "edit": "Edytuj",
     "save": "Zapisz",
     "create": "Utwórz",
-    "delete": "Usuń"
+    "delete": "Usuń",
+    "active": "Aktywny(a)",
+    "inactive": "Nieaktywny(a)"
   },
   "settings": {
     "title": "Ustawienia",
@@ -109,7 +111,7 @@
       "createSuccessToast": "Utworzono kategorię \"{{name}}\".",
       "updateSuccessToast": "Nazwa kategorii \"{{oldName}}\" pomyślnie zmieniona na \"{{newName}}\".",
       "deleteSuccessToast": "Usunięto kategorię \"{{name}}\".",
-      "confirmDeleteTitle": "Usuwanie kategorii przedmiotu",
+      "confirmDeleteTitle": "Potwierdź usunięcie kategorii przedmiotu",
       "confirmDeleteMessage": "Czy na pewno usunąć kategorię \"{{name}}\"? Tej operacji nie da się cofnąć."
     },
     "classrooms": {
@@ -150,7 +152,18 @@
         },
         "submitButton": "Utwórz użytkownika",
         "userCreated": "Użytkownik pomyślnie utworzony"
-      }
+      },
+      "table": {
+        "firstName": "Imię",
+        "lastName": "Nazwisko",
+        "email": "Adres e-mail",
+        "createdAt": "Data utworzenia",
+        "isActive": "Status",
+        "actions": "Akcje"
+      },
+      "confirmDeleteTitle": "Potwierdź usunięcie użytkownika",
+      "confirmDeleteMessage": "Czy na pewno usunąć użytkownika {{ name }}? Tej operacji nie da się cofnąć.",
+      "deleteSuccessToast": "Użytkownik pomyślnie usunięty."
     }
   },
   "404": {

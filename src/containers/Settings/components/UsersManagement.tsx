@@ -21,7 +21,6 @@ export default function UsersManagement() {
   return (
     <CommonViewLayout
       headerTitle={t('title')}
-      maxWidth={600}
       CenteredProps={{
         sx: { pt: 0 },
       }}

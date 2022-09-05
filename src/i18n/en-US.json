@@ -89,7 +89,9 @@
     "edit": "Edit",
     "save": "Save",
     "create": "Create",
-    "delete": "Delete"
+    "delete": "Delete",
+    "active": "Active",
+    "inactive": "Inactive"
   },
   "settings": {
     "title": "Settings",
@@ -108,7 +110,7 @@
       "nothingToSaveTooltip": "No change to the name was made",
       "createSuccessToast": "Successfully created \"{{name}}\" subject category.",
       "updateSuccessToast": "Successfully renamed \"{{oldName}}\" category to \"{{newName}}\".",
-      "deleteSuccessToast": "Successfully delete \"{{name}}\" subject category.",
+      "deleteSuccessToast": "Successfully deleted \"{{name}}\" subject category.",
       "confirmDeleteTitle": "Deleting a subject category",
       "confirmDeleteMessage": "Are you sure you want to delete \"{{name}}\" category? This operation cannot be undone."
     },
@@ -150,7 +152,18 @@
         },
         "submitButton": "Create user",
         "userCreated": "User created successfully"
-      }
+      },
+      "table": {
+        "firstName": "First name",
+        "lastName": "Last name",
+        "email": "Email address",
+        "createdAt": "Date of creation",
+        "isActive": "Active",
+        "actions": "Actions"
+      },
+      "confirmDeleteTitle": "Deleting user",
+      "confirmDeleteMessage": "Are you sure you want to delete user {{ name }}? This operation cannot be undone.",
+      "deleteSuccessToast": "User successfully deleted."
     }
   },
   "404": {
