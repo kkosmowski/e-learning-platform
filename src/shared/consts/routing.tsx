@@ -22,7 +22,7 @@ import TeacherGuard from 'shared/guards/TeacherGuard';
 import { RouteObjectWithId } from 'shared/types/routing';
 import { TaskType } from 'shared/types/task';
 import { Role } from 'shared/types/user';
-import ClassroomDetails from '../../containers/Settings/features/ClassroomDetails';
+import ClassroomDetails from 'containers/Settings/features/ClassroomDetails';
 
 export const features: RouteObjectWithId[] = [
   {

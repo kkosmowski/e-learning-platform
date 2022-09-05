@@ -12,7 +12,7 @@ import {
 import ClassroomDetailsList from './components/ClassroomDetailsList';
 import ClassroomEditForm from './components/ClassroomEditForm';
 import { useTranslation } from 'react-i18next';
-import { getErrorDetail } from '../../../../shared/utils/common.utils';
+import { getErrorDetail } from 'shared/utils/common.utils';
 
 interface ClassroomDetailsProps {
   mode: 'view' | 'edit';

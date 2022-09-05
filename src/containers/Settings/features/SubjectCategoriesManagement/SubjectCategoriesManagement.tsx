@@ -18,7 +18,7 @@ import { SubjectCategory } from 'shared/types/subject';
 import { useConfirmationDialog } from 'shared/hooks';
 import CreateNewCategoryForm from './components/CreateNewCategoryForm';
 import EditCategoryForm from './components/EditCategoryForm';
-import CommonViewLayout from '../../../../layouts/CommonView';
+import CommonViewLayout from 'layouts/CommonView';
 
 export default function SubjectCategoriesManagement() {
   const { t } = useTranslation('settings', { keyPrefix: 'subjectCategories' });

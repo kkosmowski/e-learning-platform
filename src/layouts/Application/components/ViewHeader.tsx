@@ -2,7 +2,7 @@ import { Divider, Typography } from '@mui/material';
 
 import { background } from 'colors';
 import { Centered } from 'shared/components/Container';
-import TextButton from '../../../shared/components/TextButton';
+import TextButton from 'shared/components/TextButton';
 import { useTranslation } from 'react-i18next';
 import StyledLink from 'shared/components/StyledLink';
 
