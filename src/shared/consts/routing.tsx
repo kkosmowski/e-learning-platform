@@ -23,6 +23,7 @@ import { RouteObjectWithId } from 'shared/types/routing';
 import { TaskType } from 'shared/types/task';
 import { Role } from 'shared/types/user';
 import ClassroomDetails from 'containers/Settings/features/ClassroomDetails';
+import UserDetails from 'containers/Settings/features/UserDetails';
 
 export const features: RouteObjectWithId[] = [
   {
@@ -188,6 +189,24 @@ export const features: RouteObjectWithId[] = [
               {
                 path: ':type',
                 element: <Users />,
+              },
+            ],
+          },
+          {
+            path: 'user',
+            children: [
+              {
+                path: ':id',
+                children: [
+                  {
+                    path: '',
+                    element: <UserDetails mode="view" />,
+                  },
+                  {
+                    path: 'edit',
+                    element: <UserDetails mode="edit" />,
+                  },
+                ],
               },
             ],
           },

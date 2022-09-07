@@ -5,6 +5,7 @@ import {
   FetchMeResponse,
   GetUsersProps,
   GetUsersResponse,
+  GetUserResponse,
 } from 'shared/types/user';
 import { AxiosResponse } from 'axios';
 
@@ -39,6 +40,9 @@ export const getUsers = (props: GetUsersProps): Promise<GetUsersResponse> => {
 
   return authorized((api) => api.get(`user${roleParam}${groupParam}`));
 };
+
+export const getUser = (userId: string): Promise<GetUserResponse> =>
+  authorized((api) => api.get(`user/${userId}`));
 
 export const deleteUser = (userId: string): Promise<AxiosResponse<void>> =>
   authorized((api) => api.delete(`user/${userId}`));

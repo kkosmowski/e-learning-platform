@@ -1,5 +1,5 @@
 import { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import {
   GlobalStyles,
   IconButton,
@@ -29,6 +29,7 @@ export default function Users() {
   const { type } = useParams<{ type: 'teachers' | 'students' }>();
   const [users, setUsers] = useState<User[]>([]);
   const [actionMenuTarget, setActionsMenuTarget] = useState<User | null>(null);
+  const navigate = useNavigate();
 
   const { t } = useTranslation();
   const { confirmAction, confirmationDialog } = useConfirmationDialog();
@@ -40,9 +41,13 @@ export default function Users() {
     setUsers(data.map(mapUserDtoToUser));
   }, [type]);
 
+  const handleView = (userId: string) => {
+    navigate(`/settings/user/${userId}`);
+  };
+
   const handleEdit = () => {
     if (actionMenuTarget) {
-      console.log('navigate to edit');
+      navigate(`/settings/user/${actionMenuTarget.id}/edit`);
     }
   };
 
@@ -90,7 +95,7 @@ export default function Users() {
         <UsersTableHead />
         <TableBody>
           {users.map((user) => (
-            <TableRow key={user.id}>
+            <TableRow key={user.id} onClick={() => handleView(user.id)}>
               <TableCell className="users-table__row--firstName">
                 {user.firstName}
               </TableCell>
