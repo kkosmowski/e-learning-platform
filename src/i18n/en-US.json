@@ -91,7 +91,12 @@
     "create": "Create",
     "delete": "Delete",
     "active": "Active",
-    "inactive": "Inactive"
+    "inactive": "Inactive",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "email": "Email address",
+    "status": "Status",
+    "userType": "Type"
   },
   "settings": {
     "title": "Settings",

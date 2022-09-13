@@ -6,6 +6,7 @@ import {
   Menu,
   MenuItem,
   Paper,
+  styled,
   Table,
   TableBody,
   TableCell,
@@ -23,7 +24,7 @@ import { deleteUser, getUsers } from 'api/user';
 import { Role, User } from 'shared/types/user';
 import { mapUserDtoToUser } from 'shared/utils/user.utils';
 import { useConfirmationDialog } from 'shared/hooks';
-import { error } from 'colors';
+import { background, error } from 'colors';
 
 export default function Users() {
   const { type } = useParams<{ type: 'teachers' | 'students' }>();
@@ -95,7 +96,7 @@ export default function Users() {
         <UsersTableHead />
         <TableBody>
           {users.map((user) => (
-            <TableRow key={user.id} onClick={() => handleView(user.id)}>
+            <StyledTableRow key={user.id} onClick={() => handleView(user.id)}>
               <TableCell className="users-table__row--firstName">
                 {user.firstName}
               </TableCell>
@@ -135,7 +136,7 @@ export default function Users() {
                   </MenuItem>
                 </MoreButton>
               </TableCell>
-            </TableRow>
+            </StyledTableRow>
           ))}
         </TableBody>
       </Table>
@@ -152,16 +153,16 @@ const getRole = (type: 'teachers' | 'students' | undefined): Role => {
 };
 
 const usersTableHeadRows = [
-  'firstName',
-  'lastName',
-  'email',
-  'createdAt',
-  'isActive',
-  'actions',
+  'common:firstName',
+  'common:lastName',
+  'common:email',
+  'users.table.createdAt',
+  'users.table.isActive',
+  'users.table.actions',
 ];
 
 const UsersTableHead = () => {
-  const { t } = useTranslation('settings', { keyPrefix: 'users.table' });
+  const { t } = useTranslation('settings');
   return (
     <TableHead>
       <TableRow>
@@ -230,3 +231,10 @@ const MoreButton = (props: MoreButtonProps) => {
     </>
   );
 };
+
+const StyledTableRow = styled(TableRow)(() => ({
+  cursor: 'pointer',
+  '&:hover': {
+    backgroundColor: background[200],
+  },
+}));

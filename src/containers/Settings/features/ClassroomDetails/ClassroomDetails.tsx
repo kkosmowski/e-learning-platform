@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { Button, Card, CardContent } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 import CommonViewLayout from 'layouts/CommonView';
 import { getClassroom, updateClassroom } from 'api/classroom';
@@ -11,7 +12,6 @@ import {
 } from 'shared/utils/classroom.utils';
 import ClassroomDetailsList from './components/ClassroomDetailsList';
 import ClassroomEditForm from './components/ClassroomEditForm';
-import { useTranslation } from 'react-i18next';
 import { getErrorDetail } from 'shared/utils/common.utils';
 
 interface ClassroomDetailsProps {

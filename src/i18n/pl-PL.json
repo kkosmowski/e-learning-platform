@@ -91,7 +91,12 @@
     "create": "Utwórz",
     "delete": "Usuń",
     "active": "Aktywny(a)",
-    "inactive": "Nieaktywny(a)"
+    "inactive": "Nieaktywny(a)",
+    "firstName": "Imię",
+    "lastName": "Nazwisko",
+    "email": "Adres e-mail",
+    "status": "Status",
+    "userType": "Typ użytkownika"
   },
   "settings": {
     "title": "Ustawienia",
@@ -154,9 +159,6 @@
         "userCreated": "Użytkownik pomyślnie utworzony"
       },
       "table": {
-        "firstName": "Imię",
-        "lastName": "Nazwisko",
-        "email": "Adres e-mail",
         "createdAt": "Data utworzenia",
         "isActive": "Status",
         "actions": "Akcje"
