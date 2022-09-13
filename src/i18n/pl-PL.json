@@ -96,7 +96,9 @@
     "lastName": "Nazwisko",
     "email": "Adres e-mail",
     "status": "Status",
-    "userType": "Typ użytkownika"
+    "userType": "Typ użytkownika",
+    "activate": "Aktywuj",
+    "deactivate": "Dezaktywuj"
   },
   "settings": {
     "title": "Ustawienia",
@@ -165,7 +167,17 @@
       },
       "confirmDeleteTitle": "Potwierdź usunięcie użytkownika",
       "confirmDeleteMessage": "Czy na pewno usunąć użytkownika {{ name }}? Tej operacji nie da się cofnąć.",
-      "deleteSuccessToast": "Użytkownik pomyślnie usunięty."
+      "deleteSuccessToast": "Użytkownik pomyślnie usunięty.",
+      "details": {
+        "activate": "Aktywuj konto",
+        "deactivate": "Dezaktywuj konto",
+        "confirmActivateTitle": "Potwierdź aktywację użytkownika",
+        "confirmActivateMessage": "Czy na pewno aktywować konto użytkownika \"{{name}}\"?",
+        "confirmDeactivateTitle": "Potwierdź usunięcie kategorii przedmiotu",
+        "confirmDeactivateMessage": "Czy na pewno dezaktywować konto użytkownika \"{{name}}\"?",
+        "activateSuccessToast": "Aktywowano użytkownika \"{{name}}\".",
+        "deactivateSuccessToast": "Dezaktywowano użytkownika \"{{name}}\"."
+      }
     }
   },
   "404": {

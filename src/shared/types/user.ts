@@ -48,6 +48,8 @@ export type CreateUserPayload = Pick<
   UserDto,
   'email' | 'first_name' | 'last_name' | 'role'
 >;
+export type UpdateUserPayload = Pick<UserDto, 'id'> &
+  Partial<Omit<UserDto, 'id' | 'role'>>;
 
 // responses
 
