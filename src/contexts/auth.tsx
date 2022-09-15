@@ -22,6 +22,7 @@ import { mapUserDtoToUser } from 'shared/utils/user.utils';
 import { getErrorDetail } from 'shared/utils/common.utils';
 import { sessionExpiredError } from 'shared/consts/error';
 import { MINUTE } from 'shared/consts/date';
+import useInterceptors from 'hooks/use-interceptors';
 
 interface AuthContextState {
   currentUser: User | null | undefined;
@@ -82,6 +83,8 @@ export function AuthProvider(props: AuthProviderProps) {
     setCurrentUser(null);
     setTokenExpirationTime(null);
   };
+
+  useInterceptors(signOut);
 
   const fetchCurrentUser = useCallback(async (token: string): Promise<void> => {
     setToken(token);
