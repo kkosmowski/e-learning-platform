@@ -22,6 +22,18 @@ export const mapUserDtoToUser = (userDto: UserDto): User => ({
   fullName: `${userDto.first_name} ${userDto.last_name}`,
 });
 
+export const mapPartialUserToUserDto = (
+  user: Partial<User>
+): Partial<UserDto> => ({
+  ...(user.id !== undefined && { id: user.id }),
+  ...(user.firstName !== undefined && { first_name: user.firstName }),
+  ...(user.lastName !== undefined && { last_name: user.lastName }),
+  ...(user.email !== undefined && { email: user.email }),
+  ...(user.role !== undefined && { role: user.role }),
+  ...(user.createdAt !== undefined && { created_at: user.createdAt }),
+  ...(user.active !== undefined && { is_active: user.active }),
+});
+
 export const mapCreateUserFormToCreateUserPayload = (
   form: CreateUserForm
 ): CreateUserPayload => ({

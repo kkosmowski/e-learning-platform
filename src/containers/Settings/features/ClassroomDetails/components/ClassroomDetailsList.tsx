@@ -1,7 +1,8 @@
-import { Box, List, ListItem, styled, Typography } from '@mui/material';
+import { List, ListItem } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 import { Classroom } from 'shared/types/classroom';
-import { useTranslation } from 'react-i18next';
+import ListGridItem from 'shared/components/ListGridItem';
 
 interface ClassroomDetailsListProps {
   classroom: Classroom;
@@ -13,25 +14,13 @@ export default function ClassroomDetailsList(props: ClassroomDetailsListProps) {
 
   return (
     <List>
-      {/* todo: extract to a single component */}
-      <ListItem sx={{ flexDirection: 'column', alignItems: 'stretch' }}>
-        <ListItemWrapper>
-          <Typography sx={{ flex: 1 }}>{t('name')}</Typography>
-          <Typography sx={{ flex: 2 }}>{classroom.name}</Typography>
-        </ListItemWrapper>
-      </ListItem>
+      <ListGridItem label={t('name')} value={classroom.name} />
 
-      <ListItem sx={{ flexDirection: 'column', alignItems: 'stretch' }}>
-        <ListItemWrapper>
-          <Typography sx={{ flex: 1 }}>{t('teacher')}</Typography>
-          <Typography sx={{ flex: 2 }}>{classroom.teacher.fullName}</Typography>
-        </ListItemWrapper>
-      </ListItem>
+      <ListGridItem label={t('teacher')} value={classroom.teacher.fullName} />
 
-      <ListItem sx={{ flexDirection: 'column', alignItems: 'stretch' }}>
-        <ListItemWrapper>
-          <Typography sx={{ flex: 1 }}>{t('students')}</Typography>
-
+      <ListGridItem
+        label={t('students')}
+        value={
           <List disablePadding dense sx={{ flex: 2 }}>
             {classroom.students.map((student) => (
               <ListItem key={student.id} disableGutters>
@@ -39,14 +28,8 @@ export default function ClassroomDetailsList(props: ClassroomDetailsListProps) {
               </ListItem>
             ))}
           </List>
-        </ListItemWrapper>
-      </ListItem>
+        }
+      />
     </List>
   );
 }
-
-const ListItemWrapper = styled(Box)(() => ({
-  display: 'flex',
-  justifyContent: 'stretch',
-  columnGap: 16,
-}));

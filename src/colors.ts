@@ -107,19 +107,10 @@ const colors = {
   background: {
     default: background[50],
   },
-  error: {
-    main: error[500],
-    contrastText: text[1000],
-  },
-  info: {
-    main: info[500],
-    contrastText: text[1000],
-  },
+  error,
+  info,
   mode: 'light',
-  primary: {
-    main: primary[500],
-    contrastText: text[1000],
-  },
+  primary,
   secondary: {
     main: secondary[500],
     contrastText: text[1000],

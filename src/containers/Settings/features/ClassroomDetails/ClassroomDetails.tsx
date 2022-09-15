@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { Button, Card, CardContent } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 import CommonViewLayout from 'layouts/CommonView';
 import { getClassroom, updateClassroom } from 'api/classroom';
@@ -11,7 +12,6 @@ import {
 } from 'shared/utils/classroom.utils';
 import ClassroomDetailsList from './components/ClassroomDetailsList';
 import ClassroomEditForm from './components/ClassroomEditForm';
-import { useTranslation } from 'react-i18next';
 import { getErrorDetail } from 'shared/utils/common.utils';
 
 interface ClassroomDetailsProps {
@@ -21,16 +21,20 @@ interface ClassroomDetailsProps {
 export default function ClassroomDetails(props: ClassroomDetailsProps) {
   const isEditMode = useMemo(() => props.mode === 'edit', [props.mode]);
   const { id: classroomId } = useParams<{ id: string }>();
-  const [currentClassroom, setCurrentClassroom] = useState<Classroom | null>(
-    null
-  );
+  const [currentClassroom, setCurrentClassroom] = useState<
+    Classroom | null | undefined
+  >(undefined);
   const [error, setError] = useState('');
   const { t } = useTranslation('settings', { keyPrefix: 'classrooms.edit' });
   const navigate = useNavigate();
 
   const fetchClassroomDetails = async (id: string) => {
-    const { data } = await getClassroom(id);
-    setCurrentClassroom(mapClassroomDtoToClassroom(data));
+    try {
+      const { data } = await getClassroom(id);
+      setCurrentClassroom(mapClassroomDtoToClassroom(data));
+    } catch (error) {
+      setCurrentClassroom(null);
+    }
   };
 
   const handleCancel = () => {
@@ -66,7 +70,10 @@ export default function ClassroomDetails(props: ClassroomDetailsProps) {
     }
   }, [classroomId]);
 
-  if (!currentClassroom) {
+  if (currentClassroom === null) {
+    navigate('/404');
+    return null;
+  } else if (currentClassroom === undefined) {
     return null;
   }
 

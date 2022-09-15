@@ -36,6 +36,8 @@ export type CreateUserForm = Pick<
   'email' | 'firstName' | 'lastName' | 'role'
 >;
 
+export type UpdateUserForm = Pick<User, 'email' | 'firstName' | 'lastName'>;
+
 export interface GetUsersProps {
   role?: Role | Role[];
   withoutGroups?: boolean;
@@ -48,9 +50,12 @@ export type CreateUserPayload = Pick<
   UserDto,
   'email' | 'first_name' | 'last_name' | 'role'
 >;
+export type UpdateUserPayload = Pick<UserDto, 'id'> &
+  Partial<Omit<UserDto, 'id' | 'role'>>;
 
 // responses
 
 export type FetchMeResponse = AxiosResponse<UserDto>;
 export type CreateUserResponse = AxiosResponse<UserDto>;
 export type GetUsersResponse = AxiosResponse<UserDto[]>;
+export type GetUserResponse = AxiosResponse<UserDto>;

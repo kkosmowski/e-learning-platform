@@ -91,7 +91,14 @@
     "create": "Utwórz",
     "delete": "Usuń",
     "active": "Aktywny(a)",
-    "inactive": "Nieaktywny(a)"
+    "inactive": "Nieaktywny(a)",
+    "firstName": "Imię",
+    "lastName": "Nazwisko",
+    "email": "Adres e-mail",
+    "status": "Status",
+    "userType": "Typ użytkownika",
+    "activate": "Aktywuj",
+    "deactivate": "Dezaktywuj"
   },
   "settings": {
     "title": "Ustawienia",
@@ -144,26 +151,39 @@
         "teachers": "Nauczyciele",
         "create": "Dodaj użytkownika"
       },
-      "createUser": {
+      "userForm": {
         "placeholder": {
           "email": "Adres e-mail",
           "firstName": "Imię",
           "lastName": "Nazwisko"
-        },
+        }
+      },
+      "createUser": {
         "submitButton": "Utwórz użytkownika",
-        "userCreated": "Użytkownik pomyślnie utworzony"
+        "success": "Użytkownik pomyślnie utworzony"
+      },
+      "updateUser": {
+        "submitButton": "Aktualizuj konto użytkownika",
+        "success": "Użytkownik pomyślnie zaktualizowany"
       },
       "table": {
-        "firstName": "Imię",
-        "lastName": "Nazwisko",
-        "email": "Adres e-mail",
         "createdAt": "Data utworzenia",
         "isActive": "Status",
         "actions": "Akcje"
       },
       "confirmDeleteTitle": "Potwierdź usunięcie użytkownika",
-      "confirmDeleteMessage": "Czy na pewno usunąć użytkownika {{ name }}? Tej operacji nie da się cofnąć.",
-      "deleteSuccessToast": "Użytkownik pomyślnie usunięty."
+      "confirmDeleteMessage": "Czy na pewno usunąć użytkownika \"{{ name }}\"? Tej operacji nie da się cofnąć.",
+      "deleteSuccessToast": "Użytkownik pomyślnie usunięty.",
+      "details": {
+        "activate": "Aktywuj konto",
+        "deactivate": "Dezaktywuj konto",
+        "confirmActivateTitle": "Potwierdź aktywację użytkownika",
+        "confirmActivateMessage": "Czy na pewno aktywować użytkownika \"{{name}}\"?",
+        "confirmDeactivateTitle": "Potwierdź dezaktywację użytkownika",
+        "confirmDeactivateMessage": "Czy na pewno dezaktywować użytkownika \"{{name}}\"?",
+        "activateSuccessToast": "Aktywowano użytkownika \"{{name}}\".",
+        "deactivateSuccessToast": "Dezaktywowano użytkownika \"{{name}}\"."
+      }
     }
   },
   "404": {
@@ -181,7 +201,7 @@
     "PASSWORD_TOO_SHORT": "Hasło jest zbyt krótkie.",
     "PASSWORD_TOO_LONG": "Hasło jest zbyt długie.",
     "FIRST_NAME_REQUIRED": "Nie można utworzyć użytkownika bez imienia.",
-    "ROLE_REQUIRED": "Rodzaj użytkownika musi zostać określony",
+    "ROLE_REQUIRED": "Rodzaj użytkownika musi zostać określony.",
     "EMAIL_TAKEN": "Ten adres e-mail istnieje już w bazie danych.",
     "INCORRECT CREDENTIALS": "Niepoprawny e-mail bądź hasło.",
     "USER_NOT_FOUND": "Nie znaleziono użytkownika.",

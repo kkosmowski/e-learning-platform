@@ -1,11 +1,19 @@
-import { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router';
+import {
+  ReactNode,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  MouseEvent,
+} from 'react';
+import { useNavigate, useParams } from 'react-router';
 import {
   GlobalStyles,
   IconButton,
   Menu,
   MenuItem,
   Paper,
+  styled,
   Table,
   TableBody,
   TableCell,
@@ -23,15 +31,20 @@ import { deleteUser, getUsers } from 'api/user';
 import { Role, User } from 'shared/types/user';
 import { mapUserDtoToUser } from 'shared/utils/user.utils';
 import { useConfirmationDialog } from 'shared/hooks';
-import { error } from 'colors';
+import { background, error } from 'colors';
+import useUpdateUserData from 'containers/Settings/hooks/use-update-user-data';
+import usePrevious from 'hooks/use-previous';
 
 export default function Users() {
   const { type } = useParams<{ type: 'teachers' | 'students' }>();
   const [users, setUsers] = useState<User[]>([]);
   const [actionMenuTarget, setActionsMenuTarget] = useState<User | null>(null);
-
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const { confirmAction, confirmationDialog } = useConfirmationDialog();
+  const updateUserData = useUpdateUserData();
+  const previousActionMenuTarget = usePrevious(actionMenuTarget);
+  const anyActionMenuTarget = actionMenuTarget || previousActionMenuTarget;
 
   const fetchUsers = useCallback(async () => {
     const role = getRole(type);
@@ -40,9 +53,15 @@ export default function Users() {
     setUsers(data.map(mapUserDtoToUser));
   }, [type]);
 
-  const handleEdit = () => {
+  const handleView = (userId: string) => {
+    navigate(`/settings/user/${userId}`);
+  };
+
+  const handleEdit = (event: MouseEvent) => {
+    event.stopPropagation();
+
     if (actionMenuTarget) {
-      console.log('navigate to edit');
+      navigate(`/settings/user/${actionMenuTarget.id}/edit`);
     }
   };
 
@@ -55,7 +74,61 @@ export default function Users() {
     }
   };
 
-  const showConfirmationDialog = async () => {
+  const updateUserStatus = async (user: User) => {
+    await updateUserData({
+      id: user.id,
+      userData: { active: !user.active },
+      onSuccess: async (user) => {
+        const toastTranslationKey =
+          'users.details.' +
+          (user.active ? 'deactivateSuccessToast' : 'activateSuccessToast');
+        toast.success(t(toastTranslationKey, { name: user.fullName }));
+
+        await fetchUsers();
+      },
+      onError: (error) => {
+        console.error(error);
+        toast.error(t(error));
+      },
+    });
+  };
+
+  const showStatusToggleDialog = async (event: MouseEvent) => {
+    event.stopPropagation();
+
+    if (actionMenuTarget) {
+      const userToUpdate = actionMenuTarget;
+      setActionsMenuTarget(null);
+
+      const shouldUpdate = await confirmAction({
+        title:
+          'settings:users.details.' +
+          (userToUpdate.active
+            ? 'confirmDeactivateTitle'
+            : 'confirmActivateTitle'),
+        message: {
+          key:
+            'settings:users.details.' +
+            (userToUpdate.active
+              ? 'confirmDeactivateMessage'
+              : 'confirmActivateMessage'),
+          props: { name: userToUpdate.fullName },
+        },
+        confirmLabel: userToUpdate.active
+          ? 'common:deactivate'
+          : 'common:activate',
+        confirmColor: userToUpdate.active ? 'error' : 'primary',
+      });
+
+      if (shouldUpdate) {
+        await updateUserStatus(userToUpdate);
+      }
+    }
+  };
+
+  const showDeleteDialog = async (event: MouseEvent) => {
+    event.stopPropagation();
+
     if (actionMenuTarget) {
       const userToDelete = actionMenuTarget;
       setActionsMenuTarget(null);
@@ -90,7 +163,7 @@ export default function Users() {
         <UsersTableHead />
         <TableBody>
           {users.map((user) => (
-            <TableRow key={user.id}>
+            <StyledTableRow key={user.id} onClick={() => handleView(user.id)}>
               <TableCell className="users-table__row--firstName">
                 {user.firstName}
               </TableCell>
@@ -123,14 +196,24 @@ export default function Users() {
                 >
                   <MenuItem onClick={handleEdit}>{t('common:edit')}</MenuItem>
                   <MenuItem
+                    {...(anyActionMenuTarget?.active && {
+                      sx: { color: error[600] },
+                    })}
+                    onClick={showStatusToggleDialog}
+                  >
+                    {anyActionMenuTarget?.active
+                      ? t('common:deactivate')
+                      : t('common:activate')}
+                  </MenuItem>
+                  <MenuItem
                     sx={{ color: error[600] }}
-                    onClick={showConfirmationDialog}
+                    onClick={showDeleteDialog}
                   >
                     {t('common:delete')}
                   </MenuItem>
                 </MoreButton>
               </TableCell>
-            </TableRow>
+            </StyledTableRow>
           ))}
         </TableBody>
       </Table>
@@ -147,16 +230,16 @@ const getRole = (type: 'teachers' | 'students' | undefined): Role => {
 };
 
 const usersTableHeadRows = [
-  'firstName',
-  'lastName',
-  'email',
-  'createdAt',
-  'isActive',
-  'actions',
+  'common:firstName',
+  'common:lastName',
+  'common:email',
+  'users.table.createdAt',
+  'users.table.isActive',
+  'users.table.actions',
 ];
 
 const UsersTableHead = () => {
-  const { t } = useTranslation('settings', { keyPrefix: 'users.table' });
+  const { t } = useTranslation('settings');
   return (
     <TableHead>
       <TableRow>
@@ -209,19 +292,36 @@ const MoreButton = (props: MoreButtonProps) => {
   const { children, target, currentTarget, onClick, onClose } = props;
   const anchor = useRef<HTMLButtonElement | null>(null);
 
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    onClick(target);
+  };
+
+  const handleClose = (event: MouseEvent) => {
+    event.stopPropagation();
+    onClose();
+  };
+
   return (
     <>
-      <IconButton ref={anchor} onClick={() => onClick(target)}>
+      <IconButton ref={anchor} onClick={handleClick}>
         <MoreVert />
       </IconButton>
 
       <Menu
         open={currentTarget === target}
         anchorEl={anchor.current}
-        onClose={onClose}
+        onClose={handleClose}
       >
         {children}
       </Menu>
     </>
   );
 };
+
+const StyledTableRow = styled(TableRow)(() => ({
+  cursor: 'pointer',
+  '&:hover': {
+    backgroundColor: background[200],
+  },
+}));

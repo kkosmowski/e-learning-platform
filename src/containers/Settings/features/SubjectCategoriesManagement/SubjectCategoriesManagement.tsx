@@ -11,8 +11,6 @@ import {
   getSubjectCategories,
   updateSubjectCategory,
 } from 'api/subject';
-import ViewHeader from 'layouts/Application/components/ViewHeader';
-import { Centered } from 'shared/components/Container';
 import { getErrorDetail } from 'shared/utils/common.utils';
 import { SubjectCategory } from 'shared/types/subject';
 import { useConfirmationDialog } from 'shared/hooks';
