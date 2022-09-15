@@ -172,15 +172,15 @@
         "actions": "Akcje"
       },
       "confirmDeleteTitle": "Potwierdź usunięcie użytkownika",
-      "confirmDeleteMessage": "Czy na pewno usunąć użytkownika {{ name }}? Tej operacji nie da się cofnąć.",
+      "confirmDeleteMessage": "Czy na pewno usunąć użytkownika \"{{ name }}\"? Tej operacji nie da się cofnąć.",
       "deleteSuccessToast": "Użytkownik pomyślnie usunięty.",
       "details": {
         "activate": "Aktywuj konto",
         "deactivate": "Dezaktywuj konto",
         "confirmActivateTitle": "Potwierdź aktywację użytkownika",
-        "confirmActivateMessage": "Czy na pewno aktywować konto użytkownika \"{{name}}\"?",
+        "confirmActivateMessage": "Czy na pewno aktywować użytkownika \"{{name}}\"?",
         "confirmDeactivateTitle": "Potwierdź dezaktywację użytkownika",
-        "confirmDeactivateMessage": "Czy na pewno dezaktywować konto użytkownika \"{{name}}\"?",
+        "confirmDeactivateMessage": "Czy na pewno dezaktywować użytkownika \"{{name}}\"?",
         "activateSuccessToast": "Aktywowano użytkownika \"{{name}}\".",
         "deactivateSuccessToast": "Dezaktywowano użytkownika \"{{name}}\"."
       }

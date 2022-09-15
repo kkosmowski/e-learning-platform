@@ -1,3 +1,5 @@
+import { Navigate } from 'react-router-dom';
+
 import Home from 'containers/Home';
 import Subjects from 'containers/Subjects';
 import Settings, {
@@ -195,6 +197,10 @@ export const features: RouteObjectWithId[] = [
           {
             path: 'user',
             children: [
+              {
+                path: '',
+                element: <Navigate to="/settings/users" />,
+              },
               {
                 path: ':id',
                 children: [

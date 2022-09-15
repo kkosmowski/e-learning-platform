@@ -1,4 +1,11 @@
-import { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
+import {
+  ReactNode,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  MouseEvent,
+} from 'react';
 import { useNavigate, useParams } from 'react-router';
 import {
   GlobalStyles,
@@ -25,15 +32,19 @@ import { Role, User } from 'shared/types/user';
 import { mapUserDtoToUser } from 'shared/utils/user.utils';
 import { useConfirmationDialog } from 'shared/hooks';
 import { background, error } from 'colors';
+import useUpdateUserData from 'containers/Settings/hooks/use-update-user-data';
+import usePrevious from 'hooks/use-previous';
 
 export default function Users() {
   const { type } = useParams<{ type: 'teachers' | 'students' }>();
   const [users, setUsers] = useState<User[]>([]);
   const [actionMenuTarget, setActionsMenuTarget] = useState<User | null>(null);
   const navigate = useNavigate();
-
   const { t } = useTranslation();
   const { confirmAction, confirmationDialog } = useConfirmationDialog();
+  const updateUserData = useUpdateUserData();
+  const previousActionMenuTarget = usePrevious(actionMenuTarget);
+  const anyActionMenuTarget = actionMenuTarget || previousActionMenuTarget;
 
   const fetchUsers = useCallback(async () => {
     const role = getRole(type);
@@ -46,7 +57,9 @@ export default function Users() {
     navigate(`/settings/user/${userId}`);
   };
 
-  const handleEdit = () => {
+  const handleEdit = (event: MouseEvent) => {
+    event.stopPropagation();
+
     if (actionMenuTarget) {
       navigate(`/settings/user/${actionMenuTarget.id}/edit`);
     }
@@ -61,7 +74,61 @@ export default function Users() {
     }
   };
 
-  const showConfirmationDialog = async () => {
+  const updateUserStatus = async (user: User) => {
+    await updateUserData({
+      id: user.id,
+      userData: { active: !user.active },
+      onSuccess: async (user) => {
+        const toastTranslationKey =
+          'users.details.' +
+          (user.active ? 'deactivateSuccessToast' : 'activateSuccessToast');
+        toast.success(t(toastTranslationKey, { name: user.fullName }));
+
+        await fetchUsers();
+      },
+      onError: (error) => {
+        console.error(error);
+        toast.error(t(error));
+      },
+    });
+  };
+
+  const showStatusToggleDialog = async (event: MouseEvent) => {
+    event.stopPropagation();
+
+    if (actionMenuTarget) {
+      const userToUpdate = actionMenuTarget;
+      setActionsMenuTarget(null);
+
+      const shouldUpdate = await confirmAction({
+        title:
+          'settings:users.details.' +
+          (userToUpdate.active
+            ? 'confirmDeactivateTitle'
+            : 'confirmActivateTitle'),
+        message: {
+          key:
+            'settings:users.details.' +
+            (userToUpdate.active
+              ? 'confirmDeactivateMessage'
+              : 'confirmActivateMessage'),
+          props: { name: userToUpdate.fullName },
+        },
+        confirmLabel: userToUpdate.active
+          ? 'common:deactivate'
+          : 'common:activate',
+        confirmColor: userToUpdate.active ? 'error' : 'primary',
+      });
+
+      if (shouldUpdate) {
+        await updateUserStatus(userToUpdate);
+      }
+    }
+  };
+
+  const showDeleteDialog = async (event: MouseEvent) => {
+    event.stopPropagation();
+
     if (actionMenuTarget) {
       const userToDelete = actionMenuTarget;
       setActionsMenuTarget(null);
@@ -129,8 +196,18 @@ export default function Users() {
                 >
                   <MenuItem onClick={handleEdit}>{t('common:edit')}</MenuItem>
                   <MenuItem
+                    {...(anyActionMenuTarget?.active && {
+                      sx: { color: error[600] },
+                    })}
+                    onClick={showStatusToggleDialog}
+                  >
+                    {anyActionMenuTarget?.active
+                      ? t('common:deactivate')
+                      : t('common:activate')}
+                  </MenuItem>
+                  <MenuItem
                     sx={{ color: error[600] }}
-                    onClick={showConfirmationDialog}
+                    onClick={showDeleteDialog}
                   >
                     {t('common:delete')}
                   </MenuItem>
@@ -215,16 +292,26 @@ const MoreButton = (props: MoreButtonProps) => {
   const { children, target, currentTarget, onClick, onClose } = props;
   const anchor = useRef<HTMLButtonElement | null>(null);
 
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    onClick(target);
+  };
+
+  const handleClose = (event: MouseEvent) => {
+    event.stopPropagation();
+    onClose();
+  };
+
   return (
     <>
-      <IconButton ref={anchor} onClick={() => onClick(target)}>
+      <IconButton ref={anchor} onClick={handleClick}>
         <MoreVert />
       </IconButton>
 
       <Menu
         open={currentTarget === target}
         anchorEl={anchor.current}
-        onClose={onClose}
+        onClose={handleClose}
       >
         {children}
       </Menu>

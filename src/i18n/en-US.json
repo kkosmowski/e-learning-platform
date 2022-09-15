@@ -173,7 +173,7 @@
         "actions": "Actions"
       },
       "confirmDeleteTitle": "Deleting user",
-      "confirmDeleteMessage": "Are you sure you want to delete user {{ name }}? This operation cannot be undone.",
+      "confirmDeleteMessage": "Are you sure you want to delete user \"{{ name }}\"? This operation cannot be undone.",
       "deleteSuccessToast": "User successfully deleted.",
       "details": {
         "activate": "Active",

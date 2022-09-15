@@ -4,17 +4,14 @@ import { Box, Button, Card, CardContent, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
 
-import { getUser, updateUser } from 'api/user';
-import {
-  mapUserDtoToUser,
-  mapPartialUserToUserDto,
-} from 'shared/utils/user.utils';
-import { UpdateUserForm, UpdateUserPayload, User } from 'shared/types/user';
+import { deleteUser, getUser } from 'api/user';
+import { mapUserDtoToUser } from 'shared/utils/user.utils';
+import { UpdateUserForm, User } from 'shared/types/user';
 import CommonViewLayout from 'layouts/CommonView';
-import { getErrorDetail } from 'shared/utils/common.utils';
 import { useConfirmationDialog } from 'shared/hooks';
 import UserInfo from './components/UserInfo';
 import UserEditForm from './components/UserEditForm';
+import useUpdateUserData from '../../hooks/use-update-user-data';
 
 interface UserDetailsProps {
   mode: 'view' | 'edit';
@@ -29,6 +26,7 @@ export default function UserDetails(props: UserDetailsProps) {
   );
   const [error, setError] = useState('');
   const { t } = useTranslation('settings');
+  const updateUserData = useUpdateUserData();
 
   const { confirmAction, confirmationDialog } = useConfirmationDialog();
 
@@ -58,7 +56,7 @@ export default function UserDetails(props: UserDetailsProps) {
     return null;
   }
 
-  const toggleStatus = async () => {
+  const showStatusToggleDialog = async () => {
     const shouldUpdate = await confirmAction({
       title:
         'settings:users.details.' +
@@ -84,41 +82,66 @@ export default function UserDetails(props: UserDetailsProps) {
     }
   };
 
-  const updateUserData = async (userData: Partial<User>) =>
-    new Promise<void>((resolve, reject) => {
-      try {
-        const payload = mapPartialUserToUserDto({
-          id: currentUser.id,
-          ...userData,
-        }) as UpdateUserPayload;
-
-        (async () => {
-          const { data: updatedUserDto } = await updateUser(payload);
-          setCurrentUser(mapUserDtoToUser(updatedUserDto));
-          setError('');
-          resolve();
-        })();
-      } catch (err: unknown) {
-        const error = getErrorDetail(err);
-        setError(t(error));
-        toast.error(t(error));
-        reject();
-      }
+  const showDeleteDialog = async () => {
+    const shouldDelete = await confirmAction({
+      title: 'settings:users.confirmDeleteTitle',
+      message: {
+        key: 'settings:users.confirmDeleteMessage',
+        props: { name: currentUser.fullName },
+      },
+      confirmLabel: 'common:delete',
+      confirmColor: 'error',
     });
 
-  const updateUserStatus = async () => {
-    await updateUserData({ active: !currentUser.active });
+    if (shouldDelete) {
+      await handleDelete();
+    }
+  };
 
-    const toastTranslationKey =
-      'users.details.' +
-      (currentUser.active ? 'deactivateSuccessToast' : 'activateSuccessToast');
-    toast.success(t(toastTranslationKey, { name: currentUser.fullName }));
+  const handleDelete = async () => {
+    try {
+      await deleteUser(currentUser.id);
+      toast.success(t('settings:users.deleteSuccessToast'));
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const updateUserStatus = async () => {
+    await updateUserData({
+      id: currentUser.id,
+      userData: { active: !currentUser.active },
+      onSuccess: (user) => {
+        setCurrentUser(user);
+        setError('');
+
+        const toastTranslationKey =
+          'users.details.' +
+          (currentUser.active
+            ? 'deactivateSuccessToast'
+            : 'activateSuccessToast');
+        toast.success(t(toastTranslationKey, { name: currentUser.fullName }));
+      },
+      onError: (error) => {
+        setError(t(error));
+        toast.error(t(error));
+      },
+    });
   };
 
   const handleUserUpdate = async (userData: UpdateUserForm) => {
-    await updateUserData(userData);
-    navigate('..');
-    toast.success(t('settings:users.updateUser.success'));
+    await updateUserData({
+      id: currentUser.id,
+      userData,
+      onSuccess: () => {
+        navigate('..');
+        toast.success(t('settings:users.updateUser.success'));
+      },
+      onError: (error) => {
+        setError(t(error));
+        toast.error(t(error));
+      },
+    });
   };
 
   return (
@@ -143,11 +166,15 @@ export default function UserDetails(props: UserDetailsProps) {
         <Button
           variant="contained"
           color={currentUser.active ? 'error' : 'primary'}
-          onClick={toggleStatus}
+          onClick={showStatusToggleDialog}
         >
           {currentUser.active
             ? t('users.details.deactivate')
             : t('users.details.activate')}
+        </Button>
+
+        <Button variant="contained" color="error" onClick={showDeleteDialog}>
+          {t('common:delete')}
         </Button>
       </Box>
 
