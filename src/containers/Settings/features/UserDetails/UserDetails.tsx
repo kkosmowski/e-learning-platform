@@ -1,27 +1,20 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
-import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  List,
-  Typography,
-} from '@mui/material';
+import { Box, Button, Card, CardContent, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { Close, Done } from '@mui/icons-material';
+import toast from 'react-hot-toast';
 
 import { getUser, updateUser } from 'api/user';
 import {
   mapUserDtoToUser,
   mapPartialUserToUserDto,
 } from 'shared/utils/user.utils';
-import { UpdateUserPayload, User } from 'shared/types/user';
+import { UpdateUserForm, UpdateUserPayload, User } from 'shared/types/user';
 import CommonViewLayout from 'layouts/CommonView';
-import ListGridItem from 'shared/components/ListGridItem';
 import { getErrorDetail } from 'shared/utils/common.utils';
-import { useConfirmationDialog } from '../../../../shared/hooks';
-import toast from 'react-hot-toast';
+import { useConfirmationDialog } from 'shared/hooks';
+import UserInfo from './components/UserInfo';
+import UserEditForm from './components/UserEditForm';
 
 interface UserDetailsProps {
   mode: 'view' | 'edit';
@@ -91,26 +84,41 @@ export default function UserDetails(props: UserDetailsProps) {
     }
   };
 
-  const updateUserStatus = async () => {
-    try {
-      const payload = mapPartialUserToUserDto({
-        id: currentUser.id,
-        active: !currentUser.active,
-      }) as UpdateUserPayload;
+  const updateUserData = async (userData: Partial<User>) =>
+    new Promise<void>((resolve, reject) => {
+      try {
+        const payload = mapPartialUserToUserDto({
+          id: currentUser.id,
+          ...userData,
+        }) as UpdateUserPayload;
 
-      const { data: updatedUserDto } = await updateUser(payload);
-      setCurrentUser(mapUserDtoToUser(updatedUserDto));
-      const toastTranslationKey =
-        'users.details.' +
-        (currentUser.active
-          ? 'deactivateSuccessToast'
-          : 'activateSuccessToast');
-      toast.success(t(toastTranslationKey, { name: currentUser.fullName }));
-    } catch (err: unknown) {
-      const error = getErrorDetail(err);
-      setError(t(error));
-      toast.error(t(error));
-    }
+        (async () => {
+          const { data: updatedUserDto } = await updateUser(payload);
+          setCurrentUser(mapUserDtoToUser(updatedUserDto));
+          setError('');
+          resolve();
+        })();
+      } catch (err: unknown) {
+        const error = getErrorDetail(err);
+        setError(t(error));
+        toast.error(t(error));
+        reject();
+      }
+    });
+
+  const updateUserStatus = async () => {
+    await updateUserData({ active: !currentUser.active });
+
+    const toastTranslationKey =
+      'users.details.' +
+      (currentUser.active ? 'deactivateSuccessToast' : 'activateSuccessToast');
+    toast.success(t(toastTranslationKey, { name: currentUser.fullName }));
+  };
+
+  const handleUserUpdate = async (userData: UpdateUserForm) => {
+    await updateUserData(userData);
+    navigate('..');
+    toast.success(t('settings:users.updateUser.success'));
   };
 
   return (
@@ -147,40 +155,13 @@ export default function UserDetails(props: UserDetailsProps) {
 
       <Card>
         <CardContent>
-          <List>
-            <ListGridItem
-              label={t('common:userType')}
-              value={t(`common:${currentUser.role}`)}
-            />
-
-            <ListGridItem
-              label={t('common:status')}
-              value={
-                <Box sx={{ display: 'flex', alignItems: 'center', flex: 2 }}>
-                  {currentUser.active ? (
-                    <Done sx={{ color: 'success.500' }} />
-                  ) : (
-                    <Close sx={{ color: 'error.500' }} />
-                  )}
-                  {currentUser.active
-                    ? t('common:active')
-                    : t('common:inactive')}
-                </Box>
-              }
-            />
-
-            <ListGridItem
-              label={t('common:firstName')}
-              value={currentUser.firstName}
-            />
-
-            <ListGridItem
-              label={t('common:lastName')}
-              value={currentUser.lastName}
-            />
-
-            <ListGridItem label={t('common:email')} value={currentUser.email} />
-          </List>
+          <UserInfo
+            user={currentUser}
+            {...(isEditMode && { fields: ['role', 'active'] })}
+          />
+          {isEditMode && (
+            <UserEditForm user={currentUser} onSubmit={handleUserUpdate} />
+          )}
         </CardContent>
       </Card>
 

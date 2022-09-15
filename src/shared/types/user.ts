@@ -36,6 +36,8 @@ export type CreateUserForm = Pick<
   'email' | 'firstName' | 'lastName' | 'role'
 >;
 
+export type UpdateUserForm = Pick<User, 'email' | 'firstName' | 'lastName'>;
+
 export interface GetUsersProps {
   role?: Role | Role[];
   withoutGroups?: boolean;

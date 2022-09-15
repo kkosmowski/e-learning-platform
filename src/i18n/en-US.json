@@ -149,14 +149,20 @@
         "teachers": "Teachers",
         "create": "Add new user"
       },
-      "createUser": {
+      "userForm": {
         "placeholder": {
           "email": "Email address",
           "firstName": "First name",
           "lastName": "Last name"
-        },
+        }
+      },
+      "createUser": {
         "submitButton": "Create user",
-        "userCreated": "User created successfully"
+        "success": "User created successfully"
+      },
+      "updateUser": {
+        "submitButton": "Update user details",
+        "success": "User details updated successfully"
       },
       "table": {
         "firstName": "First name",
@@ -168,7 +174,17 @@
       },
       "confirmDeleteTitle": "Deleting user",
       "confirmDeleteMessage": "Are you sure you want to delete user {{ name }}? This operation cannot be undone.",
-      "deleteSuccessToast": "User successfully deleted."
+      "deleteSuccessToast": "User successfully deleted.",
+      "details": {
+        "activate": "Active",
+        "deactivate": "Deactivate",
+        "confirmActivateTitle": "Confirm user activation",
+        "confirmActivateMessage": "Are you sure you want to activate user \"{{name}}\"?",
+        "confirmDeactivateTitle": "Confirm user deactivation",
+        "confirmDeactivateMessage": "Are you sure you want to deactivate user \"{{name}}\"?",
+        "activateSuccessToast": "User \"{{name}}\" activated.",
+        "deactivateSuccessToast": "User \"{{name}}\" deactivated."
+      }
     }
   },
   "404": {
@@ -185,8 +201,8 @@
     "PASSWORD_REQUIRED": "Password cannot be empty.",
     "PASSWORD_TOO_SHORT": "Password is too short.",
     "PASSWORD_TOO_LONG": "Password is too long.",
-    "FIRST_NAME_REQUIRED": "Cannot create a user without first name",
-    "ROLE_REQUIRED": "User's role must be selected",
+    "FIRST_NAME_REQUIRED": "Cannot create a user without first name.",
+    "ROLE_REQUIRED": "User's role must be selected.",
     "EMAIL_TAKEN": "This email is already in use.",
     "INCORRECT CREDENTIALS": "Incorrect email or password.",
     "USER_NOT_FOUND": "User not found.",

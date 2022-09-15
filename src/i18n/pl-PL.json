@@ -151,14 +151,20 @@
         "teachers": "Nauczyciele",
         "create": "Dodaj użytkownika"
       },
-      "createUser": {
+      "userForm": {
         "placeholder": {
           "email": "Adres e-mail",
           "firstName": "Imię",
           "lastName": "Nazwisko"
-        },
+        }
+      },
+      "createUser": {
         "submitButton": "Utwórz użytkownika",
-        "userCreated": "Użytkownik pomyślnie utworzony"
+        "success": "Użytkownik pomyślnie utworzony"
+      },
+      "updateUser": {
+        "submitButton": "Aktualizuj konto użytkownika",
+        "success": "Użytkownik pomyślnie zaktualizowany"
       },
       "table": {
         "createdAt": "Data utworzenia",
@@ -173,7 +179,7 @@
         "deactivate": "Dezaktywuj konto",
         "confirmActivateTitle": "Potwierdź aktywację użytkownika",
         "confirmActivateMessage": "Czy na pewno aktywować konto użytkownika \"{{name}}\"?",
-        "confirmDeactivateTitle": "Potwierdź usunięcie kategorii przedmiotu",
+        "confirmDeactivateTitle": "Potwierdź dezaktywację użytkownika",
         "confirmDeactivateMessage": "Czy na pewno dezaktywować konto użytkownika \"{{name}}\"?",
         "activateSuccessToast": "Aktywowano użytkownika \"{{name}}\".",
         "deactivateSuccessToast": "Dezaktywowano użytkownika \"{{name}}\"."
@@ -195,7 +201,7 @@
     "PASSWORD_TOO_SHORT": "Hasło jest zbyt krótkie.",
     "PASSWORD_TOO_LONG": "Hasło jest zbyt długie.",
     "FIRST_NAME_REQUIRED": "Nie można utworzyć użytkownika bez imienia.",
-    "ROLE_REQUIRED": "Rodzaj użytkownika musi zostać określony",
+    "ROLE_REQUIRED": "Rodzaj użytkownika musi zostać określony.",
     "EMAIL_TAKEN": "Ten adres e-mail istnieje już w bazie danych.",
     "INCORRECT CREDENTIALS": "Niepoprawny e-mail bądź hasło.",
     "USER_NOT_FOUND": "Nie znaleziono użytkownika.",

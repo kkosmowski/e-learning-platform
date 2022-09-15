@@ -1,57 +1,34 @@
 import { useFormik } from 'formik';
-import { useEffect, useState } from 'react';
 import * as yup from 'yup';
-import {
-  Button,
-  MenuItem,
-  Select,
-  Stack,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Box, Button, Stack, TextField, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router';
 
-import { createUser } from 'api/user';
-import { error } from 'colors';
-import { CreateUserForm, Role } from 'shared/types/user';
-import { mapCreateUserFormToCreateUserPayload } from 'shared/utils/user.utils';
-import { getErrorDetail } from 'shared/utils/common.utils';
+import { UpdateUserForm, User } from 'shared/types/user';
 import {
   emailRequiredError,
   firstNameRequiredError,
   incorrectEmailError,
   invalidFormError,
-  roleRequiredError,
 } from 'shared/consts/error';
-import toast from 'react-hot-toast';
+import { error } from 'colors';
 
-export default function CreateUser() {
+interface UserEditFormProps {
+  user: User;
+  onSubmit: (data: UpdateUserForm) => void;
+}
+
+export default function UserEditForm(props: UserEditFormProps) {
+  const { user, onSubmit } = props;
   const { t } = useTranslation();
-  const [errorText, setErrorText] = useState('');
+  const navigate = useNavigate();
 
-  const onSubmit = async (userData: CreateUserForm) => {
-    try {
-      await createUser(mapCreateUserFormToCreateUserPayload(userData));
-      setErrorText('');
-      toast.success(t('settings:users.createUser.success'));
-      formik.resetForm();
-      await formik.validateForm();
-    } catch (err: unknown) {
-      const errorDetail = getErrorDetail(err);
-      setErrorText(errorDetail);
-      toast.error(t(errorDetail));
-    }
-  };
-
-  const formik = useFormik({
+  const formik = useFormik<UpdateUserForm>({
     initialValues: {
-      email: '',
-      firstName: '',
-      lastName: '',
-      role: Role.Student,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
     },
-    validateOnBlur: true,
-    validateOnMount: true,
     validationSchema: yup.object().shape({
       email: yup
         .string()
@@ -59,10 +36,13 @@ export default function CreateUser() {
         .required(emailRequiredError),
       firstName: yup.string().required(firstNameRequiredError),
       lastName: yup.string(),
-      role: yup.string().oneOf(Object.values(Role)).required(roleRequiredError),
     }),
     onSubmit,
   });
+
+  const handleCancel = () => {
+    navigate('..');
+  };
 
   const {
     errors,
@@ -73,10 +53,6 @@ export default function CreateUser() {
     touched,
     values,
   } = formik;
-
-  useEffect(() => {
-    setErrorText('');
-  }, [values]);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -114,33 +90,21 @@ export default function CreateUser() {
           onChange={handleChange}
         />
 
-        <Select<Role>
-          name="role"
-          value={values.role}
-          error={touched.role && Boolean(errors.role)}
-          onBlur={handleBlur}
-          onChange={handleChange}
-        >
-          {Object.values(Role).map((role: Role) => (
-            <MenuItem key={role} value={role}>
-              {t(`common:${role}`)}
-            </MenuItem>
-          ))}
-        </Select>
-
         {touched.email && touched.firstName && touched.lastName && !isValid && (
           <Typography sx={{ color: error[500] }}>
             {t(invalidFormError)}
           </Typography>
         )}
 
-        <Button variant="contained" disabled={!isValid} type="submit">
-          {t('settings:users.createUser.submitButton')}
-        </Button>
+        <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 2 }}>
+          <Button variant="contained" color="secondary" onClick={handleCancel}>
+            {t('common:cancel')}
+          </Button>
 
-        {errorText && (
-          <Typography sx={{ color: error[500] }}>{t(errorText)}</Typography>
-        )}
+          <Button variant="contained" disabled={!isValid} type="submit">
+            {t('settings:users.updateUser.submitButton')}
+          </Button>
+        </Box>
       </Stack>
     </form>
   );
