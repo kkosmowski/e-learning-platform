@@ -133,8 +133,9 @@ export default function UserDetails(props: UserDetailsProps) {
     await updateUserData({
       id: currentUser.id,
       userData,
-      onSuccess: () => {
+      onSuccess: (user) => {
         navigate('..');
+        setCurrentUser(user);
         toast.success(t('settings:users.updateUser.success'));
       },
       onError: (error) => {
