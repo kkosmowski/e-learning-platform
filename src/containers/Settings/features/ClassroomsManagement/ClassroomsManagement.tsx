@@ -1,4 +1,4 @@
-import { MouseEvent, useEffect, useState } from 'react';
+import { MouseEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import {
@@ -10,13 +10,15 @@ import {
   Typography,
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
+import { useQuery } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 
 import CommonViewLayout from 'layouts/CommonView';
-import { SimpleClassroom } from 'shared/types/classroom';
+import { GetClassroomsResponse, SimpleClassroom } from 'shared/types/classroom';
 import { getClassrooms } from 'api/classroom';
+import PageLoading from 'shared/components/PageLoading';
 
 export default function ClassroomsManagement() {
-  const [classrooms, setClassrooms] = useState<SimpleClassroom[]>([]);
   const { t } = useTranslation('settings', { keyPrefix: 'classrooms' });
   const navigate = useNavigate();
 
@@ -36,14 +38,17 @@ export default function ClassroomsManagement() {
     navigate(`${classroomId}`);
   };
 
-  const fetchClassrooms = async () => {
-    const { data } = await getClassrooms();
-    setClassrooms(data);
-  };
-
-  useEffect(() => {
-    void fetchClassrooms();
-  }, []);
+  const {
+    data: classrooms,
+    isSuccess,
+    isLoading,
+  } = useQuery<GetClassroomsResponse, AxiosError, SimpleClassroom[]>(
+    ['classrooms'],
+    getClassrooms,
+    {
+      select: ({ data }) => data,
+    }
+  );
 
   return (
     <CommonViewLayout headerTitle={t('title')} maxWidth={600}>
@@ -53,34 +58,42 @@ export default function ClassroomsManagement() {
         </Button>
       </Box>
 
-      {classrooms.length ? (
-        <List sx={{ width: '100%' }}>
-          {classrooms.map((classroom) => (
-            <ListItemButton
-              key={classroom.id}
-              dense={true}
-              divider
-              sx={{ py: 1.5 }}
-              onClick={() => navigateToClassroomViewPage(classroom.id)}
-            >
-              {classroom.name}
-              <IconButton
-                color="primary"
-                size="small"
-                sx={{ ml: 2 }}
-                aria-label={t('common:edit')}
-                onClick={(event) =>
-                  navigateToClassroomEditPage(classroom.id, event)
-                }
-              >
-                <EditIcon />
-              </IconButton>
-            </ListItemButton>
-          ))}
-        </List>
-      ) : (
-        <Typography>{t('noItems')}</Typography>
-      )}
+      {/*{ isSuccess ?*/}
+      {/*  classrooms.length ? (*/}
+      {/*    <List sx={ { width: '100%' } }>*/}
+      {/*      { classrooms.map((classroom) => (*/}
+      {/*        <ListItemButton*/}
+      {/*          key={ classroom.id }*/}
+      {/*          dense={ true }*/}
+      {/*          divider*/}
+      {/*          sx={ { py: 1.5 } }*/}
+      {/*          onClick={ () => navigateToClassroomViewPage(classroom.id) }*/}
+      {/*        >*/}
+      {/*          { classroom.name }*/}
+      {/*          <IconButton*/}
+      {/*            color="primary"*/}
+      {/*            size="small"*/}
+      {/*            sx={ { ml: 2 } }*/}
+      {/*            aria-label={ t('common:edit') }*/}
+      {/*            onClick={ (event) =>*/}
+      {/*              navigateToClassroomEditPage(classroom.id, event)*/}
+      {/*            }*/}
+      {/*          >*/}
+      {/*            <EditIcon />*/}
+      {/*          </IconButton>*/}
+      {/*        </ListItemButton>*/}
+      {/*      )) }*/}
+      {/*    </List>*/}
+      {/*  ) : (*/}
+      {/*    <Typography>{ t('noItems') }</Typography>*/}
+      {/*  ) : isLoading*/}
+      {/*    ? (*/}
+      {/*    ) : (*/}
+      {/*      'error'*/}
+      {/*    )*/}
+      {/*}*/}
+
+      <PageLoading />
     </CommonViewLayout>
   );
 }
