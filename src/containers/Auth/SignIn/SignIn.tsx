@@ -1,3 +1,4 @@
+import { ChangeEvent, useEffect, useState } from 'react';
 import { Button, Stack, TextField, Tooltip, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -17,8 +18,13 @@ import {
 } from 'shared/consts/error';
 
 export default function SignIn() {
-  const { error, signIn } = useAuth();
+  const { error: authError, signIn } = useAuth();
   const { t } = useTranslation('auth');
+  const [error, setError] = useState(authError);
+
+  useEffect(() => {
+    setError(authError);
+  }, [authError]);
 
   const formik = useFormik({
     initialValues: {
@@ -51,6 +57,11 @@ export default function SignIn() {
     values,
   } = formik;
 
+  const onChange = (event: ChangeEvent) => {
+    setError('');
+    handleChange(event);
+  };
+
   return (
     <form onSubmit={handleSubmit}>
       <Stack spacing={2}>
@@ -64,7 +75,7 @@ export default function SignIn() {
             startAdornment: <Mail color="secondary" />,
           }}
           onBlur={handleBlur}
-          onChange={handleChange}
+          onChange={onChange}
         />
 
         <TextField
@@ -78,7 +89,7 @@ export default function SignIn() {
             type: 'password',
           }}
           onBlur={handleBlur}
-          onChange={handleChange}
+          onChange={onChange}
         />
 
         {touched.username && touched.password && !isValid && (
