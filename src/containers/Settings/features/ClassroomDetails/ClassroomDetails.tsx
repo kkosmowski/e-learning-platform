@@ -1,11 +1,19 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { Button, Card, CardContent } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
+import toast from 'react-hot-toast';
 
 import CommonViewLayout from 'layouts/CommonView';
 import { getClassroom, updateClassroom } from 'api/classroom';
-import { Classroom, ClassroomForm } from 'shared/types/classroom';
+import {
+  Classroom,
+  ClassroomForm,
+  GetClassroomResponse,
+  UpdateClassroomResponse,
+} from 'shared/types/classroom';
 import {
   mapClassroomDtoToClassroom,
   mapClassroomToUpdateClassroomPayload,
@@ -21,30 +29,39 @@ interface ClassroomDetailsProps {
 export default function ClassroomDetails(props: ClassroomDetailsProps) {
   const isEditMode = useMemo(() => props.mode === 'edit', [props.mode]);
   const { id: classroomId } = useParams<{ id: string }>();
-  const [currentClassroom, setCurrentClassroom] = useState<
-    Classroom | null | undefined
-  >(undefined);
   const [error, setError] = useState('');
   const { t } = useTranslation('settings', { keyPrefix: 'classrooms.edit' });
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
-  const fetchClassroomDetails = async (id: string) => {
-    try {
-      const { data } = await getClassroom(id);
-      setCurrentClassroom(mapClassroomDtoToClassroom(data));
-    } catch (error) {
-      setCurrentClassroom(null);
+  const {
+    data: currentClassroom,
+    isSuccess,
+    isLoading,
+  } = useQuery<GetClassroomResponse, AxiosError, Classroom>(
+    ['classroom', classroomId],
+    () => {
+      if (classroomId) return getClassroom(classroomId);
+      else throw new Error('Classroom id is missing');
+    },
+    {
+      enabled: Boolean(classroomId),
+      select: ({ data }) => mapClassroomDtoToClassroom(data),
     }
-  };
+  );
 
-  const handleCancel = () => {
+  const navigateBack = () => {
     navigate('..', { replace: false });
   };
 
-  const handleSave = async (values: ClassroomForm) => {
-    if (currentClassroom && values.teacher) {
-      try {
-        const { data: updatedClassroom } = await updateClassroom(
+  const { mutate: handleSave } = useMutation<
+    UpdateClassroomResponse,
+    AxiosError,
+    ClassroomForm
+  >(
+    async (values: ClassroomForm) => {
+      if (currentClassroom && values.teacher) {
+        return updateClassroom(
           mapClassroomToUpdateClassroomPayload({
             id: currentClassroom.id,
             name: values.name,
@@ -52,61 +69,65 @@ export default function ClassroomDetails(props: ClassroomDetailsProps) {
             students: values.students,
           })
         );
-        setCurrentClassroom(mapClassroomDtoToClassroom(updatedClassroom));
-        navigate('..', { replace: false });
-      } catch (e) {
+      } else throw new Error('Classroom id is missing');
+    },
+    {
+      onSuccess: async ({ data }) => {
+        await queryClient.invalidateQueries(['classroom', classroomId]);
+        queryClient.setQueryData(['classroom', classroomId], { data });
+        navigateBack();
+        toast.success('Classroom updated');
+      },
+      onError: (e) => {
         setError(getErrorDetail(e));
-      }
+        toast.error('There was an error');
+      },
     }
-  };
+  );
 
   const navigateToEdit = () => {
     navigate('./edit', { replace: false });
   };
 
-  useEffect(() => {
-    if (classroomId) {
-      void fetchClassroomDetails(classroomId);
-    }
-  }, [classroomId]);
-
-  if (currentClassroom === null) {
+  if (!isLoading && !isSuccess) {
     navigate('/404');
-    return null;
-  } else if (currentClassroom === undefined) {
     return null;
   }
 
   return (
     <CommonViewLayout
-      headerTitle={currentClassroom.name}
+      headerTitle={currentClassroom?.name || ''}
       maxWidth={600}
       CenteredProps={{ innerSx: { gap: 3 } }}
     >
-      {!isEditMode && (
-        <Button
-          variant="contained"
-          sx={{ mr: 'auto' }}
-          onClick={navigateToEdit}
-        >
-          {t('editThisClassroom')}
-        </Button>
-      )}
-
-      <Card>
-        <CardContent>
-          {isEditMode ? (
-            <ClassroomEditForm
-              classroom={currentClassroom}
-              error={error}
-              onSubmit={handleSave}
-              onCancel={handleCancel}
-            />
-          ) : (
-            <ClassroomDetailsList classroom={currentClassroom} />
+      {isSuccess && (
+        <>
+          {!isEditMode && (
+            <Button
+              variant="contained"
+              sx={{ mr: 'auto' }}
+              onClick={navigateToEdit}
+            >
+              {t('editThisClassroom')}
+            </Button>
           )}
-        </CardContent>
-      </Card>
+
+          <Card>
+            <CardContent>
+              {isEditMode ? (
+                <ClassroomEditForm
+                  classroom={currentClassroom}
+                  error={error}
+                  onSubmit={handleSave}
+                  onCancel={navigateBack}
+                />
+              ) : (
+                <ClassroomDetailsList classroom={currentClassroom} />
+              )}
+            </CardContent>
+          </Card>
+        </>
+      )}
     </CommonViewLayout>
   );
 }
