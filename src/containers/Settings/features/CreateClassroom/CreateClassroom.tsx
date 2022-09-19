@@ -1,50 +1,37 @@
 import { useTranslation } from 'react-i18next';
-import toast from 'react-hot-toast';
 import { Button } from '@mui/material';
 
 import CommonViewLayout from 'layouts/CommonView';
-import { createClassroom } from 'api/classroom';
-import { ClassroomForm } from 'shared/types/classroom';
-import { getErrorDetail } from 'shared/utils/common.utils';
 import useClassroomForm from 'shared/hooks/use-classroom-form';
+import useCreateClassroomQuery from './hooks/use-create-classroom-query';
+import { ClassroomForm } from 'shared/types/classroom';
 
 export default function CreateClassroom() {
   const { t } = useTranslation('settings');
+  const createClassroom = useCreateClassroomQuery();
 
-  const handleCreate = async (formValues: ClassroomForm) => {
-    try {
-      await createClassroom(formValues);
-      toast.success(
-        t('classrooms.create.createSuccessToast', { name: formValues.name })
-      );
-    } catch (err: unknown) {
-      const error = getErrorDetail(err);
-      toast.error(t(error));
-    }
+  const handleCreateAndShow = (values: ClassroomForm) => {
+    createClassroom({ values, show: true });
   };
 
-  const handleCreateAndShow = async () => {
-    await handleCreate(values);
-    // @todo navigate to the classroom
+  const handleCreate = (values: ClassroomForm) => {
+    createClassroom({ values });
   };
 
-  const {
-    formik: { values },
-    Form,
-  } = useClassroomForm({
+  const { Form } = useClassroomForm({
     initialValues: {
       name: '',
       teacher: null,
       students: [],
     },
     submitButtonLabel: t('common:create'),
-    secondaryButton: ({ isValid }) => (
+    secondaryButton: ({ isValid, values }) => (
       <Button
         type="button"
         variant="contained"
         disabled={!isValid}
         color="secondary"
-        onClick={handleCreateAndShow}
+        onClick={() => handleCreateAndShow(values)}
       >
         {t('classrooms.create.createAndShow')}
       </Button>
