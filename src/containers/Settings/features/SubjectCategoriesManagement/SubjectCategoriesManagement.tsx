@@ -1,121 +1,101 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, Button, IconButton, List, ListItem } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import toast from 'react-hot-toast';
 
-import {
-  createSubjectCategory,
-  deleteSubjectCategory,
-  getSubjectCategories,
-  updateSubjectCategory,
-} from 'api/subject';
-import { getErrorDetail } from 'shared/utils/common.utils';
 import { SubjectCategory } from 'shared/types/subject';
 import { useConfirmationDialog } from 'shared/hooks';
 import CreateNewCategoryForm from './components/CreateNewCategoryForm';
 import EditCategoryForm from './components/EditCategoryForm';
 import CommonViewLayout from 'layouts/CommonView';
+import useSubjectCategoriesQuery from './hooks/use-subject-categories-query';
+import PageLoading from '../../../../shared/components/PageLoading';
+import SubjectCategoriesList from './components/SubjectCategoriesList';
 
 export default function SubjectCategoriesManagement() {
   const { t } = useTranslation('settings', { keyPrefix: 'subjectCategories' });
-  const [subjectCategories, setSubjectCategories] = useState<SubjectCategory[]>(
-    []
-  );
   const [isCreateMode, setIsCreateMode] = useState(false);
   const [editedCategory, setEditedCategory] = useState<SubjectCategory | null>(
     null
   );
   const { confirmAction, confirmationDialog } = useConfirmationDialog();
+  const {
+    subjectCategories,
+    isLoading,
+    isSuccess,
+    createSubjectCategory,
+    updateSubjectCategory,
+    deleteSubjectCategory,
+  } = useSubjectCategoriesQuery();
 
-  const isEditMode = (categoryId: string): boolean =>
-    categoryId === editedCategory?.id;
+  const isEditMode = useCallback(
+    (categoryId: string): boolean => categoryId === editedCategory?.id,
+    [editedCategory]
+  );
 
   const showCreateNewCategoryForm = () => {
     setIsCreateMode(true);
     setEditedCategory(null);
   };
 
-  const showConfirmationDialog = async (category: SubjectCategory) => {
-    const shouldDelete = await confirmAction({
-      title: 'settings:subjectCategories.confirmDeleteTitle',
-      message: {
-        key: 'settings:subjectCategories.confirmDeleteMessage',
-        props: { name: category.name },
-      },
-      confirmLabel: 'common:delete',
-      confirmColor: 'error',
-    });
+  const showConfirmationDialog = useCallback(
+    async (category: SubjectCategory) => {
+      const shouldDelete = await confirmAction({
+        title: 'settings:subjectCategories.confirmDeleteTitle',
+        message: {
+          key: 'settings:subjectCategories.confirmDeleteMessage',
+          props: { name: category.name },
+        },
+        confirmLabel: 'common:delete',
+        confirmColor: 'error',
+      });
 
-    if (shouldDelete) {
-      await handleDelete(category);
-    }
-  };
+      if (shouldDelete) {
+        await deleteSubjectCategory(category.id);
+      }
+    },
+    [confirmAction, deleteSubjectCategory]
+  );
 
-  const showEditCategoryForm = (category: SubjectCategory) => {
+  const showEditCategoryForm = useCallback((category: SubjectCategory) => {
     setEditedCategory(category);
     setIsCreateMode(false);
-  };
+  }, []);
 
-  const handleCancel = () => {
+  const handleCancel = useCallback(() => {
     setIsCreateMode(false);
     setEditedCategory(null);
-  };
+  }, []);
 
-  const handleCreateNew = async (name: string) => {
-    try {
-      const { data } = await createSubjectCategory(name);
-      setSubjectCategories([...subjectCategories, data]);
-      toast.success(t('createSuccessToast', { name }));
-    } catch (err: unknown) {
-      const error = getErrorDetail(err);
-      toast.error(t(error));
-    }
-  };
-
-  const handleUpdate = async (newName: string) => {
-    if (editedCategory) {
-      try {
-        const { data } = await updateSubjectCategory({
+  const handleUpdate = useCallback(
+    (newName: string) => {
+      if (editedCategory) {
+        updateSubjectCategory({
           id: editedCategory.id,
           name: newName,
         });
-        setSubjectCategories(
-          subjectCategories.map((category) =>
-            category.id === data.id ? data : category
-          )
-        );
-        toast.success(
-          t('updateSuccessToast', { oldName: editedCategory.name, newName })
-        );
-      } catch (err: unknown) {
-        const error = getErrorDetail(err);
-        toast.error(t(error));
       }
-    }
-  };
+    },
+    [editedCategory, updateSubjectCategory]
+  );
 
-  const handleDelete = async (category: SubjectCategory) => {
-    try {
-      await deleteSubjectCategory(category.id);
-      toast.success(t('deleteSuccessToast', { name: category.name }));
-      setSubjectCategories(
-        subjectCategories.filter(({ id }) => category.id !== id)
-      );
-    } catch (err: unknown) {
-      const error = getErrorDetail(err);
-      toast.error(t(error));
-    }
-  };
-
-  useEffect(() => {
-    // @todo use TanStack Query
-    (async () => {
-      const { data } = await getSubjectCategories();
-      setSubjectCategories(data);
-    })();
-  }, []);
+  const listProps = useMemo(
+    () => ({
+      isEditMode,
+      handleUpdate,
+      handleCancel,
+      showEditCategoryForm,
+      showConfirmationDialog,
+    }),
+    [
+      showEditCategoryForm,
+      showConfirmationDialog,
+      isEditMode,
+      handleUpdate,
+      handleCancel,
+    ]
+  );
 
   return (
     <CommonViewLayout
@@ -125,7 +105,7 @@ export default function SubjectCategoriesManagement() {
     >
       {isCreateMode ? (
         <CreateNewCategoryForm
-          onSubmit={handleCreateNew}
+          onSubmit={createSubjectCategory}
           onCancel={handleCancel}
         />
       ) : (
@@ -136,46 +116,13 @@ export default function SubjectCategoriesManagement() {
         </Box>
       )}
 
-      <List sx={{ width: '100%' }}>
-        {subjectCategories.map((category) => (
-          <ListItem
-            key={category.id}
-            divider
-            secondaryAction={
-              <>
-                <IconButton
-                  color="primary"
-                  aria-label={t('common:edit')}
-                  onClick={() => showEditCategoryForm(category)}
-                >
-                  <EditIcon />
-                </IconButton>
-                <IconButton
-                  color="error"
-                  aria-label={t('common:delete')}
-                  onClick={() => showConfirmationDialog(category)}
-                >
-                  <DeleteIcon />
-                </IconButton>
-              </>
-            }
-            sx={{
-              py: isEditMode(category.id) ? 0.5 : 1.5,
-              pr: 16,
-            }}
-          >
-            {isEditMode(category.id) ? (
-              <EditCategoryForm
-                value={category.name}
-                onSubmit={handleUpdate}
-                onCancel={handleCancel}
-              />
-            ) : (
-              category.name
-            )}
-          </ListItem>
-        ))}
-      </List>
+      {isLoading && <PageLoading />}
+
+      {isSuccess && !subjectCategories?.length && t('noItems')}
+
+      {isSuccess && !!subjectCategories?.length && (
+        <SubjectCategoriesList categories={subjectCategories} {...listProps} />
+      )}
 
       {confirmationDialog}
     </CommonViewLayout>

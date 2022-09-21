@@ -113,11 +113,12 @@
       "create": "Create category",
       "nameCannotBeEmptyTooltip": "You need to define a category name in order to create it",
       "nothingToSaveTooltip": "No change to the name was made",
-      "createSuccessToast": "Successfully created \"{{name}}\" subject category.",
-      "updateSuccessToast": "Successfully renamed \"{{oldName}}\" category to \"{{newName}}\".",
-      "deleteSuccessToast": "Successfully deleted \"{{name}}\" subject category.",
+      "createSuccessToast": "Successfully created new subject category.",
+      "updateSuccessToast": "Successfully renamed a subject category.",
+      "deleteSuccessToast": "Successfully deleted a subject category.",
       "confirmDeleteTitle": "Deleting a subject category",
-      "confirmDeleteMessage": "Are you sure you want to delete \"{{name}}\" category? This operation cannot be undone."
+      "confirmDeleteMessage": "Are you sure you want to delete \"{{name}}\" category? This operation cannot be undone.",
+      "noItems": "No subject categories yet."
     },
     "classrooms": {
       "title": "Classrooms management",

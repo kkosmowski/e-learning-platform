@@ -71,7 +71,6 @@ export default function useClassroomQuery(
     },
     {
       onSuccess: async ({ data }) => {
-        await queryClient.invalidateQueries(['classroom', classroomId]);
         queryClient.setQueryData(['classroom', classroomId], { data });
         navigateBack();
         toast.success('Classroom updated');

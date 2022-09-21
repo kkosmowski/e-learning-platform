@@ -115,11 +115,12 @@
       "create": "Utwórz kategorię",
       "nameCannotBeEmptyTooltip": "Aby utworzyć kategorię musisz nadać jej nazwę",
       "nothingToSaveTooltip": "Brak zmian w nazwie kategorii",
-      "createSuccessToast": "Utworzono kategorię \"{{name}}\".",
-      "updateSuccessToast": "Nazwa kategorii \"{{oldName}}\" pomyślnie zmieniona na \"{{newName}}\".",
-      "deleteSuccessToast": "Usunięto kategorię \"{{name}}\".",
+      "createSuccessToast": "Kategoria pomyślnie utworzona.",
+      "updateSuccessToast": "Nazwa kategorii pomyślnie zmieniona.",
+      "deleteSuccessToast": "Kategoria pomyślnie usunięta.",
       "confirmDeleteTitle": "Potwierdź usunięcie kategorii przedmiotu",
-      "confirmDeleteMessage": "Czy na pewno usunąć kategorię \"{{name}}\"? Tej operacji nie da się cofnąć."
+      "confirmDeleteMessage": "Czy na pewno usunąć kategorię \"{{name}}\"? Tej operacji nie da się cofnąć.",
+      "noItems": "Brak kategorii przedmiotów."
     },
     "classrooms": {
       "title": "Zarządzanie klasami",
