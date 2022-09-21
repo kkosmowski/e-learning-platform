@@ -96,7 +96,9 @@
     "lastName": "Last name",
     "email": "Email address",
     "status": "Status",
-    "userType": "Type"
+    "userType": "Type",
+    "activate": "Activate",
+    "deactivate": "Deactivate"
   },
   "settings": {
     "title": "Settings",
@@ -158,23 +160,20 @@
         }
       },
       "createUser": {
-        "submitButton": "Create user",
-        "success": "User created successfully"
+        "submitButton": "Create user"
       },
       "updateUser": {
-        "submitButton": "Update user details",
-        "success": "User details updated successfully"
+        "submitButton": "Update user details"
       },
       "table": {
-        "firstName": "First name",
-        "lastName": "Last name",
-        "email": "Email address",
         "createdAt": "Date of creation",
         "isActive": "Active",
         "actions": "Actions"
       },
       "confirmDeleteTitle": "Deleting user",
       "confirmDeleteMessage": "Are you sure you want to delete user \"{{ name }}\"? This operation cannot be undone.",
+      "createSuccessToast": "User created successfully",
+      "updateSuccessToast": "User details updated successfully",
       "deleteSuccessToast": "User successfully deleted.",
       "details": {
         "activate": "Active",
@@ -185,7 +184,8 @@
         "confirmDeactivateMessage": "Are you sure you want to deactivate user \"{{name}}\"?",
         "activateSuccessToast": "User \"{{name}}\" activated.",
         "deactivateSuccessToast": "User \"{{name}}\" deactivated."
-      }
+      },
+      "noItems": "Brak użytkowników"
     }
   },
   "404": {

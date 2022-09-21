@@ -160,12 +160,10 @@
         }
       },
       "createUser": {
-        "submitButton": "Utwórz użytkownika",
-        "success": "Użytkownik pomyślnie utworzony"
+        "submitButton": "Utwórz użytkownika"
       },
       "updateUser": {
-        "submitButton": "Aktualizuj konto użytkownika",
-        "success": "Użytkownik pomyślnie zaktualizowany"
+        "submitButton": "Aktualizuj konto użytkownika"
       },
       "table": {
         "createdAt": "Data utworzenia",
@@ -174,6 +172,8 @@
       },
       "confirmDeleteTitle": "Potwierdź usunięcie użytkownika",
       "confirmDeleteMessage": "Czy na pewno usunąć użytkownika \"{{ name }}\"? Tej operacji nie da się cofnąć.",
+      "createSuccessToast": "Użytkownik pomyślnie utworzony.",
+      "updateSuccessToast": "Użytkownik pomyślnie zaktualizowany.",
       "deleteSuccessToast": "Użytkownik pomyślnie usunięty.",
       "details": {
         "activate": "Aktywuj konto",
@@ -184,7 +184,8 @@
         "confirmDeactivateMessage": "Czy na pewno dezaktywować użytkownika \"{{name}}\"?",
         "activateSuccessToast": "Aktywowano użytkownika \"{{name}}\".",
         "deactivateSuccessToast": "Dezaktywowano użytkownika \"{{name}}\"."
-      }
+      },
+      "noItems": "Brak użytkowników"
     }
   },
   "404": {

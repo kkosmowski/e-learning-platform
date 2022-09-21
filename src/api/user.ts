@@ -8,7 +8,7 @@ import {
   GetUserResponse,
   UpdateUserPayload,
 } from 'shared/types/user';
-import { AxiosResponse } from 'axios';
+import { EmptyResponse } from 'shared/types/shared';
 
 export const createUser = (
   data: CreateUserPayload
@@ -50,5 +50,5 @@ export const updateUser = (
 ): Promise<GetUserResponse> =>
   authorized((api) => api.patch(`user/${payload.id}`, payload));
 
-export const deleteUser = (userId: string): Promise<AxiosResponse<void>> =>
+export const deleteUser = (userId: string): Promise<EmptyResponse> =>
   authorized((api) => api.delete(`user/${userId}`));
