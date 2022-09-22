@@ -5,6 +5,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
 import {
+  GetUserResponse,
   GetUsersProps,
   GetUsersResponse,
   UpdateUserPayload,
@@ -13,6 +14,7 @@ import {
 } from 'shared/types/user';
 import {
   getUsers,
+  getUser,
   updateUser as updateUserApi,
   deleteUser as deleteUserApi,
 } from 'api/user';
@@ -34,7 +36,9 @@ type MutationFnReturnData = {
 
 export default function useUsersQuery() {
   const [getUsersProps, setGetUsersProps] = useState<GetUsersProps>({});
+  const [getUserId, setGetUserId] = useState<string | null>(null);
   const [getUsersEnabled, setGetUsersEnabled] = useState(false);
+  const [getUserEnabled, setGetUserEnabled] = useState(false);
   const { t } = useTranslation('settings');
   const queryClient = useQueryClient();
 
@@ -53,9 +57,29 @@ export default function useUsersQuery() {
     }
   }, [getUsersProps, usersQuery]);
 
+  const userQuery = useQuery<GetUserResponse, AxiosError, UserDto>(
+    ['user', getUserId],
+    () => getUser(getUserId || ''),
+    {
+      enabled: Boolean(getUserId),
+      select: ({ data }) => data,
+    }
+  );
+
+  useEffect(() => {
+    if (usersQuery.data) {
+      void usersQuery.refetch();
+    }
+  }, [getUsersProps, usersQuery]);
+
   const fetchUsers = (props: GetUsersProps) => {
     setGetUsersProps(props);
     setGetUsersEnabled(true);
+  };
+
+  const fetchUser = (userId: string) => {
+    setGetUserId(userId);
+    setGetUserEnabled(true);
   };
 
   const { mutate: updateUser } = useMutation<
@@ -75,6 +99,9 @@ export default function useUsersQuery() {
           data: usersQuery.data
             ? usersQuery.data.map((user) => (user.id === data.id ? data : user))
             : [],
+        });
+        queryClient.setQueryData(['user', data.id], {
+          data: userQuery.data ? data : undefined,
         });
         if (onSuccess) onSuccess(mapUserDtoToUser(data));
       },
@@ -97,6 +124,7 @@ export default function useUsersQuery() {
             ? usersQuery.data.filter((user) => user.id !== deletedUserId)
             : [],
         });
+        void queryClient.invalidateQueries(['user', deletedUserId]);
         toast.success(t('users.deleteSuccessToast'));
       },
       onError: (err) => {
@@ -110,12 +138,45 @@ export default function useUsersQuery() {
     () => usersQuery.data?.map(mapUserDtoToUser),
     [usersQuery.data]
   );
+  const currentUser = useMemo(
+    () => userQuery.data && mapUserDtoToUser(userQuery.data),
+    [userQuery.data]
+  );
+
+  const isLoading = useMemo(() => {
+    if (getUsersEnabled) {
+      return usersQuery.isLoading;
+    } else if (getUserEnabled) {
+      return userQuery.isLoading;
+    }
+    return false;
+  }, [
+    getUserEnabled,
+    getUsersEnabled,
+    userQuery.isLoading,
+    usersQuery.isLoading,
+  ]);
+  const isSuccess = useMemo(() => {
+    if (getUsersEnabled) {
+      return usersQuery.isSuccess;
+    } else if (getUserEnabled) {
+      return userQuery.isSuccess;
+    }
+    return false;
+  }, [
+    getUserEnabled,
+    getUsersEnabled,
+    userQuery.isSuccess,
+    usersQuery.isSuccess,
+  ]);
 
   return {
     users,
-    isLoading: usersQuery.isLoading,
-    isSuccess: usersQuery.isSuccess,
+    currentUser,
+    isLoading,
+    isSuccess,
     fetchUsers,
+    fetchUser,
     updateUser,
     deleteUser,
   };

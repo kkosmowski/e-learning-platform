@@ -1,17 +1,16 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router';
-import { Box, Button, Card, CardContent, Typography } from '@mui/material';
+import { Box, Button, Card, CardContent } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
 
-import { deleteUser, getUser } from 'api/user';
-import { mapUserDtoToUser } from 'shared/utils/user.utils';
-import { UpdateUserForm, User } from 'shared/types/user';
+import { UpdateUserForm } from 'shared/types/user';
 import CommonViewLayout from 'layouts/CommonView';
 import { useConfirmationDialog } from 'shared/hooks';
 import UserInfo from './components/UserInfo';
 import UserEditForm from './components/UserEditForm';
-import useUpdateUserData from '../../hooks/use-update-user-data';
+import useUsersQuery from '../hooks/use-users-query';
+import PageLoading from '../../../../shared/components/PageLoading';
 
 interface UserDetailsProps {
   mode: 'view' | 'edit';
@@ -21,23 +20,16 @@ export default function UserDetails(props: UserDetailsProps) {
   const isEditMode = useMemo(() => props.mode === 'edit', [props.mode]);
   const { id: userId } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const [currentUser, setCurrentUser] = useState<User | null | undefined>(
-    undefined
-  );
-  const [error, setError] = useState('');
   const { t } = useTranslation('settings');
-  const updateUserData = useUpdateUserData();
-
+  const {
+    currentUser,
+    isLoading,
+    isSuccess,
+    fetchUser,
+    updateUser,
+    deleteUser,
+  } = useUsersQuery();
   const { confirmAction, confirmationDialog } = useConfirmationDialog();
-
-  const fetchUser = useCallback(async (userId: string) => {
-    try {
-      const { data: user } = await getUser(userId);
-      setCurrentUser(mapUserDtoToUser(user));
-    } catch (error) {
-      setCurrentUser(null);
-    }
-  }, []);
 
   const navigateToEdit = () => {
     navigate('./edit', { replace: false });
@@ -45,18 +37,18 @@ export default function UserDetails(props: UserDetailsProps) {
 
   useEffect(() => {
     if (userId) {
-      void fetchUser(userId);
+      fetchUser(userId);
     }
   }, [fetchUser, userId]);
 
-  if (currentUser === null) {
+  if (!isLoading && !currentUser) {
     navigate('/404');
-    return null;
-  } else if (currentUser === undefined) {
     return null;
   }
 
   const showStatusToggleDialog = async () => {
+    if (!currentUser) return;
+
     const shouldUpdate = await confirmAction({
       title:
         'settings:users.details.' +
@@ -83,6 +75,8 @@ export default function UserDetails(props: UserDetailsProps) {
   };
 
   const showDeleteDialog = async () => {
+    if (!currentUser) return;
+
     const shouldDelete = await confirmAction({
       title: 'settings:users.confirmDeleteTitle',
       message: {
@@ -94,60 +88,43 @@ export default function UserDetails(props: UserDetailsProps) {
     });
 
     if (shouldDelete) {
-      await handleDelete();
-    }
-  };
-
-  const handleDelete = async () => {
-    try {
-      await deleteUser(currentUser.id);
-      toast.success(t('settings:users.deleteSuccessToast'));
-    } catch (e) {
-      console.error(e);
+      deleteUser(currentUser.id);
+      navigate('./..');
     }
   };
 
   const updateUserStatus = async () => {
-    await updateUserData({
-      id: currentUser.id,
-      userData: { active: !currentUser.active },
-      onSuccess: (user) => {
-        setCurrentUser(user);
-        setError('');
+    if (!currentUser) return;
 
+    updateUser({
+      id: currentUser.id,
+      active: !currentUser.active,
+      onSuccess: (updatedUser) => {
         const toastTranslationKey =
           'users.details.' +
-          (currentUser.active
-            ? 'deactivateSuccessToast'
-            : 'activateSuccessToast');
-        toast.success(t(toastTranslationKey, { name: currentUser.fullName }));
-      },
-      onError: (error) => {
-        setError(t(error));
-        toast.error(t(error));
+          (updatedUser.active
+            ? 'activateSuccessToast'
+            : 'deactivateSuccessToast');
+        toast.success(t(toastTranslationKey, { name: updatedUser.fullName }));
       },
     });
   };
 
   const handleUserUpdate = async (userData: UpdateUserForm) => {
-    await updateUserData({
+    if (!currentUser) return;
+
+    updateUser({
       id: currentUser.id,
-      userData,
-      onSuccess: (user) => {
-        navigate('..');
-        setCurrentUser(user);
+      ...userData,
+      onSuccess: () => {
         toast.success(t('settings:users.updateUser.success'));
-      },
-      onError: (error) => {
-        setError(t(error));
-        toast.error(t(error));
       },
     });
   };
 
   return (
     <CommonViewLayout
-      headerTitle={currentUser.fullName}
+      headerTitle={currentUser?.fullName || ''}
       maxWidth={600}
       CenteredProps={{ innerSx: { gap: 3 } }}
     >
@@ -159,37 +136,50 @@ export default function UserDetails(props: UserDetailsProps) {
         }}
       >
         {!isEditMode && (
-          <Button variant="contained" onClick={navigateToEdit}>
+          <Button
+            variant="contained"
+            disabled={!currentUser}
+            onClick={navigateToEdit}
+          >
             {t('common:edit')}
           </Button>
         )}
 
         <Button
           variant="contained"
-          color={currentUser.active ? 'error' : 'primary'}
+          color={currentUser?.active ? 'error' : 'primary'}
+          disabled={!currentUser}
           onClick={showStatusToggleDialog}
         >
-          {currentUser.active
+          {currentUser?.active
             ? t('users.details.deactivate')
             : t('users.details.activate')}
         </Button>
 
-        <Button variant="contained" color="error" onClick={showDeleteDialog}>
+        <Button
+          variant="contained"
+          color="error"
+          disabled={!currentUser}
+          onClick={showDeleteDialog}
+        >
           {t('common:delete')}
         </Button>
       </Box>
 
-      {error && <Typography color="error.500">{error}</Typography>}
+      {/*{ error && <Typography color="error.500">{ error }</Typography> }*/}
 
       <Card>
         <CardContent>
-          <UserInfo
-            user={currentUser}
-            {...(isEditMode && { fields: ['role', 'active'] })}
-          />
-          {isEditMode && (
+          {isSuccess && currentUser && (
+            <UserInfo
+              user={currentUser}
+              {...(isEditMode && { fields: ['role', 'active'] })}
+            />
+          )}
+          {isSuccess && currentUser && isEditMode && (
             <UserEditForm user={currentUser} onSubmit={handleUserUpdate} />
           )}
+          {isLoading && <PageLoading />}
         </CardContent>
       </Card>
 
