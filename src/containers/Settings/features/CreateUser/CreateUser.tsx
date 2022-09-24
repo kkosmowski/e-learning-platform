@@ -50,8 +50,11 @@ export default function CreateUser() {
   const { handleCreate, errorText } = useCreateUserQuery(formik);
 
   function onSubmit(values: CreateUserForm) {
+    console.log(emailInputRef.current);
     handleCreate(values);
-    emailInputRef.current?.focus();
+    setTimeout(() => {
+      emailInputRef.current?.focus();
+    });
   }
 
   const {
@@ -74,7 +77,7 @@ export default function CreateUser() {
           error={touched.email && Boolean(errors.email)}
           helperText={touched.email && errors.email && t(errors.email)}
           autoFocus
-          InputProps={{
+          inputProps={{
             ref: emailInputRef,
           }}
           onBlur={handleBlur}
