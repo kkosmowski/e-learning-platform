@@ -105,7 +105,7 @@
     "categories": {
       "subjectCategories": "Subject categories management",
       "classrooms": "Classrooms management",
-      "subjects": "Subjects managements",
+      "subjects": "Subjects management",
       "users": "Users management"
     },
     "subjectCategories": {
@@ -143,7 +143,13 @@
       }
     },
     "subjects": {
-      "title": "Subjects managements"
+      "title": "Subjects management",
+      "table": {
+        "subjectCategory": "Category",
+        "classroom": "Classroom",
+        "teacher": "Lecturer"
+      },
+      "noItems": "No subjects yet."
     },
     "users": {
       "title": "Users management",
@@ -185,7 +191,7 @@
         "activateSuccessToast": "User \"{{name}}\" activated.",
         "deactivateSuccessToast": "User \"{{name}}\" deactivated."
       },
-      "noItems": "Brak użytkowników"
+      "noItems": "No users yet."
     }
   },
   "404": {

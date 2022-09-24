@@ -188,6 +188,9 @@ const TableStyles = () => (
       '.users-table__row--actions': {
         width: '40px',
       },
+      '.--clickable:hover': {
+        textDecoration: 'underline',
+      },
     }}
   />
 );
