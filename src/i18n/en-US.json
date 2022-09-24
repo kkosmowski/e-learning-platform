@@ -105,7 +105,7 @@
     "categories": {
       "subjectCategories": "Subject categories management",
       "classrooms": "Classrooms management",
-      "subjects": "Subjects managements",
+      "subjects": "Subjects management",
       "users": "Users management"
     },
     "subjectCategories": {
@@ -143,7 +143,12 @@
       }
     },
     "subjects": {
-      "title": "Subjects managements"
+      "title": "Subjects management",
+      "table": {
+        "subjectCategory": "Category",
+        "classroom": "Classroom",
+        "teacher": "Lecturer"
+      }
     },
     "users": {
       "title": "Users management",

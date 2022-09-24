@@ -1,6 +1,6 @@
-import Subject from './Subject';
+import SubjectOverview from './SubjectOverview';
 import SubjectLayout from './Subject.layout';
 
-export default Subject;
+export default SubjectOverview;
 
 export { SubjectLayout };

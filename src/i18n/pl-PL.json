@@ -143,7 +143,12 @@
       }
     },
     "subjects": {
-      "title": "Zarządzanie przedmiotami"
+      "title": "Zarządzanie przedmiotami",
+      "table": {
+        "subjectCategory": "Kategoria",
+        "classroom": "Klasa",
+        "teacher": "Prowadzący"
+      }
     },
     "users": {
       "title": "Zarządzanie użytkownikami",

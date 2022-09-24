@@ -14,7 +14,7 @@ import LatestTasks from './components/LatestTasks';
 const getTaskRoute = (type: TaskType): string =>
   type === TaskType.Task ? 'tasks' : 'homework';
 
-export default function Subject() {
+export default function SubjectOverview() {
   const navigate = useNavigate();
 
   const navigateToNotices = (): void => {

@@ -28,6 +28,11 @@ export interface Classroom {
   students: User[];
 }
 
+export interface SubjectClassroom {
+  id: string;
+  name: string;
+}
+
 export interface ClassroomForm {
   name: string;
   teacher: User | null;

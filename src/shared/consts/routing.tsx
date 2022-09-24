@@ -4,14 +4,17 @@ import Home from 'containers/Home';
 import Subjects from 'containers/Subjects';
 import Settings, {
   CreateClassroom,
+  ClassroomDetails,
   ClassroomsManagement,
   SettingsLayout,
   SubjectCategoriesManagement,
-  UsersManagement,
-  CreateUser,
+  SubjectsManagement,
   Users,
+  UserDetails,
+  CreateUser,
 } from 'containers/Settings';
-import Subject, { SubjectLayout } from 'containers/Subject';
+import UsersManagement from 'containers/Settings/components/UsersManagement';
+import SubjectOverview, { SubjectLayout } from 'containers/Subject';
 import NoticeBoard from 'containers/NoticeBoard';
 import Notice from 'containers/Notice';
 import TaskList from 'containers/TaskList';
@@ -24,8 +27,6 @@ import TeacherGuard from 'shared/guards/TeacherGuard';
 import { RouteObjectWithId } from 'shared/types/routing';
 import { TaskType } from 'shared/types/task';
 import { Role } from 'shared/types/user';
-import ClassroomDetails from 'containers/Settings/features/ClassroomDetails';
-import UserDetails from 'containers/Settings/features/UserDetails';
 
 export const features: RouteObjectWithId[] = [
   {
@@ -47,7 +48,7 @@ export const features: RouteObjectWithId[] = [
         children: [
           {
             path: '',
-            element: <Subject />,
+            element: <SubjectOverview />,
           },
           {
             path: 'notices',
@@ -214,6 +215,32 @@ export const features: RouteObjectWithId[] = [
                   },
                 ],
               },
+            ],
+          },
+          {
+            path: 'subjects',
+            children: [
+              {
+                path: '',
+                element: <SubjectsManagement />,
+              },
+              // {
+              //   path: 'create',
+              //   element: <CreateSubject />,
+              // },
+              // {
+              //   path: ':id',
+              //   children: [
+              //     {
+              //       path: '',
+              //       element: <SubjectDetails mode="view" />,
+              //     },
+              //     {
+              //       path: 'edit',
+              //       element: <SubjectDetails mode="edit" />,
+              //     },
+              //   ],
+              // },
             ],
           },
         ],
