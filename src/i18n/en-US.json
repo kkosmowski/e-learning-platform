@@ -205,6 +205,7 @@
     "FIRST_NAME_REQUIRED": "Cannot create a user without first name.",
     "ROLE_REQUIRED": "User's role must be selected.",
     "EMAIL_TAKEN": "This email is already in use.",
+    "SUBJECT_NAME_TAKEN": "This category subject name is already in use.",
     "INCORRECT CREDENTIALS": "Incorrect email or password.",
     "USER_NOT_FOUND": "User not found.",
     "USER_INACTIVE": "Inactive account.",

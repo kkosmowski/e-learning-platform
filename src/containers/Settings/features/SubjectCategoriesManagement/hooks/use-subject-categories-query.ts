@@ -15,7 +15,6 @@ import {
   getSubjectCategories,
   updateSubjectCategory,
 } from 'api/subject';
-import { getErrorDetail } from 'shared/utils/common.utils';
 
 export default function useSubjectCategoriesQuery() {
   const { t } = useTranslation('settings');
@@ -42,9 +41,9 @@ export default function useSubjectCategoriesQuery() {
         data: fetchQuery.data ? [...fetchQuery.data, data] : [data],
       });
     },
-    onError: (err) => {
-      const error = getErrorDetail(err);
-      toast.error(t(error));
+    onError: (error) => {
+      console.log(error.message);
+      toast.error(t(error.message));
     },
   });
 
@@ -61,9 +60,8 @@ export default function useSubjectCategoriesQuery() {
         ),
       });
     },
-    onError: (err) => {
-      const error = getErrorDetail(err);
-      toast.error(t(error));
+    onError: (error) => {
+      toast.error(t(error.message));
     },
   });
 
@@ -81,9 +79,8 @@ export default function useSubjectCategoriesQuery() {
           ),
         });
       },
-      onError: (err) => {
-        const error = getErrorDetail(err);
-        toast.error(t(error));
+      onError: (error) => {
+        toast.error(t(error.message));
       },
     }
   );

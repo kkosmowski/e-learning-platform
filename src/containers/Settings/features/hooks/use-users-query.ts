@@ -55,6 +55,7 @@ export default function useUsersQuery() {
     if (getUsersEnabled) {
       void usersQuery.refetch();
     }
+    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [usersQuery.refetch, getUsersProps, getUsersEnabled]);
 
   const userQuery = useQuery<GetUserResponse, AxiosError, UserDto | undefined>(
@@ -176,6 +177,19 @@ export default function useUsersQuery() {
     userQuery.isFetched,
     usersQuery.isFetched,
   ]);
+  const isFetching = useMemo(() => {
+    if (getUsersEnabled) {
+      return usersQuery.isFetching;
+    } else if (getUserEnabled) {
+      return userQuery.isFetching;
+    }
+    return false;
+  }, [
+    getUserEnabled,
+    getUsersEnabled,
+    userQuery.isFetching,
+    usersQuery.isFetching,
+  ]);
 
   return {
     users,
@@ -183,6 +197,7 @@ export default function useUsersQuery() {
     isLoading,
     isSuccess,
     isFetched,
+    isFetching,
     fetchUsers,
     fetchUser,
     updateUser,

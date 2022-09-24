@@ -16,7 +16,7 @@ export default function Users() {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { confirmAction, confirmationDialog } = useConfirmationDialog();
-  const { users, isLoading, isSuccess, fetchUsers, updateUser, deleteUser } =
+  const { users, isFetching, isSuccess, fetchUsers, updateUser, deleteUser } =
     useUsersQuery();
   const currentRole = useMemo(() => getRole(type), [type]);
 
@@ -99,24 +99,27 @@ export default function Users() {
 
   useEffect(() => {
     void fetchUsers({ role: currentRole });
+    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentRole]);
 
   return (
     <TableContainer component={Paper}>
-      {isLoading && <PageLoading />}
-      {isSuccess && users?.length ? (
-        <UsersTable
-          users={users}
-          target={actionMenuTarget}
-          setTarget={setActionsMenuTarget}
-          onView={handleView}
-          onEdit={handleEdit}
-          showStatusToggleDialog={showStatusToggleDialog}
-          showDeleteDialog={showDeleteDialog}
-        />
-      ) : (
-        t('settings:users.noItems')
-      )}
+      {isFetching && <PageLoading sx={{ px: 4 }} />}
+      {!isFetching && isSuccess ? (
+        users?.length ? (
+          <UsersTable
+            users={users}
+            target={actionMenuTarget}
+            setTarget={setActionsMenuTarget}
+            onView={handleView}
+            onEdit={handleEdit}
+            showStatusToggleDialog={showStatusToggleDialog}
+            showDeleteDialog={showDeleteDialog}
+          />
+        ) : (
+          t('settings:users.noItems')
+        )
+      ) : null}
 
       {confirmationDialog}
     </TableContainer>

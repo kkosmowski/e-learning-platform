@@ -205,6 +205,7 @@
     "FIRST_NAME_REQUIRED": "Nie można utworzyć użytkownika bez imienia.",
     "ROLE_REQUIRED": "Rodzaj użytkownika musi zostać określony.",
     "EMAIL_TAKEN": "Ten adres e-mail istnieje już w bazie danych.",
+    "SUBJECT_NAME_TAKEN": "Kategoria przedmiotu o tej nazwie już istnieje.",
     "INCORRECT CREDENTIALS": "Niepoprawny e-mail bądź hasło.",
     "USER_NOT_FOUND": "Nie znaleziono użytkownika.",
     "USER_INACTIVE": "To konto nie jest aktywne.",
