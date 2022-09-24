@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -51,7 +51,13 @@ export default function useUsersQuery() {
     }
   );
 
-  const userQuery = useQuery<GetUserResponse, AxiosError, UserDto>(
+  useEffect(() => {
+    if (getUsersEnabled) {
+      void usersQuery.refetch();
+    }
+  }, [usersQuery.refetch, getUsersProps, getUsersEnabled]);
+
+  const userQuery = useQuery<GetUserResponse, AxiosError, UserDto | undefined>(
     ['user', getUserId],
     () => getUser(getUserId || ''),
     {
@@ -157,12 +163,26 @@ export default function useUsersQuery() {
     userQuery.isSuccess,
     usersQuery.isSuccess,
   ]);
+  const isFetched = useMemo(() => {
+    if (getUsersEnabled) {
+      return usersQuery.isFetched;
+    } else if (getUserEnabled) {
+      return userQuery.isFetched;
+    }
+    return false;
+  }, [
+    getUserEnabled,
+    getUsersEnabled,
+    userQuery.isFetched,
+    usersQuery.isFetched,
+  ]);
 
   return {
     users,
     currentUser,
     isLoading,
     isSuccess,
+    isFetched,
     fetchUsers,
     fetchUser,
     updateUser,

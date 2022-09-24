@@ -25,6 +25,7 @@ export default function UserDetails(props: UserDetailsProps) {
     currentUser,
     isLoading,
     isSuccess,
+    isFetched,
     fetchUser,
     updateUser,
     deleteUser,
@@ -41,10 +42,11 @@ export default function UserDetails(props: UserDetailsProps) {
     }
   }, [fetchUser, userId]);
 
-  if (!isLoading && !currentUser) {
-    navigate('/404');
-    return null;
-  }
+  useEffect(() => {
+    if (isFetched && !currentUser) {
+      navigate('/404');
+    }
+  }, [isFetched, currentUser, navigate]);
 
   const showStatusToggleDialog = async () => {
     if (!currentUser) return;
