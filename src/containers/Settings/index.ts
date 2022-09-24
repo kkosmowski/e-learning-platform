@@ -8,6 +8,7 @@ import CreateClassroom from './features/CreateClassroom';
 import SubjectCategoriesManagement from './features/SubjectCategoriesManagement';
 
 import SubjectsManagement from './features/SubjectsManagement';
+import SubjectDetails from './features/SubjectDetails';
 
 import Users from './features/Users';
 import UserDetails from './features/UserDetails';
@@ -20,6 +21,7 @@ export {
   CreateClassroom,
   SubjectCategoriesManagement,
   SubjectsManagement,
+  SubjectDetails,
   Users,
   UserDetails,
   CreateUser,

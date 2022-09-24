@@ -5,6 +5,7 @@ import {
   GetSubjectCategoriesResponse,
   SubjectCategory,
   GetSubjectsResponse,
+  GetSubjectResponse,
 } from 'shared/types/subject';
 import { EmptyResponse } from 'shared/types/shared';
 
@@ -32,4 +33,8 @@ export const deleteSubjectCategory = (id: string): Promise<EmptyResponse> => {
 
 export const getSubjects = (): Promise<GetSubjectsResponse> => {
   return authorized((api) => api.get('group-subject'));
+};
+
+export const getSubject = (subjectId: string): Promise<GetSubjectResponse> => {
+  return authorized((api) => api.get(`group-subject/${subjectId}`));
 };
