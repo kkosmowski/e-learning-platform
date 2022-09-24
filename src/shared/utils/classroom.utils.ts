@@ -30,9 +30,11 @@ export const mapClassroomToUpdateClassroomPayload = (
   student_ids: classroom.students.map(({ id }) => id),
 });
 
-export const mapClassroomDtoToClassroom = (dto: ClassroomDto): Classroom => ({
-  id: dto.id,
-  name: dto.name,
-  teacher: mapUserDtoToUser(dto.teacher),
-  students: dto.students.map(mapUserDtoToUser),
-});
+export const mapClassroomDtoToClassroom = (dto: ClassroomDto): Classroom => {
+  return {
+    id: dto.id,
+    name: dto.name,
+    teacher: mapUserDtoToUser(dto.teacher),
+    students: dto.students.map(mapUserDtoToUser),
+  };
+};

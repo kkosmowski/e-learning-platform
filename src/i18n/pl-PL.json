@@ -115,11 +115,12 @@
       "create": "Utwórz kategorię",
       "nameCannotBeEmptyTooltip": "Aby utworzyć kategorię musisz nadać jej nazwę",
       "nothingToSaveTooltip": "Brak zmian w nazwie kategorii",
-      "createSuccessToast": "Utworzono kategorię \"{{name}}\".",
-      "updateSuccessToast": "Nazwa kategorii \"{{oldName}}\" pomyślnie zmieniona na \"{{newName}}\".",
-      "deleteSuccessToast": "Usunięto kategorię \"{{name}}\".",
+      "createSuccessToast": "Kategoria pomyślnie utworzona.",
+      "updateSuccessToast": "Nazwa kategorii pomyślnie zmieniona.",
+      "deleteSuccessToast": "Kategoria pomyślnie usunięta.",
       "confirmDeleteTitle": "Potwierdź usunięcie kategorii przedmiotu",
-      "confirmDeleteMessage": "Czy na pewno usunąć kategorię \"{{name}}\"? Tej operacji nie da się cofnąć."
+      "confirmDeleteMessage": "Czy na pewno usunąć kategorię \"{{name}}\"? Tej operacji nie da się cofnąć.",
+      "noItems": "Brak kategorii przedmiotów."
     },
     "classrooms": {
       "title": "Zarządzanie klasami",
@@ -159,12 +160,10 @@
         }
       },
       "createUser": {
-        "submitButton": "Utwórz użytkownika",
-        "success": "Użytkownik pomyślnie utworzony"
+        "submitButton": "Utwórz użytkownika"
       },
       "updateUser": {
-        "submitButton": "Aktualizuj konto użytkownika",
-        "success": "Użytkownik pomyślnie zaktualizowany"
+        "submitButton": "Aktualizuj konto użytkownika"
       },
       "table": {
         "createdAt": "Data utworzenia",
@@ -173,6 +172,8 @@
       },
       "confirmDeleteTitle": "Potwierdź usunięcie użytkownika",
       "confirmDeleteMessage": "Czy na pewno usunąć użytkownika \"{{ name }}\"? Tej operacji nie da się cofnąć.",
+      "createSuccessToast": "Użytkownik pomyślnie utworzony.",
+      "updateSuccessToast": "Użytkownik pomyślnie zaktualizowany.",
       "deleteSuccessToast": "Użytkownik pomyślnie usunięty.",
       "details": {
         "activate": "Aktywuj konto",
@@ -183,7 +184,8 @@
         "confirmDeactivateMessage": "Czy na pewno dezaktywować użytkownika \"{{name}}\"?",
         "activateSuccessToast": "Aktywowano użytkownika \"{{name}}\".",
         "deactivateSuccessToast": "Dezaktywowano użytkownika \"{{name}}\"."
-      }
+      },
+      "noItems": "Brak użytkowników"
     }
   },
   "404": {

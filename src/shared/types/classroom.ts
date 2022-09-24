@@ -55,3 +55,4 @@ export type CreateClassroomResponse = AxiosResponse<SimpleClassroomDto>;
 export type GetClassroomsResponse = AxiosResponse<SimpleClassroom[]>;
 export type ValidateClassroomNameResponse = AxiosResponse<boolean>;
 export type GetClassroomResponse = AxiosResponse<ClassroomDto>;
+export type UpdateClassroomResponse = AxiosResponse<ClassroomDto>;

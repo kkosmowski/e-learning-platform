@@ -96,7 +96,9 @@
     "lastName": "Last name",
     "email": "Email address",
     "status": "Status",
-    "userType": "Type"
+    "userType": "Type",
+    "activate": "Activate",
+    "deactivate": "Deactivate"
   },
   "settings": {
     "title": "Settings",
@@ -113,11 +115,12 @@
       "create": "Create category",
       "nameCannotBeEmptyTooltip": "You need to define a category name in order to create it",
       "nothingToSaveTooltip": "No change to the name was made",
-      "createSuccessToast": "Successfully created \"{{name}}\" subject category.",
-      "updateSuccessToast": "Successfully renamed \"{{oldName}}\" category to \"{{newName}}\".",
-      "deleteSuccessToast": "Successfully deleted \"{{name}}\" subject category.",
+      "createSuccessToast": "Successfully created new subject category.",
+      "updateSuccessToast": "Successfully renamed a subject category.",
+      "deleteSuccessToast": "Successfully deleted a subject category.",
       "confirmDeleteTitle": "Deleting a subject category",
-      "confirmDeleteMessage": "Are you sure you want to delete \"{{name}}\" category? This operation cannot be undone."
+      "confirmDeleteMessage": "Are you sure you want to delete \"{{name}}\" category? This operation cannot be undone.",
+      "noItems": "No subject categories yet."
     },
     "classrooms": {
       "title": "Classrooms management",
@@ -157,23 +160,20 @@
         }
       },
       "createUser": {
-        "submitButton": "Create user",
-        "success": "User created successfully"
+        "submitButton": "Create user"
       },
       "updateUser": {
-        "submitButton": "Update user details",
-        "success": "User details updated successfully"
+        "submitButton": "Update user details"
       },
       "table": {
-        "firstName": "First name",
-        "lastName": "Last name",
-        "email": "Email address",
         "createdAt": "Date of creation",
         "isActive": "Active",
         "actions": "Actions"
       },
       "confirmDeleteTitle": "Deleting user",
       "confirmDeleteMessage": "Are you sure you want to delete user \"{{ name }}\"? This operation cannot be undone.",
+      "createSuccessToast": "User created successfully",
+      "updateSuccessToast": "User details updated successfully",
       "deleteSuccessToast": "User successfully deleted.",
       "details": {
         "activate": "Active",
@@ -184,7 +184,8 @@
         "confirmDeactivateMessage": "Are you sure you want to deactivate user \"{{name}}\"?",
         "activateSuccessToast": "User \"{{name}}\" activated.",
         "deactivateSuccessToast": "User \"{{name}}\" deactivated."
-      }
+      },
+      "noItems": "Brak użytkowników"
     }
   },
   "404": {

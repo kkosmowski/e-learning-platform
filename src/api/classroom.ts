@@ -1,6 +1,5 @@
 import { authorized } from './axios';
 import {
-  Classroom,
   ClassroomForm,
   CreateClassroomResponse,
   GetClassroomResponse,
