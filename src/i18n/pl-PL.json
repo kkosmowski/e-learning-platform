@@ -148,7 +148,8 @@
         "subjectCategory": "Kategoria",
         "classroom": "Klasa",
         "teacher": "Prowadzący"
-      }
+      },
+      "noItems": "Brak przedmiotów."
     },
     "users": {
       "title": "Zarządzanie użytkownikami",
