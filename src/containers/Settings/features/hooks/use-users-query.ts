@@ -176,6 +176,19 @@ export default function useUsersQuery() {
     userQuery.isFetched,
     usersQuery.isFetched,
   ]);
+  const isFetching = useMemo(() => {
+    if (getUsersEnabled) {
+      return usersQuery.isFetching;
+    } else if (getUserEnabled) {
+      return userQuery.isFetching;
+    }
+    return false;
+  }, [
+    getUserEnabled,
+    getUsersEnabled,
+    userQuery.isFetching,
+    usersQuery.isFetching,
+  ]);
 
   return {
     users,
@@ -183,6 +196,7 @@ export default function useUsersQuery() {
     isLoading,
     isSuccess,
     isFetched,
+    isFetching,
     fetchUsers,
     fetchUser,
     updateUser,
