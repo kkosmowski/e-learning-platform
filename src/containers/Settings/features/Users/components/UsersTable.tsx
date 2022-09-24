@@ -74,13 +74,26 @@ export default function UsersTable(props: UsersTableProps) {
     showDeleteDialog();
   };
 
+  const handleView = (event: MouseEvent, userId: string) => {
+    event.stopPropagation();
+    onView(userId);
+  };
+
+  const handleEdit = (event: MouseEvent) => {
+    event.stopPropagation();
+    onEdit();
+  };
+
   return (
     <Table size="small">
       <TableStyles />
       <UsersTableHead />
       <TableBody>
         {users.map((user) => (
-          <StyledTableRow key={user.id} onClick={() => onView(user.id)}>
+          <StyledTableRow
+            key={user.id}
+            onClick={(event) => handleView(event, user.id)}
+          >
             <TableCell className="users-table__row--firstName">
               {user.firstName}
             </TableCell>
@@ -111,7 +124,7 @@ export default function UsersTable(props: UsersTableProps) {
                 onClick={setTarget}
                 onClose={() => setTarget(null)}
               >
-                <MenuItem onClick={onEdit}>{t('common:edit')}</MenuItem>
+                <MenuItem onClick={handleEdit}>{t('common:edit')}</MenuItem>
                 <MenuItem
                   {...(anyTarget?.active && {
                     sx: { color: error[600] },

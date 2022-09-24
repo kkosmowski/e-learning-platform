@@ -98,7 +98,6 @@ export default function Users() {
   };
 
   useEffect(() => {
-    console.log('what', currentRole);
     void fetchUsers({ role: currentRole });
   }, [currentRole]);
 

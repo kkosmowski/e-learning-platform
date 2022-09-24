@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -51,12 +51,6 @@ export default function useUsersQuery() {
     }
   );
 
-  useEffect(() => {
-    if (usersQuery.data) {
-      void usersQuery.refetch();
-    }
-  }, [getUsersProps, usersQuery]);
-
   const userQuery = useQuery<GetUserResponse, AxiosError, UserDto>(
     ['user', getUserId],
     () => getUser(getUserId || ''),
@@ -65,12 +59,6 @@ export default function useUsersQuery() {
       select: ({ data }) => data,
     }
   );
-
-  useEffect(() => {
-    if (usersQuery.data) {
-      void usersQuery.refetch();
-    }
-  }, [getUsersProps, usersQuery]);
 
   const fetchUsers = (props: GetUsersProps) => {
     setGetUsersProps(props);
