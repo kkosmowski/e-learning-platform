@@ -7,7 +7,7 @@ import { DefaultComponentProps } from '@mui/material/OverridableComponent';
 import { useNavigate } from 'react-router';
 
 interface CommonViewLayoutProps {
-  headerTitle: string;
+  headerTitle: ReactNode;
   children: ReactNode;
   maxWidth?: number;
   CenteredProps?: Partial<CenteredProps>;

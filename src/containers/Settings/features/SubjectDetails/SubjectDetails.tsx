@@ -1,10 +1,11 @@
 import { useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { Button, Card, CardContent } from '@mui/material';
 
 import CommonViewLayout from 'layouts/CommonView';
 import useSubjectQuery from './hooks/use-subject-query';
+import SubjectDetailsList from './components/SubjectDetailsList';
 // import SubjectEditForm from './components/SubjectEditForm';
 // import SubjectDetailsList from './components/SubjectDetailsList';
 
@@ -35,7 +36,26 @@ export default function SubjectDetails(props: SubjectDetailsProps) {
 
   return (
     <CommonViewLayout
-      headerTitle={currentSubject?.name || ''}
+      headerTitle={
+        currentSubject ? (
+          <Trans
+            i18nKey="title"
+            values={{
+              category: currentSubject.category.name,
+              classroom: currentSubject.classroom.name,
+            }}
+          >
+            <span style={{ color: 'gray', fontWeight: 500 }}>Subject</span>{' '}
+            <span>subject</span>
+            <span style={{ color: 'gray', fontWeight: 500 }}>
+              , Classroom
+            </span>{' '}
+            <span>classroom</span>
+          </Trans>
+        ) : (
+          ''
+        )
+      }
       maxWidth={600}
       CenteredProps={{ innerSx: { gap: 3 } }}
     >
@@ -47,7 +67,7 @@ export default function SubjectDetails(props: SubjectDetailsProps) {
               sx={{ mr: 'auto' }}
               onClick={navigateToEdit}
             >
-              {t('editThisSubject')}
+              {t('buttons.edit')}
             </Button>
           )}
 
@@ -61,7 +81,7 @@ export default function SubjectDetails(props: SubjectDetailsProps) {
               {/*    onCancel={navigateBack}*/}
               {/*  />*/}
               {/*) : (*/}
-              {/*  <SubjectDetailsList classroom={currentSubject} />*/}
+              <SubjectDetailsList subject={currentSubject} />
               {/*)}*/}
             </CardContent>
           </Card>

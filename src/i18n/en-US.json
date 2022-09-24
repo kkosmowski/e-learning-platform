@@ -149,7 +149,17 @@
         "classroom": "Classroom",
         "teacher": "Lecturer"
       },
-      "noItems": "No subjects yet."
+      "noItems": "No subjects yet.",
+      "details": {
+        "title": "<0>Subject</0> <2>{{category}}</2><3>, Classroom </3><5>{{classroom}}</5>",
+        "category": "Subject category",
+        "classroom": "Classroom",
+        "teacher": "Lecturer",
+        "students": "Participating students",
+        "buttons": {
+          "edit": "Edit this subject"
+        }
+      }
     },
     "users": {
       "title": "Users management",

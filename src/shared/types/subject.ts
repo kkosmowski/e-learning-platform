@@ -9,7 +9,6 @@ export interface SubjectCategory {
 
 export interface Subject {
   id: string;
-  name: string;
   category: SubjectCategory;
   classroom: SubjectClassroom;
   teacher: User;
@@ -17,7 +16,6 @@ export interface Subject {
 
 export interface FullSubject {
   id: string;
-  name: string;
   category: SubjectCategory;
   classroom: Classroom;
   teacher: User;
