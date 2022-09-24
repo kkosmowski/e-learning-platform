@@ -55,6 +55,7 @@ export default function useUsersQuery() {
     if (getUsersEnabled) {
       void usersQuery.refetch();
     }
+    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [usersQuery.refetch, getUsersProps, getUsersEnabled]);
 
   const userQuery = useQuery<GetUserResponse, AxiosError, UserDto | undefined>(

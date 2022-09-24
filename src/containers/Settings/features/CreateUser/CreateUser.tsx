@@ -1,5 +1,4 @@
 import { useFormik } from 'formik';
-import { useEffect, useState } from 'react';
 import * as yup from 'yup';
 import {
   Button,
@@ -11,11 +10,8 @@ import {
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-import { createUser } from 'api/user';
 import { error } from 'colors';
 import { CreateUserForm, Role } from 'shared/types/user';
-import { mapCreateUserFormToCreateUserPayload } from 'shared/utils/user.utils';
-import { getErrorDetail } from 'shared/utils/common.utils';
 import {
   emailRequiredError,
   firstNameRequiredError,
@@ -23,27 +19,14 @@ import {
   invalidFormError,
   roleRequiredError,
 } from 'shared/consts/error';
-import toast from 'react-hot-toast';
+import useCreateUserQuery from './hooks/use-create-user-query';
+import { useRef } from 'react';
 
 export default function CreateUser() {
   const { t } = useTranslation();
-  const [errorText, setErrorText] = useState('');
+  const emailInputRef = useRef<HTMLInputElement>();
 
-  const onSubmit = async (userData: CreateUserForm) => {
-    try {
-      await createUser(mapCreateUserFormToCreateUserPayload(userData));
-      setErrorText('');
-      toast.success(t('settings:users.createUser.success'));
-      formik.resetForm();
-      await formik.validateForm();
-    } catch (err: unknown) {
-      const errorDetail = getErrorDetail(err);
-      setErrorText(errorDetail);
-      toast.error(t(errorDetail));
-    }
-  };
-
-  const formik = useFormik({
+  const formik = useFormik<CreateUserForm>({
     initialValues: {
       email: '',
       firstName: '',
@@ -64,6 +47,13 @@ export default function CreateUser() {
     onSubmit,
   });
 
+  const { handleCreate, errorText } = useCreateUserQuery(formik);
+
+  function onSubmit(values: CreateUserForm) {
+    handleCreate(values);
+    emailInputRef.current?.focus();
+  }
+
   const {
     errors,
     isValid,
@@ -73,10 +63,6 @@ export default function CreateUser() {
     touched,
     values,
   } = formik;
-
-  useEffect(() => {
-    setErrorText('');
-  }, [values]);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -88,6 +74,9 @@ export default function CreateUser() {
           error={touched.email && Boolean(errors.email)}
           helperText={touched.email && errors.email && t(errors.email)}
           autoFocus
+          InputProps={{
+            ref: emailInputRef,
+          }}
           onBlur={handleBlur}
           onChange={handleChange}
         />
