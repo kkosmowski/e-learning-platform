@@ -9,6 +9,7 @@ import SubjectCategoriesManagement from './features/SubjectCategoriesManagement'
 
 import SubjectsManagement from './features/SubjectsManagement';
 import SubjectDetails from './features/SubjectDetails';
+import CreateSubject from './features/CreateSubject';
 
 import Users from './features/Users';
 import UserDetails from './features/UserDetails';
@@ -22,6 +23,7 @@ export {
   SubjectCategoriesManagement,
   SubjectsManagement,
   SubjectDetails,
+  CreateSubject,
   Users,
   UserDetails,
   CreateUser,

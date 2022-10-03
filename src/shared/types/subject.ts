@@ -24,9 +24,9 @@ export interface FullSubject {
 }
 
 export interface SubjectForm {
-  category: SubjectCategory;
-  classroom: SubjectClassroom;
-  teacher: User;
+  category: SubjectCategory | null;
+  classroom: SubjectClassroom | null;
+  teacher: User | null;
 }
 
 export interface SubjectToUpdate {
