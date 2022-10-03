@@ -5,10 +5,10 @@ import CommonViewLayout from 'layouts/CommonView';
 import PageLoading from 'shared/components/PageLoading';
 import SubjectsTable from './components/SubjectsTable';
 import useSubjectsQuery from './hooks/use-subjects-query';
-import { Paper, TableContainer } from '@mui/material';
+import { Box, Button, Paper, TableContainer } from '@mui/material';
 
 export default function SubjectsManagement() {
-  const { t } = useTranslation('settings', { keyPrefix: 'subjects' });
+  const { t } = useTranslation('settings');
   const navigate = useNavigate();
   const { subjects, isLoading, isSuccess } = useSubjectsQuery();
 
@@ -24,12 +24,22 @@ export default function SubjectsManagement() {
     navigate(`/settings/user/${userId}`);
   };
 
+  const navigateToSubjectCreatePage = () => {
+    navigate('./create');
+  };
+
   return (
     <CommonViewLayout
       headerTitle={t('title')}
       maxWidth={600}
       CenteredProps={{ innerSx: { gap: 3 } }}
     >
+      <Box sx={{ height: 40, display: 'flex', alignItems: 'center' }}>
+        <Button variant="contained" onClick={navigateToSubjectCreatePage}>
+          {t('subjects.button.add')}
+        </Button>
+      </Box>
+
       <TableContainer component={Paper}>
         {isLoading && <PageLoading />}
         {!isLoading && isSuccess ? (
@@ -41,7 +51,7 @@ export default function SubjectsManagement() {
               onTeacherClick={handleTeacherClick}
             />
           ) : (
-            t('noItems')
+            t('subjects.noItems')
           )
         ) : null}
       </TableContainer>

@@ -1,4 +1,5 @@
 import {
+  CreateSubjectPayload,
   FullSubject,
   FullSubjectDto,
   Subject,
@@ -17,6 +18,22 @@ export const mapSubjectDtoToSubject = (subjectDto: SubjectDto): Subject => ({
   classroom: subjectDto.group,
   teacher: mapUserDtoToUser(subjectDto.teacher),
 });
+
+export const mapSubjectFormToCreatSubjectPayload = (
+  formValues: SubjectForm
+): CreateSubjectPayload => {
+  const { category, classroom, teacher } = formValues;
+  if (!category || !classroom || !teacher)
+    throw new Error(
+      'Missing data when mapping SubjectForm to CreateSubjectPayload.'
+    );
+
+  return {
+    subject_id: category.id,
+    group_id: classroom.id,
+    teacher_id: teacher.id,
+  };
+};
 
 export const mapFullSubjectDtoToFullSubject = (
   subjectDto: FullSubjectDto

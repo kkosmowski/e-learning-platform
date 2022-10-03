@@ -89,6 +89,7 @@
     "edit": "Edit",
     "save": "Save",
     "create": "Create",
+    "createAndView": "Create and view",
     "delete": "Delete",
     "active": "Active",
     "inactive": "Inactive",
@@ -135,8 +136,7 @@
           "name": "Classroom name",
           "teacher": "Teacher (supervising)",
           "students": "Students"
-        },
-        "createAndShow": "Create and show"
+        }
       },
       "edit": {
         "editThisClassroom": "Edit this classroom"
@@ -148,6 +148,9 @@
         "subjectCategory": "Category",
         "classroom": "Classroom",
         "teacher": "Lecturer"
+      },
+      "create": {
+        "title": "Create new subject"
       },
       "noItems": "No subjects yet.",
       "details": {
@@ -163,6 +166,9 @@
         "category": "Subject category...",
         "classroom": "Class...",
         "teacher": "Lecturing teacher..."
+      },
+      "button": {
+        "add": "Add new subject"
       }
     },
     "users": {
@@ -232,6 +238,8 @@
     "CLASSROOM_NAME_REQUIRED": "Classroom name is required.",
     "CLASSROOM_NAME_TAKEN": "This classroom name is already taken.",
     "CLASSROOM_TEACHER_REQUIRED": "Select supervising teacher.",
+    "SUBJECT_CATEGORY_REQUIRED": "Select subject category.",
+    "SUBJECT_CLASS_REQUIRED": "Select this subject's class.",
     "SUBJECT_TEACHER_REQUIRED": "Select lecturing teacher."
   }
 }

@@ -7,8 +7,11 @@ import {
   GetSubjectsResponse,
   GetSubjectResponse,
   UpdateSubjectPayload,
+  SubjectForm,
+  CreateSubjectResponse,
 } from 'shared/types/subject';
 import { EmptyResponse } from 'shared/types/shared';
+import { mapSubjectFormToCreatSubjectPayload } from 'shared/utils/subject.utils';
 
 export const getSubjectCategories =
   (): Promise<GetSubjectCategoriesResponse> => {
@@ -35,6 +38,13 @@ export const deleteSubjectCategory = (id: string): Promise<EmptyResponse> => {
 export const getSubjects = (): Promise<GetSubjectsResponse> => {
   return authorized((api) => api.get('group-subject'));
 };
+
+export const createSubject = (
+  formValues: SubjectForm
+): Promise<CreateSubjectResponse> =>
+  authorized((api) =>
+    api.post('group-subject', mapSubjectFormToCreatSubjectPayload(formValues))
+  );
 
 export const getSubject = (subjectId: string): Promise<GetSubjectResponse> => {
   return authorized((api) => api.get(`group-subject/${subjectId}`));

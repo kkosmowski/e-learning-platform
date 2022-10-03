@@ -17,7 +17,9 @@ export default function SubjectEditForm(props: SubjectEditFormProps) {
   const { t } = useTranslation('settings');
 
   const handleSubmit = (values: SubjectForm) => {
-    onSubmit(values.teacher);
+    if (values.teacher) {
+      onSubmit(values.teacher);
+    }
   };
 
   const { Form } = useSubjectForm({

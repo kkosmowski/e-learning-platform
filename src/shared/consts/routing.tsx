@@ -10,6 +10,7 @@ import Settings, {
   SubjectCategoriesManagement,
   SubjectsManagement,
   SubjectDetails,
+  CreateSubject,
   Users,
   UserDetails,
   CreateUser,
@@ -225,10 +226,10 @@ export const features: RouteObjectWithId[] = [
                 path: '',
                 element: <SubjectsManagement />,
               },
-              // {
-              //   path: 'create',
-              //   element: <CreateSubject />,
-              // },
+              {
+                path: 'create',
+                element: <CreateSubject />,
+              },
               {
                 path: ':id',
                 children: [

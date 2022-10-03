@@ -105,7 +105,7 @@ export function useSubjectForm(props: UseSubjectFormProps) {
         <ListGridItem
           element="div"
           label={t('subjects.details.category')}
-          value={values.category.name}
+          value={values.category?.name}
         />
       ) : (
         <Autocomplete
@@ -118,7 +118,7 @@ export function useSubjectForm(props: UseSubjectFormProps) {
               helperText={
                 touched.category &&
                 errors.category &&
-                t(errors.category as string)
+                t('error:SUBJECT_CATEGORY_REQUIRED')
               }
             />
           )}
@@ -135,7 +135,7 @@ export function useSubjectForm(props: UseSubjectFormProps) {
         <ListGridItem
           element="div"
           label={t('subjects.details.classroom')}
-          value={values.classroom.name}
+          value={values.classroom?.name}
         />
       ) : (
         <Autocomplete
@@ -148,7 +148,7 @@ export function useSubjectForm(props: UseSubjectFormProps) {
               helperText={
                 touched.classroom &&
                 errors.classroom &&
-                t(errors.classroom as string)
+                t('error:SUBJECT_CLASS_REQUIRED')
               }
             />
           )}
@@ -165,7 +165,7 @@ export function useSubjectForm(props: UseSubjectFormProps) {
         <ListGridItem
           element="div"
           label={t('subjects.details.teacher')}
-          value={values.teacher.fullName}
+          value={values.teacher?.fullName}
         />
       ) : (
         <Autocomplete

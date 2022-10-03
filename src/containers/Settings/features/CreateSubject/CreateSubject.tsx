@@ -2,27 +2,27 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '@mui/material';
 
 import CommonViewLayout from 'layouts/CommonView';
-import { useClassroomForm } from 'shared/hooks';
-import useCreateClassroomQuery from './hooks/use-create-classroom-query';
-import { ClassroomForm } from 'shared/types/classroom';
+import { useSubjectForm } from 'shared/hooks';
+import useCreateSubjectQuery from './hooks/use-create-subject-query';
+import { SubjectForm } from 'shared/types/subject';
 
-export default function CreateClassroom() {
+export default function CreateSubject() {
   const { t } = useTranslation('settings');
-  const createClassroom = useCreateClassroomQuery();
+  const createSubject = useCreateSubjectQuery();
 
-  const handleCreateAndShow = (values: ClassroomForm) => {
-    createClassroom({ values, show: true });
+  const handleCreateAndShow = (values: SubjectForm) => {
+    createSubject({ values, show: true });
   };
 
-  const handleCreate = (values: ClassroomForm) => {
-    createClassroom({ values });
+  const handleCreate = (values: SubjectForm) => {
+    createSubject({ values });
   };
 
-  const { Form } = useClassroomForm({
+  const { Form } = useSubjectForm({
     initialValues: {
-      name: '',
+      category: null,
+      classroom: null,
       teacher: null,
-      students: [],
     },
     submitButtonLabel: t('common:create'),
     secondaryButton: ({ isValid, values }) => (
@@ -41,7 +41,7 @@ export default function CreateClassroom() {
   });
 
   return (
-    <CommonViewLayout headerTitle={t('classrooms.create.title')} maxWidth={600}>
+    <CommonViewLayout headerTitle={t('subjects.create.title')} maxWidth={600}>
       {Form}
     </CommonViewLayout>
   );

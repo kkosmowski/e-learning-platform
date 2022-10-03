@@ -89,6 +89,7 @@
     "edit": "Edytuj",
     "save": "Zapisz",
     "create": "Utwórz",
+    "createAndView": "Utwórz i wyświetl",
     "delete": "Usuń",
     "active": "Aktywny(a)",
     "inactive": "Nieaktywny(a)",
@@ -135,8 +136,7 @@
           "name": "Nazwa klasy",
           "teacher": "Nauczyciel (wychowawca)",
           "students": "Uczniowie"
-        },
-        "createAndShow": "Utwórz i wyświetl"
+        }
       },
       "edit": {
         "editThisClassroom": "Modyfikuj tę klasę"
@@ -148,6 +148,9 @@
         "subjectCategory": "Kategoria",
         "classroom": "Klasa",
         "teacher": "Prowadzący"
+      },
+      "create": {
+        "title": "Utwórz nowy przedmiot"
       },
       "noItems": "Brak przedmiotów.",
       "details": {
@@ -163,6 +166,10 @@
         "category": "Kategoria przedmiotu...",
         "classroom": "Klasa...",
         "teacher": "Nauczyciel prowadzący..."
+      },
+      "button": {
+        "add": "Dodaj przedmiot",
+        "": "Utwórz i wyświetl"
       }
     },
     "users": {
@@ -232,6 +239,8 @@
     "CLASSROOM_NAME_REQUIRED": "Nazwa klasy jest wymagana.",
     "CLASSROOM_NAME_TAKEN": "Ta nazwa klasy jest już zajęta.",
     "CLASSROOM_TEACHER_REQUIRED": "Wybierz wychowawcę klasy.",
-    "SUBJECT_TEACHER_REQUIRED": "Wybierz nauczyciela klasy."
+    "SUBJECT_CATEGORY_REQUIRED": "Wybierz kategorię przedmiotu.",
+    "SUBJECT_CLASS_REQUIRED": "Wybierz klasę, której przedmiot dotyczy.",
+    "SUBJECT_TEACHER_REQUIRED": "Wybierz nauczyciela prowadzącego przedmiot."
   }
 }
