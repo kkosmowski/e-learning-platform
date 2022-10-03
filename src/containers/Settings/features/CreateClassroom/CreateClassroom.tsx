@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '@mui/material';
 
 import CommonViewLayout from 'layouts/CommonView';
-import useClassroomForm from 'shared/hooks/use-classroom-form';
+import { useClassroomForm } from 'shared/hooks';
 import useCreateClassroomQuery from './hooks/use-create-classroom-query';
 import { ClassroomForm } from 'shared/types/classroom';
 

@@ -34,7 +34,7 @@ type MutationFnReturnData = {
   onSuccess: UpdateUserData['onSuccess'];
 };
 
-export default function useUsersQuery() {
+export function useUsersQuery() {
   const [getUsersProps, setGetUsersProps] = useState<GetUsersProps>({});
   const [getUserId, setGetUserId] = useState<string | null>(null);
   const [getUsersEnabled, setGetUsersEnabled] = useState(false);

@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '@mui/material';
 
 import { Classroom, ClassroomForm } from 'shared/types/classroom';
-import useClassroomForm from 'shared/hooks/use-classroom-form';
+import { useClassroomForm } from 'shared/hooks';
 
 interface ClassroomEditFormProps {
   classroom: Classroom;

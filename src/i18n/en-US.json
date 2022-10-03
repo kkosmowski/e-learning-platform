@@ -151,7 +151,6 @@
       },
       "noItems": "No subjects yet.",
       "details": {
-        "title": "<0>Subject</0> <2>{{category}}</2><3>, Classroom </3><5>{{classroom}}</5>",
         "category": "Subject category",
         "classroom": "Classroom",
         "teacher": "Lecturer",
@@ -159,6 +158,11 @@
         "buttons": {
           "edit": "Edit this subject"
         }
+      },
+      "placeholders": {
+        "category": "Subject category...",
+        "classroom": "Class...",
+        "teacher": "Lecturing teacher..."
       }
     },
     "users": {
@@ -227,6 +231,7 @@
     "USER_INACTIVE": "Inactive account.",
     "CLASSROOM_NAME_REQUIRED": "Classroom name is required.",
     "CLASSROOM_NAME_TAKEN": "This classroom name is already taken.",
-    "CLASSROOM_TEACHER_REQUIRED": "Select supervising teacher."
+    "CLASSROOM_TEACHER_REQUIRED": "Select supervising teacher.",
+    "SUBJECT_TEACHER_REQUIRED": "Select lecturing teacher."
   }
 }

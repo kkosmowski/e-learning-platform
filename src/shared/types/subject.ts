@@ -9,6 +9,7 @@ export interface SubjectCategory {
 
 export interface Subject {
   id: string;
+  name: string;
   category: SubjectCategory;
   classroom: SubjectClassroom;
   teacher: User;
@@ -16,8 +17,15 @@ export interface Subject {
 
 export interface FullSubject {
   id: string;
+  name: string;
   category: SubjectCategory;
   classroom: Classroom;
+  teacher: User;
+}
+
+export interface SubjectForm {
+  category: SubjectCategory;
+  classroom: SubjectClassroom;
   teacher: User;
 }
 
@@ -33,6 +41,18 @@ export interface FullSubjectDto {
   subject: SubjectCategory;
   group: ClassroomDto;
   teacher: UserDto;
+}
+
+// payloads
+
+export interface CreateSubjectPayload {
+  subject_id: string;
+  group_id: string;
+  teacher_id: string;
+}
+
+export interface UpdateSubjectPayload extends CreateSubjectPayload {
+  id: string;
 }
 
 // responses

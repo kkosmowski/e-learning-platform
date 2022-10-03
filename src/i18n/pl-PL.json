@@ -149,7 +149,21 @@
         "classroom": "Klasa",
         "teacher": "Prowadzący"
       },
-      "noItems": "Brak przedmiotów."
+      "noItems": "Brak przedmiotów.",
+      "details": {
+        "category": "Kategoria",
+        "classroom": "Klasa",
+        "teacher": "Prowadzący",
+        "students": "Uczniowie",
+        "buttons": {
+          "edit": "Edytuj przedmiot"
+        }
+      },
+      "placeholders": {
+        "category": "Kategoria przedmiotu...",
+        "classroom": "Klasa...",
+        "teacher": "Nauczyciel prowadzący..."
+      }
     },
     "users": {
       "title": "Zarządzanie użytkownikami",
@@ -217,6 +231,7 @@
     "USER_INACTIVE": "To konto nie jest aktywne.",
     "CLASSROOM_NAME_REQUIRED": "Nazwa klasy jest wymagana.",
     "CLASSROOM_NAME_TAKEN": "Ta nazwa klasy jest już zajęta.",
-    "CLASSROOM_TEACHER_REQUIRED": "Wybierz wychowawcę klasy."
+    "CLASSROOM_TEACHER_REQUIRED": "Wybierz wychowawcę klasy.",
+    "SUBJECT_TEACHER_REQUIRED": "Wybierz nauczyciela klasy."
   }
 }

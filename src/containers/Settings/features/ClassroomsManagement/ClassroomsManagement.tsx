@@ -10,30 +10,16 @@ import {
   Typography,
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
-import { useQuery } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
 
 import CommonViewLayout from 'layouts/CommonView';
-import { GetClassroomsResponse, SimpleClassroom } from 'shared/types/classroom';
-import { getClassrooms } from 'api/classroom';
 import PageLoading from 'shared/components/PageLoading';
 import { unknownError } from 'shared/consts/error';
+import { useClassroomsQuery } from 'shared/hooks';
 
 export default function ClassroomsManagement() {
   const { t } = useTranslation('settings', { keyPrefix: 'classrooms' });
   const navigate = useNavigate();
-
-  const {
-    data: classrooms,
-    isSuccess,
-    isLoading,
-  } = useQuery<GetClassroomsResponse, AxiosError, SimpleClassroom[]>(
-    ['classrooms'],
-    getClassrooms,
-    {
-      select: ({ data }) => data,
-    }
-  );
+  const { classrooms, isSuccess, isLoading } = useClassroomsQuery();
 
   const navigateToClassroomCreatePage = () => {
     navigate('create');
@@ -60,7 +46,7 @@ export default function ClassroomsManagement() {
       </Box>
 
       {isSuccess ? (
-        classrooms.length ? (
+        classrooms?.length ? (
           <List sx={{ width: '100%' }}>
             {classrooms.map((classroom) => (
               <ListItemButton

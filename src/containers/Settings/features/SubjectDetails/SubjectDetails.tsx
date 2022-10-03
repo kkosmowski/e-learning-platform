@@ -1,13 +1,12 @@
 import { useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { Button, Card, CardContent } from '@mui/material';
 
 import CommonViewLayout from 'layouts/CommonView';
 import useSubjectQuery from './hooks/use-subject-query';
 import SubjectDetailsList from './components/SubjectDetailsList';
-// import SubjectEditForm from './components/SubjectEditForm';
-// import SubjectDetailsList from './components/SubjectDetailsList';
+import SubjectEditForm from './components/SubjectEditForm';
 
 interface SubjectDetailsProps {
   mode: 'view' | 'edit';
@@ -18,7 +17,7 @@ export default function SubjectDetails(props: SubjectDetailsProps) {
   const { id: subjectId } = useParams<{ id: string }>();
   const { t } = useTranslation('settings', { keyPrefix: 'subjects.details' });
   const navigate = useNavigate();
-  const { currentSubject, isSuccess, isLoading, error /*updateSubject*/ } =
+  const { currentSubject, isSuccess, isLoading, error, updateSubject } =
     useSubjectQuery(subjectId);
 
   const navigateBack = () => {
@@ -36,26 +35,7 @@ export default function SubjectDetails(props: SubjectDetailsProps) {
 
   return (
     <CommonViewLayout
-      headerTitle={
-        currentSubject ? (
-          <Trans
-            i18nKey="title"
-            values={{
-              category: currentSubject.category.name,
-              classroom: currentSubject.classroom.name,
-            }}
-          >
-            <span style={{ color: 'gray', fontWeight: 500 }}>Subject</span>{' '}
-            <span>subject</span>
-            <span style={{ color: 'gray', fontWeight: 500 }}>
-              , Classroom
-            </span>{' '}
-            <span>classroom</span>
-          </Trans>
-        ) : (
-          ''
-        )
-      }
+      headerTitle={currentSubject?.name || ''}
       maxWidth={600}
       CenteredProps={{ innerSx: { gap: 3 } }}
     >
@@ -73,16 +53,16 @@ export default function SubjectDetails(props: SubjectDetailsProps) {
 
           <Card>
             <CardContent>
-              {/*{isEditMode ? (*/}
-              {/*  <SubjectEditForm*/}
-              {/*    classroom={currentSubject}*/}
-              {/*    error={error}*/}
-              {/*    // onSubmit={updateSubject}*/}
-              {/*    onCancel={navigateBack}*/}
-              {/*  />*/}
-              {/*) : (*/}
-              <SubjectDetailsList subject={currentSubject} />
-              {/*)}*/}
+              {isEditMode ? (
+                <SubjectEditForm
+                  subject={currentSubject}
+                  error={error}
+                  onSubmit={updateSubject}
+                  onCancel={navigateBack}
+                />
+              ) : (
+                <SubjectDetailsList subject={currentSubject} />
+              )}
             </CardContent>
           </Card>
         </>

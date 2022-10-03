@@ -5,9 +5,8 @@ import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
 
 import { Role, User } from 'shared/types/user';
-import { useConfirmationDialog } from 'shared/hooks';
+import { useConfirmationDialog, useUsersQuery } from 'shared/hooks';
 import PageLoading from 'shared/components/PageLoading';
-import useUsersQuery from '../hooks/use-users-query';
 import UsersTable from './components/UsersTable';
 
 export default function Users() {

@@ -47,11 +47,8 @@ export interface CreateClassroomPayload {
   student_ids: string[];
 }
 
-export interface UpdateClassroomPayload {
+export interface UpdateClassroomPayload extends CreateClassroomPayload {
   id: string;
-  name: string;
-  teacher_id: string;
-  student_ids: string[];
 }
 
 // responses

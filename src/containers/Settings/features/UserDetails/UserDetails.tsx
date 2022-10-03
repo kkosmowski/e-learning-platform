@@ -6,11 +6,10 @@ import toast from 'react-hot-toast';
 
 import { UpdateUserForm } from 'shared/types/user';
 import CommonViewLayout from 'layouts/CommonView';
-import { useConfirmationDialog } from 'shared/hooks';
+import { useConfirmationDialog, useUsersQuery } from 'shared/hooks';
 import UserInfo from './components/UserInfo';
 import UserEditForm from './components/UserEditForm';
-import useUsersQuery from '../hooks/use-users-query';
-import PageLoading from '../../../../shared/components/PageLoading';
+import PageLoading from 'shared/components/PageLoading';
 
 interface UserDetailsProps {
   mode: 'view' | 'edit';
