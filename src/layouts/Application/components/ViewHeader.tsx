@@ -5,9 +5,10 @@ import { Centered } from 'shared/components/Container';
 import TextButton from 'shared/components/TextButton';
 import { useTranslation } from 'react-i18next';
 import StyledLink from 'shared/components/StyledLink';
+import { ReactNode } from 'react';
 
 interface ViewHeaderProps {
-  title: string;
+  title: ReactNode;
   isLink?: boolean;
   linkTo?: string;
   onBack: () => void;

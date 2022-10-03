@@ -149,7 +149,21 @@
         "classroom": "Classroom",
         "teacher": "Lecturer"
       },
-      "noItems": "No subjects yet."
+      "noItems": "No subjects yet.",
+      "details": {
+        "category": "Subject category",
+        "classroom": "Classroom",
+        "teacher": "Lecturer",
+        "students": "Participating students",
+        "buttons": {
+          "edit": "Edit this subject"
+        }
+      },
+      "placeholders": {
+        "category": "Subject category...",
+        "classroom": "Class...",
+        "teacher": "Lecturing teacher..."
+      }
     },
     "users": {
       "title": "Users management",
@@ -217,6 +231,7 @@
     "USER_INACTIVE": "Inactive account.",
     "CLASSROOM_NAME_REQUIRED": "Classroom name is required.",
     "CLASSROOM_NAME_TAKEN": "This classroom name is already taken.",
-    "CLASSROOM_TEACHER_REQUIRED": "Select supervising teacher."
+    "CLASSROOM_TEACHER_REQUIRED": "Select supervising teacher.",
+    "SUBJECT_TEACHER_REQUIRED": "Select lecturing teacher."
   }
 }

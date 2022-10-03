@@ -41,7 +41,7 @@ export interface UseClassroomFormProps {
   error?: string;
 }
 
-export default function useClassroomForm(props: UseClassroomFormProps) {
+export function useClassroomForm(props: UseClassroomFormProps) {
   const {
     initialValues,
     submitButtonLabel,

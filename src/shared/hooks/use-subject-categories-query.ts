@@ -16,7 +16,7 @@ import {
   updateSubjectCategory,
 } from 'api/subject';
 
-export default function useSubjectCategoriesQuery() {
+export function useSubjectCategoriesQuery() {
   const { t } = useTranslation('settings');
   const queryClient = useQueryClient();
 

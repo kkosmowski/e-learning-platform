@@ -1,16 +1,12 @@
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Box, Button, IconButton, List, ListItem } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
+import { Box, Button } from '@mui/material';
 
 import { SubjectCategory } from 'shared/types/subject';
-import { useConfirmationDialog } from 'shared/hooks';
+import { useConfirmationDialog, useSubjectCategoriesQuery } from 'shared/hooks';
 import CreateNewCategoryForm from './components/CreateNewCategoryForm';
-import EditCategoryForm from './components/EditCategoryForm';
 import CommonViewLayout from 'layouts/CommonView';
-import useSubjectCategoriesQuery from './hooks/use-subject-categories-query';
-import PageLoading from '../../../../shared/components/PageLoading';
+import PageLoading from 'shared/components/PageLoading';
 import SubjectCategoriesList from './components/SubjectCategoriesList';
 
 export default function SubjectCategoriesManagement() {

@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { ClassroomDto, SubjectClassroom } from './classroom';
+import { Classroom, ClassroomDto, SubjectClassroom } from './classroom';
 import { User, UserDto } from './user';
 
 export interface SubjectCategory {
@@ -9,8 +9,28 @@ export interface SubjectCategory {
 
 export interface Subject {
   id: string;
+  name: string;
   category: SubjectCategory;
   classroom: SubjectClassroom;
+  teacher: User;
+}
+
+export interface FullSubject {
+  id: string;
+  name: string;
+  category: SubjectCategory;
+  classroom: Classroom;
+  teacher: User;
+}
+
+export interface SubjectForm {
+  category: SubjectCategory;
+  classroom: SubjectClassroom;
+  teacher: User;
+}
+
+export interface SubjectToUpdate {
+  id: string;
   teacher: User;
 }
 
@@ -21,6 +41,26 @@ export interface SubjectDto {
   teacher: UserDto;
 }
 
+export interface FullSubjectDto {
+  id: string;
+  subject: SubjectCategory;
+  group: ClassroomDto;
+  teacher: UserDto;
+}
+
+// payloads
+
+export interface CreateSubjectPayload {
+  subject_id: string;
+  group_id: string;
+  teacher_id: string;
+}
+
+export interface UpdateSubjectPayload {
+  id: string;
+  teacher_id: string;
+}
+
 // responses
 
 export type GetSubjectCategoriesResponse = AxiosResponse<SubjectCategory[]>;
@@ -28,5 +68,6 @@ export type CreateSubjectCategoryResponse = AxiosResponse<SubjectCategory>;
 export type UpdateSubjectCategoryResponse = AxiosResponse<SubjectCategory>;
 
 export type GetSubjectsResponse = AxiosResponse<SubjectDto[]>;
+export type GetSubjectResponse = AxiosResponse<FullSubjectDto>;
 export type CreateSubjectResponse = AxiosResponse<SubjectDto>;
 export type UpdateSubjectResponse = AxiosResponse<SubjectDto>;
