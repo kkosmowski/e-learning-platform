@@ -17,6 +17,7 @@ import {
 } from 'shared/utils/subject.utils';
 import { getErrorDetail } from 'shared/utils/common.utils';
 import { useNavigate } from 'react-router';
+import { User } from '../../../../../shared/types/user';
 
 export default function useSubjectQuery(subjectId: string | undefined) {
   const queryClient = useQueryClient();
@@ -47,24 +48,21 @@ export default function useSubjectQuery(subjectId: string | undefined) {
   const { mutate: handleUpdate } = useMutation<
     UpdateSubjectResponse,
     AxiosError,
-    SubjectForm
+    User | null
   >(
-    async (values: SubjectForm) => {
-      if (fetchQuery.data && values.teacher) {
+    async (teacher: User | null) => {
+      if (fetchQuery.data && teacher) {
         return updateSubject(
           mapSubjectToUpdateSubjectPayload({
             id: fetchQuery.data.id,
-            name: '',
-            category: values.category,
-            classroom: values.classroom,
-            teacher: values.teacher,
+            teacher,
           })
         );
       } else throw new Error('Subject id is missing');
     },
     {
       onSuccess: async ({ data }) => {
-        queryClient.setQueryData(['classroom', subjectId], { data });
+        queryClient.setQueryData(['subject', subjectId], { data });
         navigateBack();
         toast.success('Subject updated');
       },

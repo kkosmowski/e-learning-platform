@@ -40,8 +40,9 @@ export const getSubject = (subjectId: string): Promise<GetSubjectResponse> => {
   return authorized((api) => api.get(`group-subject/${subjectId}`));
 };
 
-export const updateSubject = (
-  subject: UpdateSubjectPayload
-): Promise<GetSubjectResponse> => {
-  return authorized((api) => api.put(`group-subject/${subject.id}`));
+export const updateSubject = ({
+  id,
+  teacher_id,
+}: UpdateSubjectPayload): Promise<GetSubjectResponse> => {
+  return authorized((api) => api.put(`group-subject/${id}`, { teacher_id }));
 };

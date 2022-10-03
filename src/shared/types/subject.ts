@@ -29,6 +29,11 @@ export interface SubjectForm {
   teacher: User;
 }
 
+export interface SubjectToUpdate {
+  id: string;
+  teacher: User;
+}
+
 export interface SubjectDto {
   id: string;
   subject: SubjectCategory;
@@ -51,8 +56,9 @@ export interface CreateSubjectPayload {
   teacher_id: string;
 }
 
-export interface UpdateSubjectPayload extends CreateSubjectPayload {
+export interface UpdateSubjectPayload {
   id: string;
+  teacher_id: string;
 }
 
 // responses

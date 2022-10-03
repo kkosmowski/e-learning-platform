@@ -4,6 +4,7 @@ import {
   Subject,
   SubjectDto,
   SubjectForm,
+  SubjectToUpdate,
   UpdateSubjectPayload,
 } from 'shared/types/subject';
 import { mapUserDtoToUser } from './user.utils';
@@ -28,10 +29,8 @@ export const mapFullSubjectDtoToFullSubject = (
 });
 
 export const mapSubjectToUpdateSubjectPayload = (
-  subject: Subject
+  subject: SubjectToUpdate
 ): UpdateSubjectPayload => ({
   id: subject.id,
-  subject_id: subject.category.id,
-  group_id: subject.classroom.id,
   teacher_id: subject.teacher.id,
 });
