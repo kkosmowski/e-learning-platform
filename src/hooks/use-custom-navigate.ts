@@ -18,7 +18,6 @@ export default function useCustomNavigate() {
   const back = useCallback(
     (path?: string) => {
       const locationWithBack = location.state as { back?: string } | undefined;
-      console.log(locationWithBack, path || locationWithBack?.back || './..');
       navigate(path || locationWithBack?.back || './..');
     },
     [location.state, navigate]
