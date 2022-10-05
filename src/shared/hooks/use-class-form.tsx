@@ -14,6 +14,8 @@ import {
   Button,
   debounce,
   TextField,
+  Toolbar,
+  Tooltip,
   Typography,
 } from '@mui/material';
 import { TFunction } from 'i18next';
@@ -29,6 +31,7 @@ import {
   classTeacherRequiredError,
 } from 'shared/consts/error';
 import { defaultDebounce } from 'shared/consts/shared';
+import { areArraysEqual } from '@mui/base';
 
 export interface UseClassFormProps {
   initialValues: ClassForm;
@@ -52,6 +55,7 @@ export function useClassForm(props: UseClassFormProps) {
   } = props;
   const [studentsList, setStudentsList] = useState<User[]>([]);
   const [teachersList, setTeachersList] = useState<User[]>([]);
+  const [isUntouched, setIsUntouched] = useState(true);
   const initialRun = useRef(true);
 
   const fetchUsers = useCallback(async () => {
@@ -114,6 +118,14 @@ export function useClassForm(props: UseClassFormProps) {
     touched,
     values,
   } = formik;
+
+  useEffect(() => {
+    setIsUntouched(
+      values.name === initialValues.name &&
+        values.teacher?.id === initialValues.teacher?.id &&
+        areArraysEqual(values.students, initialValues.students)
+    );
+  }, [initialValues, values]);
 
   const validateName = useCallback(
     debounce(async (name: string) => {
@@ -203,9 +215,27 @@ export function useClassForm(props: UseClassFormProps) {
       {error && <Typography color="error">{t(error)}</Typography>}
 
       <Box sx={{ display: 'flex', gap: 3, '*': { flex: 1 } }}>
-        <Button type="submit" variant="contained" disabled={!isValid}>
-          {submitButtonLabel}
-        </Button>
+        <Tooltip
+          title={
+            !isValid || isUntouched
+              ? t(
+                  `classes.tooltip.${
+                    !isValid ? 'missingData' : 'formUntouched'
+                  }`
+                ) + ''
+              : ''
+          }
+        >
+          <Box sx={{ display: 'flex', '*': { flex: 1 } }}>
+            <Button
+              type="submit"
+              variant="contained"
+              disabled={!isValid || isUntouched}
+            >
+              {submitButtonLabel}
+            </Button>
+          </Box>
+        </Tooltip>
 
         {secondaryButton && secondaryButton(formik)}
       </Box>

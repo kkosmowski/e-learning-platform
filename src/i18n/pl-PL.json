@@ -152,6 +152,10 @@
           "students": "Uczniowie"
         }
       },
+      "tooltip": {
+        "missingData": "Nie wypełniono wszystkich wymaganych pól",
+        "formUntouched": "Dane nie zostały zmodyfikowane"
+      },
       "noItems": "Brak istniejących klas."
     },
     "subjects": {
@@ -181,6 +185,10 @@
       },
       "button": {
         "add": "Dodaj przedmiot"
+      },
+      "tooltip": {
+        "missingData": "Nie wypełniono wszystkich wymaganych pól",
+        "formUntouched": "Dane nie zostały zmodyfikowane"
       }
     },
     "users": {

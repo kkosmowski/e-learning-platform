@@ -152,6 +152,10 @@
           "students": "Students"
         }
       },
+      "tooltip": {
+        "missingData": "Not all required data is provided",
+        "formUntouched": "Form data has not been modified"
+      },
       "noItems": "There are no classes yet."
     },
     "subjects": {
@@ -181,6 +185,10 @@
       },
       "button": {
         "add": "Add new subject"
+      },
+      "tooltip": {
+        "missingData": "Not all required data is provided",
+        "formUntouched": "Form data has not been modified"
       }
     },
     "users": {

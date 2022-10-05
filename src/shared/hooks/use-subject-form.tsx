@@ -1,4 +1,4 @@
-import { ReactNode, SyntheticEvent, useEffect } from 'react';
+import { ReactNode, SyntheticEvent, useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import {
@@ -6,6 +6,7 @@ import {
   Box,
   Button,
   TextField,
+  Tooltip,
   Typography,
 } from '@mui/material';
 import { TFunction } from 'i18next';
@@ -17,6 +18,7 @@ import { SubjectClass } from 'shared/types/class';
 import { useUsersQuery } from './use-users-query';
 import { useClassesQuery } from './use-classes-query';
 import { useSubjectCategoriesQuery } from './use-subject-categories-query';
+import { areArraysEqual } from '@mui/base';
 
 export interface UseSubjectFormProps {
   initialValues: SubjectForm;
@@ -43,6 +45,7 @@ export function useSubjectForm(props: UseSubjectFormProps) {
   const { subjectCategories } = useSubjectCategoriesQuery();
   const { classes } = useClassesQuery();
   const { users: teachers, fetchUsers } = useUsersQuery();
+  const [isUntouched, setIsUntouched] = useState(true);
 
   useEffect(() => {
     fetchUsers({ role: Role.Teacher });
@@ -89,8 +92,12 @@ export function useSubjectForm(props: UseSubjectFormProps) {
   };
 
   useEffect(() => {
-    console.log(isValid, errors);
-  }, [values, isValid, errors]);
+    setIsUntouched(
+      values.category?.id === initialValues.category?.id &&
+        values.subjectClass?.id === initialValues.subjectClass?.id &&
+        values.teacher?.id === initialValues.teacher?.id
+    );
+  }, [initialValues, values]);
 
   const Form = (
     <form
@@ -194,9 +201,27 @@ export function useSubjectForm(props: UseSubjectFormProps) {
       {error && <Typography color="error">{t(error)}</Typography>}
 
       <Box sx={{ display: 'flex', gap: 3, '*': { flex: 1 } }}>
-        <Button type="submit" variant="contained" disabled={!isValid}>
-          {submitButtonLabel}
-        </Button>
+        <Tooltip
+          title={
+            !isValid || isUntouched
+              ? t(
+                  `subjects.tooltip.${
+                    !isValid ? 'missingData' : 'formUntouched'
+                  }`
+                ) + ''
+              : ''
+          }
+        >
+          <Box sx={{ display: 'flex', '*': { flex: 1 } }}>
+            <Button
+              type="submit"
+              variant="contained"
+              disabled={!isValid || isUntouched}
+            >
+              {submitButtonLabel}
+            </Button>
+          </Box>
+        </Tooltip>
 
         {secondaryButton && secondaryButton(formik)}
       </Box>

@@ -60,7 +60,7 @@ export default function UserToolbar(props: UserToolbarProps) {
           'aria-labelledby': 'user-menu-button',
         }}
       >
-        <MenuItem onClick={onSignOut}>{t('nav:signOut')}</MenuItem>
+        <MenuItem onClick={onSignOut}>{t('nav:button.signOut')}</MenuItem>
       </Menu>
     </Box>
   );
