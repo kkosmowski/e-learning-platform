@@ -1,9 +1,9 @@
 import Settings from './Settings';
 import SettingsLayout from './Settings.layout';
 
-import ClassroomsManagement from './features/ClassroomsManagement';
-import ClassroomDetails from './features/ClassroomDetails';
-import CreateClassroom from './features/CreateClassroom';
+import ClassesManagement from './features/ClassesManagement';
+import ClassDetails from './features/ClassDetails';
+import CreateClass from './features/CreateClass';
 
 import SubjectCategoriesManagement from './features/SubjectCategoriesManagement';
 
@@ -17,9 +17,9 @@ import CreateUser from './features/CreateUser';
 
 export {
   SettingsLayout,
-  ClassroomsManagement,
-  ClassroomDetails,
-  CreateClassroom,
+  ClassesManagement,
+  ClassDetails,
+  CreateClass,
   SubjectCategoriesManagement,
   SubjectsManagement,
   SubjectDetails,

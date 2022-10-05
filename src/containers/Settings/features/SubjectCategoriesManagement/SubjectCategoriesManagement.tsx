@@ -38,9 +38,9 @@ export default function SubjectCategoriesManagement() {
   const showConfirmationDialog = useCallback(
     async (category: SubjectCategory) => {
       const shouldDelete = await confirmAction({
-        title: 'settings:subjectCategories.confirmDeleteTitle',
+        title: 'settings:subjectCategories.confirm.deleteTitle',
         message: {
-          key: 'settings:subjectCategories.confirmDeleteMessage',
+          key: 'settings:subjectCategories.confirm.deleteMessage',
           props: { name: category.name },
         },
         confirmLabel: 'common:delete',
@@ -107,7 +107,7 @@ export default function SubjectCategoriesManagement() {
       ) : (
         <Box sx={{ height: 40, display: 'flex', alignItems: 'center' }}>
           <Button variant="contained" onClick={showCreateNewCategoryForm}>
-            {t('addNew')}
+            {t('button.add')}
           </Button>
         </Box>
       )}

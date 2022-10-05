@@ -19,29 +19,29 @@ import {
 import { TFunction } from 'i18next';
 
 import { getUsers } from 'api/user';
-import { validateClassroomName } from 'api/classroom';
+import { validateClassName } from 'api/class';
 import { Role, User } from 'shared/types/user';
 import { mapUserDtoToUser } from 'shared/utils/user.utils';
-import { ClassroomForm } from 'shared/types/classroom';
+import { ClassForm } from 'shared/types/class';
 import {
-  classroomNameRequiredError,
-  classroomNameTakenError,
-  classroomTeacherRequiredError,
+  classNameRequiredError,
+  classNameTakenError,
+  classTeacherRequiredError,
 } from 'shared/consts/error';
 import { defaultDebounce } from 'shared/consts/shared';
 
-export interface UseClassroomFormProps {
-  initialValues: ClassroomForm;
+export interface UseClassFormProps {
+  initialValues: ClassForm;
   submitButtonLabel: string;
   secondaryButton?: (
-    formik: ReturnType<typeof useFormik<ClassroomForm>>
+    formik: ReturnType<typeof useFormik<ClassForm>>
   ) => ReactNode;
-  onSubmit: (form: ClassroomForm) => void;
+  onSubmit: (form: ClassForm) => void;
   t: TFunction;
   error?: string;
 }
 
-export function useClassroomForm(props: UseClassroomFormProps) {
+export function useClassForm(props: UseClassFormProps) {
   const {
     initialValues,
     submitButtonLabel,
@@ -55,7 +55,7 @@ export function useClassroomForm(props: UseClassroomFormProps) {
   const initialRun = useRef(true);
 
   const fetchUsers = useCallback(async () => {
-    // @todo: fetch only users that have no classroom assigned
+    // @todo: fetch only users that have no class assigned
     const { data } = await getUsers({
       role: [Role.Student, Role.Teacher],
       withoutGroups: true,
@@ -91,13 +91,13 @@ export function useClassroomForm(props: UseClassroomFormProps) {
     void fetchUsers();
   }, []);
 
-  const formik = useFormik<ClassroomForm>({
+  const formik = useFormik<ClassForm>({
     initialValues,
     validateOnBlur: false,
     validateOnMount: true,
     validationSchema: yup.object().shape({
-      name: yup.string().required(classroomNameRequiredError),
-      teacher: yup.object().nullable().required(classroomTeacherRequiredError),
+      name: yup.string().required(classNameRequiredError),
+      teacher: yup.object().nullable().required(classTeacherRequiredError),
       students: yup.array(),
     }),
     onSubmit,
@@ -117,10 +117,10 @@ export function useClassroomForm(props: UseClassroomFormProps) {
 
   const validateName = useCallback(
     debounce(async (name: string) => {
-      const { data: isNameValid } = await validateClassroomName(name);
+      const { data: isNameValid } = await validateClassName(name);
 
       if (!isNameValid && name !== initialValues.name) {
-        setFieldError('name', classroomNameTakenError);
+        setFieldError('name', classNameTakenError);
       }
     }, defaultDebounce),
     [setFieldError]
@@ -155,7 +155,7 @@ export function useClassroomForm(props: UseClassroomFormProps) {
     >
       <TextField
         name="name"
-        placeholder={t('classrooms.create.placeholder.name')}
+        placeholder={t('classes.create.placeholder.name')}
         value={values.name}
         error={touched.name && Boolean(errors.name)}
         helperText={touched.name && errors.name && t(errors.name)}
@@ -169,7 +169,7 @@ export function useClassroomForm(props: UseClassroomFormProps) {
           <TextField
             {...params}
             name="teacher"
-            placeholder={t('classrooms.create.placeholder.teacher')}
+            placeholder={t('classes.create.placeholder.teacher')}
             error={touched.teacher && Boolean(errors.teacher)}
             helperText={touched.teacher && errors.teacher && t(errors.teacher)}
           />
@@ -188,7 +188,7 @@ export function useClassroomForm(props: UseClassroomFormProps) {
           <TextField
             {...params}
             name="students"
-            placeholder={t('classrooms.create.placeholder.students')}
+            placeholder={t('classes.create.placeholder.students')}
             error={touched.students && Boolean(errors.students)}
           />
         )}

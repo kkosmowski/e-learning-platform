@@ -17,23 +17,23 @@ import { Subject } from 'shared/types/subject';
 interface SubjectsTableProps {
   subjects: Subject[];
   onClick: (subjectId: string) => void;
-  onClassroomClick: (classroomId: string) => void;
+  onClassClick: (classId: string) => void;
   onTeacherClick: (userId: string) => void;
 }
 
 const subjectsTableHeadRows = [
   'subjects.table.subjectCategory',
-  'subjects.table.classroom',
+  'subjects.table.class',
   'subjects.table.teacher',
 ];
 
 export default function SubjectsTable(props: SubjectsTableProps) {
-  const { subjects, onClick, onClassroomClick, onTeacherClick } = props;
+  const { subjects, onClick, onClassClick, onTeacherClick } = props;
   const { t } = useTranslation();
 
-  const handleClassroomClick = (event: MouseEvent, classroomId: string) => {
+  const handleClassClick = (event: MouseEvent, classId: string) => {
     event.stopPropagation();
-    onClassroomClick(classroomId);
+    onClassClick(classId);
   };
 
   const handleTeacherClick = (event: MouseEvent, userId: string) => {
@@ -52,12 +52,12 @@ export default function SubjectsTable(props: SubjectsTableProps) {
               {subject.category.name}
             </TableCell>
             <TableCell
-              className="subjects-table__row--classroom --clickable"
+              className="subjects-table__row--class --clickable"
               onClick={(event) =>
-                handleClassroomClick(event, subject.classroom.id)
+                handleClassClick(event, subject.subjectClass.id)
               }
             >
-              {subject.classroom.name}
+              {subject.subjectClass.name}
             </TableCell>
             <TableCell
               className="subjects-table__row--teacher --clickable"
@@ -98,7 +98,7 @@ const TableStyles = () => (
       '.subjects-table__row--category': {
         width: '35%',
       },
-      '.subjects-table__row--classroom': {
+      '.subjects-table__row--class': {
         width: '27.5%',
       },
       '.subjects-table__row--teacher': {

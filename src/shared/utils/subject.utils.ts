@@ -9,28 +9,28 @@ import {
   UpdateSubjectPayload,
 } from 'shared/types/subject';
 import { mapUserDtoToUser } from './user.utils';
-import { mapClassroomDtoToClassroom } from './classroom.utils';
+import { mapClassDtoToClass } from './class.utils';
 
 export const mapSubjectDtoToSubject = (subjectDto: SubjectDto): Subject => ({
   id: subjectDto.id,
   name: `${subjectDto.subject.name} (${subjectDto.group.name})`,
   category: subjectDto.subject,
-  classroom: subjectDto.group,
+  subjectClass: subjectDto.group,
   teacher: mapUserDtoToUser(subjectDto.teacher),
 });
 
 export const mapSubjectFormToCreatSubjectPayload = (
   formValues: SubjectForm
 ): CreateSubjectPayload => {
-  const { category, classroom, teacher } = formValues;
-  if (!category || !classroom || !teacher)
+  const { category, subjectClass, teacher } = formValues;
+  if (!category || !subjectClass || !teacher)
     throw new Error(
       'Missing data when mapping SubjectForm to CreateSubjectPayload.'
     );
 
   return {
     subject_id: category.id,
-    group_id: classroom.id,
+    group_id: subjectClass.id,
     teacher_id: teacher.id,
   };
 };
@@ -41,7 +41,7 @@ export const mapFullSubjectDtoToFullSubject = (
   id: subjectDto.id,
   name: `${subjectDto.subject.name} (${subjectDto.group.name})`,
   category: subjectDto.subject,
-  classroom: mapClassroomDtoToClassroom(subjectDto.group),
+  subjectClass: mapClassDtoToClass(subjectDto.group),
   teacher: mapUserDtoToUser(subjectDto.teacher),
 });
 

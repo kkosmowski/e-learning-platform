@@ -1,5 +1,5 @@
-export * from './use-classroom-form';
-export * from './use-classrooms-query';
+export * from './use-class-form';
+export * from './use-classes-query';
 export * from './use-confirmation-dialog';
 export * from './use-subject-form';
 export * from './use-subject-categories-query';

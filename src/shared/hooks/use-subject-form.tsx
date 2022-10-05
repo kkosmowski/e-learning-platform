@@ -13,9 +13,9 @@ import { TFunction } from 'i18next';
 import { Role, User } from 'shared/types/user';
 import { SubjectCategory, SubjectForm } from 'shared/types/subject';
 import ListGridItem from 'shared/components/ListGridItem';
-import { SubjectClassroom } from 'shared/types/classroom';
+import { SubjectClass } from 'shared/types/class';
 import { useUsersQuery } from './use-users-query';
-import { useClassroomsQuery } from './use-classrooms-query';
+import { useClassesQuery } from './use-classes-query';
 import { useSubjectCategoriesQuery } from './use-subject-categories-query';
 
 export interface UseSubjectFormProps {
@@ -41,7 +41,7 @@ export function useSubjectForm(props: UseSubjectFormProps) {
     disabled,
   } = props;
   const { subjectCategories } = useSubjectCategoriesQuery();
-  const { classrooms } = useClassroomsQuery();
+  const { classes } = useClassesQuery();
   const { users: teachers, fetchUsers } = useUsersQuery();
 
   useEffect(() => {
@@ -54,7 +54,7 @@ export function useSubjectForm(props: UseSubjectFormProps) {
     validateOnMount: true,
     validationSchema: yup.object().shape({
       category: yup.object().required(),
-      classroom: yup.object().required(),
+      class: yup.object().required(),
       teacher: yup.object().required(),
     }),
     onSubmit,
@@ -77,11 +77,11 @@ export function useSubjectForm(props: UseSubjectFormProps) {
     setFieldValue('category', value);
   };
 
-  const handleClassroomChange = (
+  const handleClassChange = (
     event: SyntheticEvent,
-    value: SubjectClassroom | null
+    value: SubjectClass | null
   ) => {
-    setFieldValue('classroom', value);
+    setFieldValue('class', value);
   };
 
   const handleTeacherChange = (event: SyntheticEvent, value: User | null) => {
@@ -131,32 +131,32 @@ export function useSubjectForm(props: UseSubjectFormProps) {
         />
       )}
 
-      {disabled?.includes('classroom') ? (
+      {disabled?.includes('subjectClass') ? (
         <ListGridItem
           element="div"
-          label={t('subjects.details.classroom')}
-          value={values.classroom?.name}
+          label={t('subjects.details.class')}
+          value={values.subjectClass?.name}
         />
       ) : (
         <Autocomplete
           renderInput={(params) => (
             <TextField
               {...params}
-              name="classroom"
-              placeholder={t('subjects.placeholders.classroom')}
-              error={touched.classroom && Boolean(errors.classroom)}
+              name="class"
+              placeholder={t('subjects.placeholders.class')}
+              error={touched.subjectClass && Boolean(errors.subjectClass)}
               helperText={
-                touched.classroom &&
-                errors.classroom &&
+                touched.subjectClass &&
+                errors.subjectClass &&
                 t('error:SUBJECT_CLASS_REQUIRED')
               }
             />
           )}
-          value={values.classroom}
-          options={classrooms || []}
-          getOptionLabel={(classroom) => classroom.name}
+          value={values.subjectClass}
+          options={classes || []}
+          getOptionLabel={(subjectClass) => subjectClass.name}
           onBlur={handleBlur}
-          onChange={handleClassroomChange}
+          onChange={handleClassChange}
           isOptionEqualToValue={(option, value) => option.id === value.id}
         />
       )}

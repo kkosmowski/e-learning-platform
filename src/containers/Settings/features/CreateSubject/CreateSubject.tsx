@@ -21,7 +21,7 @@ export default function CreateSubject() {
   const { Form } = useSubjectForm({
     initialValues: {
       category: null,
-      classroom: null,
+      subjectClass: null,
       teacher: null,
     },
     submitButtonLabel: t('common:create'),

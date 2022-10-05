@@ -2,23 +2,23 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '@mui/material';
 
 import CommonViewLayout from 'layouts/CommonView';
-import { useClassroomForm } from 'shared/hooks';
-import useCreateClassroomQuery from './hooks/use-create-classroom-query';
-import { ClassroomForm } from 'shared/types/classroom';
+import { useClassForm } from 'shared/hooks';
+import useCreateClassQuery from './hooks/use-create-class-query';
+import { ClassForm } from 'shared/types/class';
 
-export default function CreateClassroom() {
+export default function CreateClass() {
   const { t } = useTranslation('settings');
-  const createClassroom = useCreateClassroomQuery();
+  const createClass = useCreateClassQuery();
 
-  const handleCreateAndShow = (values: ClassroomForm) => {
-    createClassroom({ values, show: true });
+  const handleCreateAndShow = (values: ClassForm) => {
+    createClass({ values, show: true });
   };
 
-  const handleCreate = (values: ClassroomForm) => {
-    createClassroom({ values });
+  const handleCreate = (values: ClassForm) => {
+    createClass({ values });
   };
 
-  const { Form } = useClassroomForm({
+  const { Form } = useClassForm({
     initialValues: {
       name: '',
       teacher: null,
@@ -41,7 +41,7 @@ export default function CreateClassroom() {
   });
 
   return (
-    <CommonViewLayout headerTitle={t('classrooms.create.title')} maxWidth={600}>
+    <CommonViewLayout headerTitle={t('classes.create.title')} maxWidth={600}>
       {Form}
     </CommonViewLayout>
   );

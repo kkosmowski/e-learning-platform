@@ -26,7 +26,7 @@ export default function NavbarMenu() {
             sx={{ color: text[1000] }}
             onClick={() => handleButtonClick(feature.path)}
           >
-            {t(feature.id)}
+            {t(`button.${feature.id}`)}
           </Button>
         ))}
     </Box>

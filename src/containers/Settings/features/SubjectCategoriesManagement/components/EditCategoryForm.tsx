@@ -11,7 +11,7 @@ interface EditCategoryFormProps {
 export default function EditCategoryForm(props: EditCategoryFormProps) {
   const { value, onSubmit, onCancel } = props;
   const [categoryName, setCategoryName] = useState(value);
-  const { t } = useTranslation('settings');
+  const { t } = useTranslation('settings', { keyPrefix: 'subjectCategories' });
 
   const handleCategoryNameChange = (e: ChangeEvent<HTMLInputElement>) => {
     setCategoryName(e.target.value);
@@ -35,7 +35,7 @@ export default function EditCategoryForm(props: EditCategoryFormProps) {
     >
       <TextField
         value={categoryName}
-        placeholder={t('subjectCategories.categoryNamePlaceholder')}
+        placeholder={t('placeholder.name')}
         autoFocus
         sx={{ mr: 'auto' }}
         inputProps={{
@@ -50,9 +50,9 @@ export default function EditCategoryForm(props: EditCategoryFormProps) {
       <Tooltip
         title={
           !categoryName
-            ? t('subjectCategories.nameCannotBeEmptyTooltip')
+            ? t('tooltip.nameCannotBeEmpty')
             : categoryName === value
-            ? t('subjectCategories.nothingToSaveTooltip')
+            ? t('tooltip.nothingToSave')
             : ''
         }
       >

@@ -25,7 +25,7 @@ export default function SubjectEditForm(props: SubjectEditFormProps) {
   const { Form } = useSubjectForm({
     initialValues: {
       category: subject.category,
-      classroom: subject.classroom,
+      subjectClass: subject.subjectClass,
       teacher: subject.teacher,
     },
     submitButtonLabel: t('common:save'),
@@ -35,7 +35,7 @@ export default function SubjectEditForm(props: SubjectEditFormProps) {
     onSubmit: handleSubmit,
     t,
     error,
-    disabled: ['category', 'classroom'],
+    disabled: ['category', 'subjectClass'],
   });
 
   return Form;
