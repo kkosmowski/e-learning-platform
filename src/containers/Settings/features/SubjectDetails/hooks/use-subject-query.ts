@@ -16,17 +16,17 @@ import {
   mapSubjectToUpdateSubjectPayload,
 } from 'shared/utils/subject.utils';
 import { getErrorDetail } from 'shared/utils/common.utils';
-import { useNavigate } from 'react-router';
-import { User } from '../../../../../shared/types/user';
+import { User } from 'shared/types/user';
+import useCustomNavigate from 'hooks/use-custom-navigate';
 
 export default function useSubjectQuery(subjectId: string | undefined) {
   const queryClient = useQueryClient();
-  const navigate = useNavigate();
+  const { navigate } = useCustomNavigate();
   const [errorText, setErrorText] = useState('');
   const { t } = useTranslation();
 
   const navigateBack = () => {
-    navigate('..', { replace: false });
+    navigate('..');
   };
 
   const fetchQuery = useQuery<GetSubjectResponse, AxiosError, FullSubject>(

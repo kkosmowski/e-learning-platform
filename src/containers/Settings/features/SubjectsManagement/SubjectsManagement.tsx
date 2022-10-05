@@ -1,15 +1,15 @@
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router';
+import { Box, Button, Paper, TableContainer } from '@mui/material';
 
 import CommonViewLayout from 'layouts/CommonView';
 import PageLoading from 'shared/components/PageLoading';
 import SubjectsTable from './components/SubjectsTable';
 import useSubjectsQuery from './hooks/use-subjects-query';
-import { Box, Button, Paper, TableContainer } from '@mui/material';
+import useCustomNavigate from 'hooks/use-custom-navigate';
 
 export default function SubjectsManagement() {
   const { t } = useTranslation('settings');
-  const navigate = useNavigate();
+  const { navigate } = useCustomNavigate();
   const { subjects, isLoading, isSuccess } = useSubjectsQuery();
 
   const handleSubjectClick = (subjectId: string) => {

@@ -2,9 +2,9 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { Box, Button, Stack, TextField, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router';
 
 import { UpdateUserForm, User } from 'shared/types/user';
+import useCustomNavigate from 'hooks/use-custom-navigate';
 import {
   emailRequiredError,
   firstNameRequiredError,
@@ -21,7 +21,7 @@ interface UserEditFormProps {
 export default function UserEditForm(props: UserEditFormProps) {
   const { user, onSubmit } = props;
   const { t } = useTranslation('settings');
-  const navigate = useNavigate();
+  const { navigate } = useCustomNavigate();
 
   const formik = useFormik<UpdateUserForm>({
     initialValues: {
@@ -41,7 +41,7 @@ export default function UserEditForm(props: UserEditFormProps) {
   });
 
   const handleCancel = () => {
-    navigate('..');
+    navigate('..', { replace: true });
   };
 
   const {

@@ -1,12 +1,13 @@
 import { useEffect } from 'react';
-import { useNavigate, useParams, Outlet } from 'react-router';
+import { useParams, Outlet } from 'react-router';
 
 import Container from 'shared/components/Container';
 import { subjects } from 'shared/consts/subject';
 import ViewHeader from 'layouts/Application/components/ViewHeader';
+import useCustomNavigate from 'hooks/use-custom-navigate';
 
 export default function SubjectLayout() {
-  const navigate = useNavigate();
+  const { navigate, back } = useCustomNavigate();
   const { subjectId } = useParams<{ subjectId: string }>();
   const currentSubject = subjects.find((subject) => subject.id === subjectId);
 
@@ -20,17 +21,13 @@ export default function SubjectLayout() {
     return null;
   }
 
-  const navigateBack = () => {
-    navigate(-1);
-  };
-
   return (
     <Container sx={{ p: 0, overflow: 'hidden', flex: 1 }}>
       <ViewHeader
         title={currentSubject.label}
         isLink
         linkTo={`/subjects/${currentSubject.id}`}
-        onBack={navigateBack}
+        onBack={() => back()}
       />
       <Outlet />
     </Container>

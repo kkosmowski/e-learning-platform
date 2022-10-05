@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from 'react';
-import { useNavigate, useParams } from 'react-router';
+import { useParams } from 'react-router';
 import { Box, Button, Card, CardContent } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
@@ -10,6 +10,7 @@ import { useConfirmationDialog, useUsersQuery } from 'shared/hooks';
 import UserInfo from './components/UserInfo';
 import UserEditForm from './components/UserEditForm';
 import PageLoading from 'shared/components/PageLoading';
+import useCustomNavigate from 'hooks/use-custom-navigate';
 
 interface UserDetailsProps {
   mode: 'view' | 'edit';
@@ -18,7 +19,7 @@ interface UserDetailsProps {
 export default function UserDetails(props: UserDetailsProps) {
   const isEditMode = useMemo(() => props.mode === 'edit', [props.mode]);
   const { id: userId } = useParams<{ id: string }>();
-  const navigate = useNavigate();
+  const { navigate } = useCustomNavigate();
   const { t } = useTranslation('settings');
   const {
     currentUser,
@@ -32,7 +33,7 @@ export default function UserDetails(props: UserDetailsProps) {
   const { confirmAction, confirmationDialog } = useConfirmationDialog();
 
   const navigateToEdit = () => {
-    navigate('./edit', { replace: false });
+    navigate('./edit');
   };
 
   useEffect(() => {
