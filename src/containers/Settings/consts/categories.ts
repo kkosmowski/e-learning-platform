@@ -19,9 +19,9 @@ export const categories: SettingCategory[] = [
     route: 'subject-categories',
   },
   {
-    label: 'categories.classrooms',
+    label: 'categories.classes',
     Icon: PeopleAlt,
-    route: 'classrooms',
+    route: 'classes',
   },
   {
     label: 'categories.subjects',

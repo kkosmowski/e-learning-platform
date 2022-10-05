@@ -13,7 +13,7 @@ export default function Users() {
   const { type } = useParams<{ type: 'teachers' | 'students' }>();
   const [actionMenuTarget, setActionsMenuTarget] = useState<User | null>(null);
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t } = useTranslation('settings');
   const { confirmAction, confirmationDialog } = useConfirmationDialog();
   const { users, isFetching, isSuccess, fetchUsers, updateUser, deleteUser } =
     useUsersQuery();
@@ -35,10 +35,8 @@ export default function Users() {
       active: !user.active,
       onSuccess: (updatedUser) => {
         const toastTranslationKey =
-          'users.details.' +
-          (updatedUser.active
-            ? 'activateSuccessToast'
-            : 'deactivateSuccessToast');
+          'users.details.toast.' +
+          (updatedUser.active ? 'activateSuccess' : 'deactivateSuccess');
         toast.success(t(toastTranslationKey, { name: updatedUser.fullName }));
       },
     });
@@ -51,16 +49,12 @@ export default function Users() {
 
       const shouldUpdate = await confirmAction({
         title:
-          'settings:users.details.' +
-          (userToUpdate.active
-            ? 'confirmDeactivateTitle'
-            : 'confirmActivateTitle'),
+          'settings:users.details.confirm.' +
+          (userToUpdate.active ? 'deactivateTitle' : 'activateTitle'),
         message: {
           key:
-            'settings:users.details.' +
-            (userToUpdate.active
-              ? 'confirmDeactivateMessage'
-              : 'confirmActivateMessage'),
+            'settings:users.details.confirm.' +
+            (userToUpdate.active ? 'deactivateMessage' : 'activateMessage'),
           props: { name: userToUpdate.fullName },
         },
         confirmLabel: userToUpdate.active
@@ -81,9 +75,9 @@ export default function Users() {
       setActionsMenuTarget(null);
 
       const shouldDelete = await confirmAction({
-        title: 'settings:users.confirmDeleteTitle',
+        title: 'settings:users.confirm.deleteTitle',
         message: {
-          key: 'settings:users.confirmDeleteMessage',
+          key: 'settings:users.confirm.deleteMessage',
           props: { name: userToDelete.fullName },
         },
         confirmLabel: 'common:delete',
@@ -116,7 +110,7 @@ export default function Users() {
             showDeleteDialog={showDeleteDialog}
           />
         ) : (
-          t('settings:users.noItems')
+          t('users.noItems')
         )
       ) : null}
 

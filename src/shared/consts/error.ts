@@ -17,7 +17,7 @@ export const roleRequiredError = 'error:ROLE_REQUIRED';
 // user errors
 export const emailTakenError = 'error:EMAIL_TAKEN';
 
-// classroom errors
-export const classroomNameRequiredError = 'error:CLASSROOM_NAME_REQUIRED';
-export const classroomNameTakenError = 'error:CLASSROOM_NAME_TAKEN';
-export const classroomTeacherRequiredError = 'error:CLASSROOM_TEACHER_REQUIRED';
+// class errors
+export const classNameRequiredError = 'error:Class_NAME_REQUIRED';
+export const classNameTakenError = 'error:Class_NAME_TAKEN';
+export const classTeacherRequiredError = 'error:Class_TEACHER_REQUIRED';

@@ -12,10 +12,12 @@
     }
   },
   "nav": {
-    "home": "Home",
-    "subjects": "Subjects",
-    "settings": "Settings",
-    "signOut": "Sign out"
+    "button": {
+      "home": "Home",
+      "subjects": "Subjects",
+      "settings": "Settings",
+      "signOut": "Sign out"
+    }
   },
   "subject": {
     "general": {
@@ -105,48 +107,58 @@
     "title": "Settings",
     "categories": {
       "subjectCategories": "Subject categories management",
-      "classrooms": "Classrooms management",
+      "classes": "Classes management",
       "subjects": "Subjects management",
       "users": "Users management"
     },
     "subjectCategories": {
       "title": "Subject categories management",
-      "addNew": "Add new category",
-      "categoryNamePlaceholder": "Category name",
-      "create": "Create category",
-      "nameCannotBeEmptyTooltip": "You need to define a category name in order to create it",
-      "nothingToSaveTooltip": "No change to the name was made",
-      "createSuccessToast": "Successfully created new subject category.",
-      "updateSuccessToast": "Successfully renamed a subject category.",
-      "deleteSuccessToast": "Successfully deleted a subject category.",
-      "confirmDeleteTitle": "Deleting a subject category",
-      "confirmDeleteMessage": "Are you sure you want to delete \"{{name}}\" category? This operation cannot be undone.",
+      "button": {
+        "add": "Add new category",
+        "create": "Create category"
+      },
+      "placeholder": {
+        "name": "Category name"
+      },
+      "tooltip": {
+        "nameCannotBeEmpty": "You need to define a category name in order to create it",
+        "nothingToSave": "No change to the name was made"
+      },
+      "toast": {
+        "createSuccess": "Successfully created new subject category.",
+        "updateSuccess": "Successfully renamed a subject category.",
+        "deleteSuccess": "Successfully deleted a subject category."
+      },
+      "confirm": {
+        "deleteTitle": "Deleting a subject category",
+        "deleteMessage": "Are you sure you want to delete \"{{name}}\" category? This operation cannot be undone."
+      },
       "noItems": "No subject categories yet."
     },
-    "classrooms": {
-      "title": "Classrooms management",
-      "addNew": "Add new classroom",
-      "noItems": "There are no classrooms yet.",
+    "classes": {
+      "title": "Classes management",
+      "button": {
+        "add": "Add new class",
+        "edit": "Edit this class"
+      },
       "name": "Name",
       "teacher": "Supervising teacher",
       "students": "Students",
       "create": {
-        "title": "New classroom",
+        "title": "New class",
         "placeholder": {
-          "name": "Classroom name",
+          "name": "Class name",
           "teacher": "Teacher (supervising)",
           "students": "Students"
         }
       },
-      "edit": {
-        "editThisClassroom": "Edit this classroom"
-      }
+      "noItems": "There are no classes yet."
     },
     "subjects": {
       "title": "Subjects management",
       "table": {
         "subjectCategory": "Category",
-        "classroom": "Classroom",
+        "class": "Class",
         "teacher": "Lecturer"
       },
       "create": {
@@ -155,16 +167,16 @@
       "noItems": "No subjects yet.",
       "details": {
         "category": "Subject category",
-        "classroom": "Classroom",
+        "class": "Class",
         "teacher": "Lecturer",
         "students": "Participating students",
         "buttons": {
           "edit": "Edit this subject"
         }
       },
-      "placeholders": {
+      "placeholder": {
         "category": "Subject category...",
-        "classroom": "Class...",
+        "class": "Class...",
         "teacher": "Lecturing teacher..."
       },
       "button": {
@@ -178,45 +190,51 @@
         "teachers": "Teachers",
         "create": "Add new user"
       },
-      "userForm": {
+      "form": {
         "placeholder": {
           "email": "Email address",
           "firstName": "First name",
           "lastName": "Last name"
         }
       },
-      "createUser": {
-        "submitButton": "Create user"
-      },
-      "updateUser": {
-        "submitButton": "Update user details"
+      "button": {
+        "create": "Create user",
+        "update": "Update user details"
       },
       "table": {
         "createdAt": "Date of creation",
         "isActive": "Active",
         "actions": "Actions"
       },
-      "confirmDeleteTitle": "Deleting user",
-      "confirmDeleteMessage": "Are you sure you want to delete user \"{{ name }}\"? This operation cannot be undone.",
-      "createSuccessToast": "User created successfully",
-      "updateSuccessToast": "User details updated successfully",
-      "deleteSuccessToast": "User successfully deleted.",
+      "confirm": {
+        "deleteTitle": "Deleting user",
+        "deleteMessage": "Are you sure you want to delete user \"{{ name }}\"? This operation cannot be undone."
+      },
+      "toast": {
+        "createSuccess": "User created successfully",
+        "updateSuccess": "User details updated successfully",
+        "deleteSuccess": "User successfully deleted."
+      },
       "details": {
         "activate": "Active",
         "deactivate": "Deactivate",
-        "confirmActivateTitle": "Confirm user activation",
-        "confirmActivateMessage": "Are you sure you want to activate user \"{{name}}\"?",
-        "confirmDeactivateTitle": "Confirm user deactivation",
-        "confirmDeactivateMessage": "Are you sure you want to deactivate user \"{{name}}\"?",
-        "activateSuccessToast": "User \"{{name}}\" activated.",
-        "deactivateSuccessToast": "User \"{{name}}\" deactivated."
+        "confirm": {
+          "activateTitle": "Confirm user activation",
+          "activateMessage": "Are you sure you want to activate user \"{{name}}\"?",
+          "deactivateTitle": "Confirm user deactivation",
+          "deactivateMessage": "Are you sure you want to deactivate user \"{{name}}\"?"
+        },
+        "toast": {
+          "activateSuccess": "User \"{{name}}\" activated.",
+          "deactivateSuccess": "User \"{{name}}\" deactivated."
+        }
       },
       "noItems": "No users yet."
     }
   },
   "404": {
     "title": "404",
-    "goHome": "Take me home"
+    "button": "Take me home"
   },
   "error": {
     "UNKNOWN_ERROR": "Unknown error occurred.",
@@ -235,9 +253,9 @@
     "INCORRECT CREDENTIALS": "Incorrect email or password.",
     "USER_NOT_FOUND": "User not found.",
     "USER_INACTIVE": "Inactive account.",
-    "CLASSROOM_NAME_REQUIRED": "Classroom name is required.",
-    "CLASSROOM_NAME_TAKEN": "This classroom name is already taken.",
-    "CLASSROOM_TEACHER_REQUIRED": "Select supervising teacher.",
+    "Class_NAME_REQUIRED": "Class name is required.",
+    "Class_NAME_TAKEN": "This class name is already taken.",
+    "Class_TEACHER_REQUIRED": "Select supervising teacher.",
     "SUBJECT_CATEGORY_REQUIRED": "Select subject category.",
     "SUBJECT_CLASS_REQUIRED": "Select this subject's class.",
     "SUBJECT_TEACHER_REQUIRED": "Select lecturing teacher."

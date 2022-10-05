@@ -14,56 +14,56 @@ import EditIcon from '@mui/icons-material/Edit';
 import CommonViewLayout from 'layouts/CommonView';
 import PageLoading from 'shared/components/PageLoading';
 import { unknownError } from 'shared/consts/error';
-import { useClassroomsQuery } from 'shared/hooks';
+import { useClassesQuery } from 'shared/hooks';
 
-export default function ClassroomsManagement() {
-  const { t } = useTranslation('settings', { keyPrefix: 'classrooms' });
+export default function ClassesManagement() {
+  const { t } = useTranslation('settings', { keyPrefix: 'classes' });
   const navigate = useNavigate();
-  const { classrooms, isSuccess, isLoading } = useClassroomsQuery();
+  const { classes, isSuccess, isLoading } = useClassesQuery();
 
-  const navigateToClassroomCreatePage = () => {
+  const navigateToClassCreatePage = () => {
     navigate('create');
   };
 
-  const navigateToClassroomEditPage = (
-    classroomId: string,
+  const navigateToClassEditPage = (
+    classId: string,
     event: MouseEvent<HTMLButtonElement>
   ) => {
     event.stopPropagation();
-    navigate(`${classroomId}/edit`);
+    navigate(`${classId}/edit`);
   };
 
-  const navigateToClassroomViewPage = (classroomId: string) => {
-    navigate(`${classroomId}`);
+  const navigateToClassViewPage = (classId: string) => {
+    navigate(`${classId}`);
   };
 
   return (
     <CommonViewLayout headerTitle={t('title')} maxWidth={600}>
       <Box sx={{ height: 40, display: 'flex', alignItems: 'center' }}>
-        <Button variant="contained" onClick={navigateToClassroomCreatePage}>
-          {t('addNew')}
+        <Button variant="contained" onClick={navigateToClassCreatePage}>
+          {t('button.add')}
         </Button>
       </Box>
 
       {isSuccess ? (
-        classrooms?.length ? (
+        classes?.length ? (
           <List sx={{ width: '100%' }}>
-            {classrooms.map((classroom) => (
+            {classes.map((currentClass) => (
               <ListItemButton
-                key={classroom.id}
+                key={currentClass.id}
                 dense={true}
                 divider
                 sx={{ py: 1.5 }}
-                onClick={() => navigateToClassroomViewPage(classroom.id)}
+                onClick={() => navigateToClassViewPage(currentClass.id)}
               >
-                {classroom.name}
+                {currentClass.name}
                 <IconButton
                   color="primary"
                   size="small"
                   sx={{ ml: 2 }}
                   aria-label={t('common:edit')}
                   onClick={(event) =>
-                    navigateToClassroomEditPage(classroom.id, event)
+                    navigateToClassEditPage(currentClass.id, event)
                   }
                 >
                   <EditIcon />

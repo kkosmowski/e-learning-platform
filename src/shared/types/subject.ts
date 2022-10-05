@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { Classroom, ClassroomDto, SubjectClassroom } from './classroom';
+import { Class, ClassDto, SubjectClass } from './class';
 import { User, UserDto } from './user';
 
 export interface SubjectCategory {
@@ -11,7 +11,7 @@ export interface Subject {
   id: string;
   name: string;
   category: SubjectCategory;
-  classroom: SubjectClassroom;
+  subjectClass: SubjectClass;
   teacher: User;
 }
 
@@ -19,13 +19,13 @@ export interface FullSubject {
   id: string;
   name: string;
   category: SubjectCategory;
-  classroom: Classroom;
+  subjectClass: Class;
   teacher: User;
 }
 
 export interface SubjectForm {
   category: SubjectCategory | null;
-  classroom: SubjectClassroom | null;
+  subjectClass: SubjectClass | null;
   teacher: User | null;
 }
 
@@ -37,14 +37,14 @@ export interface SubjectToUpdate {
 export interface SubjectDto {
   id: string;
   subject: SubjectCategory;
-  group: SubjectClassroom;
+  group: SubjectClass;
   teacher: UserDto;
 }
 
 export interface FullSubjectDto {
   id: string;
   subject: SubjectCategory;
-  group: ClassroomDto;
+  group: ClassDto;
   teacher: UserDto;
 }
 

@@ -52,16 +52,12 @@ export default function UserDetails(props: UserDetailsProps) {
 
     const shouldUpdate = await confirmAction({
       title:
-        'settings:users.details.' +
-        (currentUser.active
-          ? 'confirmDeactivateTitle'
-          : 'confirmActivateTitle'),
+        'settings:users.details.confirm.' +
+        (currentUser.active ? 'deactivateTitle' : 'activateTitle'),
       message: {
         key:
-          'settings:users.details.' +
-          (currentUser.active
-            ? 'confirmDeactivateMessage'
-            : 'confirmActivateMessage'),
+          'settings:users.details.confirm.' +
+          (currentUser.active ? 'deactivateMessage' : 'activateMessage'),
         props: { name: currentUser.fullName },
       },
       confirmLabel: currentUser.active
@@ -79,9 +75,9 @@ export default function UserDetails(props: UserDetailsProps) {
     if (!currentUser) return;
 
     const shouldDelete = await confirmAction({
-      title: 'settings:users.confirmDeleteTitle',
+      title: 'settings:users.confirm.deleteTitle',
       message: {
-        key: 'settings:users.confirmDeleteMessage',
+        key: 'settings:users.confirm.deleteMessage',
         props: { name: currentUser.fullName },
       },
       confirmLabel: 'common:delete',
@@ -102,10 +98,8 @@ export default function UserDetails(props: UserDetailsProps) {
       active: !currentUser.active,
       onSuccess: (updatedUser) => {
         const toastTranslationKey =
-          'users.details.' +
-          (updatedUser.active
-            ? 'activateSuccessToast'
-            : 'deactivateSuccessToast');
+          'users.details.toast.' +
+          (updatedUser.active ? 'activateSuccess' : 'deactivateSuccess');
         toast.success(t(toastTranslationKey, { name: updatedUser.fullName }));
       },
     });
@@ -118,7 +112,7 @@ export default function UserDetails(props: UserDetailsProps) {
       id: currentUser.id,
       ...userData,
       onSuccess: () => {
-        toast.success(t('settings:users.updateUser.success'));
+        toast.success(t('users.toast.updateSuccess'));
       },
     });
   };

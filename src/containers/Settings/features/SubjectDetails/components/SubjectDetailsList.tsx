@@ -19,9 +19,9 @@ export default function SubjectDetailsList(props: SubjectDetailsListProps) {
         value={subject.category.name}
       />
       <ListGridItem
-        label={t('details.classroom')}
-        value={subject.classroom.name}
-        link={`/settings/classrooms/${subject.classroom.id}`}
+        label={t('details.class')}
+        value={subject.subjectClass.name}
+        link={`/settings/classes/${subject.subjectClass.id}`}
       />
 
       <ListGridItem
@@ -34,7 +34,7 @@ export default function SubjectDetailsList(props: SubjectDetailsListProps) {
         label={t('details.students')}
         value={
           <List disablePadding dense sx={{ flex: 2 }}>
-            {subject.classroom.students.map((student) => (
+            {subject.subjectClass.students.map((student) => (
               <ListItem key={student.id} disableGutters>
                 {student.fullName}
               </ListItem>

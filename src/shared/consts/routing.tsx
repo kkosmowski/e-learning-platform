@@ -3,9 +3,9 @@ import { Navigate } from 'react-router-dom';
 import Home from 'containers/Home';
 import Subjects from 'containers/Subjects';
 import Settings, {
-  CreateClassroom,
-  ClassroomDetails,
-  ClassroomsManagement,
+  CreateClass,
+  ClassDetails,
+  ClassesManagement,
   SettingsLayout,
   SubjectCategoriesManagement,
   SubjectsManagement,
@@ -158,26 +158,26 @@ export const features: RouteObjectWithId[] = [
             element: <SubjectCategoriesManagement />,
           },
           {
-            path: 'classrooms',
+            path: 'classes',
             children: [
               {
                 path: '',
-                element: <ClassroomsManagement />,
+                element: <ClassesManagement />,
               },
               {
                 path: 'create',
-                element: <CreateClassroom />,
+                element: <CreateClass />,
               },
               {
                 path: ':id',
                 children: [
                   {
                     path: '',
-                    element: <ClassroomDetails mode="view" />,
+                    element: <ClassDetails mode="view" />,
                   },
                   {
                     path: 'edit',
-                    element: <ClassroomDetails mode="edit" />,
+                    element: <ClassDetails mode="edit" />,
                   },
                 ],
               },

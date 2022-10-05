@@ -16,8 +16,8 @@ export default function SubjectsManagement() {
     navigate(`./${subjectId}`);
   };
 
-  const handleClassroomClick = (classroomId: string) => {
-    navigate(`/settings/classrooms/${classroomId}`);
+  const handleClassClick = (classId: string) => {
+    navigate(`/settings/classes/${classId}`);
   };
 
   const handleTeacherClick = (userId: string) => {
@@ -47,7 +47,7 @@ export default function SubjectsManagement() {
             <SubjectsTable
               subjects={subjects}
               onClick={handleSubjectClick}
-              onClassroomClick={handleClassroomClick}
+              onClassClick={handleClassClick}
               onTeacherClick={handleTeacherClick}
             />
           ) : (

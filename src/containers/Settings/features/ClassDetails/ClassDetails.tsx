@@ -4,21 +4,21 @@ import { Button, Card, CardContent } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 import CommonViewLayout from 'layouts/CommonView';
-import ClassroomDetailsList from './components/ClassroomDetailsList';
-import ClassroomEditForm from './components/ClassroomEditForm';
-import useClassroomQuery from './hooks/use-classroom-query';
+import ClassDetailsList from './components/ClassDetailsList';
+import ClassEditForm from './components/ClassEditForm';
+import useClassQuery from './hooks/use-class-query';
 
-interface ClassroomDetailsProps {
+interface ClassDetailsProps {
   mode: 'view' | 'edit';
 }
 
-export default function ClassroomDetails(props: ClassroomDetailsProps) {
+export default function ClassDetails(props: ClassDetailsProps) {
   const isEditMode = useMemo(() => props.mode === 'edit', [props.mode]);
-  const { id: classroomId } = useParams<{ id: string }>();
-  const { t } = useTranslation('settings', { keyPrefix: 'classrooms.edit' });
+  const { id: classId } = useParams<{ id: string }>();
+  const { t } = useTranslation('settings', { keyPrefix: 'classes' });
   const navigate = useNavigate();
-  const { currentClassroom, isSuccess, isLoading, error, updateClassroom } =
-    useClassroomQuery(classroomId);
+  const { currentClass, isSuccess, isLoading, error, updateClass } =
+    useClassQuery(classId);
 
   const navigateBack = () => {
     navigate('..', { replace: false });
@@ -35,11 +35,11 @@ export default function ClassroomDetails(props: ClassroomDetailsProps) {
 
   return (
     <CommonViewLayout
-      headerTitle={currentClassroom?.name || ''}
+      headerTitle={currentClass?.name || ''}
       maxWidth={600}
       CenteredProps={{ innerSx: { gap: 3 } }}
     >
-      {isSuccess && currentClassroom && (
+      {isSuccess && currentClass && (
         <>
           {!isEditMode && (
             <Button
@@ -47,21 +47,21 @@ export default function ClassroomDetails(props: ClassroomDetailsProps) {
               sx={{ mr: 'auto' }}
               onClick={navigateToEdit}
             >
-              {t('editThisClassroom')}
+              {t('button.edit')}
             </Button>
           )}
 
           <Card>
             <CardContent>
               {isEditMode ? (
-                <ClassroomEditForm
-                  classroom={currentClassroom}
+                <ClassEditForm
+                  class={currentClass}
                   error={error}
-                  onSubmit={updateClassroom}
+                  onSubmit={updateClass}
                   onCancel={navigateBack}
                 />
               ) : (
-                <ClassroomDetailsList classroom={currentClassroom} />
+                <ClassDetailsList class={currentClass} />
               )}
             </CardContent>
           </Card>

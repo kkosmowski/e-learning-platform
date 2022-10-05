@@ -12,7 +12,7 @@ export default function CreateNewCategoryForm(
 ) {
   const { onSubmit, onCancel } = props;
   const [newCategoryName, setNewCategoryName] = useState('');
-  const { t } = useTranslation('settings');
+  const { t } = useTranslation('settings', { keyPrefix: 'subjectCategories' });
 
   const handleNewCategoryNameChange = (e: ChangeEvent<HTMLInputElement>) => {
     setNewCategoryName(e.target.value);
@@ -36,7 +36,7 @@ export default function CreateNewCategoryForm(
     >
       <TextField
         value={newCategoryName}
-        placeholder={t('subjectCategories.categoryNamePlaceholder')}
+        placeholder={t('placeholder.categoryName')}
         autoFocus
         sx={{ mr: 'auto' }}
         size="small"
@@ -44,11 +44,7 @@ export default function CreateNewCategoryForm(
       />
 
       <Tooltip
-        title={
-          !newCategoryName.trim()
-            ? t('subjectCategories.nameCannotBeEmptyTooltip')
-            : ''
-        }
+        title={!newCategoryName.trim() ? t('tooltip.nameCannotBeEmpty') : ''}
       >
         <span>
           <Button
@@ -56,7 +52,7 @@ export default function CreateNewCategoryForm(
             type="submit"
             disabled={!newCategoryName.trim()}
           >
-            {t('subjectCategories.create')}
+            {t('button.create')}
           </Button>
         </span>
       </Tooltip>

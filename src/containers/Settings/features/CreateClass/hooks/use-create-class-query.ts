@@ -4,14 +4,14 @@ import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 
-import { ClassroomForm, SimpleClassroomDto } from 'shared/types/classroom';
-import { createClassroom } from 'api/classroom';
+import { ClassForm, SimpleClassDto } from 'shared/types/class';
+import { createClass } from 'api/class';
 import { getErrorDetail } from 'shared/utils/common.utils';
 
-type MutationFnPayload = { values: ClassroomForm; show?: boolean };
-type MutationFnReturnData = { data: SimpleClassroomDto; show?: boolean };
+type MutationFnPayload = { values: ClassForm; show?: boolean };
+type MutationFnReturnData = { data: SimpleClassDto; show?: boolean };
 
-export default function useCreateClassroomQuery() {
+export default function useCreateClassQuery() {
   const { t } = useTranslation('settings');
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -25,15 +25,15 @@ export default function useCreateClassroomQuery() {
       values,
       show,
     }: MutationFnPayload): Promise<MutationFnReturnData> => {
-      const { data } = await createClassroom(values);
+      const { data } = await createClass(values);
       return { data, show };
     },
     {
       onSuccess: async ({ data, show }) => {
         toast.success(
-          t('classrooms.create.createSuccessToast', { name: data.name })
+          t('classes.create.createSuccessToast', { name: data.name })
         );
-        await queryClient.invalidateQueries(['classrooms']);
+        await queryClient.invalidateQueries(['classes']);
         navigate(show ? `../${data.id}` : '..');
       },
       onError: (err) => {

@@ -12,10 +12,12 @@
     }
   },
   "nav": {
-    "home": "Strona główna",
-    "subjects": "Przedmioty",
-    "settings": "Ustawienia",
-    "signOut": "Wyloguj się"
+    "button": {
+      "home": "Strona główna",
+      "subjects": "Przedmioty",
+      "settings": "Ustawienia",
+      "signOut": "Wyloguj się"
+    }
   },
   "subject": {
     "general": {
@@ -105,28 +107,40 @@
     "title": "Ustawienia",
     "categories": {
       "subjectCategories": "Zarządzanie kategoriami przedmiotów",
-      "classrooms": "Zarządzanie klasami",
+      "classes": "Zarządzanie klasami",
       "subjects": "Zarządzanie przedmiotami",
       "users": "Zarządzanie użytkownikami"
     },
     "subjectCategories": {
       "title": "Zarządzanie kategoriami przedmiotów",
-      "addNew": "Dodaj nową kategorię",
-      "categoryNamePlaceholder": "Nazwa kategorii",
-      "create": "Utwórz kategorię",
-      "nameCannotBeEmptyTooltip": "Aby utworzyć kategorię musisz nadać jej nazwę",
-      "nothingToSaveTooltip": "Brak zmian w nazwie kategorii",
-      "createSuccessToast": "Kategoria pomyślnie utworzona.",
-      "updateSuccessToast": "Nazwa kategorii pomyślnie zmieniona.",
-      "deleteSuccessToast": "Kategoria pomyślnie usunięta.",
-      "confirmDeleteTitle": "Potwierdź usunięcie kategorii przedmiotu",
-      "confirmDeleteMessage": "Czy na pewno usunąć kategorię \"{{name}}\"? Tej operacji nie da się cofnąć.",
+      "button": {
+        "add": "Dodaj nową kategorię",
+        "create": "Utwórz kategorię"
+      },
+      "placeholder": {
+        "name": "Nazwa kategorii"
+      },
+      "tooltip": {
+        "nameCannotBeEmpty": "Aby utworzyć kategorię musisz nadać jej nazwę",
+        "nothingToSave": "Brak zmian w nazwie kategorii"
+      },
+      "toast": {
+        "createSuccess": "Kategoria pomyślnie utworzona.",
+        "updateSuccess": "Nazwa kategorii pomyślnie zmieniona.",
+        "deleteSuccess": "Kategoria pomyślnie usunięta."
+      },
+      "confirm": {
+        "deleteTitle": "Potwierdź usunięcie kategorii przedmiotu",
+        "deleteMessage": "Czy na pewno usunąć kategorię \"{{name}}\"? Tej operacji nie da się cofnąć."
+      },
       "noItems": "Brak kategorii przedmiotów."
     },
-    "classrooms": {
+    "classes": {
       "title": "Zarządzanie klasami",
-      "addNew": "Dodaj nową klasę",
-      "noItems": "Brak istniejących klas.",
+      "button": {
+        "add": "Dodaj nową klasę",
+        "edit": "Modyfikuj tę klasę"
+      },
       "name": "Nazwa",
       "teacher": "Wychowawca",
       "students": "Uczniowie",
@@ -134,19 +148,17 @@
         "title": "Nowa klasa",
         "placeholder": {
           "name": "Nazwa klasy",
-          "teacher": "Nauczyciel (wychowawca)",
+          "teacher": "Wychowawca",
           "students": "Uczniowie"
         }
       },
-      "edit": {
-        "editThisClassroom": "Modyfikuj tę klasę"
-      }
+      "noItems": "Brak istniejących klas."
     },
     "subjects": {
       "title": "Zarządzanie przedmiotami",
       "table": {
         "subjectCategory": "Kategoria",
-        "classroom": "Klasa",
+        "class": "Klasa",
         "teacher": "Prowadzący"
       },
       "create": {
@@ -155,21 +167,20 @@
       "noItems": "Brak przedmiotów.",
       "details": {
         "category": "Kategoria",
-        "classroom": "Klasa",
+        "class": "Klasa",
         "teacher": "Prowadzący",
         "students": "Uczniowie",
         "buttons": {
           "edit": "Edytuj przedmiot"
         }
       },
-      "placeholders": {
+      "placeholder": {
         "category": "Kategoria przedmiotu...",
-        "classroom": "Klasa...",
+        "class": "Klasa...",
         "teacher": "Nauczyciel prowadzący..."
       },
       "button": {
-        "add": "Dodaj przedmiot",
-        "": "Utwórz i wyświetl"
+        "add": "Dodaj przedmiot"
       }
     },
     "users": {
@@ -179,45 +190,51 @@
         "teachers": "Nauczyciele",
         "create": "Dodaj użytkownika"
       },
-      "userForm": {
+      "form": {
         "placeholder": {
           "email": "Adres e-mail",
           "firstName": "Imię",
           "lastName": "Nazwisko"
         }
       },
-      "createUser": {
-        "submitButton": "Utwórz użytkownika"
-      },
-      "updateUser": {
-        "submitButton": "Aktualizuj konto użytkownika"
+      "button": {
+        "create": "Utwórz użytkownika",
+        "update": "Aktualizuj konto użytkownika"
       },
       "table": {
         "createdAt": "Data utworzenia",
         "isActive": "Status",
         "actions": "Akcje"
       },
-      "confirmDeleteTitle": "Potwierdź usunięcie użytkownika",
-      "confirmDeleteMessage": "Czy na pewno usunąć użytkownika \"{{ name }}\"? Tej operacji nie da się cofnąć.",
-      "createSuccessToast": "Użytkownik pomyślnie utworzony.",
-      "updateSuccessToast": "Użytkownik pomyślnie zaktualizowany.",
-      "deleteSuccessToast": "Użytkownik pomyślnie usunięty.",
+      "confirm": {
+        "deleteTitle": "Potwierdź usunięcie użytkownika",
+        "deleteMessage": "Czy na pewno usunąć użytkownika \"{{ name }}\"? Tej operacji nie da się cofnąć."
+      },
+      "toast": {
+        "createSuccess": "Użytkownik pomyślnie utworzony.",
+        "updateSuccess": "Użytkownik pomyślnie zaktualizowany.",
+        "deleteSuccess": "Użytkownik pomyślnie usunięty."
+      },
       "details": {
         "activate": "Aktywuj konto",
         "deactivate": "Dezaktywuj konto",
-        "confirmActivateTitle": "Potwierdź aktywację użytkownika",
-        "confirmActivateMessage": "Czy na pewno aktywować użytkownika \"{{name}}\"?",
-        "confirmDeactivateTitle": "Potwierdź dezaktywację użytkownika",
-        "confirmDeactivateMessage": "Czy na pewno dezaktywować użytkownika \"{{name}}\"?",
-        "activateSuccessToast": "Aktywowano użytkownika \"{{name}}\".",
-        "deactivateSuccessToast": "Dezaktywowano użytkownika \"{{name}}\"."
+        "confirm": {
+          "activateTitle": "Potwierdź aktywację użytkownika",
+          "activateMessage": "Czy na pewno aktywować użytkownika \"{{name}}\"?",
+          "deactivateTitle": "Potwierdź dezaktywację użytkownika",
+          "deactivateMessage": "Czy na pewno dezaktywować użytkownika \"{{name}}\"?"
+        },
+        "toast": {
+          "activateSuccess": "Aktywowano użytkownika \"{{name}}\".",
+          "deactivateSuccess": "Dezaktywowano użytkownika \"{{name}}\"."
+        }
       },
       "noItems": "Brak użytkowników"
     }
   },
   "404": {
     "title": "404",
-    "goHome": "Powrót do strony głównej"
+    "button": "Powrót do strony głównej"
   },
   "error": {
     "UNKNOWN_ERROR": "Nieznany błąd.",
@@ -236,9 +253,9 @@
     "INCORRECT CREDENTIALS": "Niepoprawny e-mail bądź hasło.",
     "USER_NOT_FOUND": "Nie znaleziono użytkownika.",
     "USER_INACTIVE": "To konto nie jest aktywne.",
-    "CLASSROOM_NAME_REQUIRED": "Nazwa klasy jest wymagana.",
-    "CLASSROOM_NAME_TAKEN": "Ta nazwa klasy jest już zajęta.",
-    "CLASSROOM_TEACHER_REQUIRED": "Wybierz wychowawcę klasy.",
+    "Class_NAME_REQUIRED": "Nazwa klasy jest wymagana.",
+    "Class_NAME_TAKEN": "Ta nazwa klasy jest już zajęta.",
+    "Class_TEACHER_REQUIRED": "Wybierz wychowawcę klasy.",
     "SUBJECT_CATEGORY_REQUIRED": "Wybierz kategorię przedmiotu.",
     "SUBJECT_CLASS_REQUIRED": "Wybierz klasę, której przedmiot dotyczy.",
     "SUBJECT_TEACHER_REQUIRED": "Wybierz nauczyciela prowadzącego przedmiot."
