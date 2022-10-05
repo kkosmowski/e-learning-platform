@@ -2,7 +2,8 @@ import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { useNavigate } from 'react-router';
+
+import useCustomNavigate from 'hooks/use-custom-navigate';
 
 import {
   Class,
@@ -29,11 +30,11 @@ export default function useClassQuery(
   classId: string | undefined
 ): UseClassQueryData {
   const queryClient = useQueryClient();
-  const navigate = useNavigate();
+  const { navigate } = useCustomNavigate();
   const [error, setError] = useState('');
 
   const navigateBack = () => {
-    navigate('..', { replace: false });
+    navigate('..');
   };
 
   const fetchClassQuery = useQuery<GetClassResponse, AxiosError, Class>(

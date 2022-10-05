@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router';
+import { useParams } from 'react-router';
 import { useState } from 'react';
 import { Box, Button, Tooltip } from '@mui/material';
 import { useTranslation } from 'react-i18next';
@@ -13,9 +13,10 @@ import { isStudent, isTeacher } from 'shared/utils/user.utils';
 import { CURRENT_USER } from 'shared/consts/user';
 import TaskAnswerForm from './components/TaskAnswerForm';
 import TaskSubmissionList from './components/TaskSubmissionList';
+import useCustomNavigate from 'hooks/use-custom-navigate';
 
 export default function Task({ type }: { type: TaskType }) {
-  const navigate = useNavigate();
+  const { navigate } = useCustomNavigate();
   const { taskId } = useParams<{ taskId: string }>();
   const { t } = useTranslation('task');
   const [isSubmitting, setIsSubmitting] = useState(false);

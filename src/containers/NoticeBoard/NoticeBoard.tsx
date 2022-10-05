@@ -1,14 +1,14 @@
 import { Grid, Typography } from '@mui/material';
-import { useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
 
 import { Centered } from 'shared/components/Container';
 import SectionTitle from 'shared/components/SectionTitle';
 import NoticeCard from 'shared/components/NoticeCard';
 import { notices } from 'shared/consts/notice';
+import useCustomNavigate from 'hooks/use-custom-navigate';
 
 export default function NoticeBoard() {
-  const navigate = useNavigate();
+  const { navigate } = useCustomNavigate();
   const { t } = useTranslation('notice');
 
   const navigateToNotice = (noticeId: string): void => {

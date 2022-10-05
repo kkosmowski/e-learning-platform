@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import {
@@ -20,7 +21,6 @@ import {
   roleRequiredError,
 } from 'shared/consts/error';
 import useCreateUserQuery from './hooks/use-create-user-query';
-import { useRef } from 'react';
 
 export default function CreateUser() {
   const { t } = useTranslation('settings');

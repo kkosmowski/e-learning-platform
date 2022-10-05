@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useNavigate, useParams } from 'react-router';
+import { useParams } from 'react-router';
 import { Button, Card, CardContent } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
@@ -7,6 +7,7 @@ import CommonViewLayout from 'layouts/CommonView';
 import ClassDetailsList from './components/ClassDetailsList';
 import ClassEditForm from './components/ClassEditForm';
 import useClassQuery from './hooks/use-class-query';
+import useCustomNavigate from 'hooks/use-custom-navigate';
 
 interface ClassDetailsProps {
   mode: 'view' | 'edit';
@@ -16,16 +17,16 @@ export default function ClassDetails(props: ClassDetailsProps) {
   const isEditMode = useMemo(() => props.mode === 'edit', [props.mode]);
   const { id: classId } = useParams<{ id: string }>();
   const { t } = useTranslation('settings', { keyPrefix: 'classes' });
-  const navigate = useNavigate();
+  const { navigate } = useCustomNavigate();
   const { currentClass, isSuccess, isLoading, error, updateClass } =
     useClassQuery(classId);
 
   const navigateBack = () => {
-    navigate('..', { replace: false });
+    navigate('..', { replace: true });
   };
 
   const navigateToEdit = () => {
-    navigate('./edit', { replace: false });
+    navigate('./edit');
   };
 
   if (!isLoading && !isSuccess) {

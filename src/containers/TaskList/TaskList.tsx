@@ -1,14 +1,14 @@
 import { Grid } from '@mui/material';
-import { useNavigate } from 'react-router';
 
 import { Centered } from 'shared/components/Container';
 import TaskCard from 'shared/components/TaskCard';
 import { tasks, homework, taskSubmissions } from 'shared/consts/task';
 import { TaskType } from 'shared/types/task';
 import { subjectStudents } from 'shared/consts/subject';
+import useCustomNavigate from 'hooks/use-custom-navigate';
 
 export default function TaskList({ type }: { type: TaskType }) {
-  const navigate = useNavigate();
+  const { navigate } = useCustomNavigate();
 
   const items = type === TaskType.Task ? tasks : homework;
 

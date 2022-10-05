@@ -1,5 +1,3 @@
-import { useNavigate } from 'react-router';
-
 import { Centered } from 'shared/components/Container';
 import { notices } from 'shared/consts/notice';
 import { homework, tasks } from 'shared/consts/task';
@@ -10,12 +8,13 @@ import { CURRENT_USER } from 'shared/consts/user';
 import LatestGrades from './components/LatestGrades';
 import LatestNotices from './components/LatestNotices';
 import LatestTasks from './components/LatestTasks';
+import useCustomNavigate from 'hooks/use-custom-navigate';
 
 const getTaskRoute = (type: TaskType): string =>
   type === TaskType.Task ? 'tasks' : 'homework';
 
 export default function SubjectOverview() {
-  const navigate = useNavigate();
+  const { navigate } = useCustomNavigate();
 
   const navigateToNotices = (): void => {
     navigate('notices');

@@ -1,6 +1,5 @@
 import { MouseEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router';
 import {
   Box,
   Button,
@@ -15,10 +14,11 @@ import CommonViewLayout from 'layouts/CommonView';
 import PageLoading from 'shared/components/PageLoading';
 import { unknownError } from 'shared/consts/error';
 import { useClassesQuery } from 'shared/hooks';
+import useCustomNavigate from 'hooks/use-custom-navigate';
 
 export default function ClassesManagement() {
   const { t } = useTranslation('settings', { keyPrefix: 'classes' });
-  const navigate = useNavigate();
+  const { navigate } = useCustomNavigate();
   const { classes, isSuccess, isLoading } = useClassesQuery();
 
   const navigateToClassCreatePage = () => {

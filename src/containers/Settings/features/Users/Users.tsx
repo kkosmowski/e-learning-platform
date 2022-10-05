@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from 'react';
-import { useNavigate, useParams } from 'react-router';
+import { useParams } from 'react-router';
 import { Paper, TableContainer } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
@@ -8,11 +8,12 @@ import { Role, User } from 'shared/types/user';
 import { useConfirmationDialog, useUsersQuery } from 'shared/hooks';
 import PageLoading from 'shared/components/PageLoading';
 import UsersTable from './components/UsersTable';
+import useCustomNavigate from 'hooks/use-custom-navigate';
 
 export default function Users() {
   const { type } = useParams<{ type: 'teachers' | 'students' }>();
   const [actionMenuTarget, setActionsMenuTarget] = useState<User | null>(null);
-  const navigate = useNavigate();
+  const { navigate } = useCustomNavigate();
   const { t } = useTranslation('settings');
   const { confirmAction, confirmationDialog } = useConfirmationDialog();
   const { users, isFetching, isSuccess, fetchUsers, updateUser, deleteUser } =

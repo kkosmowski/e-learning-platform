@@ -3,31 +3,22 @@ import { Box, Card, CardContent, styled } from '@mui/material';
 
 import { consts } from 'theme';
 import CommonViewLayout from 'layouts/CommonView';
-import StyledLink from 'shared/components/StyledLink';
 import { categories } from './consts/categories';
+import useCustomNavigate from 'hooks/use-custom-navigate';
 
 export default function Settings() {
   const { t } = useTranslation('settings');
+  const { navigate } = useCustomNavigate();
 
   return (
     <CommonViewLayout headerTitle={t('title')}>
       <SettingsCategoriesContainer>
         {categories.map(({ label, Icon, route }) => (
-          <SettingsCategoryCard key={route}>
-            <StyledLink
-              to={route}
-              hoverUnderline={false}
-              sx={{
-                flex: 1,
-                display: 'flex',
-                flexDirection: 'column',
-              }}
-            >
-              <SettingsCategoryCardContent>
-                <Icon sx={{ fontSize: 36 }} />
-                {t(label)}
-              </SettingsCategoryCardContent>
-            </StyledLink>
+          <SettingsCategoryCard key={route} onClick={() => navigate(route)}>
+            <SettingsCategoryCardContent>
+              <Icon sx={{ fontSize: 36 }} />
+              {t(label)}
+            </SettingsCategoryCardContent>
           </SettingsCategoryCard>
         ))}
       </SettingsCategoriesContainer>
@@ -51,7 +42,9 @@ const SettingsCategoryCard = styled(Card)(() => ({
   minWidth: 120,
   maxWidth: maxCardWidth,
   height: 120,
-  flex: '0 0 100%',
+  flex: 1,
+  display: 'flex',
+  flexDirection: 'column',
 }));
 
 const SettingsCategoryCardContent = styled(CardContent)(() => ({

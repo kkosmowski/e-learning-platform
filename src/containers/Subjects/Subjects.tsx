@@ -5,13 +5,13 @@ import {
   Grid,
   Typography,
 } from '@mui/material';
-import { useNavigate } from 'react-router';
 
 import { Centered } from 'shared/components/Container';
 import { subjects } from 'shared/consts/subject';
+import useCustomNavigate from 'hooks/use-custom-navigate';
 
 export default function Subjects() {
-  const navigate = useNavigate();
+  const { navigate } = useCustomNavigate();
 
   const handleSubjectClick = (subjectId: string): void => {
     navigate(subjectId);
