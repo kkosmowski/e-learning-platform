@@ -20,7 +20,7 @@ interface UserEditFormProps {
 
 export default function UserEditForm(props: UserEditFormProps) {
   const { user, onSubmit } = props;
-  const { t } = useTranslation();
+  const { t } = useTranslation('settings');
   const navigate = useNavigate();
 
   const formik = useFormik<UpdateUserForm>({
@@ -59,7 +59,7 @@ export default function UserEditForm(props: UserEditFormProps) {
       <Stack spacing={2} sx={{ maxWidth: 600 }}>
         <TextField
           name="email"
-          placeholder={t('settings:users.userForm.placeholder.email')}
+          placeholder={t('users.form.placeholder.email')}
           value={values.email}
           error={touched.email && Boolean(errors.email)}
           helperText={touched.email && errors.email && t(errors.email)}
@@ -70,7 +70,7 @@ export default function UserEditForm(props: UserEditFormProps) {
 
         <TextField
           name="firstName"
-          placeholder={t('settings:users.userForm.placeholder.firstName')}
+          placeholder={t('users.form.placeholder.firstName')}
           value={values.firstName}
           error={touched.firstName && Boolean(errors.firstName)}
           helperText={
@@ -82,7 +82,7 @@ export default function UserEditForm(props: UserEditFormProps) {
 
         <TextField
           name="lastName"
-          placeholder={t('settings:users.userForm.placeholder.lastName')}
+          placeholder={t('users.form.placeholder.lastName')}
           value={values.lastName}
           error={touched.lastName && Boolean(errors.lastName)}
           helperText={touched.lastName && errors.lastName && t(errors.lastName)}
@@ -102,7 +102,7 @@ export default function UserEditForm(props: UserEditFormProps) {
           </Button>
 
           <Button variant="contained" disabled={!isValid} type="submit">
-            {t('settings:users.updateUser.submitButton')}
+            {t('users.button.update')}
           </Button>
         </Box>
       </Stack>

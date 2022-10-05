@@ -137,8 +137,10 @@
     },
     "classes": {
       "title": "Zarządzanie klasami",
-      "addNew": "Dodaj nową klasę",
-      "noItems": "Brak istniejących klas.",
+      "button": {
+        "add": "Dodaj nową klasę",
+        "edit": "Modyfikuj tę klasę"
+      },
       "name": "Nazwa",
       "teacher": "Wychowawca",
       "students": "Uczniowie",
@@ -146,13 +148,11 @@
         "title": "Nowa klasa",
         "placeholder": {
           "name": "Nazwa klasy",
-          "teacher": "Nauczyciel (wychowawca)",
+          "teacher": "Wychowawca",
           "students": "Uczniowie"
         }
       },
-      "edit": {
-        "editThisClass": "Modyfikuj tę klasę"
-      }
+      "noItems": "Brak istniejących klas."
     },
     "subjects": {
       "title": "Zarządzanie przedmiotami",
@@ -174,14 +174,13 @@
           "edit": "Edytuj przedmiot"
         }
       },
-      "placeholders": {
+      "placeholder": {
         "category": "Kategoria przedmiotu...",
         "class": "Klasa...",
         "teacher": "Nauczyciel prowadzący..."
       },
       "button": {
-        "add": "Dodaj przedmiot",
-        "": "Utwórz i wyświetl"
+        "add": "Dodaj przedmiot"
       }
     },
     "users": {
@@ -191,45 +190,51 @@
         "teachers": "Nauczyciele",
         "create": "Dodaj użytkownika"
       },
-      "userForm": {
+      "form": {
         "placeholder": {
           "email": "Adres e-mail",
           "firstName": "Imię",
           "lastName": "Nazwisko"
         }
       },
-      "createUser": {
-        "submitButton": "Utwórz użytkownika"
-      },
-      "updateUser": {
-        "submitButton": "Aktualizuj konto użytkownika"
+      "button": {
+        "create": "Utwórz użytkownika",
+        "update": "Aktualizuj konto użytkownika"
       },
       "table": {
         "createdAt": "Data utworzenia",
         "isActive": "Status",
         "actions": "Akcje"
       },
-      "confirmDeleteTitle": "Potwierdź usunięcie użytkownika",
-      "confirmDeleteMessage": "Czy na pewno usunąć użytkownika \"{{ name }}\"? Tej operacji nie da się cofnąć.",
-      "createSuccessToast": "Użytkownik pomyślnie utworzony.",
-      "updateSuccessToast": "Użytkownik pomyślnie zaktualizowany.",
-      "deleteSuccessToast": "Użytkownik pomyślnie usunięty.",
+      "confirm": {
+        "deleteTitle": "Potwierdź usunięcie użytkownika",
+        "deleteMessage": "Czy na pewno usunąć użytkownika \"{{ name }}\"? Tej operacji nie da się cofnąć."
+      },
+      "toast": {
+        "createSuccess": "Użytkownik pomyślnie utworzony.",
+        "updateSuccess": "Użytkownik pomyślnie zaktualizowany.",
+        "deleteSuccess": "Użytkownik pomyślnie usunięty."
+      },
       "details": {
         "activate": "Aktywuj konto",
         "deactivate": "Dezaktywuj konto",
-        "confirmActivateTitle": "Potwierdź aktywację użytkownika",
-        "confirmActivateMessage": "Czy na pewno aktywować użytkownika \"{{name}}\"?",
-        "confirmDeactivateTitle": "Potwierdź dezaktywację użytkownika",
-        "confirmDeactivateMessage": "Czy na pewno dezaktywować użytkownika \"{{name}}\"?",
-        "activateSuccessToast": "Aktywowano użytkownika \"{{name}}\".",
-        "deactivateSuccessToast": "Dezaktywowano użytkownika \"{{name}}\"."
+        "confirm": {
+          "activateTitle": "Potwierdź aktywację użytkownika",
+          "activateMessage": "Czy na pewno aktywować użytkownika \"{{name}}\"?",
+          "deactivateTitle": "Potwierdź dezaktywację użytkownika",
+          "deactivateMessage": "Czy na pewno dezaktywować użytkownika \"{{name}}\"?"
+        },
+        "toast": {
+          "activateSuccess": "Aktywowano użytkownika \"{{name}}\".",
+          "deactivateSuccess": "Dezaktywowano użytkownika \"{{name}}\"."
+        }
       },
       "noItems": "Brak użytkowników"
     }
   },
   "404": {
     "title": "404",
-    "goHome": "Powrót do strony głównej"
+    "button": "Powrót do strony głównej"
   },
   "error": {
     "UNKNOWN_ERROR": "Nieznany błąd.",

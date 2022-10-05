@@ -23,7 +23,7 @@ import useCreateUserQuery from './hooks/use-create-user-query';
 import { useRef } from 'react';
 
 export default function CreateUser() {
-  const { t } = useTranslation();
+  const { t } = useTranslation('settings');
   const emailInputRef = useRef<HTMLInputElement>();
 
   const formik = useFormik<CreateUserForm>({
@@ -50,7 +50,6 @@ export default function CreateUser() {
   const { handleCreate, errorText } = useCreateUserQuery(formik);
 
   function onSubmit(values: CreateUserForm) {
-    console.log(emailInputRef.current);
     handleCreate(values);
     setTimeout(() => {
       emailInputRef.current?.focus();
@@ -72,7 +71,7 @@ export default function CreateUser() {
       <Stack spacing={2} sx={{ maxWidth: 600 }}>
         <TextField
           name="email"
-          placeholder={t('settings:users.userForm.placeholder.email')}
+          placeholder={t('users.form.placeholder.email')}
           value={values.email}
           error={touched.email && Boolean(errors.email)}
           helperText={touched.email && errors.email && t(errors.email)}
@@ -86,7 +85,7 @@ export default function CreateUser() {
 
         <TextField
           name="firstName"
-          placeholder={t('settings:users.userForm.placeholder.firstName')}
+          placeholder={t('users.form.placeholder.firstName')}
           value={values.firstName}
           error={touched.firstName && Boolean(errors.firstName)}
           helperText={
@@ -98,7 +97,7 @@ export default function CreateUser() {
 
         <TextField
           name="lastName"
-          placeholder={t('settings:users.userForm.placeholder.lastName')}
+          placeholder={t('users.form.placeholder.lastName')}
           value={values.lastName}
           error={touched.lastName && Boolean(errors.lastName)}
           helperText={touched.lastName && errors.lastName && t(errors.lastName)}
@@ -127,7 +126,7 @@ export default function CreateUser() {
         )}
 
         <Button variant="contained" disabled={!isValid} type="submit">
-          {t('settings:users.createUser.submitButton')}
+          {t('users.button.create')}
         </Button>
 
         {errorText && (

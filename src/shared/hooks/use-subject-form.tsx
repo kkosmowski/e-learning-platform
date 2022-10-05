@@ -113,7 +113,7 @@ export function useSubjectForm(props: UseSubjectFormProps) {
             <TextField
               {...params}
               name="category"
-              placeholder={t('subjects.placeholders.category')}
+              placeholder={t('subjects.placeholder.category')}
               error={touched.category && Boolean(errors.category)}
               helperText={
                 touched.category &&
@@ -143,7 +143,7 @@ export function useSubjectForm(props: UseSubjectFormProps) {
             <TextField
               {...params}
               name="class"
-              placeholder={t('subjects.placeholders.class')}
+              placeholder={t('subjects.placeholder.class')}
               error={touched.subjectClass && Boolean(errors.subjectClass)}
               helperText={
                 touched.subjectClass &&
@@ -173,7 +173,7 @@ export function useSubjectForm(props: UseSubjectFormProps) {
             <TextField
               {...params}
               name="teacher"
-              placeholder={t('subjects.placeholders.teacher')}
+              placeholder={t('subjects.placeholder.teacher')}
               error={touched.teacher && Boolean(errors.teacher)}
               helperText={
                 touched.teacher &&

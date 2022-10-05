@@ -20,7 +20,7 @@ export default function NotFound() {
         {t('title')}
       </Typography>
 
-      <Button onClick={navigateHome}>{t('goHome')}</Button>
+      <Button onClick={navigateHome}>{t('button')}</Button>
     </Container>
   );
 }

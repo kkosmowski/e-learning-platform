@@ -174,7 +174,7 @@
           "edit": "Edit this subject"
         }
       },
-      "placeholders": {
+      "placeholder": {
         "category": "Subject category...",
         "class": "Class...",
         "teacher": "Lecturing teacher..."
@@ -190,45 +190,51 @@
         "teachers": "Teachers",
         "create": "Add new user"
       },
-      "userForm": {
+      "form": {
         "placeholder": {
           "email": "Email address",
           "firstName": "First name",
           "lastName": "Last name"
         }
       },
-      "createUser": {
-        "submitButton": "Create user"
-      },
-      "updateUser": {
-        "submitButton": "Update user details"
+      "button": {
+        "create": "Create user",
+        "update": "Update user details"
       },
       "table": {
         "createdAt": "Date of creation",
         "isActive": "Active",
         "actions": "Actions"
       },
-      "confirmDeleteTitle": "Deleting user",
-      "confirmDeleteMessage": "Are you sure you want to delete user \"{{ name }}\"? This operation cannot be undone.",
-      "createSuccessToast": "User created successfully",
-      "updateSuccessToast": "User details updated successfully",
-      "deleteSuccessToast": "User successfully deleted.",
+      "confirm": {
+        "deleteTitle": "Deleting user",
+        "deleteMessage": "Are you sure you want to delete user \"{{ name }}\"? This operation cannot be undone."
+      },
+      "toast": {
+        "createSuccess": "User created successfully",
+        "updateSuccess": "User details updated successfully",
+        "deleteSuccess": "User successfully deleted."
+      },
       "details": {
         "activate": "Active",
         "deactivate": "Deactivate",
-        "confirmActivateTitle": "Confirm user activation",
-        "confirmActivateMessage": "Are you sure you want to activate user \"{{name}}\"?",
-        "confirmDeactivateTitle": "Confirm user deactivation",
-        "confirmDeactivateMessage": "Are you sure you want to deactivate user \"{{name}}\"?",
-        "activateSuccessToast": "User \"{{name}}\" activated.",
-        "deactivateSuccessToast": "User \"{{name}}\" deactivated."
+        "confirm": {
+          "activateTitle": "Confirm user activation",
+          "activateMessage": "Are you sure you want to activate user \"{{name}}\"?",
+          "deactivateTitle": "Confirm user deactivation",
+          "deactivateMessage": "Are you sure you want to deactivate user \"{{name}}\"?"
+        },
+        "toast": {
+          "activateSuccess": "User \"{{name}}\" activated.",
+          "deactivateSuccess": "User \"{{name}}\" deactivated."
+        }
       },
       "noItems": "No users yet."
     }
   },
   "404": {
     "title": "404",
-    "goHome": "Take me home"
+    "button": "Take me home"
   },
   "error": {
     "UNKNOWN_ERROR": "Unknown error occurred.",
