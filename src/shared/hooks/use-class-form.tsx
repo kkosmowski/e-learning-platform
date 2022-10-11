@@ -3,6 +3,7 @@ import {
   SyntheticEvent,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -14,7 +15,6 @@ import {
   Button,
   debounce,
   TextField,
-  Toolbar,
   Tooltip,
   Typography,
 } from '@mui/material';
@@ -156,6 +156,14 @@ export function useClassForm(props: UseClassFormProps) {
     setFieldValue('students', value);
   };
 
+  const submitButtonTooltip = useMemo(() => {
+    if (!isValid || isUntouched) {
+      const key = !isValid ? 'missingData' : 'formUntouched';
+      return t('common:tooltip.' + key);
+    }
+    return '';
+  }, [t, isValid, isUntouched]);
+
   const Form = (
     <form
       onSubmit={handleSubmit}
@@ -215,17 +223,7 @@ export function useClassForm(props: UseClassFormProps) {
       {error && <Typography color="error">{t(error)}</Typography>}
 
       <Box sx={{ display: 'flex', gap: 3, '*': { flex: 1 } }}>
-        <Tooltip
-          title={
-            !isValid || isUntouched
-              ? t(
-                  `classes.tooltip.${
-                    !isValid ? 'missingData' : 'formUntouched'
-                  }`
-                ) + ''
-              : ''
-          }
-        >
+        <Tooltip title={submitButtonTooltip}>
           <Box sx={{ display: 'flex', '*': { flex: 1 } }}>
             <Button
               type="submit"

@@ -101,7 +101,11 @@
     "status": "Status",
     "userType": "Type",
     "activate": "Activate",
-    "deactivate": "Deactivate"
+    "deactivate": "Deactivate",
+    "tooltip": {
+      "missingData": "Not all required data is provided",
+      "formUntouched": "Form data has not been modified"
+    }
   },
   "settings": {
     "title": "Settings",
@@ -151,10 +155,6 @@
           "teacher": "Teacher (supervising)",
           "students": "Students"
         }
-      },
-      "tooltip": {
-        "missingData": "Not all required data is provided",
-        "formUntouched": "Form data has not been modified"
       },
       "noItems": "There are no classes yet."
     },

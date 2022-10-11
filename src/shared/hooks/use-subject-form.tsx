@@ -1,4 +1,4 @@
-import { ReactNode, SyntheticEvent, useEffect, useState } from 'react';
+import { ReactNode, SyntheticEvent, useEffect, useMemo, useState } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import {
@@ -57,7 +57,7 @@ export function useSubjectForm(props: UseSubjectFormProps) {
     validateOnMount: true,
     validationSchema: yup.object().shape({
       category: yup.object().required(),
-      class: yup.object().required(),
+      subjectClass: yup.object().required(),
       teacher: yup.object().required(),
     }),
     onSubmit,
@@ -98,6 +98,14 @@ export function useSubjectForm(props: UseSubjectFormProps) {
         values.teacher?.id === initialValues.teacher?.id
     );
   }, [initialValues, values]);
+
+  const submitButtonTooltip = useMemo(() => {
+    if (!isValid || isUntouched) {
+      const key = !isValid ? 'missingData' : 'formUntouched';
+      return t('common:tooltip.' + key);
+    }
+    return '';
+  }, [t, isValid, isUntouched]);
 
   const Form = (
     <form
@@ -201,17 +209,7 @@ export function useSubjectForm(props: UseSubjectFormProps) {
       {error && <Typography color="error">{t(error)}</Typography>}
 
       <Box sx={{ display: 'flex', gap: 3, '*': { flex: 1 } }}>
-        <Tooltip
-          title={
-            !isValid || isUntouched
-              ? t(
-                  `subjects.tooltip.${
-                    !isValid ? 'missingData' : 'formUntouched'
-                  }`
-                ) + ''
-              : ''
-          }
-        >
+        <Tooltip title={submitButtonTooltip}>
           <Box sx={{ display: 'flex', '*': { flex: 1 } }}>
             <Button
               type="submit"
