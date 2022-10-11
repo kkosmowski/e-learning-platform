@@ -39,6 +39,7 @@ export const features: RouteObjectWithId[] = [
   {
     path: 'subjects',
     id: 'subjects',
+    limitedTo: [Role.Student, Role.Teacher],
     children: [
       {
         path: '',

@@ -4,5 +4,5 @@ import { Role } from './user';
 
 export interface RouteObjectWithId extends RouteObject {
   id: string;
-  limitedTo?: Role;
+  limitedTo?: Role | Role[];
 }
