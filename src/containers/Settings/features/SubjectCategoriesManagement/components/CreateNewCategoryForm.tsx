@@ -36,7 +36,7 @@ export default function CreateNewCategoryForm(
     >
       <TextField
         value={newCategoryName}
-        placeholder={t('placeholder.categoryName')}
+        placeholder={t('placeholder.name')}
         autoFocus
         sx={{ mr: 'auto' }}
         size="small"

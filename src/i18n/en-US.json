@@ -101,7 +101,11 @@
     "status": "Status",
     "userType": "Type",
     "activate": "Activate",
-    "deactivate": "Deactivate"
+    "deactivate": "Deactivate",
+    "tooltip": {
+      "missingData": "Not all required data is provided",
+      "formUntouched": "Form data has not been modified"
+    }
   },
   "settings": {
     "title": "Settings",
@@ -181,6 +185,10 @@
       },
       "button": {
         "add": "Add new subject"
+      },
+      "tooltip": {
+        "missingData": "Not all required data is provided",
+        "formUntouched": "Form data has not been modified"
       }
     },
     "users": {

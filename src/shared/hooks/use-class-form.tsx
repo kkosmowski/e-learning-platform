@@ -3,6 +3,7 @@ import {
   SyntheticEvent,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -14,6 +15,7 @@ import {
   Button,
   debounce,
   TextField,
+  Tooltip,
   Typography,
 } from '@mui/material';
 import { TFunction } from 'i18next';
@@ -29,6 +31,7 @@ import {
   classTeacherRequiredError,
 } from 'shared/consts/error';
 import { defaultDebounce } from 'shared/consts/shared';
+import { areArraysEqual } from '@mui/base';
 
 export interface UseClassFormProps {
   initialValues: ClassForm;
@@ -52,6 +55,7 @@ export function useClassForm(props: UseClassFormProps) {
   } = props;
   const [studentsList, setStudentsList] = useState<User[]>([]);
   const [teachersList, setTeachersList] = useState<User[]>([]);
+  const [isUntouched, setIsUntouched] = useState(true);
   const initialRun = useRef(true);
 
   const fetchUsers = useCallback(async () => {
@@ -115,6 +119,14 @@ export function useClassForm(props: UseClassFormProps) {
     values,
   } = formik;
 
+  useEffect(() => {
+    setIsUntouched(
+      values.name === initialValues.name &&
+        values.teacher?.id === initialValues.teacher?.id &&
+        areArraysEqual(values.students, initialValues.students)
+    );
+  }, [initialValues, values]);
+
   const validateName = useCallback(
     debounce(async (name: string) => {
       const { data: isNameValid } = await validateClassName(name);
@@ -143,6 +155,14 @@ export function useClassForm(props: UseClassFormProps) {
   ) => {
     setFieldValue('students', value);
   };
+
+  const submitButtonTooltip = useMemo(() => {
+    if (!isValid || isUntouched) {
+      const key = !isValid ? 'missingData' : 'formUntouched';
+      return t('common:tooltip.' + key);
+    }
+    return '';
+  }, [t, isValid, isUntouched]);
 
   const Form = (
     <form
@@ -203,9 +223,17 @@ export function useClassForm(props: UseClassFormProps) {
       {error && <Typography color="error">{t(error)}</Typography>}
 
       <Box sx={{ display: 'flex', gap: 3, '*': { flex: 1 } }}>
-        <Button type="submit" variant="contained" disabled={!isValid}>
-          {submitButtonLabel}
-        </Button>
+        <Tooltip title={submitButtonTooltip}>
+          <Box sx={{ display: 'flex', '*': { flex: 1 } }}>
+            <Button
+              type="submit"
+              variant="contained"
+              disabled={!isValid || isUntouched}
+            >
+              {submitButtonLabel}
+            </Button>
+          </Box>
+        </Tooltip>
 
         {secondaryButton && secondaryButton(formik)}
       </Box>

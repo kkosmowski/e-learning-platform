@@ -101,7 +101,11 @@
     "status": "Status",
     "userType": "Typ użytkownika",
     "activate": "Aktywuj",
-    "deactivate": "Dezaktywuj"
+    "deactivate": "Dezaktywuj",
+    "tooltip": {
+      "missingData": "Nie wypełniono wszystkich wymaganych pól",
+      "formUntouched": "Dane nie zostały zmodyfikowane"
+    }
   },
   "settings": {
     "title": "Ustawienia",
@@ -151,6 +155,10 @@
           "teacher": "Wychowawca",
           "students": "Uczniowie"
         }
+      },
+      "tooltip": {
+        "missingData": "Nie wypełniono wszystkich wymaganych pól",
+        "formUntouched": "Dane nie zostały zmodyfikowane"
       },
       "noItems": "Brak istniejących klas."
     },
