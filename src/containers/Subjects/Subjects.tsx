@@ -15,9 +15,9 @@ import PageLoading from 'shared/components/PageLoading';
 import { useSubjectsQuery } from 'shared/hooks';
 import { Subject } from 'shared/types/subject';
 import { useAuth } from 'contexts/auth';
-import ViewHeader from '../../layouts/Application/components/ViewHeader';
+import ViewHeader from 'shared/components/ViewHeader';
+import { Role } from 'shared/types/user';
 import SubjectsBatch from './components/SubjectsBatch';
-import { Role } from '../../shared/types/user';
 import SubjectsGrid from './components/SubjectsGrid';
 
 enum GroupSubjectsBy {

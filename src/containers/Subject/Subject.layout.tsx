@@ -3,7 +3,7 @@ import { useParams, Outlet } from 'react-router';
 
 import Container from 'shared/components/Container';
 import { subjects } from 'shared/consts/subject';
-import ViewHeaderTitle from 'layouts/Application/components/ViewHeaderTitle';
+import ViewHeaderTitle from 'shared/components/ViewHeaderTitle';
 import useCustomNavigate from 'hooks/use-custom-navigate';
 
 export default function SubjectLayout() {

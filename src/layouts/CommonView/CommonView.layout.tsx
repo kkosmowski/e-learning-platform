@@ -2,7 +2,7 @@ import { Fragment, ReactNode } from 'react';
 import { Box, BoxTypeMap } from '@mui/material';
 import { DefaultComponentProps } from '@mui/material/OverridableComponent';
 
-import ViewHeaderTitle from 'layouts/Application/components/ViewHeaderTitle';
+import ViewHeaderTitle from 'shared/components/ViewHeaderTitle';
 import { Centered, CenteredProps } from 'shared/components/Container';
 import useCustomNavigate from 'hooks/use-custom-navigate';
 
