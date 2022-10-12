@@ -6,6 +6,7 @@ import {
   useEffect,
   useState,
 } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 
 import { authenticate, refreshToken } from 'api/auth';
 import { fetchMe } from 'api/user';
@@ -54,6 +55,7 @@ export function AuthProvider(props: AuthProviderProps) {
   const [tokenExpirationTime, setTokenExpirationTime] = useState<string | null>(
     null
   );
+  const queryClient = useQueryClient();
 
   const tryToSaveData = useCallback((data: AuthenticationData): void => {
     if (data.user && data.access_token) {
@@ -82,6 +84,7 @@ export function AuthProvider(props: AuthProviderProps) {
     clearToken();
     setCurrentUser(null);
     setTokenExpirationTime(null);
+    queryClient.clear();
   };
 
   useInterceptors(signOut);
