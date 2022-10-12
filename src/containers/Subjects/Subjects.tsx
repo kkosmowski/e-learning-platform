@@ -17,6 +17,8 @@ import { Subject } from 'shared/types/subject';
 import { useAuth } from 'contexts/auth';
 import ViewHeader from '../../layouts/Application/components/ViewHeader';
 import SubjectsBatch from './components/SubjectsBatch';
+import { Role } from '../../shared/types/user';
+import SubjectsGrid from './components/SubjectsGrid';
 
 enum GroupSubjectsBy {
   None = 'none',
@@ -60,15 +62,21 @@ export default function Subjects() {
   const [groupBy, setGroupBy] = useState<GroupSubjectsBy>(
     searchParamsGroupBy || storedGroupBy || defaultGroupBy
   );
+  const isTeacher = useMemo(
+    () => currentUser?.role === Role.Teacher,
+    [currentUser]
+  );
   const { t } = useTranslation('subjects');
   const filteredSubjects = useMemo(() => {
     if (!subjects) return undefined;
 
-    if (groupBy === GroupSubjectsBy.Category) {
-      return getSubjectsBatch('category', subjects);
-    }
-    if (groupBy === GroupSubjectsBy.Class) {
-      return getSubjectsBatch('subjectClass', subjects);
+    if (isTeacher) {
+      if (groupBy === GroupSubjectsBy.Category) {
+        return getSubjectsBatch('category', subjects);
+      }
+      if (groupBy === GroupSubjectsBy.Class) {
+        return getSubjectsBatch('subjectClass', subjects);
+      }
     }
 
     return [
@@ -77,7 +85,7 @@ export default function Subjects() {
         subjects,
       },
     ];
-  }, [subjects, groupBy]);
+  }, [subjects, groupBy, currentUser]);
 
   const handleSubjectClick = (subjectId: string): void => {
     navigate(subjectId);
@@ -95,39 +103,56 @@ export default function Subjects() {
     );
   }, [groupBy, setSearchParams]);
 
+  const renderSubjects = (subjectsToRender: Subject[]) => {
+    if (isTeacher) {
+      return filteredSubjects?.map((batch) => (
+        <SubjectsBatch
+          key={batch.label as string}
+          {...batch}
+          onSubjectClick={handleSubjectClick}
+        />
+      ));
+    }
+
+    return (
+      <SubjectsGrid
+        subjects={subjectsToRender}
+        onSubjectClick={handleSubjectClick}
+      />
+    );
+  };
+
   return (
     <>
-      <ViewHeader sx={{ display: 'flex', alignItems: 'center', columnGap: 2 }}>
-        <InputLabel id="group-subjects-by-label">{t('groupBy')}</InputLabel>
+      {isTeacher && (
+        <ViewHeader
+          sx={{ display: 'flex', alignItems: 'center', columnGap: 2 }}
+        >
+          <InputLabel id="group-subjects-by-label">{t('groupBy')}</InputLabel>
 
-        <FormControl sx={{ width: 200 }} size="small">
-          <Select
-            id="group-subjects-by"
-            labelId="group-subjects-by-label"
-            value={groupBy}
-            onChange={handleGroupByChange}
-          >
-            <MenuItem value={GroupSubjectsBy.None}>{t('none')}</MenuItem>
-            <MenuItem value={GroupSubjectsBy.Category}>
-              {t('category')}
-            </MenuItem>
-            <MenuItem value={GroupSubjectsBy.Class}>{t('class')}</MenuItem>
-          </Select>
-        </FormControl>
-      </ViewHeader>
+          <FormControl sx={{ width: 200 }} size="small">
+            <Select
+              id="group-subjects-by"
+              labelId="group-subjects-by-label"
+              value={groupBy}
+              onChange={handleGroupByChange}
+            >
+              <MenuItem value={GroupSubjectsBy.None}>{t('none')}</MenuItem>
+              <MenuItem value={GroupSubjectsBy.Category}>
+                {t('category')}
+              </MenuItem>
+              <MenuItem value={GroupSubjectsBy.Class}>{t('class')}</MenuItem>
+            </Select>
+          </FormControl>
+        </ViewHeader>
+      )}
 
       <Centered>
         {isLoading && <PageLoading />}
 
         {isSuccess
           ? subjects?.length
-            ? filteredSubjects?.map((batch) => (
-                <SubjectsBatch
-                  key={batch.label as string}
-                  {...batch}
-                  onSubjectClick={handleSubjectClick}
-                />
-              ))
+            ? renderSubjects(subjects)
             : t(`noItems.${currentUser?.role}`)
           : null}
       </Centered>
