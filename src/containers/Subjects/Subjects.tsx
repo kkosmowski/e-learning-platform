@@ -53,7 +53,7 @@ const defaultGroupBy = GroupSubjectsBy.None;
 export default function Subjects() {
   const { navigate } = useCustomNavigate();
   const { currentUser } = useAuth();
-  const { subjects, isLoading, isSuccess } = useSubjectsQuery();
+  const { subjects, isLoading, isSuccess } = useSubjectsQuery(currentUser);
   const [searchParams, setSearchParams] = useSearchParams();
   const searchParamsGroupBy = searchParams.get(groupByKey) as GroupSubjectsBy;
   const storedGroupBy = getGroupByFromLocalStorage();

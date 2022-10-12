@@ -6,11 +6,13 @@ import PageLoading from 'shared/components/PageLoading';
 import SubjectsTable from './components/SubjectsTable';
 import { useSubjectsQuery } from 'shared/hooks';
 import useCustomNavigate from 'hooks/use-custom-navigate';
+import { useAuth } from 'contexts/auth';
 
 export default function SubjectsManagement() {
   const { t } = useTranslation('settings');
   const { navigate } = useCustomNavigate();
-  const { subjects, isLoading, isSuccess } = useSubjectsQuery();
+  const { currentUser } = useAuth();
+  const { subjects, isLoading, isSuccess } = useSubjectsQuery(currentUser);
 
   const handleSubjectClick = (subjectId: string) => {
     navigate(`./${subjectId}`);
