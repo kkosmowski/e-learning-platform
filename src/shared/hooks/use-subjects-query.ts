@@ -1,17 +1,19 @@
+import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
 import { getSubjects } from 'api/subject';
 import { GetSubjectsResponse, SubjectDto } from 'shared/types/subject';
-import { useMemo } from 'react';
-import { mapSubjectDtoToSubject } from '../../../../../shared/utils/subject.utils';
+import { mapSubjectDtoToSubject } from 'shared/utils/subject.utils';
+import { User } from 'shared/types/user';
 
-export default function useSubjectsQuery() {
+export function useSubjectsQuery(currentUser: User | null | undefined) {
   const fetchQuery = useQuery<GetSubjectsResponse, AxiosError, SubjectDto[]>(
     ['subjects'],
     getSubjects,
     {
       select: ({ data }) => data,
+      enabled: Boolean(currentUser),
     }
   );
 

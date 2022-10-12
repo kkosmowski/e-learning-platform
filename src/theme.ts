@@ -93,8 +93,8 @@ const baseThemeOptions: ThemeOptions = {
       fontWeight: 400,
     },
     h2: {
-      fontSize: 22,
-      fontWeight: 700,
+      fontSize: 18,
+      fontWeight: 500,
     },
     h3: {
       fontSize: 18,

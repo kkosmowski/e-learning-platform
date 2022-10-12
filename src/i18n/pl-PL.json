@@ -19,6 +19,17 @@
       "signOut": "Wyloguj się"
     }
   },
+  "subjects": {
+    "groupBy": "Grupowanie",
+    "none": "Brak",
+    "category": "Kategoriami",
+    "class": "Klasami",
+    "all": "Wszystkie przedmioty",
+    "noItems": {
+      "teacher": "Brak prowadzonych przedmiotów.",
+      "student": "Brak przypisanych przedmiotów."
+    }
+  },
   "subject": {
     "general": {
       "latestNotices": "Ostatnie ogłoszenia",

@@ -17,8 +17,7 @@ import ListGridItem from 'shared/components/ListGridItem';
 import { SubjectClass } from 'shared/types/class';
 import { useUsersQuery } from './use-users-query';
 import { useClassesQuery } from './use-classes-query';
-import { useSubjectCategoriesQuery } from './use-subject-categories-query';
-import { areArraysEqual } from '@mui/base';
+import { useSubjectCategoriesQuery } from 'shared/hooks';
 
 export interface UseSubjectFormProps {
   initialValues: SubjectForm;
@@ -84,7 +83,7 @@ export function useSubjectForm(props: UseSubjectFormProps) {
     event: SyntheticEvent,
     value: SubjectClass | null
   ) => {
-    setFieldValue('class', value);
+    setFieldValue('subjectClass', value);
   };
 
   const handleTeacherChange = (event: SyntheticEvent, value: User | null) => {
@@ -157,7 +156,7 @@ export function useSubjectForm(props: UseSubjectFormProps) {
           renderInput={(params) => (
             <TextField
               {...params}
-              name="class"
+              name="subjectClass"
               placeholder={t('subjects.placeholder.class')}
               error={touched.subjectClass && Boolean(errors.subjectClass)}
               helperText={

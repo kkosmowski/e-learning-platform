@@ -19,6 +19,7 @@ import {
   Typography,
 } from '@mui/material';
 import { TFunction } from 'i18next';
+import { areArraysEqual } from '@mui/base';
 
 import { getUsers } from 'api/user';
 import { validateClassName } from 'api/class';
@@ -31,7 +32,6 @@ import {
   classTeacherRequiredError,
 } from 'shared/consts/error';
 import { defaultDebounce } from 'shared/consts/shared';
-import { areArraysEqual } from '@mui/base';
 
 export interface UseClassFormProps {
   initialValues: ClassForm;

@@ -3,7 +3,7 @@ import { useParams, Outlet } from 'react-router';
 
 import Container from 'shared/components/Container';
 import { subjects } from 'shared/consts/subject';
-import ViewHeader from 'layouts/Application/components/ViewHeader';
+import ViewHeaderTitle from 'shared/components/ViewHeaderTitle';
 import useCustomNavigate from 'hooks/use-custom-navigate';
 
 export default function SubjectLayout() {
@@ -23,7 +23,7 @@ export default function SubjectLayout() {
 
   return (
     <Container sx={{ p: 0, overflow: 'hidden', flex: 1 }}>
-      <ViewHeader
+      <ViewHeaderTitle
         title={currentSubject.label}
         isLink
         linkTo={`/subjects/${currentSubject.id}`}
