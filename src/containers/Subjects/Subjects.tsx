@@ -85,7 +85,7 @@ export default function Subjects() {
         subjects,
       },
     ];
-  }, [subjects, groupBy, currentUser]);
+  }, [subjects, groupBy, isTeacher]);
 
   const handleSubjectClick = (subjectId: string): void => {
     navigate(subjectId);
