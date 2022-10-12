@@ -4,9 +4,9 @@ import { AxiosError } from 'axios';
 import { getSubjects } from 'api/subject';
 import { GetSubjectsResponse, SubjectDto } from 'shared/types/subject';
 import { useMemo } from 'react';
-import { mapSubjectDtoToSubject } from '../../../../../shared/utils/subject.utils';
+import { mapSubjectDtoToSubject } from 'shared/utils/subject.utils';
 
-export default function useSubjectsQuery() {
+export function useSubjectsQuery() {
   const fetchQuery = useQuery<GetSubjectsResponse, AxiosError, SubjectDto[]>(
     ['subjects'],
     getSubjects,

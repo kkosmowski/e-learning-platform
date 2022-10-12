@@ -19,6 +19,16 @@
       "signOut": "Sign out"
     }
   },
+  "subjects": {
+    "groupBy": "Group by",
+    "none": "No grouping",
+    "category": "Subject category",
+    "class": "Class",
+    "noItems": {
+      "teacher": "There are subjects that you are lecturing.",
+      "student": "You are not assigned to any subjects yet."
+    }
+  },
   "subject": {
     "general": {
       "latestNotices": "Latest notices",

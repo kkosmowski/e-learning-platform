@@ -2,7 +2,7 @@ import { Fragment, ReactNode } from 'react';
 import { Box, BoxTypeMap } from '@mui/material';
 import { DefaultComponentProps } from '@mui/material/OverridableComponent';
 
-import ViewHeader from 'layouts/Application/components/ViewHeader';
+import ViewHeaderTitle from 'layouts/Application/components/ViewHeaderTitle';
 import { Centered, CenteredProps } from 'shared/components/Container';
 import useCustomNavigate from 'hooks/use-custom-navigate';
 
@@ -40,7 +40,7 @@ export default function CommonViewLayout(props: CommonViewLayoutProps) {
 
   return (
     <>
-      <ViewHeader title={headerTitle} onBack={() => back()} />
+      <ViewHeaderTitle title={headerTitle} onBack={() => back()} />
 
       <Centered {...actualCenteredProps}>
         <Wrapper {...WrapperProps}>{children}</Wrapper>

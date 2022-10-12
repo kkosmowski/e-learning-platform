@@ -17,8 +17,7 @@ import ListGridItem from 'shared/components/ListGridItem';
 import { SubjectClass } from 'shared/types/class';
 import { useUsersQuery } from './use-users-query';
 import { useClassesQuery } from './use-classes-query';
-import { useSubjectCategoriesQuery } from './use-subject-categories-query';
-import { areArraysEqual } from '@mui/base';
+import { useSubjectCategoriesQuery } from 'shared/hooks';
 
 export interface UseSubjectFormProps {
   initialValues: SubjectForm;

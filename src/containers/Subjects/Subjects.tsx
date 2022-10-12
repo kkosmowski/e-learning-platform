@@ -1,23 +1,22 @@
-import { Fragment, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import {
-  Box,
-  Card,
-  CardActionArea,
-  CardContent,
   FormControl,
-  Grid,
   InputLabel,
   MenuItem,
   Select,
   SelectChangeEvent,
-  Typography,
 } from '@mui/material';
+import { useSearchParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import { Centered } from 'shared/components/Container';
 import useCustomNavigate from 'hooks/use-custom-navigate';
 import PageLoading from 'shared/components/PageLoading';
-import useSubjectsQuery from '../Settings/features/SubjectsManagement/hooks/use-subjects-query';
-import { useSearchParams } from 'react-router-dom';
+import { useSubjectsQuery } from 'shared/hooks';
+import { Subject } from 'shared/types/subject';
+import { useAuth } from 'contexts/auth';
+import ViewHeader from '../../layouts/Application/components/ViewHeader';
+import SubjectsBatch from './components/SubjectsBatch';
 
 enum GroupSubjectsBy {
   None = 'none',
@@ -25,40 +24,40 @@ enum GroupSubjectsBy {
   Class = 'class',
 }
 
+const groupByKey = 'groupBy';
+
+const getSubjectsBatch = (
+  key: 'category' | 'subjectClass',
+  items: Subject[]
+) => {
+  const labels = Array.from(
+    new Set(items.map((item) => item[key].name).sort())
+  );
+  return labels.map((label) => ({
+    label,
+    subjects: items.filter((item) => item[key].name === label),
+  }));
+};
+
 export default function Subjects() {
   const { navigate } = useCustomNavigate();
+  const { currentUser } = useAuth();
   const { subjects, isLoading, isSuccess } = useSubjectsQuery();
   const [searchParams, setSearchParams] = useSearchParams();
   const [groupBy, setGroupBy] = useState<GroupSubjectsBy>(
-    (searchParams.get('groupBy') as GroupSubjectsBy) || GroupSubjectsBy.None
+    (searchParams.get(groupByKey) as GroupSubjectsBy) || GroupSubjectsBy.None
   );
+  const { t } = useTranslation('subjects');
   const filteredSubjects = useMemo(() => {
     if (!subjects) return undefined;
 
     if (groupBy === GroupSubjectsBy.Category) {
-      const categories = Array.from(
-        new Set(subjects.map(({ category }) => category.name).sort())
-      );
-
-      return categories.map((categoryName) => ({
-        label: categoryName,
-        subjects: subjects.filter(
-          (subject) => subject.category.name === categoryName
-        ),
-      }));
+      return getSubjectsBatch('category', subjects);
     }
     if (groupBy === GroupSubjectsBy.Class) {
-      const classes = Array.from(
-        new Set(subjects.map(({ subjectClass }) => subjectClass.name).sort())
-      );
-
-      return classes.map((className) => ({
-        label: className,
-        subjects: subjects.filter(
-          (subject) => subject.subjectClass.name === className
-        ),
-      }));
+      return getSubjectsBatch('subjectClass', subjects);
     }
+
     return [
       {
         label: 'All',
@@ -75,13 +74,13 @@ export default function Subjects() {
     const newGroupBy = event.target.value as GroupSubjectsBy;
     setGroupBy(newGroupBy);
     setSearchParams(
-      newGroupBy === GroupSubjectsBy.None ? {} : { groupBy: newGroupBy }
+      newGroupBy === GroupSubjectsBy.None ? {} : { [groupByKey]: newGroupBy }
     );
   };
 
   return (
-    <Centered innerSx={{ gap: 2 }}>
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+    <>
+      <ViewHeader sx={{ display: 'flex', alignItems: 'center', columnGap: 2 }}>
         <InputLabel id="group-subjects-by-label">Group by</InputLabel>
 
         <FormControl sx={{ width: 200 }} size="small">
@@ -98,30 +97,23 @@ export default function Subjects() {
             <MenuItem value={GroupSubjectsBy.Class}>Class</MenuItem>
           </Select>
         </FormControl>
-      </Box>
+      </ViewHeader>
 
-      {isLoading && <PageLoading />}
-      {isSuccess &&
-        filteredSubjects &&
-        filteredSubjects.map(({ label, subjects }) => (
-          <Fragment key={label}>
-            <Typography>{label}</Typography>
+      <Centered>
+        {isLoading && <PageLoading />}
 
-            <Grid container spacing={2}>
-              {subjects?.map((subject) => (
-                <Grid item key={subject.id} xs={12} md={6} lg={4} xl={3}>
-                  <Card onClick={() => handleSubjectClick(subject.id)}>
-                    <CardActionArea>
-                      <CardContent>
-                        <Typography component="h2">{subject.name}</Typography>
-                      </CardContent>
-                    </CardActionArea>
-                  </Card>
-                </Grid>
-              ))}
-            </Grid>
-          </Fragment>
-        ))}
-    </Centered>
+        {isSuccess
+          ? subjects?.length
+            ? filteredSubjects?.map((batch) => (
+                <SubjectsBatch
+                  key={batch.label}
+                  {...batch}
+                  onSubjectClick={handleSubjectClick}
+                />
+              ))
+            : t(`noItems.${currentUser?.role}`)
+          : null}
+      </Centered>
+    </>
   );
 }
