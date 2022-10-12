@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   FormControl,
   InputLabel,
@@ -39,13 +39,26 @@ const getSubjectsBatch = (
   }));
 };
 
+const setGroupByInLocalStorage = (newGroupBy: GroupSubjectsBy) => {
+  localStorage.setItem(groupByKey, newGroupBy);
+};
+
+const getGroupByFromLocalStorage = (): GroupSubjectsBy | null => {
+  const storedGroupBy = localStorage.getItem(groupByKey);
+  return storedGroupBy ? (storedGroupBy as GroupSubjectsBy) : null;
+};
+
+const defaultGroupBy = GroupSubjectsBy.None;
+
 export default function Subjects() {
   const { navigate } = useCustomNavigate();
   const { currentUser } = useAuth();
   const { subjects, isLoading, isSuccess } = useSubjectsQuery();
   const [searchParams, setSearchParams] = useSearchParams();
+  const searchParamsGroupBy = searchParams.get(groupByKey) as GroupSubjectsBy;
+  const storedGroupBy = getGroupByFromLocalStorage();
   const [groupBy, setGroupBy] = useState<GroupSubjectsBy>(
-    (searchParams.get(groupByKey) as GroupSubjectsBy) || GroupSubjectsBy.None
+    searchParamsGroupBy || storedGroupBy || defaultGroupBy
   );
   const { t } = useTranslation('subjects');
   const filteredSubjects = useMemo(() => {
@@ -73,10 +86,14 @@ export default function Subjects() {
   const handleGroupByChange = (event: SelectChangeEvent) => {
     const newGroupBy = event.target.value as GroupSubjectsBy;
     setGroupBy(newGroupBy);
-    setSearchParams(
-      newGroupBy === GroupSubjectsBy.None ? {} : { [groupByKey]: newGroupBy }
-    );
+    setGroupByInLocalStorage(newGroupBy);
   };
+
+  useEffect(() => {
+    setSearchParams(
+      groupBy === GroupSubjectsBy.None ? {} : { [groupByKey]: groupBy }
+    );
+  }, [groupBy, setSearchParams]);
 
   return (
     <>
