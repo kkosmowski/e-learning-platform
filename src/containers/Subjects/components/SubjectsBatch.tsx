@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import {
   Card,
   CardActionArea,
@@ -10,7 +11,7 @@ import {
 import { Subject } from 'shared/types/subject';
 
 interface SubjectsBatchProps {
-  label: string;
+  label: ReactNode;
   subjects: Subject[];
   onSubjectClick: (subjectId: string) => void;
 }

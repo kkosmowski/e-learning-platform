@@ -24,8 +24,9 @@
     "none": "No grouping",
     "category": "Subject category",
     "class": "Class",
+    "all": "All subjects",
     "noItems": {
-      "teacher": "There are subjects that you are lecturing.",
+      "teacher": "There are no subjects that you are lecturing.",
       "student": "You are not assigned to any subjects yet."
     }
   },

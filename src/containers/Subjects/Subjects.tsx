@@ -7,7 +7,7 @@ import {
   SelectChangeEvent,
 } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 
 import { Centered } from 'shared/components/Container';
 import useCustomNavigate from 'hooks/use-custom-navigate';
@@ -73,7 +73,7 @@ export default function Subjects() {
 
     return [
       {
-        label: 'All',
+        label: <Trans i18nKey="subjects:all" />,
         subjects,
       },
     ];
@@ -98,7 +98,7 @@ export default function Subjects() {
   return (
     <>
       <ViewHeader sx={{ display: 'flex', alignItems: 'center', columnGap: 2 }}>
-        <InputLabel id="group-subjects-by-label">Group by</InputLabel>
+        <InputLabel id="group-subjects-by-label">{t('groupBy')}</InputLabel>
 
         <FormControl sx={{ width: 200 }} size="small">
           <Select
@@ -107,11 +107,11 @@ export default function Subjects() {
             value={groupBy}
             onChange={handleGroupByChange}
           >
-            <MenuItem value={GroupSubjectsBy.None}>None</MenuItem>
+            <MenuItem value={GroupSubjectsBy.None}>{t('none')}</MenuItem>
             <MenuItem value={GroupSubjectsBy.Category}>
-              Subject category
+              {t('category')}
             </MenuItem>
-            <MenuItem value={GroupSubjectsBy.Class}>Class</MenuItem>
+            <MenuItem value={GroupSubjectsBy.Class}>{t('class')}</MenuItem>
           </Select>
         </FormControl>
       </ViewHeader>
@@ -123,7 +123,7 @@ export default function Subjects() {
           ? subjects?.length
             ? filteredSubjects?.map((batch) => (
                 <SubjectsBatch
-                  key={batch.label}
+                  key={batch.label as string}
                   {...batch}
                   onSubjectClick={handleSubjectClick}
                 />
