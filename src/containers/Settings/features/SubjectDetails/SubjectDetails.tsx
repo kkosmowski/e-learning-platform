@@ -4,10 +4,11 @@ import { useTranslation } from 'react-i18next';
 import { Button, Card, CardContent } from '@mui/material';
 
 import CommonViewLayout from 'layouts/CommonView';
-import useSubjectQuery from './hooks/use-subject-query';
+import { useSubjectQuery } from 'shared/hooks';
 import SubjectDetailsList from './components/SubjectDetailsList';
 import SubjectEditForm from './components/SubjectEditForm';
 import useCustomNavigate from 'hooks/use-custom-navigate';
+import { useAuth } from 'contexts/auth';
 
 interface SubjectDetailsProps {
   mode: 'view' | 'edit';
@@ -18,8 +19,9 @@ export default function SubjectDetails(props: SubjectDetailsProps) {
   const { id: subjectId } = useParams<{ id: string }>();
   const { t } = useTranslation('settings', { keyPrefix: 'subjects.details' });
   const { navigate, back } = useCustomNavigate();
+  const { currentUser } = useAuth();
   const { currentSubject, isSuccess, isLoading, error, updateSubject } =
-    useSubjectQuery(subjectId);
+    useSubjectQuery(subjectId, currentUser);
 
   const navigateToEdit = () => {
     navigate('./edit');

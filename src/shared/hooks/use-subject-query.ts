@@ -9,7 +9,6 @@ import {
   GetSubjectResponse,
   FullSubject,
   UpdateSubjectResponse,
-  SubjectForm,
 } from 'shared/types/subject';
 import {
   mapFullSubjectDtoToFullSubject,
@@ -19,7 +18,10 @@ import { getErrorDetail } from 'shared/utils/common.utils';
 import { User } from 'shared/types/user';
 import useCustomNavigate from 'hooks/use-custom-navigate';
 
-export default function useSubjectQuery(subjectId: string | undefined) {
+export function useSubjectQuery(
+  subjectId: string | undefined,
+  currentUser: User | null | undefined
+) {
   const queryClient = useQueryClient();
   const { navigate } = useCustomNavigate();
   const [errorText, setErrorText] = useState('');
@@ -33,8 +35,9 @@ export default function useSubjectQuery(subjectId: string | undefined) {
     ['subject', subjectId],
     () => getSubject(subjectId || ''),
     {
-      enabled: Boolean(subjectId),
+      enabled: Boolean(subjectId && currentUser),
       select: ({ data }) => mapFullSubjectDtoToFullSubject(data),
+      retry: false,
       onSuccess: () => {
         setErrorText('');
       },
@@ -79,5 +82,6 @@ export default function useSubjectQuery(subjectId: string | undefined) {
     isSuccess: fetchQuery.isSuccess,
     error: errorText,
     updateSubject: handleUpdate,
+    isFetched: fetchQuery.isFetched,
   };
 }
