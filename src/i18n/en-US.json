@@ -79,7 +79,14 @@
     }
   },
   "notice": {
-    "noticeBoard": "Notice board"
+    "title": "Notice board",
+    "create": {
+      "title": "Create notice",
+      "placeholder": {
+        "name": "Title",
+        "content": "Message"
+      }
+    }
   },
   "common": {
     "back": "Back",
@@ -190,9 +197,9 @@
         }
       },
       "placeholder": {
-        "category": "Subject category...",
-        "class": "Class...",
-        "teacher": "Lecturing teacher..."
+        "category": "Subject category",
+        "class": "Class",
+        "teacher": "Lecturing teacher"
       },
       "button": {
         "add": "Add new subject"
@@ -262,6 +269,8 @@
     "SESSION_EXPIRED": "You have been logged out.",
     "INCORRECT_EMAIL": "Incorrect email format.",
     "EMAIL_REQUIRED": "Email address is required.",
+    "TITLE_REQUIRED": "Title is required.",
+    "CONTENT_REQUIRED": "Content is required.",
     "PASSWORD_REQUIRED": "Password cannot be empty.",
     "PASSWORD_TOO_SHORT": "Password is too short.",
     "PASSWORD_TOO_LONG": "Password is too long.",

@@ -18,7 +18,7 @@ const gradeTooltips = [GradeType.Average, GradeType.Proposed, GradeType.Final];
 
 export default function GradeRow(props: GradeRowProps) {
   const {
-    grade: { value, source, type, createdOn, student },
+    grade: { value, source, type, createdAt, student },
     showDivider,
     showNames,
     keepEmptyColumns,
@@ -46,7 +46,7 @@ export default function GradeRow(props: GradeRowProps) {
             sx={{ flex: 2, display: 'inline-flex', alignItems: 'center' }}
           >
             {source && type === GradeType.Assignment
-              ? source.title
+              ? source.name
               : t(`grades.${type}`)}
 
             {gradeTooltips.includes(type) && (
@@ -60,12 +60,12 @@ export default function GradeRow(props: GradeRowProps) {
         </Grid>
 
         <Grid item>
-          {!hideDate && createdOn && (
+          {!hideDate && createdAt && (
             <Typography
               component="span"
               sx={{ color: 'text.secondary', fontSize: 13 }}
             >
-              {format(new Date(createdOn), 'dd-MM-yyyy')}
+              {format(new Date(createdAt), 'dd-MM-yyyy')}
             </Typography>
           )}
         </Grid>

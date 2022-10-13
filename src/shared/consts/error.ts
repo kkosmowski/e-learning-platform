@@ -8,6 +8,8 @@ export const fileTooBigError = 'error:FILE_TOO_BIG';
 
 export const incorrectEmailError = 'error:INCORRECT_EMAIL';
 export const emailRequiredError = 'error:EMAIL_REQUIRED';
+export const titleRequiredError = 'error:TITLE_REQUIRED';
+export const contentRequiredError = 'error:CONTENT_REQUIRED';
 export const passwordRequiredError = 'error:PASSWORD_REQUIRED';
 export const passwordTooShortError = 'error:PASSWORD_TOO_SHORT';
 export const passwordTooLongError = 'error:PASSWORD_TOO_LONG';
