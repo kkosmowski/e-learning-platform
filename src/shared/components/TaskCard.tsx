@@ -64,7 +64,7 @@ export default function TaskCard(props: TaskCardProps) {
   let timeLeftTextColor = '';
 
   if ((isUserStudent && task.status === Status.Todo) || isUserTeacher) {
-    [timeLeftString, diffInMinutes] = timeLeft(t, new Date(task.deadline));
+    [timeLeftString, diffInMinutes] = timeLeft(t, task.endTime);
     timeLeftTextColor = getTimeLeftTextColor(task.type, diffInMinutes);
   }
   const StatusIcon = getStatusIcon(task.status);
@@ -75,7 +75,7 @@ export default function TaskCard(props: TaskCardProps) {
       <CardWrapper>
         <CardContent component="article" sx={{ width: '100%' }}>
           <Typography component="h3" {...(!short && { variant: 'h3' })}>
-            {task.title}
+            {task.name}
           </Typography>
 
           <Divider sx={{ my: short ? 1 : 2 }} />
@@ -114,7 +114,7 @@ export default function TaskCard(props: TaskCardProps) {
                     (isUserTeacher && timeLeftTextColor) || 'text.secondary'
                   }
                 >
-                  {format(new Date(task.deadline), 'dd.MM.yyy HH:mm')}
+                  {format(task.endTime, 'dd.MM.yyy HH:mm')}
                 </Typography>
                 {task.status === Status.Todo &&
                   isUserStudent &&

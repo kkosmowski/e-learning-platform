@@ -1,7 +1,6 @@
 import { useParams, Outlet } from 'react-router';
 
-import Container from 'shared/components/Container';
-import ViewHeaderTitle from 'shared/components/ViewHeaderTitle';
+import CommonViewLayout from 'layouts/CommonView';
 import useCustomNavigate from 'hooks/use-custom-navigate';
 import { useSubjectQuery } from 'shared/hooks';
 import PageLoading from 'shared/components/PageLoading';
@@ -22,14 +21,8 @@ export default function SubjectLayout() {
   }
 
   return (
-    <Container sx={{ p: 0, overflow: 'hidden', flex: 1 }}>
-      <ViewHeaderTitle
-        title={currentSubject.name}
-        isLink
-        linkTo={`/subjects/${currentSubject.id}`}
-        onBack={() => back()}
-      />
+    <CommonViewLayout headerTitle={currentSubject.name}>
       <Outlet />
-    </Container>
+    </CommonViewLayout>
   );
 }

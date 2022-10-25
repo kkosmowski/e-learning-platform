@@ -31,7 +31,7 @@ export default function Task({ type }: { type: TaskType }) {
     return null;
   }
 
-  const isPastDeadline = isPastDate(new Date(currentTask.deadline));
+  const isPastDeadline = isPastDate(new Date(currentTask.endTime));
 
   const handleAnswerSubmit = (): void => {
     console.log('submitted');

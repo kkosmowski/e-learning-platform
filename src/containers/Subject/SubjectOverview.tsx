@@ -1,4 +1,3 @@
-import { Centered } from 'shared/components/Container';
 import { notices } from 'shared/consts/notice';
 import { homework, tasks } from 'shared/consts/task';
 import { studentGrades, teacherGrades } from 'shared/consts/grade';
@@ -49,7 +48,7 @@ export default function SubjectOverview() {
   };
 
   return (
-    <Centered>
+    <>
       <LatestNotices
         notices={notices}
         onNoticeClick={navigateToNotice}
@@ -78,6 +77,6 @@ export default function SubjectOverview() {
         onMoreClick={navigateToTasks}
         onCreateTask={navigateToTaskCreation}
       />
-    </Centered>
+    </>
   );
 }

@@ -79,7 +79,19 @@
     }
   },
   "notice": {
-    "noticeBoard": "Tablica ogłoszeń"
+    "title": "Tablica ogłoszeń",
+    "create": {
+      "title": "Dodaj ogłoszenie",
+      "placeholder": {
+        "name": "Tytuł",
+        "content": "Treść",
+        "publishTime": "Czas publikacji"
+      },
+      "publishInstantly": "Opublikuj teraz",
+      "toast": {
+        "success": "Utworzono ogłoszenie \"{{ name }}\""
+      }
+    }
   },
   "common": {
     "back": "Wróć",
@@ -194,9 +206,9 @@
         }
       },
       "placeholder": {
-        "category": "Kategoria przedmiotu...",
-        "class": "Klasa...",
-        "teacher": "Nauczyciel prowadzący..."
+        "category": "Kategoria przedmiotu",
+        "class": "Klasa",
+        "teacher": "Nauczyciel prowadzący"
       },
       "button": {
         "add": "Dodaj przedmiot"
@@ -262,6 +274,8 @@
     "SESSION_EXPIRED": "Sesja wygasła, zaloguj się ponownie.",
     "INCORRECT_EMAIL": "Niepoprawny format adresu email.",
     "EMAIL_REQUIRED": "Adres e-mail jest wymagany.",
+    "TITLE_REQUIRED": "Tytuł jest wymagany.",
+    "CONTENT_REQUIRED": "Treść jest wymagana.",
     "PASSWORD_REQUIRED": "Pole hasło nie może być puste.",
     "PASSWORD_TOO_SHORT": "Hasło jest zbyt krótkie.",
     "PASSWORD_TOO_LONG": "Hasło jest zbyt długie.",
@@ -277,6 +291,7 @@
     "Class_TEACHER_REQUIRED": "Wybierz wychowawcę klasy.",
     "SUBJECT_CATEGORY_REQUIRED": "Wybierz kategorię przedmiotu.",
     "SUBJECT_CLASS_REQUIRED": "Wybierz klasę, której przedmiot dotyczy.",
-    "SUBJECT_TEACHER_REQUIRED": "Wybierz nauczyciela prowadzącego przedmiot."
+    "SUBJECT_TEACHER_REQUIRED": "Wybierz nauczyciela prowadzącego przedmiot.",
+    "PUBLISH_TIME_REQUIRED": "Określ datę publikacji."
   }
 }

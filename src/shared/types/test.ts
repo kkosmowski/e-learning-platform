@@ -1,8 +1,9 @@
-import { BaseItem, PublishableItem, Status } from './shared';
+import { BaseItem, ContentItem, Status } from './shared';
 
-export interface Test extends PublishableItem {
+export interface Test extends ContentItem {
   type: TestType;
-  deadline: string;
+  startTime: Date;
+  endTime: Date;
   status: Status;
   questions: TestQuestion[];
 }

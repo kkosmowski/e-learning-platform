@@ -1,7 +1,6 @@
 import { Navigate } from 'react-router-dom';
 
 import Home from 'containers/Home';
-import Subjects from 'containers/Subjects';
 import Settings, {
   CreateClass,
   ClassDetails,
@@ -22,7 +21,8 @@ import Notice from 'containers/Notice';
 import TaskList from 'containers/TaskList';
 import Task from 'containers/Task';
 import SubjectGrades from 'containers/SubjectGrades';
-import CreateNewNotice from 'containers/teacher/CreateNewNotice';
+import Subjects from 'containers/Subjects';
+import { CreateNotice } from 'containers/Subject/features';
 import AssignNewGrade from 'containers/teacher/AssignNewGrade';
 import CreateNewTask from 'containers/teacher/CreateNewTask';
 import TeacherGuard from 'shared/guards/TeacherGuard';
@@ -64,7 +64,7 @@ export const features: RouteObjectWithId[] = [
                 path: 'new',
                 element: (
                   <TeacherGuard redirectTo="..">
-                    <CreateNewNotice />
+                    <CreateNotice />
                   </TeacherGuard>
                 ),
               },

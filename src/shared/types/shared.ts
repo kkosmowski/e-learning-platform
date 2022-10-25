@@ -9,16 +9,14 @@ export enum Status {
 export interface BaseItem {
   id: string;
   // @todo implement with backend
-  // createdBy: User;
-  // createdOn: string; // ISOString
+  // createdBy: User; // @todo discuss this with Kamila
+  createdAt: Date;
   // updatedBy?: User;
   // updatedOn?: string; // ISOString
 }
 
-export interface PublishableItem extends BaseItem {
-  title: string;
-  published: boolean;
-  publishTime: string; // ISOString
+export interface ContentItem extends BaseItem {
+  name: string;
   content: string;
 }
 
