@@ -3,29 +3,29 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 
 import SectionTitle from 'shared/components/SectionTitle';
-import { useNoticeForm } from 'shared/hooks/use-notice-form';
+import { useNoticeForm, useCreateNoticeQuery } from 'shared/hooks';
 import useCustomNavigate from 'hooks/use-custom-navigate';
-import { NoticeForm } from 'shared/types/notice';
 
 export default function CreateNotice() {
   const { subjectId } = useParams();
   const { navigate } = useCustomNavigate();
   const { t } = useTranslation('notice');
+  const createNotice = useCreateNoticeQuery();
 
   if (!subjectId) {
     navigate('/404');
   }
-
-  const handleCreate = (form: NoticeForm) => {};
 
   const { Form } = useNoticeForm({
     initialValues: {
       subjectId: subjectId || '',
       name: '',
       content: '',
+      publishInstantly: true,
+      publishTime: null,
     },
     submitButtonLabel: t('common:create'),
-    onSubmit: handleCreate,
+    onSubmit: createNotice,
     t,
   });
 

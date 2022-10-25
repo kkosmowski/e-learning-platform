@@ -84,7 +84,12 @@
       "title": "Dodaj ogłoszenie",
       "placeholder": {
         "name": "Tytuł",
-        "content": "Treść"
+        "content": "Treść",
+        "publishTime": "Czas publikacji"
+      },
+      "publishInstantly": "Opublikuj teraz",
+      "toast": {
+        "success": "Utworzono ogłoszenie \"{{ name }}\""
       }
     }
   },
@@ -286,6 +291,7 @@
     "Class_TEACHER_REQUIRED": "Wybierz wychowawcę klasy.",
     "SUBJECT_CATEGORY_REQUIRED": "Wybierz kategorię przedmiotu.",
     "SUBJECT_CLASS_REQUIRED": "Wybierz klasę, której przedmiot dotyczy.",
-    "SUBJECT_TEACHER_REQUIRED": "Wybierz nauczyciela prowadzącego przedmiot."
+    "SUBJECT_TEACHER_REQUIRED": "Wybierz nauczyciela prowadzącego przedmiot.",
+    "PUBLISH_TIME_REQUIRED": "Określ datę publikacji."
   }
 }

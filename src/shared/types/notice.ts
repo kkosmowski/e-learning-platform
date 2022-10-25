@@ -11,6 +11,8 @@ export interface NoticeForm {
   subjectId: string;
   name: string;
   content: string;
+  publishInstantly: boolean;
+  publishTime?: Date | null;
 }
 
 export interface NoticeDto {
@@ -33,3 +35,4 @@ export interface CreateNoticePayload {
 // responses
 
 export type GetNoticesResponse = AxiosResponse<NoticeDto[]>;
+export type CreateNoticeResponse = AxiosResponse<NoticeDto>;

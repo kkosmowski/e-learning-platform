@@ -1,11 +1,23 @@
-import { useEffect, useMemo, useState } from 'react';
-import { Box, Button, TextField, Tooltip } from '@mui/material';
+import { ChangeEvent, useEffect, useMemo, useState } from 'react';
+import {
+  Box,
+  Button,
+  Checkbox,
+  FormControlLabel,
+  TextField,
+  Tooltip,
+} from '@mui/material';
 import { TFunction } from 'i18next';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import { DateTimePicker } from '@mui/x-date-pickers';
 
 import { NoticeForm } from 'shared/types/notice';
-import { contentRequiredError, titleRequiredError } from 'shared/consts/error';
+import {
+  contentRequiredError,
+  publishTimeRequiredError,
+  titleRequiredError,
+} from 'shared/consts/error';
 
 interface UseNoticeFormProps {
   initialValues: NoticeForm;
@@ -17,6 +29,8 @@ interface UseNoticeFormProps {
 export function useNoticeForm(props: UseNoticeFormProps) {
   const { initialValues, submitButtonLabel, onSubmit, t } = props;
   const [isUntouched, setIsUntouched] = useState(true);
+  const [datePickerOpened, setDatePickerOpened] = useState(false);
+  const [datePickerValue, setDatePickerValue] = useState<Date | null>(null);
 
   const formik = useFormik<NoticeForm>({
     initialValues,
@@ -26,6 +40,14 @@ export function useNoticeForm(props: UseNoticeFormProps) {
       subjectId: yup.string(),
       name: yup.string().required(titleRequiredError),
       content: yup.string().required(contentRequiredError),
+      publishInstantly: yup.boolean(),
+      publishTime: yup
+        .date()
+        .nullable()
+        .when('publishInstantly', {
+          is: false,
+          then: yup.date().required(publishTimeRequiredError),
+        }),
     }),
     onSubmit,
   });
@@ -37,7 +59,6 @@ export function useNoticeForm(props: UseNoticeFormProps) {
     handleChange,
     handleSubmit,
     setFieldValue,
-    setFieldError,
     touched,
     values,
   } = formik;
@@ -48,6 +69,26 @@ export function useNoticeForm(props: UseNoticeFormProps) {
         values.content === initialValues.content
     );
   }, [initialValues, values]);
+
+  const handlePublishInstantlyChange = (
+    event: ChangeEvent<HTMLInputElement>
+  ) => {
+    setFieldValue('publishInstantly', event.target.checked);
+  };
+
+  const handlePublishTimeChange = (dateTime: Date | null) => {
+    if (datePickerOpened) {
+      setDatePickerValue(dateTime);
+    } else {
+      updatePublishTimeFormValue(dateTime);
+    }
+  };
+
+  const updatePublishTimeFormValue = (newValue?: Date | null) => {
+    const value = newValue !== undefined ? newValue : datePickerValue;
+    setDatePickerOpened(false);
+    setFieldValue('publishTime', value);
+  };
 
   const submitButtonTooltip = useMemo(() => {
     if (!isValid || isUntouched) {
@@ -85,14 +126,33 @@ export function useNoticeForm(props: UseNoticeFormProps) {
         value={values.content}
         error={touched.content && Boolean(errors.content)}
         helperText={touched.content && errors.content && t(errors.content)}
-        autoFocus
         onBlur={handleBlur}
         onChange={handleChange}
       />
 
-      {/* @todo add Checkbox "Publish instantly"
-      if not checked, empty Date Field should be enabled and form invalid 
-      until either checkbox is checked or Date (with hours and minutes) is provided */}
+      <FormControlLabel
+        control={
+          <Checkbox
+            name="publishInstantly"
+            checked={values.publishInstantly}
+            onBlur={handleBlur}
+            onChange={handlePublishInstantlyChange}
+          />
+        }
+        label={t('create.publishInstantly')}
+      />
+
+      {!values.publishInstantly && (
+        <DateTimePicker
+          label={t('create.placeholder.publishTime')}
+          value={values.publishTime}
+          disablePast
+          renderInput={(params) => <TextField {...params} name="publishTime" />}
+          onChange={handlePublishTimeChange}
+          onOpen={() => setDatePickerOpened(true)}
+          onClose={updatePublishTimeFormValue}
+        />
+      )}
 
       <Box sx={{ display: 'flex', gap: 3, '*': { flex: 1 } }}>
         <Tooltip title={submitButtonTooltip}>

@@ -7,11 +7,14 @@ import {
 import { mapSubjectDtoToSubject } from './subject.utils';
 
 export const mapNoticeFormToCreateNoticePayload = (
-  form: NoticeForm
+  noticeForm: NoticeForm
 ): CreateNoticePayload => ({
-  group_subject_id: form.subjectId,
-  name: form.name,
-  content: form.content,
+  group_subject_id: noticeForm.subjectId,
+  name: noticeForm.name,
+  content: noticeForm.content,
+  ...(noticeForm.publishInstantly
+    ? {}
+    : { publish_time: noticeForm.publishTime }),
 });
 
 export const mapNoticeDtoToNotice = (dto: NoticeDto): Notice => ({
