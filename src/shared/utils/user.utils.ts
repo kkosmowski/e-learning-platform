@@ -1,15 +1,15 @@
 import {
   CreateUserForm,
   CreateUserPayload,
-  Person,
   Role,
   User,
   UserDto,
 } from 'shared/types/user';
 
-export const isStudent = (user: Person): boolean => user.role === Role.Student;
-
-export const isTeacher = (user: Person): boolean => user.role === Role.Teacher;
+export const isStudent = (user?: User | null): boolean =>
+  user?.role === Role.Student;
+export const isTeacher = (user?: User | null): boolean =>
+  user?.role === Role.Teacher;
 
 export const mapUserDtoToUser = (userDto: UserDto): User => ({
   id: userDto.id,

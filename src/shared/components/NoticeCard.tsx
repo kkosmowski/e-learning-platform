@@ -8,6 +8,7 @@ import {
 } from '@mui/material';
 import { Fragment } from 'react';
 import { Trans } from 'react-i18next';
+import format from 'date-fns/format';
 
 import {
   BOARD_NOTICE_CONTENT_LENGTH,
@@ -15,7 +16,6 @@ import {
   PREVIEW_NOTICE_CONTENT_LENGTH,
 } from 'shared/consts/notice';
 import { Notice } from 'shared/types/notice';
-import format from 'date-fns/format';
 import { primary } from 'colors';
 
 interface NoticeCardProps {
@@ -56,6 +56,7 @@ export default function NoticeCard(props: NoticeCardProps) {
   );
 
   const WrapperElement = onClick ? CardActionArea : Fragment;
+  console.log({ publishTime });
 
   return (
     <Card {...(onClick && { onClick })} sx={{ overflow: 'visible' }}>
@@ -115,7 +116,7 @@ export default function NoticeCard(props: NoticeCardProps) {
                   Published on
                   <strong style={{ color: primary[500] }}>
                     {{
-                      date: format(new Date(publishTime), 'dd-MM-yyyy HH:mm'),
+                      date: format(publishTime, 'dd-MM-yyyy HH:mm'),
                     }}
                   </strong>
                 </Trans>

@@ -9,14 +9,14 @@ import { mapNoticeDtoToNotice } from 'shared/utils/notice.utils';
 
 export function useNoticesQuery(
   currentUser: User | null | undefined,
-  subjectId: string
+  subjectId: string | undefined
 ) {
   const fetchQuery = useQuery<GetNoticesResponse, AxiosError, NoticeDto[]>(
-    ['notices'],
-    () => getNotices(subjectId),
+    ['notices', subjectId],
+    () => getNotices(subjectId || ''),
     {
       select: ({ data }) => data,
-      enabled: Boolean(currentUser),
+      enabled: Boolean(currentUser && subjectId),
     }
   );
 
