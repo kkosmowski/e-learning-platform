@@ -87,7 +87,10 @@
         "content": "Message",
         "publishTime": "Publishing time"
       },
-      "publishInstantly": "Publish instantly"
+      "publishInstantly": "Publish instantly",
+      "toast": {
+        "success": "Utworzono ogłoszenie \"{{ name }}\""
+      }
     }
   },
   "common": {
