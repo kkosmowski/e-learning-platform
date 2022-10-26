@@ -9,6 +9,7 @@ export const getErrorDetail = (err: unknown): string => {
 
   if (error.response?.data) {
     apiError = (error.response.data as ErrorData).detail;
+    console.log(error);
   }
 
   return apiError ? `error:${apiError}` : unknownError;

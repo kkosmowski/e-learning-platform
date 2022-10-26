@@ -31,5 +31,6 @@ export function useNoticeQuery(
     notice,
     isLoading: fetchQuery.isLoading,
     isSuccess: fetchQuery.isSuccess,
+    isError: fetchQuery.isError,
   };
 }

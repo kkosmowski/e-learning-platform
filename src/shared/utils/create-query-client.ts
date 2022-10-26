@@ -8,6 +8,7 @@ export default function createQueryClient() {
       queries: {
         staleTime: QUERY_STALE_TIME,
         cacheTime: QUERY_CACHE_TIME,
+        retry: 1,
       },
     },
   });
