@@ -25,8 +25,14 @@ export function useNoticesQuery(
     [fetchQuery.data]
   );
 
+  const publishedNotices = useMemo(
+    () => notices?.filter(({ isPublished }) => isPublished),
+    [notices]
+  );
+
   return {
     notices,
+    publishedNotices,
     isLoading: fetchQuery.isLoading,
     isSuccess: fetchQuery.isSuccess,
   };

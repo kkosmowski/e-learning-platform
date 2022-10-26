@@ -1,5 +1,6 @@
 import { Box, styled, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router';
 
 import {
   LONGER_PREVIEW_CONTENT_RATIO,
@@ -12,7 +13,7 @@ import NoticeCard from 'shared/components/NoticeCard';
 import TextButton from 'shared/components/TextButton';
 import { useNoticesQuery } from 'shared/hooks/use-notices-query';
 import { useAuth } from 'contexts/auth';
-import { useParams } from 'react-router';
+import PageLoading from 'shared/components/PageLoading';
 
 interface LatestNoticesProps {
   onNoticeClick: (noticeId: string) => void;
@@ -24,7 +25,10 @@ export default function LatestNotices(props: LatestNoticesProps) {
   const { onNoticeClick, onMoreClick, onCreateNotice } = props;
   const { subjectId } = useParams<{ subjectId: string }>();
   const { currentUser } = useAuth();
-  const { notices } = useNoticesQuery(currentUser, subjectId);
+  const { publishedNotices, isSuccess, isLoading } = useNoticesQuery(
+    currentUser,
+    subjectId
+  );
   const { t } = useTranslation('subject');
 
   return (
@@ -32,7 +36,7 @@ export default function LatestNotices(props: LatestNoticesProps) {
       <SectionTitle>
         <span>{t('general.latestNotices')}</span>
 
-        {!!notices?.length && (
+        {!!publishedNotices?.length && (
           <TextButton sx={{ ml: 2 }} onClick={onMoreClick}>
             {t('common:viewMore')}
           </TextButton>
@@ -53,8 +57,8 @@ export default function LatestNotices(props: LatestNoticesProps) {
           },
         }}
       >
-        {notices?.length ? (
-          notices
+        {isSuccess && publishedNotices?.length ? (
+          publishedNotices
             .slice(0, VISIBLE_LATEST_NOTICES)
             .map((notice, index) => (
               <NoticeCard
@@ -64,6 +68,8 @@ export default function LatestNotices(props: LatestNoticesProps) {
                 onClick={() => onNoticeClick(notice.id)}
               />
             ))
+        ) : isLoading ? (
+          <PageLoading />
         ) : (
           <Typography color="text.secondary">
             {t('common:noNotices')}

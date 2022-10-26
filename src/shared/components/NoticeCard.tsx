@@ -16,7 +16,7 @@ import {
   PREVIEW_NOTICE_CONTENT_LENGTH,
 } from 'shared/consts/notice';
 import { Notice } from 'shared/types/notice';
-import { primary } from 'colors';
+import { primary, unpublishedNoticeColor } from 'colors';
 
 interface NoticeCardProps {
   notice: Notice;
@@ -46,7 +46,7 @@ const getContentToRender = (
 
 export default function NoticeCard(props: NoticeCardProps) {
   const { notice, preview, longerPreview, boardPreview, onClick } = props;
-  const { content, name, publishTime } = notice;
+  const { content, name, publishTime, isPublished } = notice;
 
   const contentToRender = getContentToRender(
     content,
@@ -56,10 +56,15 @@ export default function NoticeCard(props: NoticeCardProps) {
   );
 
   const WrapperElement = onClick ? CardActionArea : Fragment;
-  console.log({ publishTime });
 
   return (
-    <Card {...(onClick && { onClick })} sx={{ overflow: 'visible' }}>
+    <Card
+      {...(onClick && { onClick })}
+      sx={{
+        overflow: 'visible',
+        ...(!isPublished && { backgroundColor: unpublishedNoticeColor }),
+      }}
+    >
       <WrapperElement
         {...(!!onClick && {
           sx: { display: 'flex', flexDirection: 'column', flex: 1 },
