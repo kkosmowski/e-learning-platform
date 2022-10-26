@@ -36,4 +36,5 @@ export interface CreateNoticePayload {
 // responses
 
 export type GetNoticesResponse = AxiosResponse<NoticeDto[]>;
+export type GetNoticeResponse = AxiosResponse<NoticeDto>;
 export type CreateNoticeResponse = AxiosResponse<NoticeDto>;

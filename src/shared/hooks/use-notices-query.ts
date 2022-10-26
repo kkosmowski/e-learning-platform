@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
-import { getNotices } from 'api/notice';
+import { getSubjectNotices } from 'api/notice';
 import { GetNoticesResponse, NoticeDto } from 'shared/types/notice';
 import { User } from 'shared/types/user';
 import { mapNoticeDtoToNotice } from 'shared/utils/notice.utils';
@@ -13,7 +13,7 @@ export function useNoticesQuery(
 ) {
   const fetchQuery = useQuery<GetNoticesResponse, AxiosError, NoticeDto[]>(
     ['notices', subjectId],
-    () => getNotices(subjectId || ''),
+    () => getSubjectNotices(subjectId || ''),
     {
       select: ({ data }) => data,
       enabled: Boolean(currentUser && subjectId),

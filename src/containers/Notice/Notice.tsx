@@ -3,27 +3,33 @@ import { useParams } from 'react-router';
 
 import { Centered } from 'shared/components/Container';
 import NoticeCard from 'shared/components/NoticeCard';
-import { notices } from 'shared/consts/notice';
 import useCustomNavigate from 'hooks/use-custom-navigate';
+import { useNoticeQuery } from 'shared/hooks/use-notice-query';
+import { useAuth } from 'contexts/auth';
+import PageLoading from '../../shared/components/PageLoading';
 
 export default function Notice() {
   const { navigate } = useCustomNavigate();
   const { noticeId } = useParams<{ noticeId: string }>();
-  const currentNotice = notices.find((notice) => notice.id === noticeId);
+  const { currentUser } = useAuth();
+  const { notice, isLoading, isSuccess } = useNoticeQuery(
+    currentUser,
+    noticeId
+  );
 
   useEffect(() => {
-    if (!currentNotice) {
+    if (isSuccess && !notice) {
       navigate('/404');
     }
-  }, [currentNotice, navigate]);
-
-  if (!currentNotice) {
-    return null;
-  }
+  }, [notice, isSuccess, navigate]);
 
   return (
     <Centered>
-      <NoticeCard notice={currentNotice} />
+      {isSuccess && notice ? (
+        <NoticeCard notice={notice} />
+      ) : isLoading ? (
+        <PageLoading />
+      ) : null}
     </Centered>
   );
 }

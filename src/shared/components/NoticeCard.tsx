@@ -67,7 +67,12 @@ export default function NoticeCard(props: NoticeCardProps) {
     >
       <WrapperElement
         {...(!!onClick && {
-          sx: { display: 'flex', flexDirection: 'column', flex: 1 },
+          sx: {
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'stretch',
+            flex: 1,
+          },
         })}
       >
         <CardContent

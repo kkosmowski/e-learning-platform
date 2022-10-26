@@ -3,10 +3,16 @@ import {
   CreateNoticePayload,
   CreateNoticeResponse,
   GetNoticesResponse,
+  GetNoticeResponse,
 } from 'shared/types/notice';
 
-export const getNotices = (subjectId: string): Promise<GetNoticesResponse> =>
-  authorized((api) => api.get(`notice/${subjectId}`));
+export const getSubjectNotices = (
+  subjectId: string
+): Promise<GetNoticesResponse> =>
+  authorized((api) => api.get(`group-subject/${subjectId}/notices`));
+
+export const getNotice = (noticeId: string): Promise<GetNoticeResponse> =>
+  authorized((api) => api.get(`notice/${noticeId}`));
 
 export const createNotice = (
   payload: CreateNoticePayload
