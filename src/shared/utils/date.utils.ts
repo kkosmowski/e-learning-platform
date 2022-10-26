@@ -29,5 +29,8 @@ export const timeLeft = (t: TFunction, deadline: Date): [string, number] => {
   return [timeLeftString, diffInMinutes];
 };
 
+export const dateStringToUTCString = (dateString: string): string =>
+  dateString + 'Z';
+
 export const isPastDate = (date: Date): boolean =>
   new Date().getTime() > date.getTime();

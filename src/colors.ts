@@ -127,4 +127,6 @@ const colors = {
   warning,
 };
 
+export const unpublishedNoticeColor = '#fff1d6';
+
 export default colors;

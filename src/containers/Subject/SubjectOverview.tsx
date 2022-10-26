@@ -50,7 +50,6 @@ export default function SubjectOverview() {
   return (
     <>
       <LatestNotices
-        notices={notices}
         onNoticeClick={navigateToNotice}
         onMoreClick={navigateToNotices}
         onCreateNotice={navigateToNoticeCreation}

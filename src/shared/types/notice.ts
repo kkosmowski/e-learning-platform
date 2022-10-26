@@ -4,6 +4,7 @@ import { AxiosResponse } from 'axios';
 
 export interface Notice extends ContentItem {
   publishTime: Date;
+  isPublished?: boolean;
   subject: Subject;
 }
 
