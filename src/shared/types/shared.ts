@@ -1,4 +1,5 @@
 import { AxiosResponse } from 'axios';
+import { User } from './user';
 
 export enum Status {
   Todo = 'TODO',
@@ -8,8 +9,7 @@ export enum Status {
 
 export interface BaseItem {
   id: string;
-  // @todo implement with backend
-  // createdBy: User; // @todo discuss this with Kamila
+  createdBy?: User; // @todo change to mandatory when mocked data is no longer used
   createdAt: Date;
   // updatedBy?: User;
   // updatedOn?: string; // ISOString

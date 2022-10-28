@@ -46,7 +46,7 @@ const getContentToRender = (
 
 export default function NoticeCard(props: NoticeCardProps) {
   const { notice, preview, longerPreview, boardPreview, onClick } = props;
-  const { content, name, publishTime, isPublished } = notice;
+  const { createdBy, content, name, publishTime, isPublished } = notice;
 
   const contentToRender = getContentToRender(
     content,
@@ -100,13 +100,13 @@ export default function NoticeCard(props: NoticeCardProps) {
             <Typography component="span" sx={{ fontSize: 13 }}>
               {preview || longerPreview ? (
                 <strong style={{ color: primary[500] }}>
-                  {/*{ author.fullName }*/}
+                  {createdBy.fullName}
                 </strong>
               ) : (
                 <Trans i18nKey="common:writtenBy">
                   Written by
                   <strong style={{ color: primary[500] }}>
-                    {/*{{ author: author.fullName }}*/}
+                    {{ author: createdBy.fullName }}
                   </strong>
                 </Trans>
               )}

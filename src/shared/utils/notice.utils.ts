@@ -6,6 +6,7 @@ import {
 } from 'shared/types/notice';
 import { mapSubjectDtoToSubject } from './subject.utils';
 import { dateStringToUTCString } from './date.utils';
+import { mapUserDtoToUser } from './user.utils';
 
 export const mapNoticeFormToCreateNoticePayload = (
   noticeForm: NoticeForm
@@ -20,6 +21,7 @@ export const mapNoticeFormToCreateNoticePayload = (
 
 export const mapNoticeDtoToNotice = (dto: NoticeDto): Notice => ({
   id: dto.id,
+  createdBy: mapUserDtoToUser(dto.created_by),
   subject: mapSubjectDtoToSubject(dto.group_subject),
   name: dto.name,
   content: dto.content,

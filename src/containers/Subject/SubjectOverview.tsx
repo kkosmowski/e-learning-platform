@@ -1,4 +1,3 @@
-import { notices } from 'shared/consts/notice';
 import { homework, tasks } from 'shared/consts/task';
 import { studentGrades, teacherGrades } from 'shared/consts/grade';
 import { TaskType } from 'shared/types/task';
