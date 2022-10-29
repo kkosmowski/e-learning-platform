@@ -1,6 +1,7 @@
-import { Grid, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
+import { Masonry } from '@mui/lab';
 
 import { Centered } from 'shared/components/Container';
 import SectionTitle from 'shared/components/SectionTitle';
@@ -29,17 +30,16 @@ export default function NoticeBoard() {
       <SectionTitle>{t('title')}</SectionTitle>
 
       {isSuccess && notices?.length ? (
-        <Grid container spacing={2}>
+        <Masonry columns={{ sm: 1, md: 2 }} spacing={2}>
           {notices.map((notice) => (
-            <Grid item key={notice.id} sm={12} lg={6}>
-              <NoticeCard
-                notice={notice}
-                boardPreview
-                onClick={() => navigateToNotice(notice.id)}
-              />
-            </Grid>
+            <NoticeCard
+              key={notice.id}
+              notice={notice}
+              boardPreview
+              onClick={() => navigateToNotice(notice.id)}
+            />
           ))}
-        </Grid>
+        </Masonry>
       ) : isLoading ? (
         <PageLoading />
       ) : (
