@@ -1,6 +1,7 @@
-import { Box, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
+import { Masonry } from '@mui/lab';
 
 import { Centered } from 'shared/components/Container';
 import SectionTitle from 'shared/components/SectionTitle';
@@ -9,7 +10,6 @@ import useCustomNavigate from 'hooks/use-custom-navigate';
 import { useNoticesQuery } from 'shared/hooks/use-notices-query';
 import { useAuth } from 'contexts/auth';
 import PageLoading from 'shared/components/PageLoading';
-import { Masonry } from '@mui/lab';
 
 export default function NoticeBoard() {
   const { navigate } = useCustomNavigate();
