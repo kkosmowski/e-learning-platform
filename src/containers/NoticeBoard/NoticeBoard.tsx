@@ -32,13 +32,12 @@ export default function NoticeBoard() {
       {isSuccess && notices?.length ? (
         <Masonry columns={{ sm: 1, md: 2 }} spacing={2}>
           {notices.map((notice) => (
-            <Box key={notice.id}>
-              <NoticeCard
-                notice={notice}
-                boardPreview
-                onClick={() => navigateToNotice(notice.id)}
-              />
-            </Box>
+            <NoticeCard
+              key={notice.id}
+              notice={notice}
+              boardPreview
+              onClick={() => navigateToNotice(notice.id)}
+            />
           ))}
         </Masonry>
       ) : isLoading ? (
