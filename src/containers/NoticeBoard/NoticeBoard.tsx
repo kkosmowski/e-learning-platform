@@ -1,4 +1,4 @@
-import { Grid, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 
@@ -9,6 +9,7 @@ import useCustomNavigate from 'hooks/use-custom-navigate';
 import { useNoticesQuery } from 'shared/hooks/use-notices-query';
 import { useAuth } from 'contexts/auth';
 import PageLoading from 'shared/components/PageLoading';
+import { Masonry } from '@mui/lab';
 
 export default function NoticeBoard() {
   const { navigate } = useCustomNavigate();
@@ -29,17 +30,17 @@ export default function NoticeBoard() {
       <SectionTitle>{t('title')}</SectionTitle>
 
       {isSuccess && notices?.length ? (
-        <Grid container spacing={2}>
+        <Masonry columns={{ sm: 1, md: 2 }} spacing={2}>
           {notices.map((notice) => (
-            <Grid item key={notice.id} sm={12} lg={6}>
+            <Box key={notice.id}>
               <NoticeCard
                 notice={notice}
                 boardPreview
                 onClick={() => navigateToNotice(notice.id)}
               />
-            </Grid>
+            </Box>
           ))}
-        </Grid>
+        </Masonry>
       ) : isLoading ? (
         <PageLoading />
       ) : (
