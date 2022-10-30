@@ -3,6 +3,7 @@ import {
   Notice,
   NoticeDto,
   NoticeForm,
+  UpdateNoticePayload,
 } from 'shared/types/notice';
 import { mapSubjectDtoToSubject } from './subject.utils';
 import { dateStringToUTCString } from './date.utils';
@@ -17,6 +18,15 @@ export const mapNoticeFormToCreateNoticePayload = (
   ...(noticeForm.publishInstantly
     ? {}
     : { publish_time: noticeForm.publishTime }),
+});
+
+export const mapNoticeFormToUpdateNoticePayload = (
+  noticeId: string,
+  noticeForm: NoticeForm
+): UpdateNoticePayload => ({
+  id: noticeId,
+  name: noticeForm.name,
+  content: noticeForm.content,
 });
 
 export const mapNoticeDtoToNotice = (dto: NoticeDto): Notice => ({

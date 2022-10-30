@@ -4,6 +4,8 @@ import {
   CreateNoticeResponse,
   GetNoticesResponse,
   GetNoticeResponse,
+  UpdateNoticePayload,
+  UpdateNoticeResponse,
 } from 'shared/types/notice';
 
 export const getSubjectNotices = (
@@ -18,3 +20,9 @@ export const createNotice = (
   payload: CreateNoticePayload
 ): Promise<CreateNoticeResponse> =>
   authorized((api) => api.post('notice', payload));
+
+export const updateNotice = ({
+  id,
+  ...noticeData
+}: UpdateNoticePayload): Promise<UpdateNoticeResponse> =>
+  authorized((api) => api.put(`notice/${id}`, noticeData));

@@ -91,7 +91,14 @@
       "toast": {
         "success": "Utworzono ogłoszenie \"{{ name }}\""
       }
+    },
+    "edit": {
+      "title": "Modify notice",
+      "tooltip": "Edit the title or content"
     }
+  },
+  "tooltip": {
+    "alreadyPublished": "Notice is already published, cannot edit its publishing time."
   },
   "common": {
     "back": "Back",
