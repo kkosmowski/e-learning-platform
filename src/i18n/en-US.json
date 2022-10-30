@@ -87,18 +87,24 @@
         "content": "Message",
         "publishTime": "Publishing time"
       },
-      "publishInstantly": "Publish instantly",
-      "toast": {
-        "success": "Utworzono ogłoszenie \"{{ name }}\""
-      }
+      "publishInstantly": "Publish instantly"
     },
     "edit": {
-      "title": "Modify notice",
-      "tooltip": "Edit the title or content"
+      "title": "Modify notice"
+    },
+    "tooltip": {
+      "edit": "Edit the title or content",
+      "publishNow": "Publish now",
+      "alreadyPublished": "Notice is already published, cannot edit its publishing time."
+    },
+    "confirm": {
+      "publishNowTitle": "Publishing a notice",
+      "publishNowMessage": "Are you sure you want to publish this notice? This operation cannot be undone."
+    },
+    "toast": {
+      "createSuccess": "Successfully created notice \"{{ name }}\"",
+      "publishSuccess": "Successfully published notice \"{{ name }}\""
     }
-  },
-  "tooltip": {
-    "alreadyPublished": "Notice is already published, cannot edit its publishing time."
   },
   "common": {
     "back": "Back",

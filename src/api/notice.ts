@@ -26,3 +26,6 @@ export const updateNotice = ({
   ...noticeData
 }: UpdateNoticePayload): Promise<UpdateNoticeResponse> =>
   authorized((api) => api.put(`notice/${id}`, noticeData));
+
+export const publishNotice = (id: string): Promise<UpdateNoticeResponse> =>
+  authorized((api) => api.post(`notice/${id}/publish`));
