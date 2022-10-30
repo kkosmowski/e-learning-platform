@@ -95,6 +95,9 @@
     "edit": {
       "title": "Modyfikuj ogłoszenie",
       "tooltip": "Edytuj tytuł lub treść ogłoszenia"
+    },
+    "tooltip": {
+      "alreadyPublished": "Ogłoszenie jest już opublikowane, nie można zmienić daty publikacji."
     }
   },
   "common": {

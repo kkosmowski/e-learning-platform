@@ -18,6 +18,7 @@ export interface NoticeForm {
   content: string;
   publishInstantly: boolean;
   publishTime?: Date | null;
+  isPublished?: boolean;
 }
 
 export interface NoticeDto {

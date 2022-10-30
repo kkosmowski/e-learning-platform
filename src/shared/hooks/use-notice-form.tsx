@@ -18,6 +18,7 @@ import {
   publishTimeRequiredError,
   titleRequiredError,
 } from 'shared/consts/error';
+import useCustomNavigate from 'hooks/use-custom-navigate';
 
 interface UseNoticeFormProps {
   initialValues: NoticeForm;
@@ -31,6 +32,7 @@ export function useNoticeForm(props: UseNoticeFormProps) {
   const [isUntouched, setIsUntouched] = useState(true);
   const [datePickerOpened, setDatePickerOpened] = useState(false);
   const [datePickerValue, setDatePickerValue] = useState<Date | null>(null);
+  const { back } = useCustomNavigate();
 
   const formik = useFormik<NoticeForm>({
     initialValues,
@@ -66,7 +68,9 @@ export function useNoticeForm(props: UseNoticeFormProps) {
   useEffect(() => {
     setIsUntouched(
       values.name === initialValues.name &&
-        values.content === initialValues.content
+        values.content === initialValues.content &&
+        values.publishInstantly === initialValues.publishInstantly &&
+        values.publishTime?.getTime() === initialValues.publishTime?.getTime()
     );
   }, [initialValues, values]);
 
@@ -130,23 +134,30 @@ export function useNoticeForm(props: UseNoticeFormProps) {
         onChange={handleChange}
       />
 
-      <FormControlLabel
-        control={
-          <Checkbox
-            name="publishInstantly"
-            checked={values.publishInstantly}
-            onBlur={handleBlur}
-            onChange={handlePublishInstantlyChange}
-          />
-        }
-        label={t('create.publishInstantly')}
-      />
+      <Tooltip
+        title={values.isPublished ? t('tooltip.alreadyPublished') + '' : ''}
+      >
+        <FormControlLabel
+          sx={{ alignSelf: 'flex-start' }}
+          control={
+            <Checkbox
+              name="publishInstantly"
+              checked={values.publishInstantly}
+              onBlur={handleBlur}
+              disabled={values.isPublished}
+              onChange={handlePublishInstantlyChange}
+            />
+          }
+          label={t('create.publishInstantly')}
+        />
+      </Tooltip>
 
       {!values.publishInstantly && (
         <DateTimePicker
           label={t('create.placeholder.publishTime')}
           value={values.publishTime}
-          disablePast
+          disablePast={!values.isPublished}
+          disabled={values.isPublished}
           renderInput={(params) => <TextField {...params} name="publishTime" />}
           onChange={handlePublishTimeChange}
           onOpen={() => setDatePickerOpened(true)}
@@ -167,7 +178,9 @@ export function useNoticeForm(props: UseNoticeFormProps) {
           </Box>
         </Tooltip>
 
-        <Button color="secondary">{t('common:cancel')}</Button>
+        <Button color="secondary" onClick={() => back()}>
+          {t('common:cancel')}
+        </Button>
       </Box>
     </form>
   );

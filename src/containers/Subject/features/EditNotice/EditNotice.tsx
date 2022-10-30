@@ -24,8 +24,9 @@ export default function EditNotice() {
             subjectId: subjectId,
             name: notice.name,
             content: notice.content,
-            publishInstantly: true,
-            publishTime: null,
+            publishInstantly: false,
+            publishTime: notice.publishTime,
+            isPublished: notice.publishTime.getTime() < new Date().getTime(),
           }
         : null,
     [notice, subjectId]
