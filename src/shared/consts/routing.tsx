@@ -29,6 +29,7 @@ import TeacherGuard from 'shared/guards/TeacherGuard';
 import { RouteObjectWithId } from 'shared/types/routing';
 import { TaskType } from 'shared/types/task';
 import { Role } from 'shared/types/user';
+import EditNotice from '../../containers/Subject/features/EditNotice';
 
 export const features: RouteObjectWithId[] = [
   {
@@ -70,7 +71,20 @@ export const features: RouteObjectWithId[] = [
               },
               {
                 path: ':noticeId',
-                element: <Notice />,
+                children: [
+                  {
+                    path: '',
+                    element: <Notice />,
+                  },
+                  {
+                    path: 'edit',
+                    element: (
+                      <TeacherGuard redirectTo="..">
+                        <EditNotice />
+                      </TeacherGuard>
+                    ),
+                  },
+                ],
               },
             ],
           },

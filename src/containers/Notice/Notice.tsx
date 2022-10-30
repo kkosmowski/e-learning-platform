@@ -7,18 +7,13 @@ import { Centered } from 'shared/components/Container';
 import NoticeCard from 'shared/components/NoticeCard';
 import useCustomNavigate from 'hooks/use-custom-navigate';
 import { useNoticeQuery } from 'shared/hooks/use-notice-query';
-import { useAuth } from 'contexts/auth';
 import PageLoading from 'shared/components/PageLoading';
 
 export default function Notice() {
   const { navigate } = useCustomNavigate();
   const { noticeId } = useParams<{ noticeId: string }>();
-  const { currentUser } = useAuth();
   const { t } = useTranslation();
-  const { notice, isLoading, isSuccess, isError } = useNoticeQuery(
-    currentUser,
-    noticeId
-  );
+  const { notice, isLoading, isSuccess, isError } = useNoticeQuery(noticeId);
 
   useEffect(() => {
     if (isError || (isSuccess && !notice)) {

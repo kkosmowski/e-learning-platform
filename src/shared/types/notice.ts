@@ -38,8 +38,15 @@ export interface CreateNoticePayload {
   content: string;
 }
 
+export interface UpdateNoticePayload {
+  id: string;
+  name: string;
+  content: string;
+}
+
 // responses
 
 export type GetNoticesResponse = AxiosResponse<NoticeDto[]>;
 export type GetNoticeResponse = AxiosResponse<NoticeDto>;
 export type CreateNoticeResponse = AxiosResponse<NoticeDto>;
+export type UpdateNoticeResponse = AxiosResponse<NoticeDto>;

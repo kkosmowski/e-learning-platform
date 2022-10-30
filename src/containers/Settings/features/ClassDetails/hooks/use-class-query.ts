@@ -54,7 +54,7 @@ export default function useClassQuery(
     AxiosError,
     ClassForm
   >(
-    async (values: ClassForm) => {
+    async (values) => {
       if (fetchClassQuery.data && values.teacher) {
         return updateClass(
           mapClassToUpdateClassPayload({
