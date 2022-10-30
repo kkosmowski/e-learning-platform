@@ -25,7 +25,7 @@ export default function LatestNotices(props: LatestNoticesProps) {
   const { onNoticeClick, onMoreClick, onCreateNotice } = props;
   const { subjectId } = useParams<{ subjectId: string }>();
   const { currentUser } = useAuth();
-  const { publishedNotices, isSuccess, isLoading } = useNoticesQuery(
+  const { notices, isSuccess, isLoading } = useNoticesQuery(
     currentUser,
     subjectId
   );
@@ -36,7 +36,7 @@ export default function LatestNotices(props: LatestNoticesProps) {
       <SectionTitle>
         <span>{t('general.latestNotices')}</span>
 
-        {!!publishedNotices?.length && (
+        {!!notices?.length && (
           <TextButton sx={{ ml: 2 }} onClick={onMoreClick}>
             {t('common:viewMore')}
           </TextButton>
@@ -57,8 +57,8 @@ export default function LatestNotices(props: LatestNoticesProps) {
           },
         }}
       >
-        {isSuccess && publishedNotices?.length ? (
-          publishedNotices
+        {isSuccess && notices?.length ? (
+          notices
             .slice(0, VISIBLE_LATEST_NOTICES)
             .map((notice, index) => (
               <NoticeCard
