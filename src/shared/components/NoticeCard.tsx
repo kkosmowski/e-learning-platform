@@ -4,10 +4,12 @@ import {
   CardActionArea,
   CardContent,
   Divider,
+  IconButton,
+  Tooltip,
   Typography,
 } from '@mui/material';
-import { Fragment } from 'react';
-import { Trans } from 'react-i18next';
+import { Fragment, useMemo } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 import format from 'date-fns/format';
 
 import {
@@ -17,6 +19,10 @@ import {
 } from 'shared/consts/notice';
 import { Notice } from 'shared/types/notice';
 import { primary, unpublishedNoticeColor } from 'colors';
+import { Edit } from '@mui/icons-material';
+import { Role } from '../types/user';
+import { useAuth } from '../../contexts/auth';
+import useCustomNavigate from '../../hooks/use-custom-navigate';
 
 interface NoticeCardProps {
   notice: Notice;
@@ -47,6 +53,9 @@ const getContentToRender = (
 export default function NoticeCard(props: NoticeCardProps) {
   const { notice, preview, longerPreview, boardPreview, onClick } = props;
   const { createdBy, content, name, publishTime, isPublished } = notice;
+  const { currentUser } = useAuth();
+  const { navigate } = useCustomNavigate();
+  const { t } = useTranslation('notice');
 
   const contentToRender = getContentToRender(
     content,
@@ -55,7 +64,28 @@ export default function NoticeCard(props: NoticeCardProps) {
     boardPreview
   );
 
+  const isAnyPreview = useMemo(
+    () => Boolean(preview || longerPreview || boardPreview),
+    [preview, longerPreview, boardPreview]
+  );
+  const isAuthor = useMemo(
+    () => currentUser?.role === Role.Teacher && currentUser.id === createdBy.id,
+    [currentUser, createdBy]
+  );
+  const isEditAllowed = useMemo(
+    () => !isAnyPreview && isAuthor,
+    [isAnyPreview, isAuthor]
+  );
+
   const WrapperElement = onClick ? CardActionArea : Fragment;
+  const TitleWrapper = isEditAllowed ? Box : Fragment;
+  const TitleWrapperProps = isEditAllowed
+    ? { sx: { display: 'flex', justifyContent: 'space-between' } }
+    : {};
+
+  const handleEdit = () => {
+    navigate('./edit');
+  };
 
   return (
     <Card
@@ -79,9 +109,19 @@ export default function NoticeCard(props: NoticeCardProps) {
           component="article"
           sx={{ display: 'flex', flexDirection: 'column', flex: 1 }}
         >
-          <Typography component="h3" mb={1}>
-            {name}
-          </Typography>
+          <TitleWrapper {...TitleWrapperProps}>
+            <Typography component="h3" mb={1}>
+              {name}
+            </Typography>
+
+            {isEditAllowed && (
+              <Tooltip title={t('edit.tooltip')}>
+                <IconButton onClick={handleEdit} size="small">
+                  <Edit fontSize="small" />
+                </IconButton>
+              </Tooltip>
+            )}
+          </TitleWrapper>
 
           <Typography
             sx={{

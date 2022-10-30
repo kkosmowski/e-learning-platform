@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
+import toast from 'react-hot-toast';
 
 import { getNotice, updateNotice } from 'api/notice';
 import {
@@ -14,9 +15,12 @@ import {
   mapNoticeFormToUpdateNoticePayload,
 } from 'shared/utils/notice.utils';
 import { useAuth } from 'contexts/auth';
+import useCustomNavigate from 'hooks/use-custom-navigate';
 
 export function useNoticeQuery(noticeId: string | undefined) {
   const { currentUser } = useAuth();
+  const queryClient = useQueryClient();
+  const { back } = useCustomNavigate();
 
   const fetchQuery = useQuery<GetNoticeResponse, AxiosError, NoticeDto>(
     ['notice', noticeId],
@@ -24,6 +28,7 @@ export function useNoticeQuery(noticeId: string | undefined) {
     {
       select: ({ data }) => data,
       enabled: Boolean(currentUser && noticeId),
+      notifyOnChangeProps: ['data'],
     }
   );
 
@@ -31,13 +36,26 @@ export function useNoticeQuery(noticeId: string | undefined) {
     UpdateNoticeResponse,
     AxiosError,
     NoticeForm
-  >(async (values) => {
-    if (fetchQuery.data) {
-      return updateNotice(
-        mapNoticeFormToUpdateNoticePayload(fetchQuery.data.id, values)
-      );
-    } else throw new Error('Notice id is missing');
-  });
+  >(
+    async (values) => {
+      if (fetchQuery.data) {
+        return updateNotice(
+          mapNoticeFormToUpdateNoticePayload(fetchQuery.data.id, values)
+        );
+      } else throw new Error('Notice id is missing');
+    },
+    {
+      onSuccess: async ({ data }) => {
+        queryClient.setQueryData(['notice', noticeId], { data });
+        await queryClient.invalidateQueries(['notices']);
+        back();
+        toast.success('Notice updated');
+      },
+      onError: (e) => {
+        toast.error('There was an error');
+      },
+    }
+  );
 
   const notice = useMemo(() => {
     if (fetchQuery.data) {

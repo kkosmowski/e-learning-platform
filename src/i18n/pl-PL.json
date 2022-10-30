@@ -91,6 +91,10 @@
       "toast": {
         "success": "Utworzono ogłoszenie \"{{ name }}\""
       }
+    },
+    "edit": {
+      "title": "Modyfikuj ogłoszenie",
+      "tooltip": "Edytuj tytuł lub treść ogłoszenia"
     }
   },
   "common": {
@@ -106,7 +110,7 @@
     "homework": "Zadanie domowe",
     "test": "Test",
     "writtenBy": "Napisał(a) <1>{{ author }}</1>",
-    "publishedOn": "Opublikował(a) <1>{{ date }}</1>",
+    "publishedOn": "Opublikowano <1>{{ date }}</1>",
     "welcome": "Witaj",
     "student": "Uczeń",
     "teacher": "Nauczyciel",

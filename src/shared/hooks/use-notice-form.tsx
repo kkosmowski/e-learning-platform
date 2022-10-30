@@ -167,7 +167,7 @@ export function useNoticeForm(props: UseNoticeFormProps) {
           </Box>
         </Tooltip>
 
-        <Button color="secondary">Cancel</Button>
+        <Button color="secondary">{t('common:cancel')}</Button>
       </Box>
     </form>
   );

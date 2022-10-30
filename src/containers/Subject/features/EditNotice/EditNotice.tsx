@@ -1,41 +1,46 @@
+import { useMemo } from 'react';
 import { Card, CardContent } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 
 import SectionTitle from 'shared/components/SectionTitle';
-import { useNoticeForm } from 'shared/hooks';
 import useCustomNavigate from 'hooks/use-custom-navigate';
 import { useNoticeQuery } from 'shared/hooks/use-notice-query';
+import EditNoticeForm from './components/EditNoticeForm';
 
 export default function EditNotice() {
-  const { subjectId } = useParams();
+  const { subjectId, noticeId } = useParams();
   const { navigate } = useCustomNavigate();
   const { t } = useTranslation('notice');
-  const { update } = useNoticeQuery(subjectId);
-
-  if (!subjectId) {
+  const { notice, update, isError } = useNoticeQuery(noticeId);
+  if (!subjectId || !noticeId || isError) {
     navigate('/404');
   }
 
-  const { Form } = useNoticeForm({
-    initialValues: {
-      subjectId: subjectId || '',
-      name: '',
-      content: '',
-      publishInstantly: true,
-      publishTime: null,
-    },
-    submitButtonLabel: t('common:create'),
-    onSubmit: update,
-    t,
-  });
+  const initialValues = useMemo(
+    () =>
+      notice && subjectId
+        ? {
+            subjectId: subjectId,
+            name: notice.name,
+            content: notice.content,
+            publishInstantly: true,
+            publishTime: null,
+          }
+        : null,
+    [notice, subjectId]
+  );
 
   return (
     <>
       <SectionTitle>{t('edit.title')}</SectionTitle>
 
       <Card>
-        <CardContent>{Form}</CardContent>
+        <CardContent>
+          {initialValues ? (
+            <EditNoticeForm initialValues={initialValues} onSubmit={update} />
+          ) : null}
+        </CardContent>
       </Card>
     </>
   );

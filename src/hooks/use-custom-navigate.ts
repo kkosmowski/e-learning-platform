@@ -1,6 +1,8 @@
 import { useLocation, useNavigate } from 'react-router';
 import { useCallback } from 'react';
 
+const history: string[] = [];
+
 export default function useCustomNavigate() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -10,17 +12,18 @@ export default function useCustomNavigate() {
       const back = options?.replace
         ? undefined
         : options?.back || location.pathname;
-      navigate(path, { state: { back }, replace: options?.replace });
+      if (back) history.push(back);
+      navigate(path, { replace: options?.replace });
     },
     [location.pathname, navigate]
   );
 
   const back = useCallback(
     (path?: string) => {
-      const locationWithBack = location.state as { back?: string } | undefined;
-      navigate(path || locationWithBack?.back || './..');
+      const latestHistoryItem = history.pop();
+      navigate(path || latestHistoryItem || '..');
     },
-    [location.state, navigate]
+    [navigate]
   );
 
   return { navigate: customNavigate, back };

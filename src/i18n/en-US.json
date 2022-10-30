@@ -91,6 +91,10 @@
       "toast": {
         "success": "Utworzono ogłoszenie \"{{ name }}\""
       }
+    },
+    "edit": {
+      "title": "Modify notice",
+      "tooltip": "Edit the title or content"
     }
   },
   "common": {
