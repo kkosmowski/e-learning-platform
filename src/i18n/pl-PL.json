@@ -87,17 +87,23 @@
         "content": "Treść",
         "publishTime": "Czas publikacji"
       },
-      "publishInstantly": "Opublikuj teraz",
-      "toast": {
-        "success": "Utworzono ogłoszenie \"{{ name }}\""
-      }
+      "publishInstantly": "Opublikuj teraz"
     },
     "edit": {
-      "title": "Modyfikuj ogłoszenie",
-      "tooltip": "Edytuj tytuł lub treść ogłoszenia"
+      "title": "Modyfikuj ogłoszenie"
     },
     "tooltip": {
+      "edit": "Edytuj tytuł lub treść ogłoszenia",
+      "publishNow": "Opublikuj teraz",
       "alreadyPublished": "Ogłoszenie jest już opublikowane, nie można zmienić daty publikacji."
+    },
+    "confirm": {
+      "publishNowTitle": "Potwierdź publikację ogłoszenia",
+      "publishNowMessage": "Czy na pewno opublikować wybrane ogłoszenie? Tej operacji nie da się cofnąć."
+    },
+    "toast": {
+      "createSuccess": "Utworzono ogłoszenie \"{{ name }}\"",
+      "publishSuccess": "Opublikowano ogłoszenie \"{{ name }}\""
     }
   },
   "common": {

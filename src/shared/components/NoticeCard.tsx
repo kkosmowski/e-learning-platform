@@ -19,10 +19,15 @@ import {
 } from 'shared/consts/notice';
 import { Notice } from 'shared/types/notice';
 import { primary, unpublishedNoticeColor } from 'colors';
-import { Edit } from '@mui/icons-material';
-import { Role } from '../types/user';
-import { useAuth } from '../../contexts/auth';
-import useCustomNavigate from '../../hooks/use-custom-navigate';
+import { Edit, Publish } from '@mui/icons-material';
+import { Role } from 'shared/types/user';
+import { useAuth } from 'contexts/auth';
+import useCustomNavigate from 'hooks/use-custom-navigate';
+import { useConfirmationDialog } from 'shared/hooks';
+import { publishNotice } from 'api/notice';
+import { useQueryClient } from '@tanstack/react-query';
+import { useParams } from 'react-router';
+import toast from 'react-hot-toast';
 
 interface NoticeCardProps {
   notice: Notice;
@@ -53,9 +58,12 @@ const getContentToRender = (
 export default function NoticeCard(props: NoticeCardProps) {
   const { notice, preview, longerPreview, boardPreview, onClick } = props;
   const { createdBy, content, name, publishTime, isPublished } = notice;
+  const { subjectId } = useParams();
   const { currentUser } = useAuth();
   const { navigate } = useCustomNavigate();
   const { t } = useTranslation('notice');
+  const { confirmAction, confirmationDialog } = useConfirmationDialog();
+  const queryClient = useQueryClient();
 
   const contentToRender = getContentToRender(
     content,
@@ -76,6 +84,10 @@ export default function NoticeCard(props: NoticeCardProps) {
     () => !isAnyPreview && isAuthor,
     [isAnyPreview, isAuthor]
   );
+  const isPublishAllowed = useMemo(
+    () => isEditAllowed && !isPublished,
+    [isEditAllowed, isPublished]
+  );
 
   const WrapperElement = onClick ? CardActionArea : Fragment;
   const TitleWrapper = isEditAllowed ? Box : Fragment;
@@ -87,94 +99,125 @@ export default function NoticeCard(props: NoticeCardProps) {
     navigate('./edit');
   };
 
+  const handlePublishNow = async () => {
+    const shouldPublishNow = await confirmAction({
+      title: 'notice:confirm.publishNowTitle',
+      message: {
+        key: 'notice:confirm.publishNowMessage',
+        props: { name: notice.name },
+      },
+      confirmLabel: 'common:publish',
+    });
+
+    if (shouldPublishNow) {
+      await publishNotice(notice.id);
+      await queryClient.invalidateQueries(['notices', subjectId]);
+      await queryClient.refetchQueries(['notice', notice.id]);
+      toast.success(t('toast.publishSuccess', { name: notice.name }));
+    }
+  };
+
   return (
-    <Card
-      {...(onClick && { onClick })}
-      sx={{
-        overflow: 'visible',
-        ...(!isPublished && { backgroundColor: unpublishedNoticeColor }),
-      }}
-    >
-      <WrapperElement
-        {...(!!onClick && {
-          sx: {
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'stretch',
-            flex: 1,
-          },
-        })}
+    <>
+      <Card
+        {...(onClick && { onClick })}
+        sx={{
+          overflow: 'visible',
+          ...(!isPublished && { backgroundColor: unpublishedNoticeColor }),
+        }}
       >
-        <CardContent
-          component="article"
-          sx={{ display: 'flex', flexDirection: 'column', flex: 1 }}
-        >
-          <TitleWrapper {...TitleWrapperProps}>
-            <Typography component="h3" mb={1}>
-              {name}
-            </Typography>
-
-            {isEditAllowed && (
-              <Tooltip title={t('edit.tooltip')}>
-                <IconButton onClick={handleEdit} size="small">
-                  <Edit fontSize="small" />
-                </IconButton>
-              </Tooltip>
-            )}
-          </TitleWrapper>
-
-          <Typography
-            sx={{
-              color: 'text.secondary',
-              fontSize: 15,
-              whiteSpace: 'pre-wrap',
+        <WrapperElement
+          {...(!!onClick && {
+            sx: {
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'stretch',
               flex: 1,
-            }}
+            },
+          })}
+        >
+          <CardContent
+            component="article"
+            sx={{ display: 'flex', flexDirection: 'column', flex: 1 }}
           >
-            {contentToRender}
-          </Typography>
+            <TitleWrapper {...TitleWrapperProps}>
+              <Typography component="h3" mb={1}>
+                {name}
+              </Typography>
 
-          <Divider sx={{ my: 1 }} />
+              {isEditAllowed && (
+                <Box>
+                  {isPublishAllowed && (
+                    <Tooltip title={t('tooltip.publishNow')}>
+                      <IconButton onClick={handlePublishNow} size="small">
+                        <Publish fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                  )}
 
-          <Box component="aside">
-            <Typography component="span" sx={{ fontSize: 13 }}>
-              {preview || longerPreview ? (
-                <strong style={{ color: primary[500] }}>
-                  {createdBy.fullName}
-                </strong>
-              ) : (
-                <Trans i18nKey="common:writtenBy">
-                  Written by
-                  <strong style={{ color: primary[500] }}>
-                    {{ author: createdBy.fullName }}
-                  </strong>
-                </Trans>
+                  <Tooltip title={t('tooltip.edit')}>
+                    <IconButton onClick={handleEdit} size="small">
+                      <Edit fontSize="small" />
+                    </IconButton>
+                  </Tooltip>
+                </Box>
               )}
+            </TitleWrapper>
+
+            <Typography
+              sx={{
+                color: 'text.secondary',
+                fontSize: 15,
+                whiteSpace: 'pre-wrap',
+                flex: 1,
+              }}
+            >
+              {contentToRender}
             </Typography>
 
-            <Typography component="span" sx={{ mx: 1 }}>
-              |
-            </Typography>
+            <Divider sx={{ my: 1 }} />
 
-            <Typography component="span" sx={{ fontSize: 13 }}>
-              {preview || longerPreview ? (
-                <strong style={{ color: primary[500] }}>
-                  {format(new Date(publishTime), 'dd-MM-yyyy HH:mm')}
-                </strong>
-              ) : (
-                <Trans i18nKey="common:publishedOn">
-                  Published on
+            <Box component="aside">
+              <Typography component="span" sx={{ fontSize: 13 }}>
+                {preview || longerPreview ? (
                   <strong style={{ color: primary[500] }}>
-                    {{
-                      date: format(publishTime, 'dd-MM-yyyy HH:mm'),
-                    }}
+                    {createdBy.fullName}
                   </strong>
-                </Trans>
-              )}
-            </Typography>
-          </Box>
-        </CardContent>
-      </WrapperElement>
-    </Card>
+                ) : (
+                  <Trans i18nKey="common:writtenBy">
+                    Written by
+                    <strong style={{ color: primary[500] }}>
+                      {{ author: createdBy.fullName }}
+                    </strong>
+                  </Trans>
+                )}
+              </Typography>
+
+              <Typography component="span" sx={{ mx: 1 }}>
+                |
+              </Typography>
+
+              <Typography component="span" sx={{ fontSize: 13 }}>
+                {preview || longerPreview ? (
+                  <strong style={{ color: primary[500] }}>
+                    {format(new Date(publishTime), 'dd-MM-yyyy HH:mm')}
+                  </strong>
+                ) : (
+                  <Trans i18nKey="common:publishedOn">
+                    Published on
+                    <strong style={{ color: primary[500] }}>
+                      {{
+                        date: format(publishTime, 'dd-MM-yyyy HH:mm'),
+                      }}
+                    </strong>
+                  </Trans>
+                )}
+              </Typography>
+            </Box>
+          </CardContent>
+        </WrapperElement>
+      </Card>
+      {confirmationDialog}
+    </>
   );
 }
