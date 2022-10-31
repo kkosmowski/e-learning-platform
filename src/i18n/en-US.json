@@ -95,7 +95,8 @@
     "tooltip": {
       "edit": "Edit the title or content",
       "publishNow": "Publish now",
-      "alreadyPublished": "Notice is already published, cannot edit its publishing time."
+      "alreadyPublished": "Notice is already published, cannot edit its publishing time.",
+      "share": "Copy the link to this notice"
     },
     "confirm": {
       "publishNowTitle": "Publishing a notice",
@@ -103,7 +104,8 @@
     },
     "toast": {
       "createSuccess": "Successfully created notice \"{{ name }}\"",
-      "publishSuccess": "Successfully published notice \"{{ name }}\""
+      "publishSuccess": "Successfully published notice \"{{ name }}\"",
+      "copySuccess": "Link copied"
     }
   },
   "common": {
@@ -141,6 +143,10 @@
     "tooltip": {
       "missingData": "Not all required data is provided",
       "formUntouched": "Form data has not been modified"
+    },
+    "toast": {
+      "linkCopied": "Link copied",
+      "linkCopyFailed": "Failed to copy a link"
     }
   },
   "settings": {
