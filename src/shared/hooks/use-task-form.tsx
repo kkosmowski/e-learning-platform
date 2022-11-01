@@ -312,6 +312,11 @@ export function useTaskForm(props: UseTaskFormProps) {
             </Typography>
           </Typography>
 
+          {/*
+           @todo add option to choose task type (if possible)
+            e.g. task should be available when duration is 10min - 24h
+                 homework should be available when duration is 4h - ...
+          */}
           {currentTaskType && (
             <Typography>
               {t('currentType')}: <strong>{t(currentTaskType)}</strong>
@@ -319,6 +324,11 @@ export function useTaskForm(props: UseTaskFormProps) {
           )}
         </Box>
       )}
+
+      {/*
+       @todo show warning when current type was *automatically* changed from original
+        (this can happen when someone started creating Task and set duration to e.g. 2 days)
+      */}
 
       <Box sx={{ display: 'flex', gap: 3, '*': { flex: 1 } }}>
         <Tooltip title={submitButtonTooltip}>
