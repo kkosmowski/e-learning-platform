@@ -61,6 +61,21 @@
     }
   },
   "task": {
+    "create": {
+      "title": {
+        "task": "Create new task",
+        "homework": "Create new homework"
+      },
+      "placeholder": {
+        "name": "Title",
+        "content": "Message",
+        "startTime": "Start time",
+        "endTime": "Deadline time"
+      }
+    },
+    "shortcuts": "Shortcuts",
+    "setStartNow": "Set start time now",
+    "currentType": "Current task type",
     "task": "Task",
     "homework": "Homework",
     "statuses": {
@@ -150,7 +165,18 @@
     "toast": {
       "linkCopied": "Link copied",
       "linkCopyFailed": "Failed to copy a link"
-    }
+    },
+    "duration": "Duration",
+    "setDuration": "Choose duration",
+    "days": "{{ days }} days",
+    "1day": "1 day",
+    "hours1": "{{ hours }} hours",
+    "hours2": "{{ hours }} hours",
+    "1hour": "1 hour",
+    "minutes1": "{{ minutes}} minutes",
+    "minutes2": "{{ minutes}} minutes",
+    "1minute": "1 minute",
+    "and": "and"
   },
   "settings": {
     "title": "Settings",
@@ -315,6 +341,7 @@
     "SUBJECT_CLASS_REQUIRED": "Select this subject's class.",
     "SUBJECT_TEACHER_REQUIRED": "Select lecturing teacher.",
     "PUBLISH_TIME_REQUIRED": "Publishing time must be given.",
-    "NOTICE_NOT_FOUND": "Notice not found"
+    "NOTICE_NOT_FOUND": "Notice not found",
+    "TASK_DURATION_TOO_SHORT": "Task duration is too short. At least {{ min }} min is required."
   }
 }

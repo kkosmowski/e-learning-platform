@@ -20,3 +20,11 @@ export interface TaskSubmission extends BaseItem {
   // fileUrl: string;
   // comment: string;
 }
+
+export interface TaskForm {
+  subjectId: string;
+  name: string;
+  content: string;
+  startTime: Date | null;
+  endTime: Date | null;
+}

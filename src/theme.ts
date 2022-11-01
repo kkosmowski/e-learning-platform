@@ -100,9 +100,6 @@ const baseThemeOptions: ThemeOptions = {
       fontSize: 18,
       fontWeight: 400,
     },
-    body1: {
-      color: colors.text.primary,
-    },
     body2: {
       color: text[1000],
     },
