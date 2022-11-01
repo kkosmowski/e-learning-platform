@@ -7,6 +7,7 @@ import {
   UpdateNoticePayload,
   UpdateNoticeResponse,
 } from 'shared/types/notice';
+import { EmptyResponse } from 'shared/types/shared';
 
 export const getSubjectNotices = (
   subjectId: string
@@ -29,3 +30,6 @@ export const updateNotice = ({
 
 export const publishNotice = (id: string): Promise<UpdateNoticeResponse> =>
   authorized((api) => api.post(`notice/${id}/publish`));
+
+export const deleteNotice = (id: string): Promise<EmptyResponse> =>
+  authorized((api) => api.delete(`notice/${id}`));
