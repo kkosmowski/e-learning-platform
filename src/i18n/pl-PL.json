@@ -95,7 +95,8 @@
     "tooltip": {
       "edit": "Edytuj tytuł lub treść ogłoszenia",
       "publishNow": "Opublikuj teraz",
-      "alreadyPublished": "Ogłoszenie jest już opublikowane, nie można zmienić daty publikacji."
+      "alreadyPublished": "Ogłoszenie jest już opublikowane, nie można zmienić daty publikacji.",
+      "share": "Skopiuj link do ogłoszenia"
     },
     "confirm": {
       "publishNowTitle": "Potwierdź publikację ogłoszenia",
@@ -141,6 +142,10 @@
     "tooltip": {
       "missingData": "Nie wypełniono wszystkich wymaganych pól",
       "formUntouched": "Dane nie zostały zmodyfikowane"
+    },
+    "toast": {
+      "linkCopied": "Skopiowano link",
+      "linkCopyFailed": "Nie udało się skopiować linku"
     }
   },
   "settings": {

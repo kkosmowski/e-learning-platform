@@ -19,7 +19,7 @@ import {
 } from 'shared/consts/notice';
 import { Notice } from 'shared/types/notice';
 import { primary, unpublishedNoticeColor } from 'colors';
-import { Edit, Publish } from '@mui/icons-material';
+import { Edit, Publish, Share } from '@mui/icons-material';
 import { Role } from 'shared/types/user';
 import { useAuth } from 'contexts/auth';
 import useCustomNavigate from 'hooks/use-custom-navigate';
@@ -117,6 +117,15 @@ export default function NoticeCard(props: NoticeCardProps) {
     }
   };
 
+  const handleShare = async () => {
+    try {
+      await navigator.clipboard.writeText(location.href);
+      toast.success(t('common:toast.linkCopied'));
+    } catch (error) {
+      toast.error(t('common:toast.linkCopyFailed'));
+    }
+  };
+
   return (
     <>
       <Card
@@ -145,23 +154,29 @@ export default function NoticeCard(props: NoticeCardProps) {
                 {name}
               </Typography>
 
-              {isEditAllowed && (
-                <Box>
-                  {isPublishAllowed && (
-                    <Tooltip title={t('tooltip.publishNow')}>
-                      <IconButton onClick={handlePublishNow} size="small">
-                        <Publish fontSize="small" />
-                      </IconButton>
-                    </Tooltip>
-                  )}
+              <Box>
+                {isPublishAllowed && (
+                  <Tooltip title={t('tooltip.publishNow')}>
+                    <IconButton onClick={handlePublishNow} size="small">
+                      <Publish fontSize="small" />
+                    </IconButton>
+                  </Tooltip>
+                )}
 
+                {isEditAllowed && (
                   <Tooltip title={t('tooltip.edit')}>
                     <IconButton onClick={handleEdit} size="small">
                       <Edit fontSize="small" />
                     </IconButton>
                   </Tooltip>
-                </Box>
-              )}
+                )}
+
+                <Tooltip title={t('tooltip.share')}>
+                  <IconButton onClick={handleShare} size="small">
+                    <Share fontSize="small" />
+                  </IconButton>
+                </Tooltip>
+              </Box>
             </TitleWrapper>
 
             <Typography
