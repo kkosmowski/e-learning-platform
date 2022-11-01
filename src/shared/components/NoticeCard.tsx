@@ -11,6 +11,10 @@ import {
 import { Fragment, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import format from 'date-fns/format';
+import { useQueryClient } from '@tanstack/react-query';
+import { useParams } from 'react-router';
+import toast from 'react-hot-toast';
+import { Delete, Edit, Publish, Share } from '@mui/icons-material';
 
 import {
   BOARD_NOTICE_CONTENT_LENGTH,
@@ -19,15 +23,11 @@ import {
 } from 'shared/consts/notice';
 import { Notice } from 'shared/types/notice';
 import { primary, unpublishedNoticeColor } from 'colors';
-import { Edit, Publish, Share } from '@mui/icons-material';
 import { Role } from 'shared/types/user';
 import { useAuth } from 'contexts/auth';
 import useCustomNavigate from 'hooks/use-custom-navigate';
 import { useConfirmationDialog } from 'shared/hooks';
-import { publishNotice } from 'api/notice';
-import { useQueryClient } from '@tanstack/react-query';
-import { useParams } from 'react-router';
-import toast from 'react-hot-toast';
+import { deleteNotice, publishNotice } from 'api/notice';
 
 interface NoticeCardProps {
   notice: Notice;
@@ -60,7 +60,7 @@ export default function NoticeCard(props: NoticeCardProps) {
   const { createdBy, content, name, publishTime, isPublished } = notice;
   const { subjectId } = useParams();
   const { currentUser } = useAuth();
-  const { navigate } = useCustomNavigate();
+  const { navigate, back } = useCustomNavigate();
   const { t } = useTranslation('notice');
   const { confirmAction, confirmationDialog } = useConfirmationDialog();
   const queryClient = useQueryClient();
@@ -126,6 +126,26 @@ export default function NoticeCard(props: NoticeCardProps) {
     }
   };
 
+  const handleDelete = async () => {
+    const shouldDelete = await confirmAction({
+      title: 'notice:confirm.deleteTitle',
+      message: {
+        key: 'notice:confirm.deleteMessage',
+        props: { name: notice.name },
+      },
+      confirmLabel: 'common:delete',
+      confirmColor: 'error',
+    });
+
+    if (shouldDelete) {
+      await deleteNotice(notice.id);
+      await queryClient.invalidateQueries(['notices', subjectId]);
+      await queryClient.removeQueries(['notice', notice.id]);
+      back();
+      toast.success(t('toast.deleteSuccess', { name: notice.name }));
+    }
+  };
+
   return (
     <>
       <Card
@@ -171,11 +191,25 @@ export default function NoticeCard(props: NoticeCardProps) {
                   </Tooltip>
                 )}
 
-                <Tooltip title={t('tooltip.share')}>
-                  <IconButton onClick={handleShare} size="small">
-                    <Share fontSize="small" />
-                  </IconButton>
-                </Tooltip>
+                {!isAnyPreview && (
+                  <Tooltip title={t('tooltip.share')}>
+                    <IconButton onClick={handleShare} size="small">
+                      <Share fontSize="small" />
+                    </IconButton>
+                  </Tooltip>
+                )}
+
+                {isEditAllowed && (
+                  <Tooltip title={t('tooltip.delete')}>
+                    <IconButton
+                      onClick={handleDelete}
+                      size="small"
+                      color="error"
+                    >
+                      <Delete fontSize="small" />
+                    </IconButton>
+                  </Tooltip>
+                )}
               </Box>
             </TitleWrapper>
 
