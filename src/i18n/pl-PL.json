@@ -71,7 +71,9 @@
         "content": "Treść",
         "startTime": "Data i czas rozpoczęcia",
         "endTime": "Data i czas zakończenia"
-      }
+      },
+      "typeChangedToTask": "Rodzaj zadania został automatycznie zmieniony na \"Zadanie\" z powodu czasu trwania (krótszy niż 12 godzin)",
+      "typeChangedToHomework": "Rodzaj zadania został automatycznie zmieniony na \"Zadanie domowe\" z powodu czasu trwania (12 godzin lub więcej)"
     },
     "shortcuts": "Skróty",
     "setStartNow": "Ustaw rozpoczęcie teraz",

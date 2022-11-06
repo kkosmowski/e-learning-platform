@@ -71,6 +71,10 @@
         "content": "Message",
         "startTime": "Start time",
         "endTime": "Deadline time"
+      },
+      "typeChangedTo": {
+        "task": "Type was adjusted to \"Task\" due to the duration (shorter than 12 hours)",
+        "homework": "Type was adjusted to \"Homework\" due to the duration (12 hours or longer)"
       }
     },
     "shortcuts": "Shortcuts",

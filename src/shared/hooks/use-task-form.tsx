@@ -32,7 +32,13 @@ interface UseTaskFormProps {
 }
 
 export function useTaskForm(props: UseTaskFormProps) {
-  const { initialValues, submitButtonLabel, onSubmit, t } = props;
+  const {
+    type: initialType,
+    initialValues,
+    submitButtonLabel,
+    onSubmit,
+    t,
+  } = props;
   const [isUntouched, setIsUntouched] = useState(true);
   const [startTimeDatePickerOpened, setStartTimeDatePickerOpened] =
     useState(false);
@@ -41,6 +47,8 @@ export function useTaskForm(props: UseTaskFormProps) {
     useState<Date | null>(null);
   const [endTimeDatePickerValue, setEndTimeDatePickerValue] =
     useState<Date | null>(null);
+  // this will be set in the type Select.
+  const [typeManuallyChanged, setTypeManuallyChanged] = useState(false);
   const { back } = useCustomNavigate();
 
   const formik = useFormik<TaskForm>({
@@ -80,6 +88,11 @@ export function useTaskForm(props: UseTaskFormProps) {
     }
     return null;
   }, [values.startTime, values.endTime]);
+
+  const typeWarningVisible = useMemo(
+    () => !typeManuallyChanged && initialType !== currentTaskType,
+    [currentTaskType, initialType, typeManuallyChanged]
+  );
 
   const endTimeError = useMemo(() => {
     if (values.startTime && values.endTime) {
@@ -312,14 +325,15 @@ export function useTaskForm(props: UseTaskFormProps) {
             </Typography>
           </Typography>
 
-          {/*
-           @todo add option to choose task type (if possible)
-            e.g. task should be available when duration is 10min - 24h
-                 homework should be available when duration is 4h - ...
-          */}
           {currentTaskType && (
             <Typography>
               {t('currentType')}: <strong>{t(currentTaskType)}</strong>
+            </Typography>
+          )}
+
+          {typeWarningVisible && (
+            <Typography color="text.warning">
+              {t('create.typeChangedTo.' + currentTaskType)}
             </Typography>
           )}
         </Box>
