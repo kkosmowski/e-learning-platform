@@ -61,6 +61,39 @@
     }
   },
   "task": {
+    "create": {
+      "title": {
+        "task": "Create new task",
+        "homework": "Create new homework"
+      }
+    },
+    "update": {
+      "title": {
+        "task": "Modify task",
+        "homework": "Modify homework"
+      }
+    },
+    "form": {
+      "placeholder": {
+        "name": "Title",
+        "content": "Message",
+        "startTime": "Start time",
+        "endTime": "Deadline time"
+      },
+      "typeChangedTo": {
+        "task": "Type was adjusted to \"Task\" due to the duration (shorter than 12 hours)",
+        "homework": "Type was adjusted to \"Homework\" due to the duration (12 hours or longer)"
+      },
+      "mandatoryLabel": "Mandatory task",
+      "shortcuts": "Shortcuts",
+      "setStartNow": "Set start time now",
+      "currentType": "Current task type",
+      "currentMandatory": "Current tasks status",
+      "mandatory": {
+        "true": "Mandatory",
+        "false": "Not mandatory"
+      }
+    },
     "task": "Task",
     "homework": "Homework",
     "statuses": {
@@ -150,7 +183,18 @@
     "toast": {
       "linkCopied": "Link copied",
       "linkCopyFailed": "Failed to copy a link"
-    }
+    },
+    "duration": "Duration",
+    "setDuration": "Choose duration",
+    "days": "{{ days }} days",
+    "1day": "1 day",
+    "hours1": "{{ hours }} hours",
+    "hours2": "{{ hours }} hours",
+    "1hour": "1 hour",
+    "minutes1": "{{ minutes}} minutes",
+    "minutes2": "{{ minutes}} minutes",
+    "1minute": "1 minute",
+    "and": "and"
   },
   "settings": {
     "title": "Settings",
@@ -315,6 +359,7 @@
     "SUBJECT_CLASS_REQUIRED": "Select this subject's class.",
     "SUBJECT_TEACHER_REQUIRED": "Select lecturing teacher.",
     "PUBLISH_TIME_REQUIRED": "Publishing time must be given.",
-    "NOTICE_NOT_FOUND": "Notice not found"
+    "NOTICE_NOT_FOUND": "Notice not found",
+    "TASK_DURATION_TOO_SHORT": "Task duration is too short. At least {{ min }} min is required."
   }
 }

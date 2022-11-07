@@ -6,7 +6,6 @@ import GradeCard from 'shared/components/GradeCard';
 import TabPanel from 'shared/components/TabPanel';
 import SectionTitle from 'shared/components/SectionTitle';
 import { divideGrades } from 'shared/utils/grade.utils';
-import { teacherGrades } from 'shared/consts/grade';
 import { useTranslation } from 'react-i18next';
 
 enum TeacherGradesTab {
@@ -15,7 +14,7 @@ enum TeacherGradesTab {
 }
 
 export default function SubjectGradesTeacher() {
-  const { assignmentGrades, nonAssignmentGrades } = divideGrades(teacherGrades);
+  const { assignmentGrades, nonAssignmentGrades } = divideGrades([]);
   const [currentTab, setCurrentTab] = useState<TeacherGradesTab>(
     TeacherGradesTab.Assignment
   );

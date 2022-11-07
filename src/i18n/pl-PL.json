@@ -61,6 +61,39 @@
     }
   },
   "task": {
+    "create": {
+      "title": {
+        "task": "Utwórz nowe zadanie",
+        "homework": "Utwórz nowe zadanie domowe"
+      }
+    },
+    "update": {
+      "title": {
+        "task": "Modyfikuj zadanie",
+        "homework": "Modyfikuj zadanie domowe"
+      }
+    },
+    "form": {
+      "placeholder": {
+        "name": "Tytuł",
+        "content": "Treść",
+        "startTime": "Data i czas rozpoczęcia",
+        "endTime": "Data i czas zakończenia"
+      },
+      "typeChangedTo": {
+        "task": "Rodzaj zadania został automatycznie zmieniony na \"Zadanie\" z powodu czasu trwania (krótszy niż 12 godzin)",
+        "homework": "Rodzaj zadania został automatycznie zmieniony na \"Zadanie domowe\" z powodu czasu trwania (12 godzin lub więcej)"
+      },
+      "mandatoryLabel": "Zadanie obowiązkowe",
+      "shortcuts": "Skróty",
+      "setStartNow": "Ustaw rozpoczęcie teraz",
+      "currentType": "Rodzaj zadania",
+      "currentMandatory": "Forma zadania",
+      "mandatory": {
+        "true": "Obowiązkowe",
+        "false": "Dodatkowe (nieobowiązkowe)"
+      }
+    },
     "task": "Zadanie",
     "homework": "Zadanie domowe",
     "statuses": {
@@ -150,7 +183,18 @@
     "toast": {
       "linkCopied": "Skopiowano link",
       "linkCopyFailed": "Nie udało się skopiować linku"
-    }
+    },
+    "duration": "Czas trwania",
+    "setDuration": "Wybierz czas trwania",
+    "days": "{{ days }} dni",
+    "1day": "1 dzień",
+    "hours1": "{{ hours }} godziny",
+    "hours2": "{{ hours }} godzin",
+    "1hour": "1 godzina",
+    "minutes1": "{{ minutes}} minuty",
+    "minutes2": "{{ minutes}} minut",
+    "1minute": "1 minuta",
+    "and": "i"
   },
   "settings": {
     "title": "Ustawienia",
@@ -315,6 +359,7 @@
     "SUBJECT_CLASS_REQUIRED": "Wybierz klasę, której przedmiot dotyczy.",
     "SUBJECT_TEACHER_REQUIRED": "Wybierz nauczyciela prowadzącego przedmiot.",
     "PUBLISH_TIME_REQUIRED": "Określ datę publikacji.",
-    "NOTICE_NOT_FOUND": "Nie znaleziono ogłoszenia"
+    "NOTICE_NOT_FOUND": "Nie znaleziono ogłoszenia",
+    "TASK_DURATION_TOO_SHORT": "Czas trwania zadania jest zbyt krótki. Wymagane minimum to {{ min }} minut."
   }
 }

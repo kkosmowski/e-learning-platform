@@ -5,8 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Centered } from 'shared/components/Container';
 import TaskCard from 'shared/components/TaskCard';
-import { tasks, homework, taskSubmissions } from 'shared/consts/task';
-import { TaskType } from 'shared/types/task';
+import { Task as TaskInterface, TaskType } from 'shared/types/task';
 import { Status } from 'shared/types/shared';
 import { isPastDate } from 'shared/utils/date.utils';
 import { isStudent, isTeacher } from 'shared/utils/user.utils';
@@ -20,7 +19,7 @@ export default function Task({ type }: { type: TaskType }) {
   const { taskId } = useParams<{ taskId: string }>();
   const { t } = useTranslation('task');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const items = type === TaskType.Task ? tasks : homework;
+  const items: TaskInterface[] = [];
   const isUserStudent = isStudent(CURRENT_USER);
   const isUserTeacher = isTeacher(CURRENT_USER);
 
@@ -68,13 +67,13 @@ export default function Task({ type }: { type: TaskType }) {
         />
       )}
 
-      {isUserTeacher && (
-        <TaskSubmissionList
-          submissions={taskSubmissions.filter(
-            (submission) => submission.taskId === taskId
-          )}
-        />
-      )}
+      {/*{isUserTeacher && (*/}
+      {/*  <TaskSubmissionList*/}
+      {/*    submissions={taskSubmissions.filter(*/}
+      {/*      (submission) => submission.taskId === taskId*/}
+      {/*    )}*/}
+      {/*  />*/}
+      {/*)}*/}
     </Centered>
   );
 }

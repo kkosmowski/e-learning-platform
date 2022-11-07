@@ -1,8 +1,4 @@
-import { homework, tasks } from 'shared/consts/task';
-import { studentGrades, teacherGrades } from 'shared/consts/grade';
 import { TaskType } from 'shared/types/task';
-import { isTeacher } from 'shared/utils/user.utils';
-import { CURRENT_USER } from 'shared/consts/user';
 import LatestGrades from './components/LatestGrades';
 import LatestNotices from './components/LatestNotices';
 import LatestTasks from './components/LatestTasks';
@@ -55,14 +51,12 @@ export default function SubjectOverview() {
       />
 
       <LatestGrades
-        grades={isTeacher(CURRENT_USER) ? teacherGrades : studentGrades}
         onMoreClick={navigateToGrades}
         onAssignGrade={navigateToGradeAssignment}
       />
 
       <LatestTasks
         type={TaskType.Task}
-        tasks={tasks}
         onTaskClick={navigateToTask}
         onMoreClick={navigateToTasks}
         onCreateTask={navigateToTaskCreation}
@@ -70,7 +64,6 @@ export default function SubjectOverview() {
 
       <LatestTasks
         type={TaskType.Homework}
-        tasks={homework}
         onTaskClick={navigateToTask}
         onMoreClick={navigateToTasks}
         onCreateTask={navigateToTaskCreation}

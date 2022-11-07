@@ -15,21 +15,24 @@ import Settings, {
   CreateUser,
 } from 'containers/Settings';
 import UsersManagement from 'containers/Settings/components/UsersManagement';
-import SubjectOverview, { SubjectLayout } from 'containers/Subject';
+import SubjectOverview, {
+  SubjectLayout,
+  CreateNotice,
+  CreateTask,
+  EditNotice,
+  // EditTask,
+} from 'containers/Subject';
 import NoticeBoard from 'containers/NoticeBoard';
 import Notice from 'containers/Notice';
 import TaskList from 'containers/TaskList';
 import Task from 'containers/Task';
 import SubjectGrades from 'containers/SubjectGrades';
 import Subjects from 'containers/Subjects';
-import { CreateNotice } from 'containers/Subject/features';
 import AssignNewGrade from 'containers/teacher/AssignNewGrade';
-import CreateNewTask from 'containers/teacher/CreateNewTask';
 import TeacherGuard from 'shared/guards/TeacherGuard';
 import { RouteObjectWithId } from 'shared/types/routing';
 import { TaskType } from 'shared/types/task';
 import { Role } from 'shared/types/user';
-import EditNotice from '../../containers/Subject/features/EditNotice';
 
 export const features: RouteObjectWithId[] = [
   {
@@ -99,7 +102,7 @@ export const features: RouteObjectWithId[] = [
                 path: 'new',
                 element: (
                   <TeacherGuard redirectTo="..">
-                    <CreateNewTask type={TaskType.Task} />
+                    <CreateTask type={TaskType.Task} />
                   </TeacherGuard>
                 ),
               },
@@ -120,7 +123,7 @@ export const features: RouteObjectWithId[] = [
                 path: 'new',
                 element: (
                   <TeacherGuard redirectTo="..">
-                    <CreateNewTask type={TaskType.Homework} />
+                    <CreateTask type={TaskType.Homework} />
                   </TeacherGuard>
                 ),
               },
