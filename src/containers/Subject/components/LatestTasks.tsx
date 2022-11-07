@@ -6,12 +6,11 @@ import TextButton from 'shared/components/TextButton';
 import TaskCard from 'shared/components/TaskCard';
 import { Task, TaskType } from 'shared/types/task';
 import { isTeacher } from 'shared/utils/user.utils';
-import { CURRENT_USER } from 'shared/consts/user';
-import { taskSubmissions, VISIBLE_LATEST_TASKS } from 'shared/consts/task';
+import { VISIBLE_LATEST_TASKS } from 'shared/consts/task';
 import { subjectStudents } from 'shared/consts/subject';
+import { useAuth } from 'contexts/auth';
 
 interface LatestTasksProps {
-  tasks: Task[];
   type: TaskType;
   onTaskClick: (type: TaskType, taskId: string) => void;
   onMoreClick: (type: TaskType) => void;
@@ -19,9 +18,11 @@ interface LatestTasksProps {
 }
 
 export default function LatestTasks(props: LatestTasksProps) {
-  const { tasks, type, onTaskClick, onMoreClick, onCreateTask } = props;
+  const { type, onTaskClick, onMoreClick, onCreateTask } = props;
   const { t } = useTranslation('subject');
-  const isUserTeacher = isTeacher(CURRENT_USER);
+  const { currentUser } = useAuth();
+  const isUserTeacher = isTeacher(currentUser);
+  const tasks: Task[] = [];
 
   return (
     <>
@@ -50,15 +51,15 @@ export default function LatestTasks(props: LatestTasksProps) {
           <Grid container spacing={2}>
             {tasks.slice(0, VISIBLE_LATEST_TASKS).map((task) => (
               <Grid item key={task.id} xs={12} md={6} lg={4}>
-                <TaskCard
-                  task={task}
-                  submissions={taskSubmissions.filter(
-                    (submission) => submission.taskId === task.id
-                  )}
-                  subjectStudents={subjectStudents}
-                  short
-                  onClick={() => onTaskClick(type, task.id)}
-                />
+                {/*<TaskCard*/}
+                {/*  task={task}*/}
+                {/*  submissions={taskSubmissions.filter(*/}
+                {/*    (submission) => submission.taskId === task.id*/}
+                {/*  )}*/}
+                {/*  subjectStudents={subjectStudents}*/}
+                {/*  short*/}
+                {/*  onClick={() => onTaskClick(type, task.id)}*/}
+                {/*/>*/}
               </Grid>
             ))}
           </Grid>

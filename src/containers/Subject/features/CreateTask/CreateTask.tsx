@@ -6,6 +6,7 @@ import { TaskType } from 'shared/types/task';
 import SectionTitle from 'shared/components/SectionTitle';
 import useCustomNavigate from 'hooks/use-custom-navigate';
 import { useTaskForm } from 'shared/hooks/use-task-form';
+import { useCreateTaskQuery } from 'shared/hooks/use-create-task-query';
 
 interface CreateTaskProps {
   type: TaskType;
@@ -16,7 +17,7 @@ export default function CreateTask(props: CreateTaskProps) {
   const { subjectId } = useParams();
   const { navigate } = useCustomNavigate();
   const { t } = useTranslation('task');
-  // const createTask = useCreateTaskQuery();
+  const createTask = useCreateTaskQuery();
 
   if (!subjectId) {
     navigate('/404');
@@ -26,14 +27,15 @@ export default function CreateTask(props: CreateTaskProps) {
     type,
     initialValues: {
       subjectId: subjectId || '',
+      mandatory: true,
+      type,
       name: '',
       content: '',
       startTime: null,
       endTime: null,
     },
     submitButtonLabel: t('common:create'),
-    onSubmit: () => {},
-    // onSubmit: createTask,
+    onSubmit: createTask,
     t,
   });
 

@@ -65,19 +65,35 @@
       "title": {
         "task": "Utwórz nowe zadanie",
         "homework": "Utwórz nowe zadanie domowe"
-      },
+      }
+    },
+    "update": {
+      "title": {
+        "task": "Modyfikuj zadanie",
+        "homework": "Modyfikuj zadanie domowe"
+      }
+    },
+    "form": {
       "placeholder": {
         "name": "Tytuł",
         "content": "Treść",
         "startTime": "Data i czas rozpoczęcia",
         "endTime": "Data i czas zakończenia"
       },
-      "typeChangedToTask": "Rodzaj zadania został automatycznie zmieniony na \"Zadanie\" z powodu czasu trwania (krótszy niż 12 godzin)",
-      "typeChangedToHomework": "Rodzaj zadania został automatycznie zmieniony na \"Zadanie domowe\" z powodu czasu trwania (12 godzin lub więcej)"
+      "typeChangedTo": {
+        "task": "Rodzaj zadania został automatycznie zmieniony na \"Zadanie\" z powodu czasu trwania (krótszy niż 12 godzin)",
+        "homework": "Rodzaj zadania został automatycznie zmieniony na \"Zadanie domowe\" z powodu czasu trwania (12 godzin lub więcej)"
+      },
+      "mandatoryLabel": "Zadanie obowiązkowe",
+      "shortcuts": "Skróty",
+      "setStartNow": "Ustaw rozpoczęcie teraz",
+      "currentType": "Rodzaj zadania",
+      "currentMandatory": "Forma zadania",
+      "mandatory": {
+        "true": "Obowiązkowe",
+        "false": "Dodatkowe (nieobowiązkowe)"
+      }
     },
-    "shortcuts": "Skróty",
-    "setStartNow": "Ustaw rozpoczęcie teraz",
-    "currentType": "Rodzaj zadania",
     "task": "Zadanie",
     "homework": "Zadanie domowe",
     "statuses": {

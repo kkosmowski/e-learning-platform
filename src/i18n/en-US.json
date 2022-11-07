@@ -65,7 +65,15 @@
       "title": {
         "task": "Create new task",
         "homework": "Create new homework"
-      },
+      }
+    },
+    "update": {
+      "title": {
+        "task": "Modify task",
+        "homework": "Modify homework"
+      }
+    },
+    "form": {
       "placeholder": {
         "name": "Title",
         "content": "Message",
@@ -75,11 +83,17 @@
       "typeChangedTo": {
         "task": "Type was adjusted to \"Task\" due to the duration (shorter than 12 hours)",
         "homework": "Type was adjusted to \"Homework\" due to the duration (12 hours or longer)"
+      },
+      "mandatoryLabel": "Mandatory task",
+      "shortcuts": "Shortcuts",
+      "setStartNow": "Set start time now",
+      "currentType": "Current task type",
+      "currentMandatory": "Current tasks status",
+      "mandatory": {
+        "true": "Mandatory",
+        "false": "Not mandatory"
       }
     },
-    "shortcuts": "Shortcuts",
-    "setStartNow": "Set start time now",
-    "currentType": "Current task type",
     "task": "Task",
     "homework": "Homework",
     "statuses": {

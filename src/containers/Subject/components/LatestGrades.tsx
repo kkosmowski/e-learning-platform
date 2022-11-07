@@ -11,20 +11,22 @@ import {
   LATEST_GRADES_VISIBLE_TEACHER_COUNT,
 } from 'shared/consts/grade';
 import { isStudent, isTeacher } from 'shared/utils/user.utils';
-import { CURRENT_USER } from 'shared/consts/user';
+import { useAuth } from 'contexts/auth';
 
 interface LatestGradesProps {
-  grades: Grade[];
   onMoreClick: () => void;
   onAssignGrade: () => void;
 }
 
 export default function LatestGrades(props: LatestGradesProps) {
-  const { grades, onMoreClick, onAssignGrade } = props;
+  const { onMoreClick, onAssignGrade } = props;
   const { t } = useTranslation('subject');
-  const isUserTeacher = isTeacher(CURRENT_USER);
-  const isUserStudent = isStudent(CURRENT_USER);
+  const { currentUser } = useAuth();
+  const isUserTeacher = isTeacher(currentUser);
+  const isUserStudent = isStudent(currentUser);
 
+  // @todo fetch different grades when teacher and when student
+  const grades: Grade[] = [];
   let assignmentGrades: Grade[] = [];
   let nonAssignmentGrades: Grade[] = [];
 

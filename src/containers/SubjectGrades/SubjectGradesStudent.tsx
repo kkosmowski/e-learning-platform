@@ -5,12 +5,11 @@ import GradeCard from 'shared/components/GradeCard';
 import GradeRow from 'shared/components/GradeRow';
 import { divideGrades } from 'shared/utils/grade.utils';
 import { average } from 'shared/utils/number.utils';
-import { studentGrades } from 'shared/consts/grade';
 import { Grade, GradeType } from 'shared/types/grade';
 import { STUDENT } from 'shared/consts/user';
 
 export default function SubjectGradesStudent() {
-  const { assignmentGrades, nonAssignmentGrades } = divideGrades(studentGrades);
+  const { assignmentGrades, nonAssignmentGrades } = divideGrades([]);
   const averageAssignmentsGrade: Grade = {
     id: 'average-grade',
     value: average(
