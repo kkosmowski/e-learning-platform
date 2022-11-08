@@ -5,8 +5,8 @@ import { useParams } from 'react-router';
 import { TaskType } from 'shared/types/task';
 import SectionTitle from 'shared/components/SectionTitle';
 import useCustomNavigate from 'hooks/use-custom-navigate';
-import { useTaskForm } from 'shared/hooks/use-task-form';
-import { useCreateTaskQuery } from 'shared/hooks/use-create-task-query';
+import { useTaskForm } from 'shared/hooks';
+import { useCreateTaskQuery } from 'shared/queries/use-create-task-query';
 
 interface CreateTaskProps {
   type: TaskType;

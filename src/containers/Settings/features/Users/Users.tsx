@@ -5,7 +5,8 @@ import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
 
 import { Role, User } from 'shared/types/user';
-import { useConfirmationDialog, useUsersQuery } from 'shared/hooks';
+import { useConfirmationDialog } from 'shared/hooks';
+import { useUsersQuery } from 'shared/queries';
 import PageLoading from 'shared/components/PageLoading';
 import UsersTable from './components/UsersTable';
 import useCustomNavigate from 'hooks/use-custom-navigate';

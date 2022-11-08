@@ -28,11 +28,13 @@ export interface TaskDto {
   id: string;
   group_subject: SubjectDto;
   created_by: UserDto;
+  mandatory: boolean;
+  type: TaskType;
   name: string;
   content: string;
-  created_at: Date;
-  start_time: Date;
-  end_time: Date;
+  created_at: string;
+  start_time: string;
+  end_time: string;
 }
 
 export interface TaskForm {

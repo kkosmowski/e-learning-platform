@@ -3,7 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 
 import SectionTitle from 'shared/components/SectionTitle';
-import { useNoticeForm, useCreateNoticeQuery } from 'shared/hooks';
+import { useNoticeForm } from 'shared/hooks';
+import { useCreateNoticeQuery } from 'shared/queries';
 import useCustomNavigate from 'hooks/use-custom-navigate';
 
 export default function CreateNotice() {

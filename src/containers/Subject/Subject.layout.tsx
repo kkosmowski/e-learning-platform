@@ -2,7 +2,7 @@ import { useParams, Outlet } from 'react-router';
 
 import CommonViewLayout from 'layouts/CommonView';
 import useCustomNavigate from 'hooks/use-custom-navigate';
-import { useSubjectQuery } from 'shared/hooks';
+import { useSubjectQuery } from 'shared/queries';
 import PageLoading from 'shared/components/PageLoading';
 import { useAuth } from 'contexts/auth';
 

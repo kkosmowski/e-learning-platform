@@ -6,7 +6,8 @@ import toast from 'react-hot-toast';
 
 import { UpdateUserForm } from 'shared/types/user';
 import CommonViewLayout from 'layouts/CommonView';
-import { useConfirmationDialog, useUsersQuery } from 'shared/hooks';
+import { useConfirmationDialog } from 'shared/hooks';
+import { useUsersQuery } from 'shared/queries';
 import UserInfo from './components/UserInfo';
 import UserEditForm from './components/UserEditForm';
 import PageLoading from 'shared/components/PageLoading';

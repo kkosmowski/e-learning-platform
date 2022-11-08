@@ -14,12 +14,13 @@ import { isStudent, isTeacher } from 'shared/utils/user.utils';
 import { useAuth } from 'contexts/auth';
 
 interface LatestGradesProps {
+  subjectId: string;
   onMoreClick: () => void;
   onAssignGrade: () => void;
 }
 
 export default function LatestGrades(props: LatestGradesProps) {
-  const { onMoreClick, onAssignGrade } = props;
+  const { subjectId, onMoreClick, onAssignGrade } = props;
   const { t } = useTranslation('subject');
   const { currentUser } = useAuth();
   const isUserTeacher = isTeacher(currentUser);

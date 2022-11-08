@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Centered } from 'shared/components/Container';
 import NoticeCard from 'shared/components/NoticeCard';
 import useCustomNavigate from 'hooks/use-custom-navigate';
-import { useNoticeQuery } from 'shared/hooks/use-notice-query';
+import { useNoticeQuery } from 'shared/queries/use-notice-query';
 import PageLoading from 'shared/components/PageLoading';
 
 export default function Notice() {

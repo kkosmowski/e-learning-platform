@@ -15,9 +15,11 @@ import { Role, User } from 'shared/types/user';
 import { SubjectCategory, SubjectForm } from 'shared/types/subject';
 import ListGridItem from 'shared/components/ListGridItem';
 import { SubjectClass } from 'shared/types/class';
-import { useUsersQuery } from './use-users-query';
-import { useClassesQuery } from './use-classes-query';
-import { useSubjectCategoriesQuery } from 'shared/hooks';
+import {
+  useUsersQuery,
+  useClassesQuery,
+  useSubjectCategoriesQuery,
+} from 'shared/queries';
 
 export interface UseSubjectFormProps {
   initialValues: SubjectForm;

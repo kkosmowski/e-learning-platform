@@ -107,6 +107,10 @@
     "daysLeft": "dni",
     "hoursLeft": "godziny",
     "minutesLeft": "minut",
+    "noItems": {
+      "task": "Brak zadań.",
+      "homework": "Brak zadań domowych."
+    },
     "tooltip": {
       "cannotSubmitPastDeadline": "Nie można przesłać rozwiązania gdyż termin minął."
     }
@@ -125,6 +129,7 @@
     "edit": {
       "title": "Modyfikuj ogłoszenie"
     },
+    "noItems": "Brak ogłoszeń.",
     "tooltip": {
       "edit": "Edytuj tytuł lub treść ogłoszenia",
       "publishNow": "Opublikuj teraz",
@@ -150,9 +155,6 @@
     "submit": "Wyślij",
     "confirm": "Potwierdź",
     "cancel": "Anuluj",
-    "noNotices": "Brak ogłoszeń.",
-    "noTasks": "Brak zadań.",
-    "noHomework": "Brak zadań domowych.",
     "task": "Zadanie",
     "homework": "Zadanie domowe",
     "test": "Test",

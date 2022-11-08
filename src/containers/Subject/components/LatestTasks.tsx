@@ -7,33 +7,38 @@ import TaskCard from 'shared/components/TaskCard';
 import { Task, TaskType } from 'shared/types/task';
 import { isTeacher } from 'shared/utils/user.utils';
 import { VISIBLE_LATEST_TASKS } from 'shared/consts/task';
-import { subjectStudents } from 'shared/consts/subject';
 import { useAuth } from 'contexts/auth';
+import { useTasksQuery } from 'shared/queries/use-tasks-query';
+import PageLoading from 'shared/components/PageLoading';
 
 interface LatestTasksProps {
   type: TaskType;
+  subjectId: string;
   onTaskClick: (type: TaskType, taskId: string) => void;
   onMoreClick: (type: TaskType) => void;
   onCreateTask: (type: TaskType) => void;
 }
 
 export default function LatestTasks(props: LatestTasksProps) {
-  const { type, onTaskClick, onMoreClick, onCreateTask } = props;
+  const { type, subjectId, onTaskClick, onMoreClick, onCreateTask } = props;
   const { t } = useTranslation('subject');
   const { currentUser } = useAuth();
   const isUserTeacher = isTeacher(currentUser);
-  const tasks: Task[] = [];
+  const isTypeTask = type === TaskType.Task;
+  const {
+    [isTypeTask ? 'tasks' : 'homework']: items,
+    [isTypeTask ? 'tasksLoading' : 'homeworkLoading']: isLoading,
+    [isTypeTask ? 'tasksSuccess' : 'homeworkSuccess']: isSuccess,
+  } = useTasksQuery(subjectId);
 
   return (
     <>
       <SectionTitle>
         <span>
-          {type === TaskType.Task
-            ? t('general.latestTasks')
-            : t('general.latestHomework')}
+          {isTypeTask ? t('general.latestTasks') : t('general.latestHomework')}
         </span>
 
-        {!!tasks.length && (
+        {Boolean(items?.length) && (
           <TextButton sx={{ ml: 2 }} onClick={() => onMoreClick(type)}>
             {t('common:viewMore')}
           </TextButton>
@@ -47,24 +52,26 @@ export default function LatestTasks(props: LatestTasksProps) {
       </SectionTitle>
 
       <Box>
-        {tasks.length ? (
+        {isSuccess && items?.length ? (
           <Grid container spacing={2}>
-            {tasks.slice(0, VISIBLE_LATEST_TASKS).map((task) => (
+            {items.slice(0, VISIBLE_LATEST_TASKS).map((task) => (
               <Grid item key={task.id} xs={12} md={6} lg={4}>
-                {/*<TaskCard*/}
-                {/*  task={task}*/}
-                {/*  submissions={taskSubmissions.filter(*/}
-                {/*    (submission) => submission.taskId === task.id*/}
-                {/*  )}*/}
-                {/*  subjectStudents={subjectStudents}*/}
-                {/*  short*/}
-                {/*  onClick={() => onTaskClick(type, task.id)}*/}
-                {/*/>*/}
+                <TaskCard
+                  task={task}
+                  submissions={[]}
+                  subjectStudents={[]}
+                  short
+                  onClick={() => onTaskClick(type, task.id)}
+                />
               </Grid>
             ))}
           </Grid>
+        ) : isLoading ? (
+          <PageLoading />
         ) : (
-          <Typography color="text.secondary">{t('common:noTasks')}</Typography>
+          <Typography color="text.secondary">
+            {t(`task:noItems.${type}`)}
+          </Typography>
         )}
       </Box>
     </>
