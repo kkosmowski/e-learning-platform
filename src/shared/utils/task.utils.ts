@@ -5,9 +5,9 @@ import {
   TaskForm,
   TaskType,
 } from 'shared/types/task';
+import { Status } from 'shared/types/shared';
 import { HOURS_IN_A_DAY, MINUTES_IN_AN_HOUR } from 'shared/consts/date';
 import { mapUserDtoToUser } from './user.utils';
-import { Status } from '../types/shared';
 import { dateStringToUTCString } from './date.utils';
 
 export const getTimeLeftTextColor = (
