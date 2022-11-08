@@ -6,4 +6,5 @@ export * from './use-notices-query';
 export * from './use-subject-categories-query';
 export * from './use-subject-query';
 export * from './use-subjects-query';
+export * from './use-tasks-query';
 export * from './use-users-query';

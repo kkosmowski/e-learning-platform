@@ -1,13 +1,13 @@
 import { Grid, Typography } from '@mui/material';
 import { useParams } from 'react-router';
+import { useTranslation } from 'react-i18next';
 
 import { Centered } from 'shared/components/Container';
 import TaskCard from 'shared/components/TaskCard';
 import { TaskType } from 'shared/types/task';
 import useCustomNavigate from 'hooks/use-custom-navigate';
-import { useTasksQuery } from 'shared/queries/use-tasks-query';
+import { useTasksQuery } from 'shared/queries';
 import PageLoading from 'shared/components/PageLoading';
-import { useTranslation } from 'react-i18next';
 
 export default function TaskList({ type }: { type: TaskType }) {
   const { navigate } = useCustomNavigate();
