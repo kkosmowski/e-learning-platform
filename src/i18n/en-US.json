@@ -107,6 +107,10 @@
     "daysLeft": "days left",
     "hoursLeft": "hours left",
     "minutesLeft": "minutes left",
+    "noItems": {
+      "task": "There are no tasks yet.",
+      "homework": "There is no homework yet."
+    },
     "tooltip": {
       "cannotSubmitPastDeadline": "Deadline has passed, you can no longer submit a solution."
     }
@@ -125,6 +129,7 @@
     "edit": {
       "title": "Modify notice"
     },
+    "noItems": "There are no notices yet.",
     "tooltip": {
       "edit": "Edit the title or content",
       "publishNow": "Publish now",
@@ -150,9 +155,6 @@
     "submit": "Submit",
     "confirm": "Confirm",
     "cancel": "Cancel",
-    "noNotices": "There are no notices yet.",
-    "noTasks": "There are no tasks yet.",
-    "noHomework": "There is no homework yet.",
     "task": "Task",
     "homework": "Homework",
     "test": "Test",

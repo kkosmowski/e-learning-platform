@@ -12,7 +12,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import { Centered } from 'shared/components/Container';
 import useCustomNavigate from 'hooks/use-custom-navigate';
 import PageLoading from 'shared/components/PageLoading';
-import { useSubjectsQuery } from 'shared/hooks';
+import { useSubjectsQuery } from 'shared/queries';
 import { Subject } from 'shared/types/subject';
 import { useAuth } from 'contexts/auth';
 import ViewHeader from 'shared/components/ViewHeader';

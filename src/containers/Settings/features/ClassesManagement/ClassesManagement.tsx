@@ -13,7 +13,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import CommonViewLayout from 'layouts/CommonView';
 import PageLoading from 'shared/components/PageLoading';
 import { unknownError } from 'shared/consts/error';
-import { useClassesQuery } from 'shared/hooks';
+import { useClassesQuery } from 'shared/queries';
 import useCustomNavigate from 'hooks/use-custom-navigate';
 
 export default function ClassesManagement() {

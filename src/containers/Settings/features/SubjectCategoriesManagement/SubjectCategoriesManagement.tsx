@@ -3,7 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { Box, Button } from '@mui/material';
 
 import { SubjectCategory } from 'shared/types/subject';
-import { useConfirmationDialog, useSubjectCategoriesQuery } from 'shared/hooks';
+import { useConfirmationDialog } from 'shared/hooks';
+import { useSubjectCategoriesQuery } from 'shared/queries';
 import CreateNewCategoryForm from './components/CreateNewCategoryForm';
 import CommonViewLayout from 'layouts/CommonView';
 import PageLoading from 'shared/components/PageLoading';

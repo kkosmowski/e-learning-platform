@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, Card, CardContent } from '@mui/material';
 
 import CommonViewLayout from 'layouts/CommonView';
-import { useSubjectQuery } from 'shared/hooks';
+import { useSubjectQuery } from 'shared/queries';
 import SubjectDetailsList from './components/SubjectDetailsList';
 import SubjectEditForm from './components/SubjectEditForm';
 import useCustomNavigate from 'hooks/use-custom-navigate';

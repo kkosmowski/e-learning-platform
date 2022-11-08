@@ -1,6 +1,5 @@
 import { Box, styled, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router';
 
 import {
   LONGER_PREVIEW_CONTENT_RATIO,
@@ -11,19 +10,19 @@ import { isTeacher } from 'shared/utils/user.utils';
 import SectionTitle from 'shared/components/SectionTitle';
 import NoticeCard from 'shared/components/NoticeCard';
 import TextButton from 'shared/components/TextButton';
-import { useNoticesQuery } from 'shared/hooks/use-notices-query';
+import { useNoticesQuery } from 'shared/queries/use-notices-query';
 import { useAuth } from 'contexts/auth';
 import PageLoading from 'shared/components/PageLoading';
 
 interface LatestNoticesProps {
+  subjectId: string;
   onNoticeClick: (noticeId: string) => void;
   onMoreClick: () => void;
   onCreateNotice: () => void;
 }
 
 export default function LatestNotices(props: LatestNoticesProps) {
-  const { onNoticeClick, onMoreClick, onCreateNotice } = props;
-  const { subjectId } = useParams<{ subjectId: string }>();
+  const { subjectId, onNoticeClick, onMoreClick, onCreateNotice } = props;
   const { currentUser } = useAuth();
   const { notices, isSuccess, isLoading } = useNoticesQuery(
     currentUser,
@@ -71,9 +70,7 @@ export default function LatestNotices(props: LatestNoticesProps) {
         ) : isLoading ? (
           <PageLoading />
         ) : (
-          <Typography color="text.secondary">
-            {t('common:noNotices')}
-          </Typography>
+          <Typography color="text.secondary">{t('noItems')}</Typography>
         )}
       </NoticesBox>
     </>

@@ -7,7 +7,7 @@ import { Centered } from 'shared/components/Container';
 import SectionTitle from 'shared/components/SectionTitle';
 import NoticeCard from 'shared/components/NoticeCard';
 import useCustomNavigate from 'hooks/use-custom-navigate';
-import { useNoticesQuery } from 'shared/hooks/use-notices-query';
+import { useNoticesQuery } from 'shared/queries/use-notices-query';
 import { useAuth } from 'contexts/auth';
 import PageLoading from 'shared/components/PageLoading';
 

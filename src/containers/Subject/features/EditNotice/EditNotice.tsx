@@ -5,7 +5,7 @@ import { useParams } from 'react-router';
 
 import SectionTitle from 'shared/components/SectionTitle';
 import useCustomNavigate from 'hooks/use-custom-navigate';
-import { useNoticeQuery } from 'shared/hooks/use-notice-query';
+import { useNoticeQuery } from 'shared/queries/use-notice-query';
 import EditNoticeForm from './components/EditNoticeForm';
 
 export default function EditNotice() {

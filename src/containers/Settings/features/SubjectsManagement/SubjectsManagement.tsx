@@ -4,7 +4,7 @@ import { Box, Button, Paper, TableContainer } from '@mui/material';
 import CommonViewLayout from 'layouts/CommonView';
 import PageLoading from 'shared/components/PageLoading';
 import SubjectsTable from './components/SubjectsTable';
-import { useSubjectsQuery } from 'shared/hooks';
+import { useSubjectsQuery } from 'shared/queries';
 import useCustomNavigate from 'hooks/use-custom-navigate';
 import { useAuth } from 'contexts/auth';
 
