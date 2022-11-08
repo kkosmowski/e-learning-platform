@@ -7,7 +7,10 @@ import { getSubjectTasks } from 'api/task';
 import { mapTaskDtoToTask } from 'shared/utils/task.utils';
 import { useAuth } from 'contexts/auth';
 
-export function useTasksQuery(subjectId: string | undefined) {
+export function useTasksQuery(
+  subjectId: string | undefined,
+  enabled: TaskType[]
+) {
   const { currentUser } = useAuth();
 
   const tasksQuery = useQuery<GetTasksResponse, AxiosError, TaskDto[]>(
@@ -15,7 +18,8 @@ export function useTasksQuery(subjectId: string | undefined) {
     () => getSubjectTasks(subjectId || '', TaskType.Task),
     {
       select: ({ data }) => data,
-      enabled: Boolean(currentUser && subjectId),
+      enabled:
+        Boolean(currentUser && subjectId) && enabled.includes(TaskType.Task),
     }
   );
 
@@ -24,7 +28,9 @@ export function useTasksQuery(subjectId: string | undefined) {
     () => getSubjectTasks(subjectId || '', TaskType.Homework),
     {
       select: ({ data }) => data,
-      enabled: Boolean(currentUser && subjectId),
+      enabled:
+        Boolean(currentUser && subjectId) &&
+        enabled.includes(TaskType.Homework),
     }
   );
 

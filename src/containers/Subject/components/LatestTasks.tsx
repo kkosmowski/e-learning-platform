@@ -4,11 +4,11 @@ import { useTranslation } from 'react-i18next';
 import SectionTitle from 'shared/components/SectionTitle';
 import TextButton from 'shared/components/TextButton';
 import TaskCard from 'shared/components/TaskCard';
-import { Task, TaskType } from 'shared/types/task';
+import { TaskType } from 'shared/types/task';
 import { isTeacher } from 'shared/utils/user.utils';
 import { VISIBLE_LATEST_TASKS } from 'shared/consts/task';
 import { useAuth } from 'contexts/auth';
-import { useTasksQuery } from 'shared/queries/use-tasks-query';
+import { useTasksQuery } from 'shared/queries';
 import PageLoading from 'shared/components/PageLoading';
 
 interface LatestTasksProps {
@@ -29,7 +29,7 @@ export default function LatestTasks(props: LatestTasksProps) {
     [isTypeTask ? 'tasks' : 'homework']: items,
     [isTypeTask ? 'tasksLoading' : 'homeworkLoading']: isLoading,
     [isTypeTask ? 'tasksSuccess' : 'homeworkSuccess']: isSuccess,
-  } = useTasksQuery(subjectId);
+  } = useTasksQuery(subjectId, [type]);
 
   return (
     <>
