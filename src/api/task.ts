@@ -4,6 +4,7 @@ import {
   CreateTaskResponse,
   GetTaskResponse,
   GetTasksResponse,
+  GetLatestTasksResponse,
   TaskType,
 } from 'shared/types/task';
 
@@ -13,6 +14,14 @@ export const getSubjectTasks = (
 ): Promise<GetTasksResponse> =>
   authorized((api) =>
     api.get(`group-subject/${subjectId}/tasks${type ? `?type=${type}` : ''}`)
+  );
+
+export const getLatestTasks = (
+  subjectId: string,
+  limit: number
+): Promise<GetLatestTasksResponse> =>
+  authorized((api) =>
+    api.get(`group-subject/${subjectId}/latest-tasks?limit=${limit}`)
   );
 
 export const getTask = (taskId: string): Promise<GetTaskResponse> =>
