@@ -101,6 +101,9 @@
       "SUBMITTED": "Wysłane",
       "GRADED": "Ocenione"
     },
+    "submissions": {
+      "noItems": "Brak przesłanych rozwiązań"
+    },
     "submitSolution": "Prześlij rozwiązanie",
     "taskMessagePlaceholder": "Napisz odpowiedź bądź opcjonalny komentarz",
     "pastDeadline": "czas minął",

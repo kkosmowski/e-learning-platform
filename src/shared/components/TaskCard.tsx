@@ -72,8 +72,12 @@ export default function TaskCard(props: TaskCardProps) {
 
   return (
     <Card {...(onClick && { onClick })}>
-      <CardWrapper>
-        <CardContent component="article" sx={{ width: '100%' }}>
+      <CardWrapper
+        {...(onClick && {
+          sx: { flexDirection: 'column', alignItems: 'stretch' },
+        })}
+      >
+        <CardContent component="article">
           <Typography component="h3" {...(!short && { variant: 'h3' })}>
             {task.name}
           </Typography>

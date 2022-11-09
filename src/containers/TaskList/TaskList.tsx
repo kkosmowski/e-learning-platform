@@ -18,7 +18,7 @@ export default function TaskList({ type }: { type: TaskType }) {
     [isTypeTask ? 'tasks' : 'homework']: items,
     [isTypeTask ? 'tasksLoading' : 'homeworkLoading']: isLoading,
     [isTypeTask ? 'tasksSuccess' : 'homeworkSuccess']: isSuccess,
-  } = useTasksQuery(subjectId, [type]);
+  } = useTasksQuery({ subjectId, enabled: [type] });
 
   const navigateToTask = (taskId: string) => {
     navigate(taskId);
