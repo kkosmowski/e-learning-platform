@@ -61,6 +61,10 @@
     }
   },
   "task": {
+    "title": {
+      "task": "Wszystkie zadania",
+      "homework": "Wszystkie zadania domowe"
+    },
     "create": {
       "title": {
         "task": "Utwórz nowe zadanie",
