@@ -116,6 +116,10 @@
     },
     "tooltip": {
       "cannotSubmitPastDeadline": "Nie można przesłać rozwiązania gdyż termin minął."
+    },
+    "confirm": {
+      "deleteTitle": "Potwierdź usunięcie zadania",
+      "deleteMessage": "Czy na pewno usunąć wybrane zadanie? Tej operacji nie da się cofnąć."
     }
   },
   "notice": {

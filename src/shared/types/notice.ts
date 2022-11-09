@@ -8,7 +8,7 @@ import { User, UserDto } from './user';
 export interface Notice extends Omit<ContentItem, 'createdBy'> {
   createdBy: User; // @todo remove when no mocked data is used
   publishTime: Date;
-  isPublished?: boolean;
+  isPublished: boolean;
   subject: Subject;
 }
 

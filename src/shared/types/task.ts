@@ -9,6 +9,7 @@ export interface Task extends ContentItem {
   status: Status; // @todo decide if this should stay
   startTime: Date;
   endTime: Date;
+  isPublished: boolean;
 }
 
 export enum TaskType {

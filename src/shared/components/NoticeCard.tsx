@@ -4,8 +4,6 @@ import {
   CardActionArea,
   CardContent,
   Divider,
-  IconButton,
-  Tooltip,
   Typography,
 } from '@mui/material';
 import { Fragment, useMemo } from 'react';
@@ -14,7 +12,6 @@ import format from 'date-fns/format';
 import { useQueryClient } from '@tanstack/react-query';
 import { useParams } from 'react-router';
 import toast from 'react-hot-toast';
-import { Delete, Edit, Publish, Share } from '@mui/icons-material';
 
 import {
   BOARD_NOTICE_CONTENT_LENGTH,
@@ -26,8 +23,8 @@ import { primary, unpublishedNoticeColor } from 'colors';
 import { Role } from 'shared/types/user';
 import { useAuth } from 'contexts/auth';
 import useCustomNavigate from 'hooks/use-custom-navigate';
-import { useConfirmationDialog } from 'shared/hooks';
 import { deleteNotice, publishNotice } from 'api/notice';
+import ActionToolbar from './ActionToolbar';
 
 interface NoticeCardProps {
   notice: Notice;
@@ -62,7 +59,6 @@ export default function NoticeCard(props: NoticeCardProps) {
   const { currentUser } = useAuth();
   const { navigate, back } = useCustomNavigate();
   const { t } = useTranslation('notice');
-  const { confirmAction, confirmationDialog } = useConfirmationDialog();
   const queryClient = useQueryClient();
 
   const contentToRender = getContentToRender(
@@ -100,50 +96,18 @@ export default function NoticeCard(props: NoticeCardProps) {
   };
 
   const handlePublishNow = async () => {
-    const shouldPublishNow = await confirmAction({
-      title: 'notice:confirm.publishNowTitle',
-      message: {
-        key: 'notice:confirm.publishNowMessage',
-        props: { name: notice.name },
-      },
-      confirmLabel: 'common:publish',
-    });
-
-    if (shouldPublishNow) {
-      await publishNotice(notice.id);
-      await queryClient.invalidateQueries(['notices', subjectId]);
-      await queryClient.refetchQueries(['notice', notice.id]);
-      toast.success(t('toast.publishSuccess', { name: notice.name }));
-    }
-  };
-
-  const handleShare = async () => {
-    try {
-      await navigator.clipboard.writeText(location.href);
-      toast.success(t('common:toast.linkCopied'));
-    } catch (error) {
-      toast.error(t('common:toast.linkCopyFailed'));
-    }
+    await publishNotice(notice.id);
+    await queryClient.invalidateQueries(['notices', subjectId]);
+    await queryClient.refetchQueries(['notice', notice.id]);
+    toast.success(t('toast.publishSuccess', { name: notice.name }));
   };
 
   const handleDelete = async () => {
-    const shouldDelete = await confirmAction({
-      title: 'notice:confirm.deleteTitle',
-      message: {
-        key: 'notice:confirm.deleteMessage',
-        props: { name: notice.name },
-      },
-      confirmLabel: 'common:delete',
-      confirmColor: 'error',
-    });
-
-    if (shouldDelete) {
-      await deleteNotice(notice.id);
-      await queryClient.invalidateQueries(['notices', subjectId]);
-      await queryClient.removeQueries(['notice', notice.id]);
-      back();
-      toast.success(t('toast.deleteSuccess', { name: notice.name }));
-    }
+    await deleteNotice(notice.id);
+    await queryClient.invalidateQueries(['notices', subjectId]);
+    await queryClient.removeQueries(['notice', notice.id]);
+    back();
+    toast.success(t('toast.deleteSuccess', { name: notice.name }));
   };
 
   return (
@@ -174,43 +138,16 @@ export default function NoticeCard(props: NoticeCardProps) {
                 {name}
               </Typography>
 
-              <Box>
-                {isPublishAllowed && (
-                  <Tooltip title={t('tooltip.publishNow')}>
-                    <IconButton onClick={handlePublishNow} size="small">
-                      <Publish fontSize="small" />
-                    </IconButton>
-                  </Tooltip>
-                )}
-
-                {isEditAllowed && (
-                  <Tooltip title={t('tooltip.edit')}>
-                    <IconButton onClick={handleEdit} size="small">
-                      <Edit fontSize="small" />
-                    </IconButton>
-                  </Tooltip>
-                )}
-
-                {!isAnyPreview && (
-                  <Tooltip title={t('tooltip.share')}>
-                    <IconButton onClick={handleShare} size="small">
-                      <Share fontSize="small" />
-                    </IconButton>
-                  </Tooltip>
-                )}
-
-                {isEditAllowed && (
-                  <Tooltip title={t('tooltip.delete')}>
-                    <IconButton
-                      onClick={handleDelete}
-                      size="small"
-                      color="error"
-                    >
-                      <Delete fontSize="small" />
-                    </IconButton>
-                  </Tooltip>
-                )}
-              </Box>
+              <ActionToolbar
+                item={['notice', notice.name]}
+                isPublishAllowed={isPublishAllowed}
+                isEditAllowed={isEditAllowed}
+                isPreview={isAnyPreview}
+                share
+                onPublish={handlePublishNow}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+              />
             </TitleWrapper>
 
             <Typography
@@ -266,7 +203,6 @@ export default function NoticeCard(props: NoticeCardProps) {
           </CardContent>
         </WrapperElement>
       </Card>
-      {confirmationDialog}
     </>
   );
 }

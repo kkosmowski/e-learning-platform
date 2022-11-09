@@ -45,6 +45,9 @@ export const mapTaskDtoToTask = (dto: TaskDto): Task => ({
   createdAt: new Date(dateStringToUTCString(dto.created_at)),
   startTime: new Date(dateStringToUTCString(dto.start_time)),
   endTime: new Date(dateStringToUTCString(dto.end_time)),
+  isPublished:
+    new Date(dateStringToUTCString(dto.start_time)).getTime() <
+    new Date().getTime(),
 });
 
 export const mapTaskFormToCreateTaskPayload = (
