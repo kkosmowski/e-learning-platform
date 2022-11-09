@@ -29,7 +29,7 @@ export default function LatestTasks(props: LatestTasksProps) {
     [isTypeTask ? 'tasks' : 'homework']: items,
     [isTypeTask ? 'tasksLoading' : 'homeworkLoading']: isLoading,
     [isTypeTask ? 'tasksSuccess' : 'homeworkSuccess']: isSuccess,
-  } = useTasksQuery(subjectId, [type]);
+  } = useTasksQuery({ subjectId, enabled: [type] });
 
   return (
     <>

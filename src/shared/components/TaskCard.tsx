@@ -7,7 +7,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import { Fragment } from 'react';
+import { Fragment, useMemo } from 'react';
 import {
   AccessTime,
   CheckBox,
@@ -26,8 +26,10 @@ import { timeLeft } from 'shared/utils/date.utils';
 import { getTimeLeftTextColor } from 'shared/utils/task.utils';
 import ItemCategory from './ItemCategory';
 import { isStudent, isTeacher } from 'shared/utils/user.utils';
-import { CURRENT_USER } from 'shared/consts/user';
-import { User } from 'shared/types/user';
+import { Role, User } from 'shared/types/user';
+import ActionToolbar from './ActionToolbar';
+import { useAuth } from 'contexts/auth';
+import useCustomNavigate from 'hooks/use-custom-navigate';
 
 interface TaskCardProps {
   task: Task;
@@ -51,17 +53,28 @@ const getStatusIcon = (status: Status): SvgIconComponent => {
 export default function TaskCard(props: TaskCardProps) {
   const { task, submissions, subjectStudents, short, onClick } = props;
   const { t } = useTranslation('task');
-  const isUserTeacher = isTeacher(CURRENT_USER);
-  const isUserStudent = isStudent(CURRENT_USER);
-  const allStudentsSubmitted =
-    isUserTeacher &&
-    !!submissions &&
-    !!subjectStudents &&
-    submissions.length === subjectStudents.length;
+  const { currentUser } = useAuth();
+  const isUserTeacher = isTeacher(currentUser);
+  const isUserStudent = isStudent(currentUser);
+  const { navigate, back } = useCustomNavigate();
+
+  const allStudentsSubmitted = useMemo(
+    () =>
+      isUserTeacher &&
+      !!submissions &&
+      !!subjectStudents &&
+      submissions.length === subjectStudents.length,
+    [isUserTeacher, submissions, subjectStudents]
+  );
 
   let timeLeftString = '';
   let diffInMinutes = 0;
   let timeLeftTextColor = '';
+
+  const TitleWrapper = isUserTeacher ? Box : Fragment;
+  const TitleWrapperProps = isUserTeacher
+    ? { sx: { display: 'flex', justifyContent: 'space-between' } }
+    : {};
 
   if ((isUserStudent && task.status === Status.Todo) || isUserTeacher) {
     [timeLeftString, diffInMinutes] = timeLeft(t, task.endTime);
@@ -70,13 +83,44 @@ export default function TaskCard(props: TaskCardProps) {
   const StatusIcon = getStatusIcon(task.status);
   const CardWrapper = onClick ? CardActionArea : Fragment;
 
+  const isAuthor = useMemo(
+    () =>
+      currentUser?.role === Role.Teacher &&
+      currentUser.id === task.createdBy?.id,
+    [currentUser, task.createdBy]
+  );
+  const isEditAllowed = useMemo(() => !short && isAuthor, [short, isAuthor]);
+
+  const handleEdit = () => {
+    navigate('./edit');
+  };
+
+  const handleDelete = () => {
+    // @todo implement delete
+  };
+
   return (
     <Card {...(onClick && { onClick })}>
-      <CardWrapper>
-        <CardContent component="article" sx={{ width: '100%' }}>
-          <Typography component="h3" {...(!short && { variant: 'h3' })}>
-            {task.name}
-          </Typography>
+      <CardWrapper
+        {...(onClick && {
+          sx: { flexDirection: 'column', alignItems: 'stretch' },
+        })}
+      >
+        <CardContent component="article">
+          <TitleWrapper {...TitleWrapperProps}>
+            <Typography component="h3" {...(!short && { variant: 'h3' })}>
+              {task.name}
+            </Typography>
+
+            <ActionToolbar
+              item={['task', task.name]}
+              isEditAllowed={isEditAllowed}
+              isPreview={Boolean(short)}
+              share
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+            />
+          </TitleWrapper>
 
           <Divider sx={{ my: short ? 1 : 2 }} />
 

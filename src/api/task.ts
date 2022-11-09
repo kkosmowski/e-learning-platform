@@ -2,7 +2,7 @@ import { authorized } from './axios';
 import {
   CreateTaskPayload,
   CreateTaskResponse,
-  // GetTaskResponse,
+  GetTaskResponse,
   GetTasksResponse,
   TaskType,
 } from 'shared/types/task';
@@ -15,9 +15,9 @@ export const getSubjectTasks = (
     api.get(`group-subject/${subjectId}/tasks${type ? `?type=${type}` : ''}`)
   );
 
-// export const getTask = (taskId: string): Promise<GetTaskResponse> =>
-//   authorized((api) => api.get(`task/${taskId}`));
-//
+export const getTask = (taskId: string): Promise<GetTaskResponse> =>
+  authorized((api) => api.get(`task/${taskId}`));
+
 export const createTask = (
   payload: CreateTaskPayload
 ): Promise<CreateTaskResponse> =>

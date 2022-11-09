@@ -101,6 +101,9 @@
       "SUBMITTED": "Wysłane",
       "GRADED": "Ocenione"
     },
+    "submissions": {
+      "noItems": "Brak przesłanych rozwiązań"
+    },
     "submitSolution": "Prześlij rozwiązanie",
     "taskMessagePlaceholder": "Napisz odpowiedź bądź opcjonalny komentarz",
     "pastDeadline": "czas minął",
@@ -113,6 +116,10 @@
     },
     "tooltip": {
       "cannotSubmitPastDeadline": "Nie można przesłać rozwiązania gdyż termin minął."
+    },
+    "confirm": {
+      "deleteTitle": "Potwierdź usunięcie zadania",
+      "deleteMessage": "Czy na pewno usunąć wybrane zadanie? Tej operacji nie da się cofnąć."
     }
   },
   "notice": {
@@ -130,13 +137,6 @@
       "title": "Modyfikuj ogłoszenie"
     },
     "noItems": "Brak ogłoszeń.",
-    "tooltip": {
-      "edit": "Edytuj tytuł lub treść ogłoszenia",
-      "publishNow": "Opublikuj teraz",
-      "alreadyPublished": "Ogłoszenie jest już opublikowane, nie można zmienić daty publikacji.",
-      "share": "Skopiuj link do ogłoszenia",
-      "delete": "Usuń ogłoszenie"
-    },
     "confirm": {
       "publishNowTitle": "Potwierdź publikację ogłoszenia",
       "publishNowMessage": "Czy na pewno opublikować wybrane ogłoszenie? Tej operacji nie da się cofnąć.",
@@ -147,6 +147,15 @@
       "createSuccess": "Utworzono ogłoszenie \"{{ name }}\"",
       "publishSuccess": "Opublikowano ogłoszenie \"{{ name }}\"",
       "deleteSuccess": "Usunięto ogłoszenie \"{{ name }}\""
+    }
+  },
+  "actions": {
+    "tooltip": {
+      "edit": "Edytuj tytuł lub treść ogłoszenia",
+      "publishNow": "Opublikuj teraz",
+      "alreadyPublished": "Ogłoszenie jest już opublikowane, nie można zmienić daty publikacji.",
+      "share": "Skopiuj link do ogłoszenia",
+      "delete": "Usuń ogłoszenie"
     }
   },
   "common": {
