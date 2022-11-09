@@ -61,6 +61,10 @@
     }
   },
   "task": {
+    "title": {
+      "task": "All tasks",
+      "homework": "All homework"
+    },
     "create": {
       "title": {
         "task": "Create new task",
