@@ -1,8 +1,9 @@
 import { Card, CardContent, Stack, Typography } from '@mui/material';
-import { TaskSubmission } from 'shared/types/task';
 import { Box } from '@mui/system';
-import PageLoading from '../../../shared/components/PageLoading';
 import { useTranslation } from 'react-i18next';
+
+import { TaskSubmission } from 'shared/types/task';
+import PageLoading from 'shared/components/PageLoading';
 
 interface TaskSubmissionListProps {
   submissions: TaskSubmission[];

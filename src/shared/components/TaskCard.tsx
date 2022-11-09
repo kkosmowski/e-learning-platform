@@ -29,9 +29,7 @@ import { isStudent, isTeacher } from 'shared/utils/user.utils';
 import { Role, User } from 'shared/types/user';
 import ActionToolbar from './ActionToolbar';
 import { useAuth } from 'contexts/auth';
-import useCustomNavigate from '../../hooks/use-custom-navigate';
-import toast from 'react-hot-toast';
-import { deleteNotice } from '../../api/notice';
+import useCustomNavigate from 'hooks/use-custom-navigate';
 
 interface TaskCardProps {
   task: Task;
