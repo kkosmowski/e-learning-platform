@@ -26,10 +26,10 @@ export default function LatestTasks(props: LatestTasksProps) {
   const isUserTeacher = isTeacher(currentUser);
   const isTypeTask = type === TaskType.Task;
   const {
-    [isTypeTask ? 'tasks' : 'homework']: items,
-    [isTypeTask ? 'tasksLoading' : 'homeworkLoading']: isLoading,
-    [isTypeTask ? 'tasksSuccess' : 'homeworkSuccess']: isSuccess,
-  } = useTasksQuery({ subjectId, enabled: [type] });
+    latestTasks: { [isTypeTask ? 'tasks' : 'homework']: items },
+    latestTasksLoading: isLoading,
+    latestTasksSuccess: isSuccess,
+  } = useTasksQuery({ subjectId, enabled: ['latest'] });
 
   return (
     <>

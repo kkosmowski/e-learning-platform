@@ -63,9 +63,20 @@ export interface CreateTaskPayload extends UpdateTaskPayload {
   group_subject_id: string;
 }
 
+export interface LatestTasksDto {
+  tasks: TaskDto[];
+  homework: TaskDto[];
+}
+
+export interface LatestTasks {
+  tasks?: Task[];
+  homework?: Task[];
+}
+
 // responses
 
 export type GetTasksResponse = AxiosResponse<TaskDto[]>;
+export type GetLatestTasksResponse = AxiosResponse<LatestTasksDto>;
 export type GetTaskResponse = AxiosResponse<TaskDto>;
 export type CreateTaskResponse = AxiosResponse<TaskDto>;
 export type UpdateTaskResponse = AxiosResponse<TaskDto>;
