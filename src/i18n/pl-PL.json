@@ -209,7 +209,8 @@
     "minutes1": "{{ minutes}} minuty",
     "minutes2": "{{ minutes}} minut",
     "1minute": "1 minuta",
-    "and": "i"
+    "and": "i",
+    "loadMore": "Załaduj więcej"
   },
   "settings": {
     "title": "Ustawienia",

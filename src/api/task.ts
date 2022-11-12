@@ -7,13 +7,19 @@ import {
   GetLatestTasksResponse,
   TaskType,
 } from 'shared/types/task';
+import { TASK_LIST_PAGE_SIZE } from 'shared/consts/task';
 
 export const getSubjectTasks = (
   subjectId: string,
+  offset: number,
   type?: TaskType
 ): Promise<GetTasksResponse> =>
   authorized((api) =>
-    api.get(`group-subject/${subjectId}/tasks${type ? `?type=${type}` : ''}`)
+    api.get(
+      `group-subject/${subjectId}/tasks?limit=${TASK_LIST_PAGE_SIZE}&offset=${offset}${
+        type ? `&type=${type}` : ''
+      }`
+    )
   );
 
 export const getLatestTasks = (
