@@ -106,6 +106,7 @@ const baseThemeOptions: ThemeOptions = {
   },
   palette: {
     background: colors.background,
+    warning: colors.warning,
     error: colors.error,
     info: colors.info,
     mode: 'light',
@@ -113,7 +114,6 @@ const baseThemeOptions: ThemeOptions = {
     secondary: colors.secondary,
     success: colors.success,
     text: colors.text,
-    warning: colors.warning,
   },
 };
 

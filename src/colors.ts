@@ -107,6 +107,7 @@ const colors = {
   background: {
     default: background[50],
   },
+  warning,
   error,
   info,
   mode: 'light',
@@ -124,7 +125,6 @@ const colors = {
     warning: warning[600],
     error: error[600],
   },
-  warning,
 };
 
 export const unpublishedNoticeColor = '#fff1d6';

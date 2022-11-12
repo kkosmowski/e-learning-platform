@@ -73,7 +73,7 @@ export default function ActionToolbar(props: ActionToolbarProps) {
   };
 
   return (
-    <Box>
+    <Box sx={{ flexShrink: 0 }}>
       {isPublishAllowed && onPublish && (
         <Tooltip title={t('tooltip.publishNow')}>
           <IconButton onClick={handlePublish} size="small">
