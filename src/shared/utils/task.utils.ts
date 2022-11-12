@@ -6,9 +6,14 @@ import {
   TaskType,
 } from 'shared/types/task';
 import { Status } from 'shared/types/shared';
-import { HOURS_IN_A_DAY, MINUTES_IN_AN_HOUR } from 'shared/consts/date';
 import { mapUserDtoToUser } from './user.utils';
 import { dateStringToUTCString } from './date.utils';
+import {
+  TASK_HOMEWORK_ENDING_SOON_TIME_IN_MINUTES,
+  TASK_HOMEWORK_ENDING_VERY_SOON_TIME_IN_MINUTES,
+  TASK_TASK_ENDING_SOON_TIME_IN_MINUTES,
+  TASK_TASK_ENDING_VERY_SOON_TIME_IN_MINUTES,
+} from 'shared/consts/task';
 
 export const getTimeLeftTextColor = (
   type: TaskType,
@@ -18,20 +23,19 @@ export const getTimeLeftTextColor = (
   let littleTimeLeft: number;
 
   if (type === TaskType.Task) {
-    veryLittleTimeLeft = 20 * MINUTES_IN_AN_HOUR;
-    littleTimeLeft = MINUTES_IN_AN_HOUR * HOURS_IN_A_DAY;
+    veryLittleTimeLeft = TASK_TASK_ENDING_VERY_SOON_TIME_IN_MINUTES;
+    littleTimeLeft = TASK_TASK_ENDING_SOON_TIME_IN_MINUTES;
   } else {
-    veryLittleTimeLeft = 2 * MINUTES_IN_AN_HOUR * HOURS_IN_A_DAY;
-    littleTimeLeft = 8 * MINUTES_IN_AN_HOUR * HOURS_IN_A_DAY;
+    veryLittleTimeLeft = TASK_HOMEWORK_ENDING_VERY_SOON_TIME_IN_MINUTES;
+    littleTimeLeft = TASK_HOMEWORK_ENDING_SOON_TIME_IN_MINUTES;
   }
-
   if (diffInMinutes < veryLittleTimeLeft) {
     return 'error';
   }
   if (diffInMinutes < littleTimeLeft) {
-    return 'warning';
+    return 'text.warning';
   }
-  return 'secondary';
+  return 'text';
 };
 
 export const mapTaskDtoToTask = (dto: TaskDto): Task => ({
