@@ -24,4 +24,9 @@ export interface ErrorData {
   detail?: string;
 }
 
+export interface Paginated<T> {
+  items: T[];
+  total_count: number;
+}
+
 export type EmptyResponse = AxiosResponse<null>;

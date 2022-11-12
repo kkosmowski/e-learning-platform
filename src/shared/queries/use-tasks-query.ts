@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
 import {
@@ -14,7 +14,27 @@ import {
 import { getLatestTasks, getSubjectTasks, getTask } from 'api/task';
 import { mapTaskDtoToTask } from 'shared/utils/task.utils';
 import { useAuth } from 'contexts/auth';
-import { VISIBLE_LATEST_TASKS } from '../consts/task';
+import { TASK_LIST_PAGE_SIZE, VISIBLE_LATEST_TASKS } from 'shared/consts/task';
+import { Paginated } from 'shared/types/shared';
+
+const getNextPageParam = (
+  { total_count }: Paginated<TaskDto>,
+  pages: Paginated<TaskDto>[]
+) =>
+  total_count > pages.length * TASK_LIST_PAGE_SIZE
+    ? pages.length + 1
+    : undefined;
+
+const getPreviousPageParam = (
+  { total_count }: Paginated<TaskDto>,
+  pages: Paginated<TaskDto>[]
+) =>
+  total_count > pages.length * TASK_LIST_PAGE_SIZE
+    ? pages.length - 1
+    : undefined;
+
+const getNumberOfFetchedTasks = (pages: Paginated<TaskDto>[]) =>
+  pages.reduce((sum, page) => sum + page.items.length, 0);
 
 export function useTasksQuery(options: {
   subjectId?: string;
@@ -32,21 +52,36 @@ export function useTasksQuery(options: {
     console.error('Tasks query: Neither subjectId nor taskId was provided.');
   }
 
-  const tasksQuery = useQuery<GetTasksResponse, AxiosError, TaskDto[]>(
+  const tasksQuery = useInfiniteQuery(
     ['tasks', 'task', subjectId],
-    () => getSubjectTasks(subjectId || '', TaskType.Task),
+    async ({ pageParam = 1 }) => {
+      const { data } = await getSubjectTasks(
+        subjectId || '',
+        pageParam,
+        TaskType.Task
+      );
+      return data;
+    },
     {
-      select: ({ data }) => data,
+      getPreviousPageParam,
+      getNextPageParam,
       enabled:
         Boolean(currentUser && subjectId) && enabled.includes(TaskType.Task),
     }
   );
 
-  const homeworkQuery = useQuery<GetTasksResponse, AxiosError, TaskDto[]>(
+  const homeworkQuery = useInfiniteQuery(
     ['tasks', 'homework', subjectId],
-    () => getSubjectTasks(subjectId || '', TaskType.Homework),
+    async ({ pageParam = 1 }) => {
+      const { data } = await getSubjectTasks(
+        subjectId || '',
+        pageParam,
+        TaskType.Homework
+      );
+      return data;
+    },
     {
-      select: ({ data }) => data,
+      getNextPageParam,
       enabled:
         Boolean(currentUser && subjectId) &&
         enabled.includes(TaskType.Homework),
@@ -76,12 +111,39 @@ export function useTasksQuery(options: {
   );
 
   const tasks = useMemo(
-    () => tasksQuery.data?.map(mapTaskDtoToTask),
+    () =>
+      tasksQuery.data?.pages.map((page) => page.items.map(mapTaskDtoToTask)),
     [tasksQuery.data]
   );
+
+  const tasksCount = useMemo(
+    () => tasksQuery.data?.pages[0].total_count || 0,
+    [tasksQuery.data]
+  );
+
+  const hasNextTasksPage = useMemo(
+    () =>
+      tasksQuery.data &&
+      getNumberOfFetchedTasks(tasksQuery.data.pages) < tasksCount,
+    [tasksQuery.data, tasksCount]
+  );
+
   const homework = useMemo(
-    () => homeworkQuery.data?.map(mapTaskDtoToTask),
+    () =>
+      homeworkQuery.data?.pages.map((page) => page.items.map(mapTaskDtoToTask)),
     [homeworkQuery.data]
+  );
+
+  const homeworkCount = useMemo(
+    () => homeworkQuery.data?.pages[0].total_count || 0,
+    [homeworkQuery.data]
+  );
+
+  const hasNextHomeworkPage = useMemo(
+    () =>
+      homeworkQuery.data &&
+      getNumberOfFetchedTasks(homeworkQuery.data.pages) < homeworkCount,
+    [homeworkQuery.data, homeworkCount]
   );
 
   const latestTasks: LatestTasks = useMemo(
@@ -99,15 +161,27 @@ export function useTasksQuery(options: {
 
   return {
     task,
-    tasks,
-    homework,
+    tasks: {
+      items: tasks,
+      isLoading: tasksQuery.isLoading,
+      isSuccess: tasksQuery.isSuccess,
+      isFetchingNextPage: tasksQuery.isFetchingNextPage,
+      fetchNextPage: tasksQuery.fetchNextPage,
+      count: tasksCount,
+      hasNextPage: hasNextTasksPage,
+    },
+    homework: {
+      items: homework,
+      isLoading: homeworkQuery.isLoading,
+      isSuccess: homeworkQuery.isSuccess,
+      isFetchingNextPage: homeworkQuery.isFetchingNextPage,
+      fetchNextPage: homeworkQuery.fetchNextPage,
+      count: homeworkCount,
+      hasNextPage: hasNextHomeworkPage,
+    },
     latestTasks,
     taskLoading: taskQuery.isLoading,
     taskSuccess: taskQuery.isSuccess,
-    tasksLoading: tasksQuery.isLoading,
-    tasksSuccess: tasksQuery.isSuccess,
-    homeworkLoading: homeworkQuery.isLoading,
-    homeworkSuccess: homeworkQuery.isSuccess,
     latestTasksLoading: latestTasksQuery.isLoading,
     latestTasksSuccess: latestTasksQuery.isSuccess,
   };

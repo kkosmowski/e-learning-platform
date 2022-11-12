@@ -1,4 +1,4 @@
-import { BaseItem, ContentItem, Status } from './shared';
+import { BaseItem, ContentItem, Paginated, Status } from './shared';
 import { AxiosResponse } from 'axios';
 import { SubjectDto } from './subject';
 import { UserDto } from './user';
@@ -75,7 +75,7 @@ export interface LatestTasks {
 
 // responses
 
-export type GetTasksResponse = AxiosResponse<TaskDto[]>;
+export type GetTasksResponse = AxiosResponse<Paginated<TaskDto>>;
 export type GetLatestTasksResponse = AxiosResponse<LatestTasksDto>;
 export type GetTaskResponse = AxiosResponse<TaskDto>;
 export type CreateTaskResponse = AxiosResponse<TaskDto>;
