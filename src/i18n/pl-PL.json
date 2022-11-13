@@ -217,6 +217,11 @@
     "minutes1": "{{ minutes}} minuty",
     "minutes2": "{{ minutes}} minut",
     "1minute": "1 minuta",
+    "short": {
+      "days": "{{ days }} d",
+      "hours": "{{ hours }} godz",
+      "minutes": "{{ minutes }} min"
+    },
     "and": "i",
     "loadMore": "Załaduj więcej"
   },
