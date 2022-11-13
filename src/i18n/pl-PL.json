@@ -120,6 +120,8 @@
       "homework": "Brak zadań domowych."
     },
     "tooltip": {
+      "startTime": "Czas rozpoczęcia",
+      "endTime": "Termin oddania",
       "cannotSubmitPastDeadline": "Nie można przesłać rozwiązania gdyż termin minął."
     },
     "confirm": {

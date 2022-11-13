@@ -55,13 +55,13 @@ export interface UpdateTaskPayload {
   mandatory: boolean;
   name: string;
   content: string;
-  start_time: Date;
   end_time: Date;
 }
 
 export interface CreateTaskPayload extends Omit<UpdateTaskPayload, 'id'> {
   group_subject_id: string;
   type: TaskType;
+  start_time: Date;
 }
 
 export interface LatestTasksDto {

@@ -63,7 +63,6 @@ export const mapTaskFormToUpdateTaskPayload = (
   mandatory: form.mandatory,
   name: form.name,
   content: form.content,
-  start_time: form.startTime!,
   end_time: form.endTime!,
 });
 

@@ -120,6 +120,8 @@
       "homework": "There is no homework yet."
     },
     "tooltip": {
+      "startTime": "Start time",
+      "endTime": "Deadline",
       "cannotSubmitPastDeadline": "Deadline has passed, you can no longer submit a solution."
     },
     "confirm": {

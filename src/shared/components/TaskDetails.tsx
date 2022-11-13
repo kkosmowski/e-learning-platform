@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
-import { Box, Stack, Typography } from '@mui/material';
+import { Box, Stack, Tooltip, Typography } from '@mui/material';
 import {
+  AccessTime,
   CheckBox,
   CheckBoxOutlineBlank,
   CheckBoxOutlined,
@@ -17,6 +18,7 @@ import ItemCategory from './ItemCategory';
 import { isStudent, isTeacher } from 'shared/utils/user.utils';
 import { isPastDate } from 'shared/utils/date.utils';
 import TimeLeft from './TimeLeft';
+import format from 'date-fns/format';
 
 interface TaskDetailsProps {
   task: Task;
@@ -64,6 +66,16 @@ export default function TaskDetails(props: TaskDetailsProps) {
       <Stack spacing={0.5}>
         <Box sx={{ display: 'flex', alignItems: 'center', columnGap: 1 }}>
           <ItemCategory type={task.type} />
+        </Box>
+
+        <Box sx={{ display: 'flex', alignItems: 'center', columnGap: 1 }}>
+          <AccessTime sx={{ fontSize: 16 }} />
+
+          <Tooltip title={t('tooltip.startTime')}>
+            <Typography component="span" sx={{ font: 'inherit' }}>
+              {format(task.startTime, 'dd.MM.yyy HH:mm')}
+            </Typography>
+          </Tooltip>
         </Box>
 
         <TimeLeft task={task} currentUser={currentUser} />
