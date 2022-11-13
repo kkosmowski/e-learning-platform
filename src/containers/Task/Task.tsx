@@ -17,14 +17,14 @@ import PageLoading from 'shared/components/PageLoading';
 
 export default function Task() {
   const { navigate } = useCustomNavigate();
-  const { taskId } = useParams<{ taskId: string }>();
+  const { subjectId, taskId } = useParams();
   const { t } = useTranslation('task');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { currentUser } = useAuth();
   const isUserStudent = isStudent(currentUser);
   const isUserTeacher = isTeacher(currentUser);
   const {
-    task: { task, isLoading, isSuccess },
+    task: { task, update, isLoading, isSuccess },
   } = useTasksQuery({ taskId });
 
   if (!isLoading && !task) {
@@ -34,6 +34,11 @@ export default function Task() {
 
   const isPastDeadline = !!task && isPastDate(new Date(task.endTime));
 
+  const handleFinishNow = (): void => {
+    if (!subjectId || !taskId) return;
+    update({ endTime: new Date() });
+  };
+
   const handleAnswerSubmit = (): void => {
     console.log('submitted');
   };
@@ -42,7 +47,7 @@ export default function Task() {
     <Centered innerSx={{ gap: 2 }}>
       {isSuccess && task ? (
         <>
-          <TaskCard task={task} />
+          <TaskCard task={task} onFinishNow={handleFinishNow} />
 
           {isUserStudent && task.status === Status.Todo && !isSubmitting && (
             <Box>

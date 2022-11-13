@@ -52,16 +52,20 @@ export interface TaskForm {
 
 export interface UpdateTaskPayload {
   id: string;
+  mandatory?: boolean;
+  name?: string;
+  content?: string;
+  end_time?: Date;
+}
+
+export interface CreateTaskPayload {
+  group_subject_id: string;
+  type: TaskType;
   mandatory: boolean;
   name: string;
   content: string;
-  end_time: Date;
-}
-
-export interface CreateTaskPayload extends Omit<UpdateTaskPayload, 'id'> {
-  group_subject_id: string;
-  type: TaskType;
   start_time: Date;
+  end_time: Date;
 }
 
 export interface LatestTasksDto {

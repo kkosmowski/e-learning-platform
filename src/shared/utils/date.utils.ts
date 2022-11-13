@@ -1,12 +1,13 @@
 import { TFunction } from 'i18next';
-import { differenceInMinutes } from 'date-fns';
+import { differenceInMinutes, differenceInSeconds } from 'date-fns';
 
 import { HOURS_IN_A_DAY, MINUTE, MINUTES_IN_AN_HOUR } from 'shared/consts/date';
 
 export const timeLeft = (t: TFunction, deadline: Date): [string, number] => {
   const diffInMinutes = differenceInMinutes(deadline, new Date());
+  const diffInSeconds = differenceInSeconds(deadline, new Date());
   const timeLeftString =
-    diffInMinutes < 0
+    diffInSeconds <= 0
       ? t('pastDeadline')
       : getReadableTimeDifference(deadline, new Date(), t, {
           shouldRound: true,

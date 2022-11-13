@@ -126,7 +126,9 @@
     },
     "confirm": {
       "deleteTitle": "Potwierdź usunięcie zadania",
-      "deleteMessage": "Czy na pewno usunąć wybrane zadanie? Tej operacji nie da się cofnąć."
+      "deleteMessage": "Czy na pewno usunąć wybrane zadanie? Tej operacji nie da się cofnąć.",
+      "finishNowTitle": "Potwierdź zakończenie zadania",
+      "finishNowMessage": "Czy na pewno zakończyć zadanie w tym momencie? Tej opacji nie da się cofnąć."
     },
     "toast": {
       "updateSuccess": "Zaktualizowano zadanie \"{{ name }}\""
@@ -164,6 +166,7 @@
     "tooltip": {
       "edit": "Edytuj ten element",
       "editDisabled": "Nie można już modyfikować tego elementu",
+      "finishNow": "Zakończ teraz",
       "publishNow": "Opublikuj teraz",
       "alreadyPublished": "Element jest już opublikowany, nie można zmienić jego daty publikacji.",
       "share": "Skopiuj link",
@@ -190,6 +193,7 @@
     "create": "Utwórz",
     "createAndView": "Utwórz i wyświetl",
     "delete": "Usuń",
+    "finish": "Zakończ",
     "active": "Aktywny(a)",
     "inactive": "Nieaktywny(a)",
     "firstName": "Imię",
