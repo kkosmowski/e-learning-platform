@@ -71,7 +71,7 @@
         "homework": "Utwórz nowe zadanie domowe"
       }
     },
-    "update": {
+    "edit": {
       "title": {
         "task": "Modyfikuj zadanie",
         "homework": "Modyfikuj zadanie domowe"
@@ -96,7 +96,8 @@
       "mandatory": {
         "true": "Obowiązkowe",
         "false": "Dodatkowe (nieobowiązkowe)"
-      }
+      },
+      "alreadyStarted": "Zmiana jest niedostępna, gdyż zadanie jest aktywne bądź zostało zakończone."
     },
     "task": "Zadanie",
     "homework": "Zadanie domowe",
@@ -155,11 +156,12 @@
   },
   "actions": {
     "tooltip": {
-      "edit": "Edytuj tytuł lub treść ogłoszenia",
+      "edit": "Edytuj ten element",
+      "editDisabled": "Nie można już modyfikować tego elementu",
       "publishNow": "Opublikuj teraz",
-      "alreadyPublished": "Ogłoszenie jest już opublikowane, nie można zmienić daty publikacji.",
-      "share": "Skopiuj link do ogłoszenia",
-      "delete": "Usuń ogłoszenie"
+      "alreadyPublished": "Element jest już opublikowany, nie można zmienić jego daty publikacji.",
+      "share": "Skopiuj link",
+      "delete": "Usuń"
     }
   },
   "common": {
@@ -376,6 +378,8 @@
     "SUBJECT_TEACHER_REQUIRED": "Wybierz nauczyciela prowadzącego przedmiot.",
     "PUBLISH_TIME_REQUIRED": "Określ datę publikacji.",
     "NOTICE_NOT_FOUND": "Nie znaleziono ogłoszenia",
-    "TASK_DURATION_TOO_SHORT": "Czas trwania zadania jest zbyt krótki. Wymagane minimum to {{ min }} minut."
+    "TASK_DURATION_TOO_SHORT": "Czas trwania zadania jest zbyt krótki. Wymagane minimum to {{ min }} minut.",
+    "TASK_DURATION_TOO_LONG": "Czas trwania zadania jest zbyt długi. Zwykłe zadanie nie może trwać dłużej niż {{ max }} godzin.",
+    "HOMEWORK_DURATION_TOO_LONG": "Czas trwania zadania dmowego jest zbyt długo. Nie powinien wynosić więcej niż 12 miesięcy."
   }
 }

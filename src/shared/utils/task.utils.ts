@@ -4,6 +4,7 @@ import {
   TaskDto,
   TaskForm,
   TaskType,
+  UpdateTaskPayload,
 } from 'shared/types/task';
 import { Status } from 'shared/types/shared';
 import { mapUserDtoToUser } from './user.utils';
@@ -52,6 +53,18 @@ export const mapTaskDtoToTask = (dto: TaskDto): Task => ({
   isPublished:
     new Date(dateStringToUTCString(dto.start_time)).getTime() <
     new Date().getTime(),
+});
+
+export const mapTaskFormToUpdateTaskPayload = (
+  id: string,
+  form: TaskForm
+): UpdateTaskPayload => ({
+  id,
+  mandatory: form.mandatory,
+  name: form.name,
+  content: form.content,
+  start_time: form.startTime!,
+  end_time: form.endTime!,
 });
 
 export const mapTaskFormToCreateTaskPayload = (

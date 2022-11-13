@@ -12,7 +12,13 @@ import { TFunction } from 'i18next';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { DateTimePicker } from '@mui/x-date-pickers';
-import { addHours, addMinutes, addYears, subMinutes } from 'date-fns';
+import {
+  addHours,
+  addMinutes,
+  addYears,
+  millisecondsToMinutes,
+  subMinutes,
+} from 'date-fns';
 import { ArrowRightAlt, HelpOutline } from '@mui/icons-material';
 
 import { TaskForm, TaskType } from 'shared/types/task';
@@ -24,10 +30,15 @@ import {
 import useCustomNavigate from 'hooks/use-custom-navigate';
 import {
   DEFAULT_TASK_DURATION_IN_HOURS,
+  MAX_TASK_DURATION_IN_HOURS,
   MAX_TASK_DURATION_IN_MINUTES,
   MIN_TASK_DURATION_IN_MINUTES,
 } from 'shared/consts/task';
-import { getReadableTimeDifference } from 'shared/utils/date.utils';
+import {
+  getReadableTimeDifference,
+  isDateAfterAnother,
+  isPastDate,
+} from 'shared/utils/date.utils';
 import { MINUTE } from 'shared/consts/date';
 import DurationDropdown from 'shared/components/DurationDropdown';
 
@@ -56,6 +67,7 @@ export function useTaskForm(props: UseTaskFormProps) {
   const [endTimeDatePickerValue, setEndTimeDatePickerValue] =
     useState<Date | null>(null);
   const { back } = useCustomNavigate();
+  const isEditMode = Boolean(initialValues.name);
 
   const formik = useFormik<TaskForm>({
     initialValues,
@@ -85,11 +97,26 @@ export function useTaskForm(props: UseTaskFormProps) {
     values,
   } = formik;
 
-  const currentTaskType = useMemo(() => {
-    if (values.startTime && values.endTime) {
-      const delta = values.endTime.getTime() - values.startTime.getTime();
+  const startTimeDisabled = useMemo(
+    () => !!initialValues.startTime && isPastDate(initialValues.startTime),
+    [initialValues.startTime]
+  );
 
-      if (delta >= MAX_TASK_DURATION_IN_MINUTES) {
+  const maxEndTime = useMemo(() => {
+    if (!values.startTime) return null;
+    if (values.type === TaskType.Homework || !isEditMode)
+      return addYears(values.startTime, 1);
+    return addMinutes(values.startTime, MAX_TASK_DURATION_IN_MINUTES);
+  }, [isEditMode, values.type, values.startTime]);
+
+  const currentTaskType = useMemo(() => {
+    if (isEditMode) return initialType;
+    if (values.startTime && values.endTime) {
+      const deltaInMinutes = millisecondsToMinutes(
+        values.endTime.getTime() - values.startTime.getTime()
+      );
+
+      if (deltaInMinutes >= MAX_TASK_DURATION_IN_MINUTES) {
         setFieldValue('type', TaskType.Homework);
         return TaskType.Homework;
       }
@@ -97,28 +124,61 @@ export function useTaskForm(props: UseTaskFormProps) {
       return TaskType.Task;
     }
     return null;
-  }, [values.startTime, values.endTime, setFieldValue]);
+  }, [
+    isEditMode,
+    initialType,
+    values.startTime,
+    values.endTime,
+    setFieldValue,
+  ]);
 
   const typeWarningVisible = useMemo(
     () => initialType !== currentTaskType,
     [currentTaskType, initialType]
   );
 
-  const endTimeError = useMemo(() => {
-    if (values.startTime && values.endTime) {
-      const deltaInMinutes =
-        (values.endTime.getTime() - values.startTime.getTime()) / MINUTE;
-      if (deltaInMinutes < MIN_TASK_DURATION_IN_MINUTES) {
-        const error = 'error:TASK_DURATION_TOO_SHORT';
-        setFieldError(
-          'endTime',
-          t(error, { min: MIN_TASK_DURATION_IN_MINUTES })
-        );
-        return error;
+  const checkIfInvalidEndTime = useCallback(
+    (dateTime: Date | null) => {
+      if (values.startTime && values.endTime) {
+        if (
+          dateTime &&
+          maxEndTime &&
+          isDateAfterAnother(dateTime, maxEndTime)
+        ) {
+          if (values.type === TaskType.Task) {
+            setFieldError(
+              'endTime',
+              t('error:TASK_DURATION_TOO_LONG', {
+                max: MAX_TASK_DURATION_IN_HOURS,
+              })
+            );
+          } else if (values.type === TaskType.Homework) {
+            setFieldError('endTime', t('error:HOMEWORK_DURATION_TOO_LONG'));
+          }
+          return;
+        }
+
+        const deltaInMinutes =
+          (values.endTime.getTime() - values.startTime.getTime()) / MINUTE;
+        if (deltaInMinutes < MIN_TASK_DURATION_IN_MINUTES) {
+          setFieldError(
+            'endTime',
+            t('error:TASK_DURATION_TOO_SHORT', {
+              min: MIN_TASK_DURATION_IN_MINUTES,
+            })
+          );
+        }
       }
-    }
-    return null;
-  }, [values.startTime, values.endTime, setFieldError, t]);
+    },
+    [
+      maxEndTime,
+      setFieldError,
+      t,
+      values.endTime,
+      values.startTime,
+      values.type,
+    ]
+  );
 
   useEffect(() => {
     setIsUntouched(
@@ -127,7 +187,10 @@ export function useTaskForm(props: UseTaskFormProps) {
         values.startTime?.getTime() === initialValues.startTime?.getTime() &&
         values.endTime?.getTime() === initialValues.endTime?.getTime()
     );
-  }, [initialValues, values]);
+    setTimeout(() => {
+      checkIfInvalidEndTime(values.endTime);
+    });
+  }, [initialValues, values, checkIfInvalidEndTime]);
 
   const validateAndFixEndTime = useCallback(
     async (startTime: Date | null) => {
@@ -178,14 +241,18 @@ export function useTaskForm(props: UseTaskFormProps) {
         await validateAndFixEndTime(value);
       }
       await setFieldValue(type, value);
+      if (type === 'endTime') {
+        checkIfInvalidEndTime(value);
+      }
       await setFieldTouched(type, true);
     },
     [
+      startTimeDatePickerValue,
       endTimeDatePickerValue,
       setFieldValue,
       setFieldTouched,
-      startTimeDatePickerValue,
       validateAndFixEndTime,
+      checkIfInvalidEndTime,
     ]
   );
 
@@ -195,17 +262,25 @@ export function useTaskForm(props: UseTaskFormProps) {
         setStartTimeDatePickerValue(dateTime);
       } else if (type === 'endTime' && endTimeDatePickerOpened) {
         setEndTimeDatePickerValue(dateTime);
+        checkIfInvalidEndTime(dateTime);
       } else {
         await updateTimeFormValue(type, dateTime);
       }
     },
-    [endTimeDatePickerOpened, startTimeDatePickerOpened, updateTimeFormValue]
+    [
+      checkIfInvalidEndTime,
+      endTimeDatePickerOpened,
+      startTimeDatePickerOpened,
+      updateTimeFormValue,
+    ]
   );
 
   useEffect(() => {
     if (!startTimeDatePickerOpened && startTimeDatePickerValue) {
+      console.log('hi');
       void updateTimeFormValue('startTime', startTimeDatePickerValue);
     } else if (!endTimeDatePickerOpened && endTimeDatePickerValue) {
+      console.log('hello');
       void updateTimeFormValue('endTime', endTimeDatePickerValue);
     }
   }, [
@@ -218,8 +293,9 @@ export function useTaskForm(props: UseTaskFormProps) {
 
   const submitButtonTooltip = useMemo(() => {
     if (!isValid || isUntouched) {
-      const key = !isValid ? 'missingData' : 'formUntouched';
-      return t('common:tooltip.' + key);
+      return isUntouched
+        ? t('common:tooltip.formUntouched')
+        : t('error:INVALID_FORM');
     }
     return '';
   }, [t, isValid, isUntouched]);
@@ -278,7 +354,9 @@ export function useTaskForm(props: UseTaskFormProps) {
 
       <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
         {t('form.shortcuts')}:{' '}
-        <Button onClick={handleStartTimeNow}>{t('form.setStartNow')}</Button>
+        <Button onClick={handleStartTimeNow} disabled={startTimeDisabled}>
+          {t('form.setStartNow')}
+        </Button>
         <DurationDropdown
           disabled={!values.startTime}
           onSelect={handleDurationSelect}
@@ -295,9 +373,21 @@ export function useTaskForm(props: UseTaskFormProps) {
         <DateTimePicker
           label={t('form.placeholder.startTime')}
           value={values.startTime}
-          disablePast
+          disablePast={!initialValues.startTime}
+          disabled={startTimeDisabled}
           renderInput={(params) => (
-            <TextField name="startTime" sx={{ flex: 1 }} {...params} />
+            <TextField
+              name="startTime"
+              sx={{ flex: 1 }}
+              {...params}
+              {...{
+                helperText: startTimeDisabled ? t('form.alreadyStarted') : ' ',
+              }}
+              {...(touched.startTime &&
+                Boolean(errors.startTime) && {
+                  error: Boolean(errors.startTime),
+                })}
+            />
           )}
           onChange={(value) => handleTimeChange('startTime', value)}
           onOpen={() => setStartTimeDatePickerOpened(true)}
@@ -309,15 +399,22 @@ export function useTaskForm(props: UseTaskFormProps) {
         <DateTimePicker
           label={t('form.placeholder.endTime')}
           value={values.endTime}
-          disablePast
+          disablePast={!initialValues.endTime}
           minDateTime={
             values.startTime
               ? addMinutes(values.startTime, MIN_TASK_DURATION_IN_MINUTES)
               : null
           }
-          maxDateTime={values.startTime ? addYears(values.startTime, 1) : null}
+          maxDateTime={maxEndTime}
           renderInput={(params) => (
-            <TextField name="endTime" sx={{ flex: 1 }} {...params} />
+            <TextField
+              name="endTime"
+              sx={{ flex: 1 }}
+              {...params}
+              helperText=" "
+              {...(touched.endTime &&
+                Boolean(errors.endTime) && { error: Boolean(errors.endTime) })}
+            />
           )}
           onChange={(value) => handleTimeChange('endTime', value)}
           onOpen={() => setEndTimeDatePickerOpened(true)}
@@ -344,24 +441,19 @@ export function useTaskForm(props: UseTaskFormProps) {
             {t('common:duration')}:{' '}
             <Typography
               component="span"
-              color={endTimeError ? 'error' : 'text'}
+              color={errors.endTime ? 'error' : 'text'}
               fontWeight="bold"
             >
-              <Tooltip
-                title={
-                  endTimeError
-                    ? t(endTimeError, { min: MIN_TASK_DURATION_IN_MINUTES }) +
-                      ''
-                    : ''
-                }
-              >
+              <Tooltip title={errors.endTime || ''}>
                 <span>
                   {getReadableTimeDifference(
                     values.endTime,
                     values.startTime,
                     t
                   )}
-                  {endTimeError && <HelpOutline sx={{ fontSize: 14 }} />}
+                  {Boolean(errors.endTime) && (
+                    <HelpOutline sx={{ fontSize: 16, ml: '3px', mb: '-3px' }} />
+                  )}
                 </span>
               </Tooltip>
             </Typography>
@@ -378,7 +470,7 @@ export function useTaskForm(props: UseTaskFormProps) {
             <strong>{t(`form.mandatory.${String(values.mandatory)}`)}</strong>
           </Typography>
 
-          {typeWarningVisible && (
+          {typeWarningVisible && !isEditMode && (
             <Typography color="text.warning">
               {t('form.typeChangedTo.' + currentTaskType)}
             </Typography>
@@ -386,18 +478,13 @@ export function useTaskForm(props: UseTaskFormProps) {
         </Box>
       )}
 
-      {/*
-       @todo show warning when current type was *automatically* changed from original
-        (this can happen when someone started creating Task and set duration to e.g. 2 days)
-      */}
-
       <Box sx={{ display: 'flex', gap: 3, '*': { flex: 1 } }}>
         <Tooltip title={submitButtonTooltip}>
           <Box sx={{ display: 'flex', '*': { flex: 1 } }}>
             <Button
               type="submit"
               variant="contained"
-              disabled={!(isValid || endTimeError) || isUntouched}
+              disabled={!isValid || isUntouched}
             >
               {submitButtonLabel}
             </Button>

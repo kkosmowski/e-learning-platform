@@ -71,7 +71,7 @@
         "homework": "Create new homework"
       }
     },
-    "update": {
+    "edit": {
       "title": {
         "task": "Modify task",
         "homework": "Modify homework"
@@ -96,7 +96,8 @@
       "mandatory": {
         "true": "Mandatory",
         "false": "Not mandatory"
-      }
+      },
+      "alreadyStarted": "Editing start time is disabled, because the task has already started or finished."
     },
     "task": "Task",
     "homework": "Homework",
@@ -155,7 +156,8 @@
   },
   "actions": {
     "tooltip": {
-      "edit": "Edit the title or content",
+      "edit": "Edit this item",
+      "editDisabled": "This item is no longer editable",
       "publishNow": "Publish now",
       "alreadyPublished": "Item is already published, cannot edit its publishing time.",
       "share": "Copy the link to this item",
@@ -376,6 +378,8 @@
     "SUBJECT_TEACHER_REQUIRED": "Select lecturing teacher.",
     "PUBLISH_TIME_REQUIRED": "Publishing time must be given.",
     "NOTICE_NOT_FOUND": "Notice not found",
-    "TASK_DURATION_TOO_SHORT": "Task duration is too short. At least {{ min }} min is required."
+    "TASK_DURATION_TOO_SHORT": "Task duration is too short. At least {{ min }} min is required.",
+    "TASK_DURATION_TOO_LONG": "Task duration is too long. Regular task duration cannot be greater than {{ max }} hours.",
+    "HOMEWORK_DURATION_TOO_LONG": "Homework duration is too long. It should not be greater than 12 months."
   }
 }

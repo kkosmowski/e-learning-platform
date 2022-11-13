@@ -33,6 +33,7 @@ import TeacherGuard from 'shared/guards/TeacherGuard';
 import { RouteObjectWithId } from 'shared/types/routing';
 import { TaskType } from 'shared/types/task';
 import { Role } from 'shared/types/user';
+import EditTask from '../../containers/Subject/features/EditTask';
 
 export const features: RouteObjectWithId[] = [
   {
@@ -108,7 +109,16 @@ export const features: RouteObjectWithId[] = [
               },
               {
                 path: ':taskId',
-                element: <Task type={TaskType.Task} />,
+                children: [
+                  {
+                    path: '',
+                    element: <Task />,
+                  },
+                  {
+                    path: 'edit',
+                    element: <EditTask />,
+                  },
+                ],
               },
             ],
           },
@@ -129,7 +139,16 @@ export const features: RouteObjectWithId[] = [
               },
               {
                 path: ':taskId',
-                element: <Task type={TaskType.Homework} />,
+                children: [
+                  {
+                    path: '',
+                    element: <Task />,
+                  },
+                  {
+                    path: 'edit',
+                    element: <EditTask />,
+                  },
+                ],
               },
             ],
           },

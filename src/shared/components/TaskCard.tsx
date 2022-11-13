@@ -17,6 +17,7 @@ import { useAuth } from 'contexts/auth';
 import useCustomNavigate from 'hooks/use-custom-navigate';
 import { TASK_VISIBLE_SHORT_TITLE_LENGTH } from 'shared/consts/task';
 import TaskDetails from './TaskDetails';
+import { isPastDate } from '../utils/date.utils';
 
 interface TaskCardProps {
   task: Task;
@@ -45,7 +46,7 @@ export default function TaskCard(props: TaskCardProps) {
       currentUser.id === task.createdBy?.id,
     [currentUser, task.createdBy]
   );
-  const isEditAllowed = useMemo(() => !short && isAuthor, [short, isAuthor]);
+  const isEditVisible = useMemo(() => !short && isAuthor, [short, isAuthor]);
 
   const handleEdit = () => {
     navigate('./edit');
@@ -89,7 +90,8 @@ export default function TaskCard(props: TaskCardProps) {
 
             <ActionToolbar
               item={['task', task.name]}
-              isEditAllowed={isEditAllowed}
+              isEditVisible={isEditVisible}
+              isEditAllowed={!isPastDate(task.endTime)}
               isPreview={Boolean(short)}
               share
               onEdit={handleEdit}

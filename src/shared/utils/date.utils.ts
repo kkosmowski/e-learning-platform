@@ -35,6 +35,9 @@ export const dateStringToUTCString = (dateString: string): string =>
 export const isPastDate = (date: Date): boolean =>
   new Date().getTime() > date.getTime();
 
+export const isDateAfterAnother = (date: Date, anotherDate: Date): boolean =>
+  date.getTime() > anotherDate.getTime();
+
 export const getReadableTimeDifference = (
   date1: Date,
   date2: Date,
