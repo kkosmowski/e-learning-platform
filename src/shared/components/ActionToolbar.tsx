@@ -8,6 +8,7 @@ import { useConfirmationDialog } from 'shared/hooks';
 interface ActionToolbarProps {
   item?: [string, string];
   isPublishAllowed?: boolean;
+  isEditVisible?: boolean;
   isEditAllowed?: boolean;
   isPreview?: boolean;
   share?: boolean;
@@ -21,6 +22,7 @@ export default function ActionToolbar(props: ActionToolbarProps) {
   const {
     item,
     isPublishAllowed,
+    isEditVisible,
     isEditAllowed,
     isPreview,
     share,
@@ -82,11 +84,15 @@ export default function ActionToolbar(props: ActionToolbarProps) {
         </Tooltip>
       )}
 
-      {isEditAllowed && onEdit && (
-        <Tooltip title={t('tooltip.edit')}>
-          <IconButton onClick={onEdit} size="small">
-            <Edit fontSize="small" />
-          </IconButton>
+      {isEditVisible && onEdit && (
+        <Tooltip
+          title={isEditAllowed ? t('tooltip.edit') : t('tooltip.editDisabled')}
+        >
+          <span>
+            <IconButton onClick={onEdit} disabled={!isEditAllowed} size="small">
+              <Edit fontSize="small" />
+            </IconButton>
+          </span>
         </Tooltip>
       )}
 
@@ -98,7 +104,7 @@ export default function ActionToolbar(props: ActionToolbarProps) {
         </Tooltip>
       )}
 
-      {isEditAllowed && onDelete && (
+      {isEditVisible && onDelete && (
         <Tooltip title={t('tooltip.delete')}>
           <IconButton onClick={handleDelete} size="small" color="error">
             <Delete fontSize="small" />

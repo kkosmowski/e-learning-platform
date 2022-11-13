@@ -11,6 +11,7 @@ import { Fragment, useMemo } from 'react';
 
 import { Task, TaskSubmission } from 'shared/types/task';
 import { isTeacher } from 'shared/utils/user.utils';
+import { isPastDate } from 'shared/utils/date.utils';
 import { Role, User } from 'shared/types/user';
 import ActionToolbar from './ActionToolbar';
 import { useAuth } from 'contexts/auth';
@@ -45,7 +46,7 @@ export default function TaskCard(props: TaskCardProps) {
       currentUser.id === task.createdBy?.id,
     [currentUser, task.createdBy]
   );
-  const isEditAllowed = useMemo(() => !short && isAuthor, [short, isAuthor]);
+  const isEditVisible = useMemo(() => !short && isAuthor, [short, isAuthor]);
 
   const handleEdit = () => {
     navigate('./edit');
@@ -89,7 +90,8 @@ export default function TaskCard(props: TaskCardProps) {
 
             <ActionToolbar
               item={['task', task.name]}
-              isEditAllowed={isEditAllowed}
+              isEditVisible={isEditVisible}
+              isEditAllowed={!isPastDate(task.endTime)}
               isPreview={Boolean(short)}
               share
               onEdit={handleEdit}

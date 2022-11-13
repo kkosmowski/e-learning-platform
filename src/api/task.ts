@@ -6,6 +6,8 @@ import {
   GetTasksResponse,
   GetLatestTasksResponse,
   TaskType,
+  UpdateTaskPayload,
+  UpdateTaskResponse,
 } from 'shared/types/task';
 import { TASK_LIST_PAGE_SIZE } from 'shared/consts/task';
 
@@ -37,3 +39,9 @@ export const createTask = (
   payload: CreateTaskPayload
 ): Promise<CreateTaskResponse> =>
   authorized((api) => api.post('task', payload));
+
+export const updateTask = ({
+  id,
+  ...data
+}: UpdateTaskPayload): Promise<UpdateTaskResponse> =>
+  authorized((api) => api.patch(`task/${id}`, data));

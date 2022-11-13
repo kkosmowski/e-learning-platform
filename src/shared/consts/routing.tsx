@@ -20,7 +20,7 @@ import SubjectOverview, {
   CreateNotice,
   CreateTask,
   EditNotice,
-  // EditTask,
+  EditTask,
 } from 'containers/Subject';
 import NoticeBoard from 'containers/NoticeBoard';
 import Notice from 'containers/Notice';
@@ -108,7 +108,16 @@ export const features: RouteObjectWithId[] = [
               },
               {
                 path: ':taskId',
-                element: <Task type={TaskType.Task} />,
+                children: [
+                  {
+                    path: '',
+                    element: <Task />,
+                  },
+                  {
+                    path: 'edit',
+                    element: <EditTask />,
+                  },
+                ],
               },
             ],
           },
@@ -129,7 +138,16 @@ export const features: RouteObjectWithId[] = [
               },
               {
                 path: ':taskId',
-                element: <Task type={TaskType.Homework} />,
+                children: [
+                  {
+                    path: '',
+                    element: <Task />,
+                  },
+                  {
+                    path: 'edit',
+                    element: <EditTask />,
+                  },
+                ],
               },
             ],
           },

@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 
 import { Centered } from 'shared/components/Container';
 import TaskCard from 'shared/components/TaskCard';
-import { TaskType } from 'shared/types/task';
 import { Status } from 'shared/types/shared';
 import { isPastDate } from 'shared/utils/date.utils';
 import { isStudent, isTeacher } from 'shared/utils/user.utils';
@@ -16,7 +15,7 @@ import { useAuth } from 'contexts/auth';
 import { useTasksQuery } from 'shared/queries';
 import PageLoading from 'shared/components/PageLoading';
 
-export default function Task({ type }: { type: TaskType }) {
+export default function Task() {
   const { navigate } = useCustomNavigate();
   const { taskId } = useParams<{ taskId: string }>();
   const { t } = useTranslation('task');
@@ -25,9 +24,7 @@ export default function Task({ type }: { type: TaskType }) {
   const isUserStudent = isStudent(currentUser);
   const isUserTeacher = isTeacher(currentUser);
   const {
-    task,
-    taskLoading: isLoading,
-    taskSuccess: isSuccess,
+    task: { task, isLoading, isSuccess },
   } = useTasksQuery({ taskId });
 
   if (!isLoading && !task) {

@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
-import { Box, Stack, Typography } from '@mui/material';
+import { Box, Stack, Tooltip, Typography } from '@mui/material';
 import {
+  AccessTime,
   CheckBox,
   CheckBoxOutlineBlank,
   CheckBoxOutlined,
@@ -9,6 +10,7 @@ import {
   SvgIconComponent,
 } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
+import format from 'date-fns/format';
 
 import { Status } from 'shared/types/shared';
 import { Task, TaskSubmission } from 'shared/types/task';
@@ -64,6 +66,16 @@ export default function TaskDetails(props: TaskDetailsProps) {
       <Stack spacing={0.5}>
         <Box sx={{ display: 'flex', alignItems: 'center', columnGap: 1 }}>
           <ItemCategory type={task.type} />
+        </Box>
+
+        <Box sx={{ display: 'flex', alignItems: 'center', columnGap: 1 }}>
+          <AccessTime sx={{ fontSize: 16 }} />
+
+          <Tooltip title={t('tooltip.startTime')}>
+            <Typography component="span" sx={{ font: 'inherit' }}>
+              {format(task.startTime, 'dd.MM.yyy HH:mm')}
+            </Typography>
+          </Tooltip>
         </Box>
 
         <TimeLeft task={task} currentUser={currentUser} />

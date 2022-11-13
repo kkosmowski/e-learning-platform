@@ -1,5 +1,5 @@
-import { Box, Typography } from '@mui/material';
-import { AccessTime } from '@mui/icons-material';
+import { Box, Tooltip, Typography } from '@mui/material';
+import { LockClock } from '@mui/icons-material';
 import format from 'date-fns/format';
 import { useTranslation } from 'react-i18next';
 
@@ -32,24 +32,23 @@ export default function TimeLeft(props: TimeLeftProps) {
 
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', columnGap: 1 }}>
-      <AccessTime sx={{ fontSize: 16 }} />
+      <LockClock sx={{ fontSize: 16 }} />
 
-      <Typography
-        component="span"
-        sx={{ font: 'inherit' }}
-        color={(isUserTeacher && timeLeftTextColor) || 'text.secondary'}
-      >
-        {format(task.endTime, 'dd.MM.yyy HH:mm')}
-      </Typography>
+      <Tooltip title={t('tooltip.endTime')}>
+        <Typography
+          component="span"
+          sx={{ font: 'inherit' }}
+          color={(isUserTeacher && timeLeftTextColor) || 'text.secondary'}
+        >
+          {format(task.endTime, 'dd.MM.yyy HH:mm')}
+        </Typography>
+      </Tooltip>
 
-      {task.status === Status.Todo &&
-        isUserStudent &&
-        timeLeftTextColor &&
-        timeLeftString && (
-          <Typography color={timeLeftTextColor} sx={{ fontSize: 'inherit' }}>
-            ({timeLeftString})
-          </Typography>
-        )}
+      {task.status === Status.Todo && timeLeftTextColor && timeLeftString && (
+        <Typography color={timeLeftTextColor} sx={{ fontSize: 'inherit' }}>
+          ({timeLeftString})
+        </Typography>
+      )}
     </Box>
   );
 }

@@ -1,21 +1,33 @@
 import { useMemo } from 'react';
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 import { AxiosError } from 'axios';
+import toast from 'react-hot-toast';
 
 import {
   GetTaskResponse,
-  GetTasksResponse,
   GetLatestTasksResponse,
   TaskDto,
   TaskType,
   LatestTasksDto,
   LatestTasks,
+  UpdateTaskResponse,
+  TaskForm,
 } from 'shared/types/task';
-import { getLatestTasks, getSubjectTasks, getTask } from 'api/task';
-import { mapTaskDtoToTask } from 'shared/utils/task.utils';
+import { getLatestTasks, getSubjectTasks, getTask, updateTask } from 'api/task';
+import {
+  mapTaskDtoToTask,
+  mapTaskFormToUpdateTaskPayload,
+} from 'shared/utils/task.utils';
 import { useAuth } from 'contexts/auth';
 import { TASK_LIST_PAGE_SIZE, VISIBLE_LATEST_TASKS } from 'shared/consts/task';
 import { Paginated } from 'shared/types/shared';
+import useCustomNavigate from 'hooks/use-custom-navigate';
+import { useTranslation } from 'react-i18next';
 
 const getNextPageParam = (
   { total_count }: Paginated<TaskDto>,
@@ -43,6 +55,9 @@ export function useTasksQuery(options: {
 }) {
   const { subjectId, taskId, enabled = [] } = options;
   const { currentUser } = useAuth();
+  const queryClient = useQueryClient();
+  const { back } = useCustomNavigate();
+  const { t } = useTranslation('task');
 
   if (!enabled.length && subjectId) {
     console.error(
@@ -110,6 +125,31 @@ export function useTasksQuery(options: {
     }
   );
 
+  const { mutate: update } = useMutation<
+    UpdateTaskResponse,
+    AxiosError,
+    TaskForm
+  >(
+    async (values) => {
+      if (taskQuery.data) {
+        return updateTask(
+          mapTaskFormToUpdateTaskPayload(taskQuery.data.id, values)
+        );
+      } else throw new Error('Task id is missing');
+    },
+    {
+      onSuccess: async ({ data }) => {
+        queryClient.setQueryData(['task', taskId], { data });
+        await queryClient.invalidateQueries(['tasks']);
+        back();
+        toast.success(t('toast.updateSuccess', { name: data.name }));
+      },
+      onError: (e) => {
+        toast.error(t('error:ERROR'));
+      },
+    }
+  );
+
   const tasks = useMemo(
     () =>
       tasksQuery.data?.pages.map((page) => page.items.map(mapTaskDtoToTask)),
@@ -160,7 +200,13 @@ export function useTasksQuery(options: {
   );
 
   return {
-    task,
+    task: {
+      task,
+      isLoading: taskQuery.isLoading,
+      isSuccess: taskQuery.isSuccess,
+      isError: taskQuery.isError,
+      update,
+    },
     tasks: {
       items: tasks,
       isLoading: tasksQuery.isLoading,
@@ -180,8 +226,6 @@ export function useTasksQuery(options: {
       hasNextPage: hasNextHomeworkPage,
     },
     latestTasks,
-    taskLoading: taskQuery.isLoading,
-    taskSuccess: taskQuery.isSuccess,
     latestTasksLoading: latestTasksQuery.isLoading,
     latestTasksSuccess: latestTasksQuery.isSuccess,
   };
