@@ -19,6 +19,7 @@ import {
   titleRequiredError,
 } from 'shared/consts/error';
 import useCustomNavigate from 'hooks/use-custom-navigate';
+import LabelledCheckbox from '../components/LabelledCheckbox';
 
 interface UseNoticeFormProps {
   initialValues: NoticeForm;
@@ -137,18 +138,13 @@ export function useNoticeForm(props: UseNoticeFormProps) {
       <Tooltip
         title={values.isPublished ? t('tooltip.alreadyPublished') + '' : ''}
       >
-        <FormControlLabel
-          sx={{ alignSelf: 'flex-start' }}
-          control={
-            <Checkbox
-              name="publishInstantly"
-              checked={values.publishInstantly}
-              onBlur={handleBlur}
-              disabled={values.isPublished}
-              onChange={handlePublishInstantlyChange}
-            />
-          }
+        <LabelledCheckbox
           label={t('create.publishInstantly')}
+          name="publishInstantly"
+          checked={values.publishInstantly}
+          onBlur={handleBlur}
+          disabled={values.isPublished}
+          onChange={handlePublishInstantlyChange}
         />
       </Tooltip>
 

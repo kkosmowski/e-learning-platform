@@ -95,7 +95,7 @@
       "currentMandatory": "Current tasks status",
       "mandatory": {
         "true": "Mandatory",
-        "false": "Not mandatory"
+        "false": "Bonus (not mandatory)"
       },
       "alreadyStarted": "Editing start time is disabled, because the task has already started or finished."
     },
