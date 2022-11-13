@@ -44,14 +44,11 @@ export default function TimeLeft(props: TimeLeftProps) {
         </Typography>
       </Tooltip>
 
-      {task.status === Status.Todo &&
-        isUserStudent &&
-        timeLeftTextColor &&
-        timeLeftString && (
-          <Typography color={timeLeftTextColor} sx={{ fontSize: 'inherit' }}>
-            ({timeLeftString})
-          </Typography>
-        )}
+      {task.status === Status.Todo && timeLeftTextColor && timeLeftString && (
+        <Typography color={timeLeftTextColor} sx={{ fontSize: 'inherit' }}>
+          ({timeLeftString})
+        </Typography>
+      )}
     </Box>
   );
 }

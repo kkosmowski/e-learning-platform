@@ -127,6 +127,9 @@
     "confirm": {
       "deleteTitle": "Deleting a task",
       "deleteMessage": "Are you sure you want to delete this task? This operation cannot be undone."
+    },
+    "toast": {
+      "updateSuccess": "Successfully updated task \"{{ name }}\""
     }
   },
   "notice": {
@@ -152,6 +155,7 @@
     },
     "toast": {
       "createSuccess": "Successfully created notice \"{{ name }}\"",
+      "updateSuccess": "Successfully updated notice \"{{ name }}\"",
       "publishSuccess": "Successfully published notice \"{{ name }}\"",
       "deleteSuccess": "Successfully published notice \"{{ name }}\""
     }
@@ -354,6 +358,7 @@
     "button": "Take me home"
   },
   "error": {
+    "ERROR": "Error occurred",
     "UNKNOWN_ERROR": "Unknown error occurred.",
     "INVALID_FORM": "Form contains errors.",
     "FILE_TOO_BIG": "The file is too large. Max size allowed is {{ maxSize }}.",

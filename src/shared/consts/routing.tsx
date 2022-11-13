@@ -20,7 +20,7 @@ import SubjectOverview, {
   CreateNotice,
   CreateTask,
   EditNotice,
-  // EditTask,
+  EditTask,
 } from 'containers/Subject';
 import NoticeBoard from 'containers/NoticeBoard';
 import Notice from 'containers/Notice';
@@ -33,7 +33,6 @@ import TeacherGuard from 'shared/guards/TeacherGuard';
 import { RouteObjectWithId } from 'shared/types/routing';
 import { TaskType } from 'shared/types/task';
 import { Role } from 'shared/types/user';
-import EditTask from '../../containers/Subject/features/EditTask';
 
 export const features: RouteObjectWithId[] = [
   {

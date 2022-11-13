@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
 
 import { getNotice, updateNotice } from 'api/notice';
 import {
@@ -21,6 +22,7 @@ export function useNoticeQuery(noticeId: string | undefined) {
   const { currentUser } = useAuth();
   const queryClient = useQueryClient();
   const { back } = useCustomNavigate();
+  const { t } = useTranslation('notice');
 
   const fetchQuery = useQuery<GetNoticeResponse, AxiosError, NoticeDto>(
     ['notice', noticeId],
@@ -49,10 +51,10 @@ export function useNoticeQuery(noticeId: string | undefined) {
         queryClient.setQueryData(['notice', noticeId], { data });
         await queryClient.invalidateQueries(['notices']);
         back();
-        toast.success('Notice updated');
+        toast.success(t('toast.updateSuccess', { name: data.name }));
       },
       onError: (e) => {
-        toast.error('There was an error');
+        toast.error(t('error:ERROR'));
       },
     }
   );

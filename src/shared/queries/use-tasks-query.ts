@@ -27,6 +27,7 @@ import { useAuth } from 'contexts/auth';
 import { TASK_LIST_PAGE_SIZE, VISIBLE_LATEST_TASKS } from 'shared/consts/task';
 import { Paginated } from 'shared/types/shared';
 import useCustomNavigate from 'hooks/use-custom-navigate';
+import { useTranslation } from 'react-i18next';
 
 const getNextPageParam = (
   { total_count }: Paginated<TaskDto>,
@@ -56,6 +57,7 @@ export function useTasksQuery(options: {
   const { currentUser } = useAuth();
   const queryClient = useQueryClient();
   const { back } = useCustomNavigate();
+  const { t } = useTranslation('task');
 
   if (!enabled.length && subjectId) {
     console.error(
@@ -140,10 +142,10 @@ export function useTasksQuery(options: {
         queryClient.setQueryData(['task', taskId], { data });
         await queryClient.invalidateQueries(['tasks']);
         back();
-        toast.success('Task updated');
+        toast.success(t('toast.updateSuccess', { name: data.name }));
       },
       onError: (e) => {
-        toast.error('There was an error');
+        toast.error(t('error:ERROR'));
       },
     }
   );

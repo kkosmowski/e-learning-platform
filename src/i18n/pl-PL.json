@@ -127,6 +127,9 @@
     "confirm": {
       "deleteTitle": "Potwierdź usunięcie zadania",
       "deleteMessage": "Czy na pewno usunąć wybrane zadanie? Tej operacji nie da się cofnąć."
+    },
+    "toast": {
+      "updateSuccess": "Zaktualizowano zadanie \"{{ name }}\""
     }
   },
   "notice": {
@@ -152,6 +155,7 @@
     },
     "toast": {
       "createSuccess": "Utworzono ogłoszenie \"{{ name }}\"",
+      "updateSuccess": "Zaktualizowano ogłoszenie \"{{ name }}\"",
       "publishSuccess": "Opublikowano ogłoszenie \"{{ name }}\"",
       "deleteSuccess": "Usunięto ogłoszenie \"{{ name }}\""
     }
@@ -354,6 +358,7 @@
     "button": "Powrót do strony głównej"
   },
   "error": {
+    "ERROR": "Wystąpił błąd",
     "UNKNOWN_ERROR": "Nieznany błąd.",
     "INVALID_FORM": "Formularz zawiera błędy.",
     "FILE_TOO_BIG": "Zbyt duży plik. Maksymalny dopuszczalny rozmiar to {{ maxSize }}.",

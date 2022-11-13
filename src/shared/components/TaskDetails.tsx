@@ -10,6 +10,7 @@ import {
   SvgIconComponent,
 } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
+import format from 'date-fns/format';
 
 import { Status } from 'shared/types/shared';
 import { Task, TaskSubmission } from 'shared/types/task';
@@ -18,7 +19,6 @@ import ItemCategory from './ItemCategory';
 import { isStudent, isTeacher } from 'shared/utils/user.utils';
 import { isPastDate } from 'shared/utils/date.utils';
 import TimeLeft from './TimeLeft';
-import format from 'date-fns/format';
 
 interface TaskDetailsProps {
   task: Task;

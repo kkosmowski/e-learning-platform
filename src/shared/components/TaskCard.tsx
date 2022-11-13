@@ -11,13 +11,13 @@ import { Fragment, useMemo } from 'react';
 
 import { Task, TaskSubmission } from 'shared/types/task';
 import { isTeacher } from 'shared/utils/user.utils';
+import { isPastDate } from 'shared/utils/date.utils';
 import { Role, User } from 'shared/types/user';
 import ActionToolbar from './ActionToolbar';
 import { useAuth } from 'contexts/auth';
 import useCustomNavigate from 'hooks/use-custom-navigate';
 import { TASK_VISIBLE_SHORT_TITLE_LENGTH } from 'shared/consts/task';
 import TaskDetails from './TaskDetails';
-import { isPastDate } from '../utils/date.utils';
 
 interface TaskCardProps {
   task: Task;

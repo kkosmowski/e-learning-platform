@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { AxiosError } from 'axios';
 
 import { api } from 'api/axios';
-import { getErrorDetail } from '../shared/utils/common.utils';
+import { getErrorDetail } from 'shared/utils/common.utils';
 
 export default function useInterceptors(signOut: () => void) {
   useEffect(() => {
