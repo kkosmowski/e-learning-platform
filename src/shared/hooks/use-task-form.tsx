@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   Box,
   Button,
@@ -41,6 +41,7 @@ import {
 } from 'shared/utils/date.utils';
 import { MINUTE } from 'shared/consts/date';
 import DurationDropdown from 'shared/components/DurationDropdown';
+import LabelledCheckbox from '../components/LabelledCheckbox';
 
 interface UseTaskFormProps {
   type: TaskType;
@@ -59,13 +60,10 @@ export function useTaskForm(props: UseTaskFormProps) {
     t,
   } = props;
   const [isUntouched, setIsUntouched] = useState(true);
-  const [startTimeDatePickerOpened, setStartTimeDatePickerOpened] =
-    useState(false);
-  const [endTimeDatePickerOpened, setEndTimeDatePickerOpened] = useState(false);
-  const [startTimeDatePickerValue, setStartTimeDatePickerValue] =
-    useState<Date | null>(null);
-  const [endTimeDatePickerValue, setEndTimeDatePickerValue] =
-    useState<Date | null>(null);
+  const [startPickerOpened, setStartPickerOpened] = useState(false);
+  const [endPickerOpened, setEndPickerOpened] = useState(false);
+  const [startPickerValue, setStartPickerValue] = useState<Date | null>(null);
+  const [endPickerValue, setEndPickerValue] = useState<Date | null>(null);
   const { back } = useCustomNavigate();
   const isEditMode = Boolean(initialValues.name);
 
@@ -109,8 +107,8 @@ export function useTaskForm(props: UseTaskFormProps) {
     return addMinutes(values.startTime, MAX_TASK_DURATION_IN_MINUTES);
   }, [isEditMode, values.type, values.startTime]);
 
-  const currentTaskType = useMemo(() => {
-    if (isEditMode) return initialType;
+  useEffect(() => {
+    if (isEditMode) return;
     if (values.startTime && values.endTime) {
       const deltaInMinutes = millisecondsToMinutes(
         values.endTime.getTime() - values.startTime.getTime()
@@ -118,12 +116,9 @@ export function useTaskForm(props: UseTaskFormProps) {
 
       if (deltaInMinutes >= MAX_TASK_DURATION_IN_MINUTES) {
         setFieldValue('type', TaskType.Homework);
-        return TaskType.Homework;
       }
       setFieldValue('type', TaskType.Task);
-      return TaskType.Task;
     }
-    return null;
   }, [
     isEditMode,
     initialType,
@@ -133,8 +128,8 @@ export function useTaskForm(props: UseTaskFormProps) {
   ]);
 
   const typeWarningVisible = useMemo(
-    () => initialType !== currentTaskType,
-    [currentTaskType, initialType]
+    () => initialType !== values.type,
+    [values.type, initialType]
   );
 
   const checkIfInvalidEndTime = useCallback(
@@ -187,9 +182,7 @@ export function useTaskForm(props: UseTaskFormProps) {
         values.startTime?.getTime() === initialValues.startTime?.getTime() &&
         values.endTime?.getTime() === initialValues.endTime?.getTime()
     );
-    setTimeout(() => {
-      checkIfInvalidEndTime(values.endTime);
-    });
+    setTimeout(() => checkIfInvalidEndTime(values.endTime));
   }, [initialValues, values, checkIfInvalidEndTime]);
 
   const validateAndFixEndTime = useCallback(
@@ -229,26 +222,20 @@ export function useTaskForm(props: UseTaskFormProps) {
   const updateTimeFormValue = useCallback(
     async (type: 'startTime' | 'endTime', newValue?: Date | null) => {
       const datePickerValue =
-        type === 'startTime'
-          ? startTimeDatePickerValue
-          : endTimeDatePickerValue;
+        type === 'startTime' ? startPickerValue : endPickerValue;
       const value = newValue !== undefined ? newValue : datePickerValue;
 
-      setStartTimeDatePickerOpened(false);
-      setEndTimeDatePickerOpened(false);
+      setStartPickerOpened(false);
+      setEndPickerOpened(false);
 
-      if (type === 'startTime') {
-        await validateAndFixEndTime(value);
-      }
+      if (type === 'startTime') await validateAndFixEndTime(value);
       await setFieldValue(type, value);
-      if (type === 'endTime') {
-        checkIfInvalidEndTime(value);
-      }
+      if (type === 'endTime') checkIfInvalidEndTime(value);
       await setFieldTouched(type, true);
     },
     [
-      startTimeDatePickerValue,
-      endTimeDatePickerValue,
+      startPickerValue,
+      endPickerValue,
       setFieldValue,
       setFieldTouched,
       validateAndFixEndTime,
@@ -258,10 +245,10 @@ export function useTaskForm(props: UseTaskFormProps) {
 
   const handleTimeChange = useCallback(
     async (type: 'startTime' | 'endTime', dateTime: Date | null) => {
-      if (type === 'startTime' && startTimeDatePickerOpened) {
-        setStartTimeDatePickerValue(dateTime);
-      } else if (type === 'endTime' && endTimeDatePickerOpened) {
-        setEndTimeDatePickerValue(dateTime);
+      if (type === 'startTime' && startPickerOpened) {
+        setStartPickerValue(dateTime);
+      } else if (type === 'endTime' && endPickerOpened) {
+        setEndPickerValue(dateTime);
         checkIfInvalidEndTime(dateTime);
       } else {
         await updateTimeFormValue(type, dateTime);
@@ -269,35 +256,31 @@ export function useTaskForm(props: UseTaskFormProps) {
     },
     [
       checkIfInvalidEndTime,
-      endTimeDatePickerOpened,
-      startTimeDatePickerOpened,
+      endPickerOpened,
+      startPickerOpened,
       updateTimeFormValue,
     ]
   );
 
   useEffect(() => {
-    if (!startTimeDatePickerOpened && startTimeDatePickerValue) {
-      console.log('hi');
-      void updateTimeFormValue('startTime', startTimeDatePickerValue);
-    } else if (!endTimeDatePickerOpened && endTimeDatePickerValue) {
-      console.log('hello');
-      void updateTimeFormValue('endTime', endTimeDatePickerValue);
+    if (!startPickerOpened && startPickerValue) {
+      void updateTimeFormValue('startTime', startPickerValue);
+    } else if (!endPickerOpened && endPickerValue) {
+      void updateTimeFormValue('endTime', endPickerValue);
     }
   }, [
-    startTimeDatePickerValue,
-    endTimeDatePickerValue,
-    startTimeDatePickerOpened,
-    endTimeDatePickerOpened,
+    startPickerValue,
+    endPickerValue,
+    startPickerOpened,
+    endPickerOpened,
     updateTimeFormValue,
   ]);
 
   const submitButtonTooltip = useMemo(() => {
-    if (!isValid || isUntouched) {
-      return isUntouched
-        ? t('common:tooltip.formUntouched')
-        : t('error:INVALID_FORM');
-    }
-    return '';
+    if (isValid && !isUntouched) return '';
+    return isUntouched
+      ? t('common:tooltip.formUntouched')
+      : t('error:INVALID_FORM');
   }, [t, isValid, isUntouched]);
 
   const handleStartTimeNow = async () => {
@@ -308,16 +291,11 @@ export function useTaskForm(props: UseTaskFormProps) {
   };
 
   const handleDurationSelect = async (valueInMinutes: number) => {
-    if (values.startTime) {
-      const endTime = new Date(addMinutes(values.startTime, valueInMinutes));
-      await setFieldValue('endTime', endTime);
-      await setFieldTouched('endTime', true);
-      setFieldError('endTime', undefined);
-    }
-  };
-
-  const handleMandatoryChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setFieldValue('mandatory', event.target.checked);
+    if (!values.startTime) return;
+    const endTime = new Date(addMinutes(values.startTime, valueInMinutes));
+    await setFieldValue('endTime', endTime);
+    await setFieldTouched('endTime', true);
+    setFieldError('endTime', undefined);
   };
 
   const Form = (
@@ -380,21 +358,17 @@ export function useTaskForm(props: UseTaskFormProps) {
               name="startTime"
               sx={{ flex: 1 }}
               {...params}
-              {...{
-                helperText: startTimeDisabled ? t('form.alreadyStarted') : ' ',
-              }}
+              helperText={startTimeDisabled ? t('form.alreadyStarted') : ' '}
               {...(touched.startTime &&
-                Boolean(errors.startTime) && {
-                  error: Boolean(errors.startTime),
-                })}
+                !!errors.startTime && { error: !!errors.startTime })}
             />
           )}
           onChange={(value) => handleTimeChange('startTime', value)}
-          onOpen={() => setStartTimeDatePickerOpened(true)}
-          onClose={() => setStartTimeDatePickerOpened(false)}
+          onOpen={() => setStartPickerOpened(true)}
+          onClose={() => setStartPickerOpened(false)}
         />
 
-        <ArrowRightAlt />
+        <ArrowRightAlt sx={{ mt: '-20px' }} />
 
         <DateTimePicker
           label={t('form.placeholder.endTime')}
@@ -413,26 +387,21 @@ export function useTaskForm(props: UseTaskFormProps) {
               {...params}
               helperText=" "
               {...(touched.endTime &&
-                Boolean(errors.endTime) && { error: Boolean(errors.endTime) })}
+                !!errors.endTime && { error: !!errors.endTime })}
             />
           )}
           onChange={(value) => handleTimeChange('endTime', value)}
-          onOpen={() => setEndTimeDatePickerOpened(true)}
-          onClose={() => setEndTimeDatePickerOpened(false)}
+          onOpen={() => setEndPickerOpened(true)}
+          onClose={() => setEndPickerOpened(false)}
         />
       </Box>
 
-      <FormControlLabel
-        sx={{ alignSelf: 'flex-start' }}
-        control={
-          <Checkbox
-            name="mandatory"
-            checked={values.mandatory}
-            onBlur={handleBlur}
-            onChange={handleMandatoryChange}
-          />
-        }
+      <LabelledCheckbox
         label={t('form.mandatoryLabel')}
+        name="mandatory"
+        checked={values.mandatory}
+        onBlur={handleBlur}
+        onChange={(e) => setFieldValue('mandatory', e.target.checked)}
       />
 
       {values.startTime && values.endTime && (
@@ -459,11 +428,9 @@ export function useTaskForm(props: UseTaskFormProps) {
             </Typography>
           </Typography>
 
-          {currentTaskType && (
-            <Typography>
-              {t('form.currentType')}: <strong>{t(currentTaskType)}</strong>
-            </Typography>
-          )}
+          <Typography>
+            {t('form.currentType')}: <strong>{t(values.type)}</strong>
+          </Typography>
 
           <Typography>
             {t('form.currentMandatory')}:{' '}
@@ -472,7 +439,7 @@ export function useTaskForm(props: UseTaskFormProps) {
 
           {typeWarningVisible && !isEditMode && (
             <Typography color="text.warning">
-              {t('form.typeChangedTo.' + currentTaskType)}
+              {t('form.typeChangedTo.' + values.type)}
             </Typography>
           )}
         </Box>
