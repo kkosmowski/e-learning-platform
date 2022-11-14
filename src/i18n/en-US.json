@@ -126,7 +126,9 @@
     },
     "confirm": {
       "deleteTitle": "Deleting a task",
-      "deleteMessage": "Are you sure you want to delete this task? This operation cannot be undone."
+      "deleteMessage": "Are you sure you want to delete this task? This operation cannot be undone.",
+      "finishNowTitle": "Finishing a task",
+      "finishNowMessage": "Are you sure you want to finish this task right now? This operation cannot be undone."
     },
     "toast": {
       "updateSuccess": "Successfully updated task \"{{ name }}\""
@@ -164,6 +166,7 @@
     "tooltip": {
       "edit": "Edit this item",
       "editDisabled": "This item is no longer editable",
+      "finishNow": "Finish now",
       "publishNow": "Publish now",
       "alreadyPublished": "Item is already published, cannot edit its publishing time.",
       "share": "Copy the link to this item",
@@ -190,6 +193,7 @@
     "create": "Create",
     "createAndView": "Create and view",
     "delete": "Delete",
+    "finish": "Finish",
     "active": "Active",
     "inactive": "Inactive",
     "firstName": "First name",

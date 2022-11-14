@@ -1,5 +1,5 @@
 import { Box, IconButton, Tooltip } from '@mui/material';
-import { Delete, Edit, Publish, Share } from '@mui/icons-material';
+import { Delete, DoneAll, Edit, Publish, Share } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
 
@@ -11,9 +11,11 @@ interface ActionToolbarProps {
   isEditVisible?: boolean;
   isEditAllowed?: boolean;
   isPreview?: boolean;
+  finishNow?: boolean;
   share?: boolean;
   publish?: [string, string];
   onPublish?: () => void;
+  onFinishNow?: () => void;
   onEdit?: () => void;
   onDelete?: () => void;
 }
@@ -25,8 +27,10 @@ export default function ActionToolbar(props: ActionToolbarProps) {
     isEditVisible,
     isEditAllowed,
     isPreview,
+    finishNow,
     share,
     onPublish,
+    onFinishNow,
     onEdit,
     onDelete,
   } = props;
@@ -74,12 +78,40 @@ export default function ActionToolbar(props: ActionToolbarProps) {
     if (shouldPublish) onPublish();
   };
 
+  const handleFinishNow = async () => {
+    if (!key || !name || !onFinishNow) return;
+
+    const shouldFinish = await confirmAction({
+      title: `${key}:confirm.finishNowTitle`,
+      message: {
+        key: `${key}:confirm.finishNowMessage`,
+        props: { name },
+      },
+      confirmLabel: 'common:finish',
+    });
+
+    if (shouldFinish) onFinishNow();
+  };
+
   return (
     <Box sx={{ flexShrink: 0 }}>
       {isPublishAllowed && onPublish && (
         <Tooltip title={t('tooltip.publishNow')}>
           <IconButton onClick={handlePublish} size="small">
             <Publish fontSize="small" />
+          </IconButton>
+        </Tooltip>
+      )}
+
+      {isEditVisible && finishNow && onFinishNow && (
+        <Tooltip title={t('tooltip.finishNow')}>
+          <IconButton
+            onClick={handleFinishNow}
+            disabled={!isEditAllowed}
+            size="small"
+            color="primary"
+          >
+            <DoneAll fontSize="small" />
           </IconButton>
         </Tooltip>
       )}
@@ -106,7 +138,12 @@ export default function ActionToolbar(props: ActionToolbarProps) {
 
       {isEditVisible && onDelete && (
         <Tooltip title={t('tooltip.delete')}>
-          <IconButton onClick={handleDelete} size="small" color="error">
+          <IconButton
+            onClick={handleDelete}
+            disabled={!isEditAllowed}
+            size="small"
+            color="error"
+          >
             <Delete fontSize="small" />
           </IconButton>
         </Tooltip>

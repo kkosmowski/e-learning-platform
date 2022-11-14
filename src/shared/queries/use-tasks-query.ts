@@ -128,7 +128,7 @@ export function useTasksQuery(options: {
   const { mutate: update } = useMutation<
     UpdateTaskResponse,
     AxiosError,
-    TaskForm
+    Partial<TaskForm>
   >(
     async (values) => {
       if (taskQuery.data) {

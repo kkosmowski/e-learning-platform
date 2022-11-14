@@ -57,7 +57,7 @@ export const mapTaskDtoToTask = (dto: TaskDto): Task => ({
 
 export const mapTaskFormToUpdateTaskPayload = (
   id: string,
-  form: TaskForm
+  form: Partial<TaskForm>
 ): UpdateTaskPayload => ({
   id,
   mandatory: form.mandatory,

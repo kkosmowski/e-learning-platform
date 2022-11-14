@@ -1,12 +1,5 @@
 import { ChangeEvent, useEffect, useMemo, useState } from 'react';
-import {
-  Box,
-  Button,
-  Checkbox,
-  FormControlLabel,
-  TextField,
-  Tooltip,
-} from '@mui/material';
+import { Box, Button, TextField, Tooltip } from '@mui/material';
 import { TFunction } from 'i18next';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -19,7 +12,7 @@ import {
   titleRequiredError,
 } from 'shared/consts/error';
 import useCustomNavigate from 'hooks/use-custom-navigate';
-import LabelledCheckbox from '../components/LabelledCheckbox';
+import LabelledCheckbox from 'shared/components/LabelledCheckbox';
 
 interface UseNoticeFormProps {
   initialValues: NoticeForm;

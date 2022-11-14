@@ -25,10 +25,12 @@ interface TaskCardProps {
   subjectStudents?: User[];
   short?: boolean;
   onClick?: () => void;
+  onFinishNow?: () => void;
 }
 
 export default function TaskCard(props: TaskCardProps) {
-  const { task, submissions, subjectStudents, short, onClick } = props;
+  const { task, submissions, subjectStudents, short, onClick, onFinishNow } =
+    props;
   const { currentUser } = useAuth();
   const isUserTeacher = isTeacher(currentUser);
   const { navigate } = useCustomNavigate();
@@ -93,7 +95,9 @@ export default function TaskCard(props: TaskCardProps) {
               isEditVisible={isEditVisible}
               isEditAllowed={!isPastDate(task.endTime)}
               isPreview={Boolean(short)}
+              finishNow={isPastDate(task.startTime)}
               share
+              onFinishNow={onFinishNow}
               onEdit={handleEdit}
               onDelete={handleDelete}
             />
