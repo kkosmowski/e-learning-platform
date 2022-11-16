@@ -67,7 +67,7 @@ export const features: RouteObjectWithId[] = [
               {
                 path: 'new',
                 element: (
-                  <TeacherGuard redirectTo="..">
+                  <TeacherGuard redirectTo="/404">
                     <CreateNotice />
                   </TeacherGuard>
                 ),
@@ -82,7 +82,7 @@ export const features: RouteObjectWithId[] = [
                   {
                     path: 'edit',
                     element: (
-                      <TeacherGuard redirectTo="..">
+                      <TeacherGuard redirectTo="/404">
                         <EditNotice />
                       </TeacherGuard>
                     ),
@@ -101,7 +101,7 @@ export const features: RouteObjectWithId[] = [
               {
                 path: 'new',
                 element: (
-                  <TeacherGuard redirectTo="..">
+                  <TeacherGuard redirectTo="/404">
                     <CreateTask type={TaskType.Task} />
                   </TeacherGuard>
                 ),
@@ -115,7 +115,11 @@ export const features: RouteObjectWithId[] = [
                   },
                   {
                     path: 'edit',
-                    element: <EditTask />,
+                    element: (
+                      <TeacherGuard redirectTo="/404">
+                        <EditTask />
+                      </TeacherGuard>
+                    ),
                   },
                 ],
               },
@@ -131,7 +135,7 @@ export const features: RouteObjectWithId[] = [
               {
                 path: 'new',
                 element: (
-                  <TeacherGuard redirectTo="..">
+                  <TeacherGuard redirectTo="/404">
                     <CreateTask type={TaskType.Homework} />
                   </TeacherGuard>
                 ),
@@ -145,7 +149,11 @@ export const features: RouteObjectWithId[] = [
                   },
                   {
                     path: 'edit',
-                    element: <EditTask />,
+                    element: (
+                      <TeacherGuard redirectTo="/404">
+                        <EditTask />
+                      </TeacherGuard>
+                    ),
                   },
                 ],
               },
@@ -161,7 +169,7 @@ export const features: RouteObjectWithId[] = [
               {
                 path: 'new',
                 element: (
-                  <TeacherGuard redirectTo="..">
+                  <TeacherGuard redirectTo="/404">
                     <AssignNewGrade />
                   </TeacherGuard>
                 ),
