@@ -116,8 +116,9 @@ export function useTaskForm(props: UseTaskFormProps) {
 
       if (deltaInMinutes >= MAX_TASK_DURATION_IN_MINUTES) {
         setFieldValue('type', TaskType.Homework);
+      } else {
+        setFieldValue('type', TaskType.Task);
       }
-      setFieldValue('type', TaskType.Task);
     }
   }, [
     isEditMode,
