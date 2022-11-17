@@ -7,6 +7,7 @@ import {
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
 
 import {
   GetTaskResponse,
@@ -18,16 +19,21 @@ import {
   UpdateTaskResponse,
   TaskForm,
 } from 'shared/types/task';
-import { getLatestTasks, getSubjectTasks, getTask, updateTask } from 'api/task';
+import {
+  deleteTask,
+  getLatestTasks,
+  getSubjectTasks,
+  getTask,
+  updateTask,
+} from 'api/task';
 import {
   mapTaskDtoToTask,
   mapTaskFormToUpdateTaskPayload,
 } from 'shared/utils/task.utils';
 import { useAuth } from 'contexts/auth';
 import { TASK_LIST_PAGE_SIZE, VISIBLE_LATEST_TASKS } from 'shared/consts/task';
-import { Paginated } from 'shared/types/shared';
+import { EmptyResponse, Paginated } from 'shared/types/shared';
 import useCustomNavigate from 'hooks/use-custom-navigate';
-import { useTranslation } from 'react-i18next';
 
 const getNextPageParam = (
   { total_count }: Paginated<TaskDto>,
@@ -56,7 +62,7 @@ export function useTasksQuery(options: {
   const { subjectId, taskId, enabled = [] } = options;
   const { currentUser } = useAuth();
   const queryClient = useQueryClient();
-  const { back } = useCustomNavigate();
+  const { navigate, back } = useCustomNavigate();
   const { t } = useTranslation('task');
 
   if (!enabled.length && subjectId) {
@@ -150,6 +156,21 @@ export function useTasksQuery(options: {
     }
   );
 
+  const { mutate: deleteT } = useMutation<EmptyResponse, AxiosError, string>(
+    async (id) => deleteTask(id),
+    {
+      onSuccess: async () => {
+        queryClient.setQueryData(['task', taskId], { data: undefined });
+        await queryClient.invalidateQueries(['tasks']);
+        navigate('./..', { replace: true });
+        toast.success(t('toast.deleteSuccess'));
+      },
+      onError: () => {
+        toast.error(t('error:ERROR'));
+      },
+    }
+  );
+
   const tasks = useMemo(
     () =>
       tasksQuery.data?.pages.map((page) => page.items.map(mapTaskDtoToTask)),
@@ -206,6 +227,7 @@ export function useTasksQuery(options: {
       isSuccess: taskQuery.isSuccess,
       isError: taskQuery.isError,
       update,
+      deleteTask: deleteT,
     },
     tasks: {
       items: tasks,

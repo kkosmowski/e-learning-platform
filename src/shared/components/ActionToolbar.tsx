@@ -10,6 +10,7 @@ interface ActionToolbarProps {
   isPublishAllowed?: boolean;
   isEditVisible?: boolean;
   isEditAllowed?: boolean;
+  isDeleteAllowed?: boolean;
   isPreview?: boolean;
   finishNow?: boolean;
   share?: boolean;
@@ -26,6 +27,7 @@ export default function ActionToolbar(props: ActionToolbarProps) {
     isPublishAllowed,
     isEditVisible,
     isEditAllowed,
+    isDeleteAllowed,
     isPreview,
     finishNow,
     share,
@@ -137,15 +139,23 @@ export default function ActionToolbar(props: ActionToolbarProps) {
       )}
 
       {isEditVisible && onDelete && (
-        <Tooltip title={t('tooltip.delete')}>
-          <IconButton
-            onClick={handleDelete}
-            disabled={!isEditAllowed}
-            size="small"
-            color="error"
-          >
-            <Delete fontSize="small" />
-          </IconButton>
+        <Tooltip
+          title={
+            !isEditAllowed || !isDeleteAllowed
+              ? t('tooltip.deleteDisabled')
+              : t('tooltip.delete')
+          }
+        >
+          <span>
+            <IconButton
+              onClick={handleDelete}
+              disabled={!isEditAllowed || !isDeleteAllowed}
+              size="small"
+              color="error"
+            >
+              <Delete fontSize="small" />
+            </IconButton>
+          </span>
         </Tooltip>
       )}
 

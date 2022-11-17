@@ -53,6 +53,9 @@ export const mapTaskDtoToTask = (dto: TaskDto): Task => ({
   isPublished:
     new Date(dateStringToUTCString(dto.start_time)).getTime() <
     new Date().getTime(),
+  canBeDeletedBefore: new Date(
+    dateStringToUTCString(dto.can_be_deleted_before)
+  ),
 });
 
 export const mapTaskFormToUpdateTaskPayload = (

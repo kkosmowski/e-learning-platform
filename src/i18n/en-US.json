@@ -170,7 +170,8 @@
       "publishNow": "Publish now",
       "alreadyPublished": "Item is already published, cannot edit its publishing time.",
       "share": "Copy the link to this item",
-      "delete": "Delete"
+      "delete": "Delete",
+      "deleteDisabled": "Cannot delete this item"
     }
   },
   "common": {

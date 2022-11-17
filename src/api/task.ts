@@ -10,6 +10,7 @@ import {
   UpdateTaskResponse,
 } from 'shared/types/task';
 import { TASK_LIST_PAGE_SIZE } from 'shared/consts/task';
+import { EmptyResponse } from 'shared/types/shared';
 
 export const getSubjectTasks = (
   subjectId: string,
@@ -45,3 +46,6 @@ export const updateTask = ({
   ...data
 }: UpdateTaskPayload): Promise<UpdateTaskResponse> =>
   authorized((api) => api.patch(`task/${id}`, data));
+
+export const deleteTask = (id: string): Promise<EmptyResponse> =>
+  authorized((api) => api.delete(`task/${id}`));

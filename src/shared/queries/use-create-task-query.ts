@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { createTask } from 'api/task';
 import { getErrorDetail } from 'shared/utils/common.utils';
 import useCustomNavigate from 'hooks/use-custom-navigate';
-import { CreateTaskResponse, TaskForm } from 'shared/types/task';
+import { CreateTaskResponse, TaskForm, TaskType } from 'shared/types/task';
 import { mapTaskFormToCreateTaskPayload } from 'shared/utils/task.utils';
 
 export function useCreateTaskQuery() {
@@ -22,7 +22,11 @@ export function useCreateTaskQuery() {
     onSuccess: async ({ data }: CreateTaskResponse) => {
       toast.success(t('create.toast.success', { name: data.name }));
       await queryClient.invalidateQueries(['tasks']);
-      navigate(`../${data.id}`);
+      navigate(
+        `./../../${data.type === TaskType.Task ? 'tasks' : 'homework'}/${
+          data.id
+        }`
+      );
     },
     onError: (err) => {
       const error = getErrorDetail(err);

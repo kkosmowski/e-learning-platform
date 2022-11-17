@@ -10,6 +10,7 @@ export interface Task extends ContentItem {
   startTime: Date;
   endTime: Date;
   isPublished: boolean;
+  canBeDeletedBefore: Date;
 }
 
 export enum TaskType {
@@ -36,6 +37,7 @@ export interface TaskDto {
   content: string;
   start_time: string;
   end_time: string;
+  can_be_deleted_before: string;
 }
 
 export interface TaskForm {
