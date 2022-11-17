@@ -8,6 +8,7 @@ import {
   Typography,
 } from '@mui/material';
 import { Fragment, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { Task, TaskSubmission } from 'shared/types/task';
 import { isTeacher } from 'shared/utils/user.utils';
@@ -26,14 +27,23 @@ interface TaskCardProps {
   short?: boolean;
   onClick?: () => void;
   onFinishNow?: () => void;
+  onDelete?: () => void;
 }
 
 export default function TaskCard(props: TaskCardProps) {
-  const { task, submissions, subjectStudents, short, onClick, onFinishNow } =
-    props;
+  const {
+    task,
+    submissions,
+    subjectStudents,
+    short,
+    onClick,
+    onFinishNow,
+    onDelete,
+  } = props;
   const { currentUser } = useAuth();
   const isUserTeacher = isTeacher(currentUser);
   const { navigate } = useCustomNavigate();
+  const { t } = useTranslation('task');
 
   const TitleWrapper = isUserTeacher ? Box : Fragment;
   const TitleWrapperProps = isUserTeacher
@@ -54,8 +64,8 @@ export default function TaskCard(props: TaskCardProps) {
     navigate('./edit');
   };
 
-  const handleDelete = () => {
-    // @todo implement delete
+  const handleDelete = async () => {
+    onDelete && onDelete();
   };
 
   return (
@@ -94,6 +104,7 @@ export default function TaskCard(props: TaskCardProps) {
               item={['task', task.name]}
               isEditVisible={isEditVisible}
               isEditAllowed={!isPastDate(task.endTime)}
+              isDeleteAllowed={!isPastDate(task.canBeDeletedBefore)}
               isPreview={Boolean(short)}
               finishNow={isPastDate(task.startTime)}
               share

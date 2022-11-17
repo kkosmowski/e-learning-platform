@@ -24,7 +24,7 @@ export default function Task() {
   const isUserStudent = isStudent(currentUser);
   const isUserTeacher = isTeacher(currentUser);
   const {
-    task: { task, update, isLoading, isSuccess },
+    task: { task, update, deleteTask, isLoading, isSuccess },
   } = useTasksQuery({ taskId });
 
   if (!isLoading && !task) {
@@ -43,11 +43,20 @@ export default function Task() {
     console.log('submitted');
   };
 
+  const handleDelete = (): void => {
+    if (!subjectId || !taskId) return;
+    deleteTask(taskId);
+  };
+
   return (
     <Centered innerSx={{ gap: 2 }}>
       {isSuccess && task ? (
         <>
-          <TaskCard task={task} onFinishNow={handleFinishNow} />
+          <TaskCard
+            task={task}
+            onFinishNow={handleFinishNow}
+            onDelete={handleDelete}
+          />
 
           {isUserStudent && task.status === Status.Todo && !isSubmitting && (
             <Box>

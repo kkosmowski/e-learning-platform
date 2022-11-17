@@ -170,7 +170,8 @@
       "publishNow": "Opublikuj teraz",
       "alreadyPublished": "Element jest już opublikowany, nie można zmienić jego daty publikacji.",
       "share": "Skopiuj link",
-      "delete": "Usuń"
+      "delete": "Usuń",
+      "deleteDisabled": "Nie można usunąć tego elementu"
     }
   },
   "common": {
