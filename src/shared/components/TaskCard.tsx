@@ -45,11 +45,6 @@ export default function TaskCard(props: TaskCardProps) {
   const { navigate } = useCustomNavigate();
   const { t } = useTranslation('task');
 
-  const TitleWrapper = isUserTeacher ? Box : Fragment;
-  const TitleWrapperProps = isUserTeacher
-    ? { sx: { display: 'flex', justifyContent: 'space-between' } }
-    : {};
-
   const CardWrapper = onClick ? CardActionArea : Fragment;
 
   const isAuthor = useMemo(
@@ -76,7 +71,7 @@ export default function TaskCard(props: TaskCardProps) {
         })}
       >
         <CardContent component="article">
-          <TitleWrapper {...TitleWrapperProps}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <Tooltip
               title={
                 short && task.name.length > TASK_VISIBLE_SHORT_TITLE_LENGTH
@@ -112,7 +107,7 @@ export default function TaskCard(props: TaskCardProps) {
               onEdit={handleEdit}
               onDelete={handleDelete}
             />
-          </TitleWrapper>
+          </Box>
 
           <Divider sx={{ my: short ? 1 : 2 }} />
 

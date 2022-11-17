@@ -107,14 +107,16 @@ export default function ActionToolbar(props: ActionToolbarProps) {
 
       {isEditVisible && finishNow && onFinishNow && (
         <Tooltip title={t('tooltip.finishNow')}>
-          <IconButton
-            onClick={handleFinishNow}
-            disabled={!isEditAllowed}
-            size="small"
-            color="primary"
-          >
-            <DoneAll fontSize="small" />
-          </IconButton>
+          <span>
+            <IconButton
+              onClick={handleFinishNow}
+              disabled={!isEditAllowed}
+              size="small"
+              color="primary"
+            >
+              <DoneAll fontSize="small" />
+            </IconButton>
+          </span>
         </Tooltip>
       )}
 

@@ -84,12 +84,12 @@ export default function NoticeCard(props: NoticeCardProps) {
     () => isEditAllowed && !isPublished,
     [isEditAllowed, isPublished]
   );
+  const isEditVisible = useMemo(
+    () => !isAnyPreview && isAuthor,
+    [isAnyPreview, isAuthor]
+  );
 
   const WrapperElement = onClick ? CardActionArea : Fragment;
-  const TitleWrapper = isEditAllowed ? Box : Fragment;
-  const TitleWrapperProps = isEditAllowed
-    ? { sx: { display: 'flex', justifyContent: 'space-between' } }
-    : {};
 
   const handleEdit = () => {
     navigate('./edit');
@@ -133,22 +133,24 @@ export default function NoticeCard(props: NoticeCardProps) {
             component="article"
             sx={{ display: 'flex', flexDirection: 'column', flex: 1 }}
           >
-            <TitleWrapper {...TitleWrapperProps}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
               <Typography component="h3" mb={1}>
                 {name}
               </Typography>
 
               <ActionToolbar
                 item={['notice', notice.name]}
-                isPublishAllowed={isPublishAllowed}
+                isEditVisible={isEditVisible}
                 isEditAllowed={isEditAllowed}
+                isDeleteAllowed={isEditAllowed}
+                isPublishAllowed={isPublishAllowed}
                 isPreview={isAnyPreview}
                 share
                 onPublish={handlePublishNow}
                 onEdit={handleEdit}
                 onDelete={handleDelete}
               />
-            </TitleWrapper>
+            </Box>
 
             <Typography
               sx={{
