@@ -29,11 +29,11 @@ interface TaskDetailsProps {
 
 const getStatusIcon = (status: Status): SvgIconComponent => {
   switch (status) {
-    case Status.Todo:
+    case Status.NOT_SUBMITTED:
       return CheckBoxOutlineBlank;
-    case Status.Submitted:
+    case Status.SUBMITTED:
       return CheckBoxOutlined;
-    case Status.Graded:
+    case Status.GRADED:
       return CheckBox;
   }
 };
@@ -43,7 +43,8 @@ export default function TaskDetails(props: TaskDetailsProps) {
   const { t } = useTranslation('task');
   const isUserTeacher = isTeacher(currentUser);
   const isUserStudent = isStudent(currentUser);
-  const StatusIcon = getStatusIcon(task.status);
+  const status = submissions[0]?.status || Status.NOT_SUBMITTED;
+  const StatusIcon = isUserStudent && getStatusIcon(status);
   const isPastDeadline = isPastDate(task.endTime);
 
   const allStudentsSubmitted = useMemo(
@@ -78,12 +79,16 @@ export default function TaskDetails(props: TaskDetailsProps) {
           </Tooltip>
         </Box>
 
-        <TimeLeft task={task} currentUser={currentUser} />
+        <TimeLeft
+          task={task}
+          taskSubmission={submissions[0]}
+          currentUser={currentUser}
+        />
 
-        {isUserStudent && (
+        {StatusIcon && (
           <Box sx={{ display: 'flex', alignItems: 'center', columnGap: 1 }}>
             <StatusIcon sx={{ fontSize: 16 }} />
-            <span>{t(`statuses.${task.status}`)}</span>
+            <span>{t(`statuses.${status}`)}</span>
           </Box>
         )}
 

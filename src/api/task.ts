@@ -8,6 +8,7 @@ import {
   TaskType,
   UpdateTaskPayload,
   UpdateTaskResponse,
+  GetTaskSubmissionResponse,
 } from 'shared/types/task';
 import { TASK_LIST_PAGE_SIZE } from 'shared/consts/task';
 import { EmptyResponse } from 'shared/types/shared';
@@ -49,3 +50,10 @@ export const updateTask = ({
 
 export const deleteTask = (id: string): Promise<EmptyResponse> =>
   authorized((api) => api.delete(`task/${id}`));
+
+// submission
+
+export const getTaskSubmission = (
+  taskId: string
+): Promise<GetTaskSubmissionResponse> =>
+  authorized((api) => api.get(`task/${taskId}/submission`));

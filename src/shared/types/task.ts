@@ -1,4 +1,4 @@
-import { BaseItem, ContentItem, Paginated, Status } from './shared';
+import { ContentItem, Paginated, Status } from './shared';
 import { AxiosResponse } from 'axios';
 import { SubjectDto } from './subject';
 import { UserDto } from './user';
@@ -6,7 +6,6 @@ import { UserDto } from './user';
 export interface Task extends ContentItem {
   mandatory: boolean;
   type: TaskType;
-  status: Status; // @todo decide if this should stay
   startTime: Date;
   endTime: Date;
   isPublished: boolean;
@@ -18,12 +17,13 @@ export enum TaskType {
   Homework = 'homework',
 }
 
-export interface TaskSubmission extends BaseItem {
-  taskId: string; // @todo consider full task data
-  studentId: string; // @todo consider full student data
+export interface TaskSubmission {
+  id: string;
+  taskId: string;
+  createdAt: Date;
   status: Status;
-  // fileUrl: string;
-  // comment: string;
+  fileUrl: string;
+  comment: string;
 }
 
 export interface TaskDto {
@@ -38,6 +38,15 @@ export interface TaskDto {
   start_time: string;
   end_time: string;
   can_be_deleted_before: string;
+}
+
+export interface TaskSubmissionDto {
+  id: string;
+  task_id: string;
+  created_at: string;
+  status: Status;
+  file_url: string;
+  comment: string;
 }
 
 export interface TaskForm {
@@ -73,11 +82,15 @@ export interface CreateTaskPayload {
 export interface LatestTasksDto {
   tasks: TaskDto[];
   homework: TaskDto[];
+  task_submissions: TaskSubmissionDto[];
+  homework_submissions: TaskSubmissionDto[];
 }
 
 export interface LatestTasks {
   tasks?: Task[];
   homework?: Task[];
+  taskSubmissions?: TaskSubmission[];
+  homeworkSubmissions?: TaskSubmission[];
 }
 
 // responses
@@ -85,5 +98,6 @@ export interface LatestTasks {
 export type GetTasksResponse = AxiosResponse<Paginated<TaskDto>>;
 export type GetLatestTasksResponse = AxiosResponse<LatestTasksDto>;
 export type GetTaskResponse = AxiosResponse<TaskDto>;
+export type GetTaskSubmissionResponse = AxiosResponse<TaskSubmissionDto>;
 export type CreateTaskResponse = AxiosResponse<TaskDto>;
 export type UpdateTaskResponse = AxiosResponse<TaskDto>;

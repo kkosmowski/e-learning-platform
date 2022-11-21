@@ -12,20 +12,28 @@ import TaskAnswerForm from './components/TaskAnswerForm';
 import TaskSubmissionList from './components/TaskSubmissionList';
 import useCustomNavigate from 'hooks/use-custom-navigate';
 import { useAuth } from 'contexts/auth';
-import { useTasksQuery } from 'shared/queries';
+import { useTasksQuery, useTaskSubmissionQuery } from 'shared/queries';
 import PageLoading from 'shared/components/PageLoading';
 
 export default function Task() {
   const { navigate } = useCustomNavigate();
   const { subjectId, taskId } = useParams();
   const { t } = useTranslation('task');
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitFormVisible, setIsSubmitFormVisible] = useState(false);
   const { currentUser } = useAuth();
   const isUserStudent = isStudent(currentUser);
   const isUserTeacher = isTeacher(currentUser);
   const {
     task: { task, update, deleteTask, isLoading, isSuccess },
   } = useTasksQuery({ taskId });
+  const {
+    taskSubmission,
+    isLoading: isSubmissionLoading,
+    isSuccess: isSubmissionSuccess,
+  } = useTaskSubmissionQuery(taskId);
+  const hasAlreadySubmitted = Boolean(
+    taskSubmission?.status !== Status.NOT_SUBMITTED
+  );
 
   if (!isLoading && !task) {
     navigate('/404');
@@ -54,36 +62,50 @@ export default function Task() {
         <>
           <TaskCard
             task={task}
+            submissions={taskSubmission ? [taskSubmission] : []}
             onFinishNow={handleFinishNow}
             onDelete={handleDelete}
           />
 
-          {isUserStudent && task.status === Status.Todo && !isSubmitting && (
-            <Box>
-              <Tooltip
-                title={
-                  isPastDeadline ? t('tooltip.cannotSubmitPastDeadline') : ''
-                }
-              >
-                <span>
-                  <Button
-                    variant="contained"
-                    disabled={isPastDeadline}
-                    onClick={() => setIsSubmitting(true)}
-                  >
-                    {t('submitSolution')}
-                  </Button>
-                </span>
-              </Tooltip>
-            </Box>
-          )}
+          {isUserStudent &&
+            taskSubmission?.status === Status.NOT_SUBMITTED &&
+            !isSubmitFormVisible && (
+              <Box>
+                <Tooltip
+                  title={
+                    isPastDeadline ? t('tooltip.cannotSubmitPastDeadline') : ''
+                  }
+                >
+                  <span>
+                    <Button
+                      variant="contained"
+                      disabled={isPastDeadline || hasAlreadySubmitted}
+                      onClick={() => setIsSubmitFormVisible(true)}
+                    >
+                      {t('submitSolution')}
+                    </Button>
+                  </span>
+                </Tooltip>
+              </Box>
+            )}
 
-          {isUserStudent && isSubmitting && (
-            <TaskAnswerForm
-              task={task}
-              onCancel={() => setIsSubmitting(false)}
-              onSubmit={handleAnswerSubmit}
-            />
+          {isUserStudent && (
+            <>
+              {isSubmitFormVisible && (
+                <TaskAnswerForm
+                  task={task}
+                  onCancel={() => setIsSubmitFormVisible(false)}
+                  onSubmit={handleAnswerSubmit}
+                />
+              )}
+
+              {hasAlreadySubmitted && !!taskSubmission && (
+                <>
+                  {'<TASK SUBMISSION>'}
+                  {/*<TaskSubmissionItem taskSubmission={ taskSubmission } />*/}
+                </>
+              )}
+            </>
           )}
 
           {isUserTeacher && <TaskSubmissionList submissions={[]} />}

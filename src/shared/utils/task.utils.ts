@@ -3,6 +3,8 @@ import {
   Task,
   TaskDto,
   TaskForm,
+  TaskSubmission,
+  TaskSubmissionDto,
   TaskType,
   UpdateTaskPayload,
 } from 'shared/types/task';
@@ -45,7 +47,6 @@ export const mapTaskDtoToTask = (dto: TaskDto): Task => ({
   type: dto.type,
   name: dto.name,
   content: dto.content,
-  status: Status.Todo,
   createdBy: mapUserDtoToUser(dto.created_by),
   createdAt: new Date(dateStringToUTCString(dto.created_at)),
   startTime: new Date(dateStringToUTCString(dto.start_time)),
@@ -79,4 +80,15 @@ export const mapTaskFormToCreateTaskPayload = (
   content: form.content,
   start_time: form.startTime!,
   end_time: form.endTime!,
+});
+
+export const mapTaskSubmissionDtoToTaskSubmission = (
+  dto: TaskSubmissionDto
+): TaskSubmission => ({
+  id: dto.id,
+  taskId: dto.task_id,
+  status: dto.status,
+  createdAt: new Date(dateStringToUTCString(dto.created_at)),
+  fileUrl: dto.file_url,
+  comment: dto.comment,
 });

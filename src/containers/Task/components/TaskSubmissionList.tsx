@@ -22,7 +22,7 @@ export default function TaskSubmissionList(props: TaskSubmissionListProps) {
           {isSuccess && submissions?.length ? (
             submissions.map((submission) => (
               <Box key={submission.id}>
-                {submission.taskId}, {submission.status}, {submission.studentId}
+                {/*{submission.task}, {submission.status}, {submission.studentId} */}
               </Box>
             ))
           ) : isLoading ? (

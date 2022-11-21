@@ -26,7 +26,10 @@ export default function LatestTasks(props: LatestTasksProps) {
   const isUserTeacher = isTeacher(currentUser);
   const isTypeTask = type === TaskType.Task;
   const {
-    latestTasks: { [isTypeTask ? 'tasks' : 'homework']: items },
+    latestTasks: {
+      [isTypeTask ? 'tasks' : 'homework']: items,
+      [isTypeTask ? 'taskSubmissions' : 'homeworkSubmissions']: submissions,
+    },
     latestTasksLoading: isLoading,
     latestTasksSuccess: isSuccess,
   } = useTasksQuery({ subjectId, enabled: ['latest'] });
@@ -58,7 +61,9 @@ export default function LatestTasks(props: LatestTasksProps) {
               <Grid item key={task.id} xs={12} md={6} lg={4}>
                 <TaskCard
                   task={task}
-                  submissions={[]}
+                  submissions={submissions?.filter(
+                    ({ taskId }) => taskId === task.id
+                  )}
                   subjectStudents={[]}
                   short
                   onClick={() => onTaskClick(type, task.id)}
