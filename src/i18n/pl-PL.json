@@ -102,9 +102,9 @@
     "task": "Zadanie",
     "homework": "Zadanie domowe",
     "statuses": {
-      "TODO": "Do wysłania",
-      "SUBMITTED": "Wysłane",
-      "GRADED": "Ocenione"
+      "not_submitted": "Do wysłania",
+      "submitted": "Wysłane",
+      "graded": "Ocenione"
     },
     "submissions": {
       "noItems": "Brak przesłanych rozwiązań"

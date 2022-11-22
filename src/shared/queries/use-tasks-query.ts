@@ -29,6 +29,7 @@ import {
 import {
   mapTaskDtoToTask,
   mapTaskFormToUpdateTaskPayload,
+  mapTaskSubmissionDtoToTaskSubmission,
 } from 'shared/utils/task.utils';
 import { useAuth } from 'contexts/auth';
 import { TASK_LIST_PAGE_SIZE, VISIBLE_LATEST_TASKS } from 'shared/consts/task';
@@ -211,6 +212,12 @@ export function useTasksQuery(options: {
     () => ({
       tasks: latestTasksQuery.data?.tasks.map(mapTaskDtoToTask),
       homework: latestTasksQuery.data?.homework.map(mapTaskDtoToTask),
+      taskSubmissions: latestTasksQuery.data?.task_submissions.map(
+        mapTaskSubmissionDtoToTaskSubmission
+      ),
+      homeworkSubmissions: latestTasksQuery.data?.homework_submissions.map(
+        mapTaskSubmissionDtoToTaskSubmission
+      ),
     }),
     [latestTasksQuery.data]
   );

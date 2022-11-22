@@ -5,18 +5,19 @@ import { useTranslation } from 'react-i18next';
 
 import { Status } from 'shared/types/shared';
 import { User } from 'shared/types/user';
-import { Task } from 'shared/types/task';
+import { Task, TaskSubmission } from 'shared/types/task';
 import { timeLeft } from 'shared/utils/date.utils';
 import { getTimeLeftTextColor } from 'shared/utils/task.utils';
 import { isStudent, isTeacher } from 'shared/utils/user.utils';
 
 interface TimeLeftProps {
   task: Task;
+  taskSubmission?: TaskSubmission;
   currentUser: User;
 }
 
 export default function TimeLeft(props: TimeLeftProps) {
-  const { task, currentUser } = props;
+  const { task, taskSubmission, currentUser } = props;
   const { t } = useTranslation('task');
   const isUserTeacher = isTeacher(currentUser);
   const isUserStudent = isStudent(currentUser);
@@ -25,7 +26,10 @@ export default function TimeLeft(props: TimeLeftProps) {
   let timeLeftString = '';
   let timeLeftTextColor = '';
 
-  if ((isUserStudent && task.status === Status.Todo) || isUserTeacher) {
+  if (
+    (isUserStudent && taskSubmission?.status === Status.NOT_SUBMITTED) ||
+    isUserTeacher
+  ) {
     [timeLeftString, diffInMinutes] = timeLeft(t, task.endTime);
     timeLeftTextColor = getTimeLeftTextColor(task.type, diffInMinutes);
   }
@@ -44,11 +48,13 @@ export default function TimeLeft(props: TimeLeftProps) {
         </Typography>
       </Tooltip>
 
-      {task.status === Status.Todo && timeLeftTextColor && timeLeftString && (
-        <Typography color={timeLeftTextColor} sx={{ fontSize: 'inherit' }}>
-          ({timeLeftString})
-        </Typography>
-      )}
+      {taskSubmission?.status === Status.NOT_SUBMITTED &&
+        timeLeftTextColor &&
+        timeLeftString && (
+          <Typography color={timeLeftTextColor} sx={{ fontSize: 'inherit' }}>
+            ({timeLeftString})
+          </Typography>
+        )}
     </Box>
   );
 }

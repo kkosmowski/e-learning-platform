@@ -102,9 +102,9 @@
     "task": "Task",
     "homework": "Homework",
     "statuses": {
-      "TODO": "To be submitted",
-      "SUBMITTED": "Submitted",
-      "GRADED": "Graded"
+      "not_submitted": "To be submitted",
+      "submitted": "Submitted",
+      "graded": "Graded"
     },
     "submissions": {
       "noItems": "There are no submitted solutions yet."

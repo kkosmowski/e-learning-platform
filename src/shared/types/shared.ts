@@ -2,9 +2,9 @@ import { AxiosResponse } from 'axios';
 import { User } from './user';
 
 export enum Status {
-  Todo = 'TODO',
-  Submitted = 'SUBMITTED',
-  Graded = 'GRADED',
+  NOT_SUBMITTED = 'not_submitted',
+  SUBMITTED = 'submitted',
+  GRADED = 'graded',
 }
 
 export interface BaseItem {
