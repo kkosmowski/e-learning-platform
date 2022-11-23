@@ -9,6 +9,8 @@ import {
   UpdateTaskPayload,
   UpdateTaskResponse,
   GetTaskSubmissionResponse,
+  SubmitTaskResponse,
+  SubmitTaskPayload,
 } from 'shared/types/task';
 import { TASK_LIST_PAGE_SIZE } from 'shared/consts/task';
 import { EmptyResponse } from 'shared/types/shared';
@@ -57,3 +59,9 @@ export const getTaskSubmission = (
   taskId: string
 ): Promise<GetTaskSubmissionResponse> =>
   authorized((api) => api.get(`task/${taskId}/submission`));
+
+export const updateTaskSubmission = ({
+  taskId,
+  formData,
+}: SubmitTaskPayload): Promise<SubmitTaskResponse> =>
+  authorized((api) => api.put(`task/submit/${taskId}`, formData));

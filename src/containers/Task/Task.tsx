@@ -8,7 +8,7 @@ import TaskCard from 'shared/components/TaskCard';
 import { Status } from 'shared/types/shared';
 import { isPastDate } from 'shared/utils/date.utils';
 import { isStudent, isTeacher } from 'shared/utils/user.utils';
-import TaskAnswerForm from './components/TaskAnswerForm';
+import SubmitTaskForm from './components/SubmitTaskForm';
 import TaskSubmissionList from './components/TaskSubmissionList';
 import useCustomNavigate from 'hooks/use-custom-navigate';
 import { useAuth } from 'contexts/auth';
@@ -30,6 +30,7 @@ export default function Task() {
     taskSubmission,
     isLoading: isSubmissionLoading,
     isSuccess: isSubmissionSuccess,
+    submitSolution,
   } = useTaskSubmissionQuery(taskId);
   const hasAlreadySubmitted = Boolean(
     taskSubmission?.status !== Status.NOT_SUBMITTED
@@ -47,8 +48,12 @@ export default function Task() {
     update({ endTime: new Date() });
   };
 
-  const handleAnswerSubmit = (): void => {
-    console.log('submitted');
+  const handleTaskSubmit = (formData: FormData): void => {
+    if (taskId) {
+      submitSolution({ taskId, formData });
+    } else {
+      console.error('Submitting task: Task id is missing.');
+    }
   };
 
   const handleDelete = (): void => {
@@ -91,20 +96,20 @@ export default function Task() {
 
           {isUserStudent && (
             <>
-              {isSubmitFormVisible && (
-                <TaskAnswerForm
-                  task={task}
-                  onCancel={() => setIsSubmitFormVisible(false)}
-                  onSubmit={handleAnswerSubmit}
-                />
-              )}
-
-              {hasAlreadySubmitted && !!taskSubmission && (
-                <>
-                  {'<TASK SUBMISSION>'}
-                  {/*<TaskSubmissionItem taskSubmission={ taskSubmission } />*/}
-                </>
-              )}
+              {hasAlreadySubmitted
+                ? !!taskSubmission && (
+                    <>
+                      {'<TASK SUBMISSION>'}
+                      {/*<TaskSubmissionItem taskSubmission={ taskSubmission } />*/}
+                    </>
+                  )
+                : isSubmitFormVisible && (
+                    <SubmitTaskForm
+                      task={task}
+                      onCancel={() => setIsSubmitFormVisible(false)}
+                      onSubmit={handleTaskSubmit}
+                    />
+                  )}
             </>
           )}
 
