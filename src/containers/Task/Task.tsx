@@ -1,6 +1,6 @@
 import { useParams } from 'react-router';
 import { useState } from 'react';
-import { Box, Button, Tooltip } from '@mui/material';
+import { Box, Button, Stack, Tooltip, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 import { Centered } from 'shared/components/Container';
@@ -12,48 +12,43 @@ import SubmitTaskForm from './components/SubmitTaskForm';
 import TaskSubmissionList from './components/TaskSubmissionList';
 import useCustomNavigate from 'hooks/use-custom-navigate';
 import { useAuth } from 'contexts/auth';
-import { useTasksQuery, useTaskSubmissionQuery } from 'shared/queries';
+import {
+  useTasksQuery,
+  useTaskSubmissionQuery,
+  useTaskSubmissionsQuery,
+} from 'shared/queries';
 import PageLoading from 'shared/components/PageLoading';
+import TaskSubmissionItem from './components/TaskSubmissionItem';
+import TaskSubmissionStudentView from './features/TaskSubmissionStudentView';
+import TaskSubmissionTeacherView from './features/TaskSubmissionTeacherView';
 
 export default function Task() {
   const { navigate } = useCustomNavigate();
   const { subjectId, taskId } = useParams();
-  const { t } = useTranslation('task');
-  const [isSubmitFormVisible, setIsSubmitFormVisible] = useState(false);
   const { currentUser } = useAuth();
   const isUserStudent = isStudent(currentUser);
   const isUserTeacher = isTeacher(currentUser);
   const {
     task: { task, update, deleteTask, isLoading, isSuccess },
   } = useTasksQuery({ taskId });
-  const {
-    taskSubmission,
-    isLoading: isSubmissionLoading,
-    isSuccess: isSubmissionSuccess,
-    submitSolution,
-  } = useTaskSubmissionQuery(taskId);
-  const hasAlreadySubmitted = Boolean(
-    taskSubmission?.status !== Status.NOT_SUBMITTED
-  );
+  const { taskSubmission, isSuccess: isTaskSubmissionSuccess } =
+    useTaskSubmissionQuery(taskId, isUserStudent);
+  const { taskSubmissions } = useTaskSubmissionsQuery(taskId, isUserTeacher);
 
   if (!isLoading && !task) {
     navigate('/404');
     return null;
   }
 
-  const isPastDeadline = !!task && isPastDate(new Date(task.endTime));
+  const submissions = isUserTeacher
+    ? taskSubmissions
+    : taskSubmission
+    ? [taskSubmission]
+    : [];
 
   const handleFinishNow = (): void => {
     if (!subjectId || !taskId) return;
     update({ endTime: new Date() });
-  };
-
-  const handleTaskSubmit = (formData: FormData): void => {
-    if (taskId) {
-      submitSolution({ taskId, formData });
-    } else {
-      console.error('Submitting task: Task id is missing.');
-    }
   };
 
   const handleDelete = (): void => {
@@ -62,58 +57,21 @@ export default function Task() {
   };
 
   return (
-    <Centered innerSx={{ gap: 2 }}>
+    <Centered innerSx={{ gap: 4 }}>
       {isSuccess && task ? (
         <>
           <TaskCard
             task={task}
-            submissions={taskSubmission ? [taskSubmission] : []}
+            submissions={submissions}
             onFinishNow={handleFinishNow}
             onDelete={handleDelete}
           />
 
-          {isUserStudent &&
-            taskSubmission?.status === Status.NOT_SUBMITTED &&
-            !isSubmitFormVisible && (
-              <Box>
-                <Tooltip
-                  title={
-                    isPastDeadline ? t('tooltip.cannotSubmitPastDeadline') : ''
-                  }
-                >
-                  <span>
-                    <Button
-                      variant="contained"
-                      disabled={isPastDeadline || hasAlreadySubmitted}
-                      onClick={() => setIsSubmitFormVisible(true)}
-                    >
-                      {t('submitSolution')}
-                    </Button>
-                  </span>
-                </Tooltip>
-              </Box>
-            )}
-
-          {isUserStudent && (
-            <>
-              {hasAlreadySubmitted
-                ? !!taskSubmission && (
-                    <>
-                      {'<TASK SUBMISSION>'}
-                      {/*<TaskSubmissionItem taskSubmission={ taskSubmission } />*/}
-                    </>
-                  )
-                : isSubmitFormVisible && (
-                    <SubmitTaskForm
-                      task={task}
-                      onCancel={() => setIsSubmitFormVisible(false)}
-                      onSubmit={handleTaskSubmit}
-                    />
-                  )}
-            </>
+          {isUserStudent && isTaskSubmissionSuccess && (
+            <TaskSubmissionStudentView task={task} />
           )}
 
-          {isUserTeacher && <TaskSubmissionList submissions={[]} />}
+          {isUserTeacher && <TaskSubmissionTeacherView task={task} />}
         </>
       ) : isLoading ? (
         <PageLoading />

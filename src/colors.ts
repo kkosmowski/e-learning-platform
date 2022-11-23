@@ -113,6 +113,7 @@ const colors = {
   mode: 'light',
   primary,
   secondary: {
+    light: secondary[200],
     main: secondary[500],
     contrastText: text[1000],
   },
