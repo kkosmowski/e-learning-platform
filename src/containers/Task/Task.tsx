@@ -14,7 +14,6 @@ import useCustomNavigate from 'hooks/use-custom-navigate';
 import { useAuth } from 'contexts/auth';
 import { useTasksQuery, useTaskSubmissionQuery } from 'shared/queries';
 import PageLoading from 'shared/components/PageLoading';
-import { TaskSubmissionForm } from 'shared/types/task';
 
 export default function Task() {
   const { navigate } = useCustomNavigate();
@@ -97,20 +96,20 @@ export default function Task() {
 
           {isUserStudent && (
             <>
-              {isSubmitFormVisible && (
-                <SubmitTaskForm
-                  task={task}
-                  onCancel={() => setIsSubmitFormVisible(false)}
-                  onSubmit={handleTaskSubmit}
-                />
-              )}
-
-              {hasAlreadySubmitted && !!taskSubmission && (
-                <>
-                  {'<TASK SUBMISSION>'}
-                  {/*<TaskSubmissionItem taskSubmission={ taskSubmission } />*/}
-                </>
-              )}
+              {hasAlreadySubmitted
+                ? !!taskSubmission && (
+                    <>
+                      {'<TASK SUBMISSION>'}
+                      {/*<TaskSubmissionItem taskSubmission={ taskSubmission } />*/}
+                    </>
+                  )
+                : isSubmitFormVisible && (
+                    <SubmitTaskForm
+                      task={task}
+                      onCancel={() => setIsSubmitFormVisible(false)}
+                      onSubmit={handleTaskSubmit}
+                    />
+                  )}
             </>
           )}
 
