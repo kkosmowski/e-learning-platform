@@ -12,7 +12,7 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
 
-import { Task } from 'shared/types/task';
+import { Task, TaskSubmissionForm } from 'shared/types/task';
 import {
   TASK_MAX_FILE_SIZE,
   TASK_MAX_MESSAGE_LENGTH,
@@ -21,25 +21,37 @@ import { bytesToKilobytesOrMegabytes } from 'shared/utils/file.utils';
 import { MEGABYTE } from 'shared/consts/file';
 import { fileTooBigError } from 'shared/consts/error';
 
-interface TaskAnswerFormProps {
+interface SubmitTaskFormProps {
   task: Task;
   onCancel: () => void;
-  onSubmit: () => void;
+  onSubmit: (formData: FormData) => void;
 }
 
-export default function TaskAnswerForm(props: TaskAnswerFormProps) {
+export default function SubmitTaskForm(props: SubmitTaskFormProps) {
   //@todo use `task` later to choose what options to display, like attaching an images, files and so on
   const { task, onCancel, onSubmit } = props;
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const { t } = useTranslation('task');
 
-  const formik = useFormik({
+  const handleFormSubmit = (values: TaskSubmissionForm) => {
+    const formData = new FormData();
+
+    formData.append('comment', values.comment);
+
+    if (values.file) {
+      formData.append('file', values.file || '');
+    }
+
+    onSubmit(formData);
+  };
+
+  const formik = useFormik<TaskSubmissionForm>({
     initialValues: {
-      textMessage: '',
+      comment: '',
       file: null,
     },
     validationSchema: yup.object().shape({
-      textMessage: yup.string().max(TASK_MAX_MESSAGE_LENGTH),
+      comment: yup.string().max(TASK_MAX_MESSAGE_LENGTH),
       file: yup
         .mixed()
         .nullable()
@@ -50,14 +62,14 @@ export default function TaskAnswerForm(props: TaskAnswerFormProps) {
         )
         .nullable(),
     }),
-    onSubmit,
+    onSubmit: handleFormSubmit,
   });
   const { errors, handleChange, handleSubmit, isValid, setFieldValue, values } =
     formik;
 
   const fileNameAndSize = useMemo(() => {
     if (values.file) {
-      const { name, size } = values.file as File;
+      const { name, size } = values.file;
       console.log(values.file);
       return `${name} (${bytesToKilobytesOrMegabytes(
         size,
@@ -84,11 +96,11 @@ export default function TaskAnswerForm(props: TaskAnswerFormProps) {
             multiline
             fullWidth
             autoFocus
-            name="textMessage"
+            name="comment"
             inputProps={{
               maxLength: TASK_MAX_MESSAGE_LENGTH,
             }}
-            value={values.textMessage}
+            value={values.comment}
             onChange={handleChange}
           />
 
@@ -132,7 +144,7 @@ export default function TaskAnswerForm(props: TaskAnswerFormProps) {
             </Button>
 
             <Typography>
-              {values.textMessage.length}/{TASK_MAX_MESSAGE_LENGTH}
+              {values.comment.length}/{TASK_MAX_MESSAGE_LENGTH}
             </Typography>
 
             <Typography>{fileNameAndSize}</Typography>

@@ -17,6 +17,11 @@ export enum TaskType {
   Homework = 'homework',
 }
 
+export interface TaskSubmissionForm {
+  comment: string;
+  file: File | null;
+}
+
 export interface TaskSubmission {
   id: string;
   taskId: string;
@@ -59,6 +64,20 @@ export interface TaskForm {
   endTime: Date | null;
 }
 
+export interface LatestTasksDto {
+  tasks: TaskDto[];
+  homework: TaskDto[];
+  task_submissions: TaskSubmissionDto[];
+  homework_submissions: TaskSubmissionDto[];
+}
+
+export interface LatestTasks {
+  tasks?: Task[];
+  homework?: Task[];
+  taskSubmissions?: TaskSubmission[];
+  homeworkSubmissions?: TaskSubmission[];
+}
+
 // payloads
 
 export interface UpdateTaskPayload {
@@ -79,18 +98,9 @@ export interface CreateTaskPayload {
   end_time: Date;
 }
 
-export interface LatestTasksDto {
-  tasks: TaskDto[];
-  homework: TaskDto[];
-  task_submissions: TaskSubmissionDto[];
-  homework_submissions: TaskSubmissionDto[];
-}
-
-export interface LatestTasks {
-  tasks?: Task[];
-  homework?: Task[];
-  taskSubmissions?: TaskSubmission[];
-  homeworkSubmissions?: TaskSubmission[];
+export interface SubmitTaskPayload {
+  taskId: string;
+  formData: FormData;
 }
 
 // responses
@@ -99,5 +109,6 @@ export type GetTasksResponse = AxiosResponse<Paginated<TaskDto>>;
 export type GetLatestTasksResponse = AxiosResponse<LatestTasksDto>;
 export type GetTaskResponse = AxiosResponse<TaskDto>;
 export type GetTaskSubmissionResponse = AxiosResponse<TaskSubmissionDto>;
+export type SubmitTaskResponse = AxiosResponse<TaskSubmissionDto>;
 export type CreateTaskResponse = AxiosResponse<TaskDto>;
 export type UpdateTaskResponse = AxiosResponse<TaskDto>;

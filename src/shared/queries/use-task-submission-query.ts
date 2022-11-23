@@ -1,16 +1,19 @@
 import { useMemo } from 'react';
 import { AxiosError } from 'axios';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 
 import { useAuth } from 'contexts/auth';
 import useCustomNavigate from 'hooks/use-custom-navigate';
 import {
   GetTaskSubmissionResponse,
+  SubmitTaskPayload,
+  SubmitTaskResponse,
   TaskSubmissionDto,
 } from 'shared/types/task';
-import { getTaskSubmission } from 'api/task';
-import { mapTaskSubmissionDtoToTaskSubmission } from '../utils/task.utils';
+import { getTaskSubmission, updateTaskSubmission } from 'api/task';
+import { mapTaskSubmissionDtoToTaskSubmission } from 'shared/utils/task.utils';
+import toast from 'react-hot-toast';
 
 export function useTaskSubmissionQuery(taskId?: string) {
   const { currentUser } = useAuth();
@@ -37,6 +40,22 @@ export function useTaskSubmissionQuery(taskId?: string) {
     }
   );
 
+  const { mutate: submitSolution } = useMutation<
+    SubmitTaskResponse,
+    AxiosError,
+    SubmitTaskPayload
+  >(updateTaskSubmission, {
+    onSuccess: async ({ data }) => {
+      queryClient.setQueryData(['task-submission', taskId, currentUser?.id], {
+        data,
+      });
+      toast.success(t('toast.submitSuccess'));
+    },
+    onError: (e) => {
+      toast.error(t('error:ERROR'));
+    },
+  });
+
   const taskSubmission = useMemo(
     () =>
       taskSubmissionQuery.data
@@ -49,5 +68,6 @@ export function useTaskSubmissionQuery(taskId?: string) {
     taskSubmission,
     isLoading: taskSubmissionQuery.isLoading,
     isSuccess: taskSubmissionQuery.isSuccess,
+    submitSolution,
   };
 }
