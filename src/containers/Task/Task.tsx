@@ -1,15 +1,8 @@
 import { useParams } from 'react-router';
-import { useState } from 'react';
-import { Box, Button, Stack, Tooltip, Typography } from '@mui/material';
-import { useTranslation } from 'react-i18next';
 
 import { Centered } from 'shared/components/Container';
 import TaskCard from 'shared/components/TaskCard';
-import { Status } from 'shared/types/shared';
-import { isPastDate } from 'shared/utils/date.utils';
 import { isStudent, isTeacher } from 'shared/utils/user.utils';
-import SubmitTaskForm from './components/SubmitTaskForm';
-import TaskSubmissionList from './components/TaskSubmissionList';
 import useCustomNavigate from 'hooks/use-custom-navigate';
 import { useAuth } from 'contexts/auth';
 import {
@@ -18,7 +11,6 @@ import {
   useTaskSubmissionsQuery,
 } from 'shared/queries';
 import PageLoading from 'shared/components/PageLoading';
-import TaskSubmissionItem from './components/TaskSubmissionItem';
 import TaskSubmissionStudentView from './features/TaskSubmissionStudentView';
 import TaskSubmissionTeacherView from './features/TaskSubmissionTeacherView';
 
