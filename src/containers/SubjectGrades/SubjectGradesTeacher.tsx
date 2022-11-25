@@ -1,12 +1,12 @@
 import { SyntheticEvent, useState } from 'react';
 import { Box, Tab, Tabs } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 import { Centered } from 'shared/components/Container';
 import GradeCard from 'shared/components/GradeCard';
 import TabPanel from 'shared/components/TabPanel';
 import SectionTitle from 'shared/components/SectionTitle';
 import { divideGrades } from 'shared/utils/grade.utils';
-import { useTranslation } from 'react-i18next';
 
 enum TeacherGradesTab {
   Assignment = 'assignment',

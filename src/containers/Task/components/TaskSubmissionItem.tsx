@@ -1,7 +1,8 @@
-import { SimpleTaskSubmission } from 'shared/types/task';
 import { Box, Link, styled, Stack, Typography } from '@mui/material';
 import format from 'date-fns/format';
 import { useTranslation } from 'react-i18next';
+
+import { SimpleTaskSubmission } from 'shared/types/task';
 
 interface TaskSubmissionItemProps {
   taskSubmission: SimpleTaskSubmission;

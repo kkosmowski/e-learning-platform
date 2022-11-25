@@ -2,15 +2,14 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
-  Divider,
   Stack,
   Typography,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 import { TaskSubmission } from 'shared/types/task';
+import { Status } from 'shared/types/shared';
 import TaskSubmissionItem from './TaskSubmissionItem';
-import { Status } from '../../../shared/types/shared';
 
 interface TaskSubmissionListProps {
   submissions: TaskSubmission[];

@@ -109,7 +109,11 @@
     "submissions": {
       "noItems": "There are no submitted solutions yet.",
       "notSubmittedYet": "Not submitted yet",
-      "yourSubmissionToTask": "Your submission to task"
+      "yourSubmissionToTask": "Your submission to task",
+      "message": "Message",
+      "attachedFile": "Attached file",
+      "downloadFile": "Download file",
+      "sentOn": "Sent on"
     },
     "submitSolution": "Submit a solution",
     "taskMessagePlaceholder": "Type your answer or leave additional comment",

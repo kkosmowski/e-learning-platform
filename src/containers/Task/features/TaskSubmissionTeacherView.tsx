@@ -1,9 +1,10 @@
-import { useTaskSubmissionsQuery } from 'shared/queries';
-import { Task } from 'shared/types/task';
-import TaskSubmissionList from '../components/TaskSubmissionList';
-import PageLoading from '../../../shared/components/PageLoading';
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+
+import { useTaskSubmissionsQuery } from 'shared/queries';
+import { Task } from 'shared/types/task';
+import PageLoading from 'shared/components/PageLoading';
+import TaskSubmissionList from '../components/TaskSubmissionList';
 
 interface TaskSubmissionTeacherViewProps {
   task: Task;
