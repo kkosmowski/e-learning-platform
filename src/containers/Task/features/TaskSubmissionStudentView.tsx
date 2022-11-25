@@ -1,5 +1,13 @@
 import { useState } from 'react';
-import { Box, Button, Stack, Tooltip, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Stack,
+  Tooltip,
+  Typography,
+} from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 import { Task } from 'shared/types/task';
@@ -54,9 +62,15 @@ export default function TaskSubmissionStudentView(
         ? !!taskSubmission && (
             <Stack gap={2}>
               <Typography variant="h3">
-                Twoja odpowiedź na zadanie <strong>{task.name}</strong>
+                {t('submissions.yourSubmissionToTask')}{' '}
+                <strong>{task.name}</strong>
               </Typography>
-              <TaskSubmissionItem task={task} taskSubmission={taskSubmission} />
+
+              <Card>
+                <CardContent>
+                  <TaskSubmissionItem taskSubmission={taskSubmission} />
+                </CardContent>
+              </Card>
             </Stack>
           )
         : isSubmitFormVisible && (

@@ -4,35 +4,26 @@ import format from 'date-fns/format';
 import { useTranslation } from 'react-i18next';
 
 import { Status } from 'shared/types/shared';
-import { User } from 'shared/types/user';
-import { Task, TaskSubmission } from 'shared/types/task';
+import { SimpleTaskSubmission, Task } from 'shared/types/task';
 import { timeLeft } from 'shared/utils/date.utils';
 import { getTimeLeftTextColor } from 'shared/utils/task.utils';
-import { isStudent, isTeacher } from 'shared/utils/user.utils';
 
 interface TimeLeftProps {
   task: Task;
-  taskSubmission?: TaskSubmission;
-  currentUser: User;
+  taskSubmission?: SimpleTaskSubmission;
 }
 
 export default function TimeLeft(props: TimeLeftProps) {
-  const { task, taskSubmission, currentUser } = props;
+  const { task, taskSubmission } = props;
   const { t } = useTranslation('task');
-  const isUserTeacher = isTeacher(currentUser);
-  const isUserStudent = isStudent(currentUser);
 
-  let diffInMinutes = 0;
-  let timeLeftString = '';
-  let timeLeftTextColor = '';
-
-  if (
-    (isUserStudent && taskSubmission?.status === Status.NOT_SUBMITTED) ||
-    isUserTeacher
-  ) {
-    [timeLeftString, diffInMinutes] = timeLeft(t, task.endTime);
-    timeLeftTextColor = getTimeLeftTextColor(task.type, diffInMinutes);
-  }
+  const [timeLeftString, diffInMinutes] = timeLeft(t, task.endTime);
+  const isSubmitted = taskSubmission?.status !== Status.NOT_SUBMITTED;
+  const timeLeftTextColor = getTimeLeftTextColor(
+    task.type,
+    diffInMinutes,
+    isSubmitted
+  );
 
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', columnGap: 1 }}>
@@ -42,19 +33,17 @@ export default function TimeLeft(props: TimeLeftProps) {
         <Typography
           component="span"
           sx={{ font: 'inherit' }}
-          color={(isUserTeacher && timeLeftTextColor) || 'text.secondary'}
+          color={timeLeftTextColor}
         >
           {format(task.endTime, 'dd.MM.yyy HH:mm')}
         </Typography>
       </Tooltip>
 
-      {taskSubmission?.status === Status.NOT_SUBMITTED &&
-        timeLeftTextColor &&
-        timeLeftString && (
-          <Typography color={timeLeftTextColor} sx={{ fontSize: 'inherit' }}>
-            ({timeLeftString})
-          </Typography>
-        )}
+      {timeLeftTextColor && timeLeftString && (
+        <Typography color={timeLeftTextColor} sx={{ fontSize: 'inherit' }}>
+          ({timeLeftString})
+        </Typography>
+      )}
     </Box>
   );
 }

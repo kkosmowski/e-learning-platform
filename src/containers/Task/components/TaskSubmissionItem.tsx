@@ -1,61 +1,53 @@
-import { Task, TaskSubmission } from 'shared/types/task';
-import {
-  Box,
-  Card,
-  CardContent,
-  Link,
-  styled,
-  Typography,
-} from '@mui/material';
+import { SimpleTaskSubmission } from 'shared/types/task';
+import { Box, Link, styled, Stack, Typography } from '@mui/material';
 import format from 'date-fns/format';
+import { useTranslation } from 'react-i18next';
 
 interface TaskSubmissionItemProps {
-  task: Task;
-  taskSubmission: TaskSubmission;
+  taskSubmission: SimpleTaskSubmission;
 }
 
 export default function TaskSubmissionItem(props: TaskSubmissionItemProps) {
-  const { task, taskSubmission } = props;
+  const { taskSubmission } = props;
+  const { t } = useTranslation('task');
 
   return (
-    <Card>
-      <CardContent sx={{ display: 'flex', flexDirection: 'column' }}>
-        <Box component="section">
-          <Typography component="h4" color="text.secondary">
-            Wiadomość
-          </Typography>
-          {taskSubmission.comment ? (
-            <Quote>{taskSubmission.comment}</Quote>
-          ) : (
-            <Typography component="em">brak</Typography>
-          )}
-        </Box>
-
-        {taskSubmission.fileUrl && (
-          <Box component="section" sx={{ mt: 2 }}>
-            <Typography component="h4" color="text.secondary">
-              Załączony plik
-            </Typography>
-
-            <Link
-              href={taskSubmission.fileUrl}
-              target="_blank"
-              rel="noreferrer"
-              sx={{ display: 'inline-block', p: 1 }}
-            >
-              Pobierz
-            </Link>
-          </Box>
-        )}
-
-        <Typography color="text.secondary" sx={{ mt: 3 }}>
-          Wysłano{' '}
-          <time dateTime={taskSubmission.createdAt.toISOString()}>
-            {format(taskSubmission.createdAt, 'dd-MM-yyyy HH:mm')}
-          </time>
+    <Stack>
+      <Box component="section">
+        <Typography component="h4" color="text.secondary">
+          {t('submissions.message')}
         </Typography>
-      </CardContent>
-    </Card>
+        {taskSubmission.comment ? (
+          <Quote>{taskSubmission.comment}</Quote>
+        ) : (
+          <Typography component="em">brak</Typography>
+        )}
+      </Box>
+
+      {taskSubmission.fileUrl && (
+        <Box component="section" sx={{ mt: 2 }}>
+          <Typography component="h4" color="text.secondary">
+            {t('submissions.attachedFile')}
+          </Typography>
+
+          <Link
+            href={taskSubmission.fileUrl}
+            target="_blank"
+            rel="noreferrer"
+            sx={{ display: 'inline-block', p: 1 }}
+          >
+            {t('submissions.downloadFile')}
+          </Link>
+        </Box>
+      )}
+
+      <Typography color="text.secondary" sx={{ mt: 3, fontSize: 14 }}>
+        {t('submissions.sentOn')}{' '}
+        <time dateTime={taskSubmission.createdAt.toISOString()}>
+          {format(taskSubmission.createdAt, 'dd-MM-yyyy HH:mm')}
+        </time>
+      </Typography>
+    </Stack>
   );
 }
 

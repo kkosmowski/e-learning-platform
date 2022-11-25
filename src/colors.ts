@@ -124,6 +124,7 @@ const colors = {
     disabled: text[900],
     success: success[600],
     warning: warning[600],
+    info: info[700],
     error: error[600],
   },
 };

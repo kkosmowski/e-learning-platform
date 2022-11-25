@@ -10,7 +10,7 @@ import {
 import { Fragment, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Task, TaskSubmission } from 'shared/types/task';
+import { SimpleTaskSubmission, Task } from 'shared/types/task';
 import { isTeacher } from 'shared/utils/user.utils';
 import { isPastDate } from 'shared/utils/date.utils';
 import { Role, User } from 'shared/types/user';
@@ -22,7 +22,7 @@ import TaskDetails from './TaskDetails';
 
 interface TaskCardProps {
   task: Task;
-  submissions?: TaskSubmission[];
+  submissions?: SimpleTaskSubmission[];
   subjectStudents?: User[];
   short?: boolean;
   onClick?: () => void;
@@ -41,9 +41,7 @@ export default function TaskCard(props: TaskCardProps) {
     onDelete,
   } = props;
   const { currentUser } = useAuth();
-  const isUserTeacher = isTeacher(currentUser);
   const { navigate } = useCustomNavigate();
-  const { t } = useTranslation('task');
 
   const CardWrapper = onClick ? CardActionArea : Fragment;
 

@@ -107,7 +107,13 @@
       "graded": "Ocenione"
     },
     "submissions": {
-      "noItems": "Brak przesłanych rozwiązań"
+      "noItems": "Brak przesłanych rozwiązań",
+      "notSubmittedYet": "Nie przesłane",
+      "yourSubmissionToTask": "Twoja odpowiedź na zadanie",
+      "message": "Wiadomość",
+      "attachedFile": "Załączony plik",
+      "downloadFile": "Pobierz",
+      "sentOn": "Wysłano"
     },
     "submitSolution": "Prześlij rozwiązanie",
     "taskMessagePlaceholder": "Napisz odpowiedź bądź opcjonalny komentarz",

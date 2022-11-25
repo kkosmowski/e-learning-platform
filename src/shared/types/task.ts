@@ -1,7 +1,7 @@
 import { ContentItem, Paginated, Status } from './shared';
 import { AxiosResponse } from 'axios';
 import { SubjectDto } from './subject';
-import { UserDto } from './user';
+import { User, UserDto } from './user';
 
 export interface Task extends ContentItem {
   mandatory: boolean;
@@ -22,13 +22,17 @@ export interface TaskSubmissionForm {
   file: File | null;
 }
 
-export interface TaskSubmission {
+export interface SimpleTaskSubmission {
   id: string;
   taskId: string;
   createdAt: Date;
   status: Status;
   fileUrl: string;
   comment: string;
+}
+
+export interface TaskSubmission extends SimpleTaskSubmission {
+  createdBy: User;
 }
 
 export interface TaskDto {
@@ -45,13 +49,17 @@ export interface TaskDto {
   can_be_deleted_before: string;
 }
 
-export interface TaskSubmissionDto {
+export interface SimpleTaskSubmissionDto {
   id: string;
   task_id: string;
   created_at: string;
   status: Status;
   file_url: string;
   comment: string;
+}
+
+export interface TaskSubmissionDto extends SimpleTaskSubmissionDto {
+  user: UserDto;
 }
 
 export interface TaskForm {
@@ -108,8 +116,8 @@ export interface SubmitTaskPayload {
 export type GetTasksResponse = AxiosResponse<Paginated<TaskDto>>;
 export type GetLatestTasksResponse = AxiosResponse<LatestTasksDto>;
 export type GetTaskResponse = AxiosResponse<TaskDto>;
-export type GetTaskSubmissionResponse = AxiosResponse<TaskSubmissionDto>;
+export type GetTaskSubmissionResponse = AxiosResponse<SimpleTaskSubmissionDto>;
 export type GetTaskSubmissionsResponse = AxiosResponse<TaskSubmissionDto[]>;
-export type SubmitTaskResponse = AxiosResponse<TaskSubmissionDto>;
+export type SubmitTaskResponse = AxiosResponse<SimpleTaskSubmissionDto>;
 export type CreateTaskResponse = AxiosResponse<TaskDto>;
 export type UpdateTaskResponse = AxiosResponse<TaskDto>;

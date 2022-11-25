@@ -1,9 +1,16 @@
-import { Card, CardContent, Stack, Typography } from '@mui/material';
-import { Box } from '@mui/system';
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Divider,
+  Stack,
+  Typography,
+} from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 import { TaskSubmission } from 'shared/types/task';
-import PageLoading from 'shared/components/PageLoading';
+import TaskSubmissionItem from './TaskSubmissionItem';
+import { Status } from '../../../shared/types/shared';
 
 interface TaskSubmissionListProps {
   submissions: TaskSubmission[];
@@ -11,29 +18,29 @@ interface TaskSubmissionListProps {
 
 export default function TaskSubmissionList(props: TaskSubmissionListProps) {
   const { submissions } = props;
-  const isSuccess = true;
-  const isLoading = false;
   const { t } = useTranslation('task');
 
   return (
-    <Card>
-      <CardContent>
-        <Stack>
-          {isSuccess && submissions?.length ? (
-            submissions.map((submission) => (
-              <Box key={submission.id}>
-                {/*{submission.task}, {submission.status}, {submission.studentId} */}
-              </Box>
-            ))
-          ) : isLoading ? (
-            <PageLoading />
-          ) : (
-            <Typography color="text.secondary">
-              {t('submissions.noItems')}
-            </Typography>
-          )}
-        </Stack>
-      </CardContent>
-    </Card>
+    <Stack>
+      {submissions.map((submission) => {
+        const notSubmitted = submission.status === Status.NOT_SUBMITTED;
+        return (
+          <Accordion key={submission.id} disabled={notSubmitted}>
+            <AccordionSummary>
+              <Typography component="h3">
+                {submission.createdBy.fullName}
+                {notSubmitted && (
+                  <span> ({t('submissions.notSubmittedYet')})</span>
+                )}
+              </Typography>
+            </AccordionSummary>
+
+            <AccordionDetails>
+              <TaskSubmissionItem taskSubmission={submission} />
+            </AccordionDetails>
+          </Accordion>
+        );
+      })}
+    </Stack>
   );
 }

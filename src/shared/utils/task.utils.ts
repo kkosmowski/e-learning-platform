@@ -1,5 +1,7 @@
 import {
   CreateTaskPayload,
+  SimpleTaskSubmission,
+  SimpleTaskSubmissionDto,
   Task,
   TaskDto,
   TaskForm,
@@ -8,7 +10,6 @@ import {
   TaskType,
   UpdateTaskPayload,
 } from 'shared/types/task';
-import { Status } from 'shared/types/shared';
 import { mapUserDtoToUser } from './user.utils';
 import { dateStringToUTCString } from './date.utils';
 import {
@@ -20,8 +21,13 @@ import {
 
 export const getTimeLeftTextColor = (
   type: TaskType,
-  diffInMinutes: number
+  diffInMinutes: number,
+  isSubmitted: boolean
 ): string => {
+  if (isSubmitted) {
+    return 'text';
+  }
+
   let veryLittleTimeLeft: number;
   let littleTimeLeft: number;
 
@@ -82,13 +88,20 @@ export const mapTaskFormToCreateTaskPayload = (
   end_time: form.endTime!,
 });
 
-export const mapTaskSubmissionDtoToTaskSubmission = (
-  dto: TaskSubmissionDto
-): TaskSubmission => ({
+export const mapSimpleTaskSubmissionDtoToSimpleTaskSubmission = (
+  dto: SimpleTaskSubmissionDto
+): SimpleTaskSubmission => ({
   id: dto.id,
   taskId: dto.task_id,
   status: dto.status,
   createdAt: new Date(dateStringToUTCString(dto.created_at)),
   fileUrl: dto.file_url,
   comment: dto.comment,
+});
+
+export const mapTaskSubmissionDtoToTaskSubmission = (
+  dto: TaskSubmissionDto
+): TaskSubmission => ({
+  ...mapSimpleTaskSubmissionDtoToSimpleTaskSubmission(dto),
+  createdBy: mapUserDtoToUser(dto.user),
 });
