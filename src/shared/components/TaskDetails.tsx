@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next';
 import format from 'date-fns/format';
 
 import { Status } from 'shared/types/shared';
-import { Task, TaskSubmission } from 'shared/types/task';
+import { SimpleTaskSubmission, Task } from 'shared/types/task';
 import { User } from 'shared/types/user';
 import ItemCategory from './ItemCategory';
 import { isStudent, isTeacher } from 'shared/utils/user.utils';
@@ -23,7 +23,7 @@ import TimeLeft from './TimeLeft';
 interface TaskDetailsProps {
   task: Task;
   currentUser: User;
-  submissions?: TaskSubmission[];
+  submissions?: SimpleTaskSubmission[];
   subjectStudents?: User[];
 }
 
@@ -38,14 +38,31 @@ const getStatusIcon = (status: Status): SvgIconComponent => {
   }
 };
 
+const prepareSubmissionsString = (submissions: SimpleTaskSubmission[]) => {
+  const allSubmissions = submissions.length;
+  const sentSubmissions = submissions.filter(
+    ({ status }) => status !== Status.NOT_SUBMITTED
+  ).length;
+  return `${sentSubmissions} / ${allSubmissions}`;
+};
+
+const statusColors: Record<Status, string> = {
+  [Status.NOT_SUBMITTED]: '',
+  [Status.SUBMITTED]: 'text.info',
+  [Status.GRADED]: 'text.success',
+};
+
 export default function TaskDetails(props: TaskDetailsProps) {
   const { task, currentUser, submissions = [], subjectStudents = [] } = props;
   const { t } = useTranslation('task');
   const isUserTeacher = isTeacher(currentUser);
   const isUserStudent = isStudent(currentUser);
   const status = submissions[0]?.status || Status.NOT_SUBMITTED;
+  const statusColor = statusColors[status];
   const StatusIcon = isUserStudent && getStatusIcon(status);
   const isPastDeadline = isPastDate(task.endTime);
+
+  const sentSubmissionsString = prepareSubmissionsString(submissions);
 
   const allStudentsSubmitted = useMemo(
     () =>
@@ -79,14 +96,17 @@ export default function TaskDetails(props: TaskDetailsProps) {
           </Tooltip>
         </Box>
 
-        <TimeLeft
-          task={task}
-          taskSubmission={submissions[0]}
-          currentUser={currentUser}
-        />
+        <TimeLeft task={task} taskSubmission={submissions[0]} />
 
         {StatusIcon && (
-          <Box sx={{ display: 'flex', alignItems: 'center', columnGap: 1 }}>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              columnGap: 1,
+              color: statusColor,
+            }}
+          >
             <StatusIcon sx={{ fontSize: 16 }} />
             <span>{t(`statuses.${status}`)}</span>
           </Box>
@@ -103,9 +123,7 @@ export default function TaskDetails(props: TaskDetailsProps) {
               />
             )}
 
-            <span>
-              {submissions.length} / {subjectStudents.length}
-            </span>
+            <span>{sentSubmissionsString}</span>
           </Box>
         )}
       </Stack>

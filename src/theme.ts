@@ -10,6 +10,33 @@ export const consts = {
 
 const baseThemeOptions: ThemeOptions = {
   components: {
+    MuiAccordionSummary: {
+      styleOverrides: {
+        root: {
+          '&.Mui-expanded': {
+            minHeight: 0,
+            borderBottom: '1px solid rgba(0, 0, 0, 0.12)',
+          },
+          '&.Mui-disabled': {
+            opacity: 0.5,
+          },
+        },
+        content: {
+          '&.Mui-expanded': {
+            margin: '12px 0',
+          },
+        },
+      },
+    },
+    MuiAccordion: {
+      styleOverrides: {
+        root: {
+          '&.Mui-disabled': {
+            backgroundColor: '#f4f4f4',
+          },
+        },
+      },
+    },
     MuiButton: {
       styleOverrides: {
         root: {
