@@ -15,7 +15,7 @@ import { getTaskSubmission, updateTaskSubmission } from 'api/task';
 import { mapTaskSubmissionDtoToTaskSubmission } from 'shared/utils/task.utils';
 import toast from 'react-hot-toast';
 
-export function useTaskSubmissionQuery(taskId?: string) {
+export function useTaskSubmissionQuery(taskId?: string, enabled?: boolean) {
   const { currentUser } = useAuth();
   const queryClient = useQueryClient();
   const { navigate, back } = useCustomNavigate();
@@ -36,7 +36,7 @@ export function useTaskSubmissionQuery(taskId?: string) {
     () => getTaskSubmission(taskId || ''),
     {
       select: ({ data }) => data,
-      enabled: Boolean(currentUser && taskId),
+      enabled: Boolean(currentUser && taskId && enabled),
     }
   );
 

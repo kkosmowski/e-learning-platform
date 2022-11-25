@@ -9,6 +9,7 @@ import {
   UpdateTaskPayload,
   UpdateTaskResponse,
   GetTaskSubmissionResponse,
+  GetTaskSubmissionsResponse,
   SubmitTaskResponse,
   SubmitTaskPayload,
 } from 'shared/types/task';
@@ -59,6 +60,11 @@ export const getTaskSubmission = (
   taskId: string
 ): Promise<GetTaskSubmissionResponse> =>
   authorized((api) => api.get(`task/${taskId}/submission`));
+
+export const getTaskSubmissions = (
+  taskId: string
+): Promise<GetTaskSubmissionsResponse> =>
+  authorized((api) => api.get(`task/${taskId}/submissions`));
 
 export const updateTaskSubmission = ({
   taskId,

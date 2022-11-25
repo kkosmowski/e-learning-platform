@@ -109,6 +109,7 @@ export type GetTasksResponse = AxiosResponse<Paginated<TaskDto>>;
 export type GetLatestTasksResponse = AxiosResponse<LatestTasksDto>;
 export type GetTaskResponse = AxiosResponse<TaskDto>;
 export type GetTaskSubmissionResponse = AxiosResponse<TaskSubmissionDto>;
+export type GetTaskSubmissionsResponse = AxiosResponse<TaskSubmissionDto[]>;
 export type SubmitTaskResponse = AxiosResponse<TaskSubmissionDto>;
 export type CreateTaskResponse = AxiosResponse<TaskDto>;
 export type UpdateTaskResponse = AxiosResponse<TaskDto>;
