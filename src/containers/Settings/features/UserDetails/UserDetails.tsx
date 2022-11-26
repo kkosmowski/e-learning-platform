@@ -117,6 +117,8 @@ export default function UserDetails(props: UserDetailsProps) {
         toast.success(t('users.toast.updateSuccess'));
       },
     });
+
+    navigate('./..');
   };
 
   return (

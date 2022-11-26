@@ -10,12 +10,13 @@ import {
   GetSubjectResponse,
   SimpleSubject,
   Subject,
+  SubjectWithClass,
   UpdateSubjectResponse,
 } from 'shared/types/subject';
 import {
   mapSimpleSubjectDtoToSimpleSubject,
-  mapSubjectDtoToSubject,
   mapSubjectToUpdateSubjectPayload,
+  mapSubjectWithClassDtoDtoToSubjectWithClass,
 } from 'shared/utils/subject.utils';
 import { getErrorDetail } from 'shared/utils/common.utils';
 import { User } from 'shared/types/user';
@@ -58,10 +59,10 @@ export function useSubjectQuery(
   const detailedFetchQuery = useQuery<
     GetFullSubjectResponse,
     AxiosError,
-    Subject
+    SubjectWithClass
   >(['subject', subjectId, 'full'], () => getFullSubject(subjectId || ''), {
     enabled: Boolean(subjectId && currentUser && options?.full),
-    select: ({ data }) => mapSubjectDtoToSubject(data),
+    select: ({ data }) => mapSubjectWithClassDtoDtoToSubjectWithClass(data),
     retry: false,
     onSuccess: () => {
       setErrorText('');
@@ -78,10 +79,10 @@ export function useSubjectQuery(
     User | null
   >(
     async (teacher: User | null) => {
-      if (fetchQuery.data && teacher) {
+      if (detailedFetchQuery.data && teacher) {
         return updateSubject(
           mapSubjectToUpdateSubjectPayload({
-            id: fetchQuery.data.id,
+            id: detailedFetchQuery.data.id,
             teacher,
           })
         );
@@ -89,7 +90,7 @@ export function useSubjectQuery(
     },
     {
       onSuccess: async ({ data }) => {
-        queryClient.setQueryData(['subject', subjectId], { data });
+        queryClient.setQueryData(['subject', subjectId, 'full'], { data });
         navigateBack();
         toast.success('Subject updated');
       },

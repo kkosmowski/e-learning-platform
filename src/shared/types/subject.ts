@@ -11,6 +11,14 @@ export interface Subject {
   id: string;
   name: string;
   category: SubjectCategory;
+  subjectClass: SubjectClass;
+  teacher: User;
+}
+
+export interface SubjectWithClass {
+  id: string;
+  name: string;
+  category: SubjectCategory;
   subjectClass: Class;
   teacher: User;
 }
@@ -34,6 +42,13 @@ export interface SubjectToUpdate {
 }
 
 export interface SubjectDto {
+  id: string;
+  subject: SubjectCategory;
+  group: SubjectClass;
+  teacher: UserDto;
+}
+
+export interface SubjectWithClassDto {
   id: string;
   subject: SubjectCategory;
   group: ClassDto;
@@ -68,6 +83,6 @@ export type UpdateSubjectCategoryResponse = AxiosResponse<SubjectCategory>;
 export type GetSubjectsResponse = AxiosResponse<SimpleSubjectDto[]>;
 export type GetFullSubjectsResponse = AxiosResponse<SubjectDto[]>;
 export type GetSubjectResponse = AxiosResponse<SimpleSubjectDto>;
-export type GetFullSubjectResponse = AxiosResponse<SubjectDto>;
+export type GetFullSubjectResponse = AxiosResponse<SubjectWithClassDto>;
 export type CreateSubjectResponse = AxiosResponse<SimpleSubjectDto>;
 export type UpdateSubjectResponse = AxiosResponse<SimpleSubjectDto>;
