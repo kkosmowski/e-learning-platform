@@ -7,12 +7,12 @@ import { useAuth } from 'contexts/auth';
 import useCustomNavigate from 'hooks/use-custom-navigate';
 import {
   GetTaskSubmissionResponse,
-  SimpleTaskSubmissionDto,
+  TaskSubmissionDto,
   SubmitTaskPayload,
   SubmitTaskResponse,
 } from 'shared/types/task';
 import { getTaskSubmission, updateTaskSubmission } from 'api/task';
-import { mapSimpleTaskSubmissionDtoToSimpleTaskSubmission } from 'shared/utils/task.utils';
+import { mapTaskSubmissionDtoToTaskSubmission } from 'shared/utils/task.utils';
 import toast from 'react-hot-toast';
 
 export function useTaskSubmissionQuery(taskId?: string, enabled?: boolean) {
@@ -30,7 +30,7 @@ export function useTaskSubmissionQuery(taskId?: string, enabled?: boolean) {
   const taskSubmissionQuery = useQuery<
     GetTaskSubmissionResponse,
     AxiosError,
-    SimpleTaskSubmissionDto
+    TaskSubmissionDto
   >(
     ['task-submission', taskId, currentUser?.id],
     () => getTaskSubmission(taskId || ''),
@@ -59,9 +59,7 @@ export function useTaskSubmissionQuery(taskId?: string, enabled?: boolean) {
   const taskSubmission = useMemo(
     () =>
       taskSubmissionQuery.data
-        ? mapSimpleTaskSubmissionDtoToSimpleTaskSubmission(
-            taskSubmissionQuery.data
-          )
+        ? mapTaskSubmissionDtoToTaskSubmission(taskSubmissionQuery.data)
         : undefined,
     [taskSubmissionQuery.data]
   );

@@ -9,6 +9,8 @@ import {
   UpdateSubjectPayload,
   SubjectForm,
   CreateSubjectResponse,
+  GetFullSubjectResponse,
+  GetFullSubjectsResponse,
 } from 'shared/types/subject';
 import { EmptyResponse } from 'shared/types/shared';
 import { mapSubjectFormToCreatSubjectPayload } from 'shared/utils/subject.utils';
@@ -39,6 +41,10 @@ export const getSubjects = (): Promise<GetSubjectsResponse> => {
   return authorized((api) => api.get('group-subject'));
 };
 
+export const getFullSubjects = (): Promise<GetFullSubjectsResponse> => {
+  return authorized((api) => api.get('group-subject/full'));
+};
+
 export const createSubject = (
   formValues: SubjectForm
 ): Promise<CreateSubjectResponse> =>
@@ -48,6 +54,12 @@ export const createSubject = (
 
 export const getSubject = (subjectId: string): Promise<GetSubjectResponse> => {
   return authorized((api) => api.get(`group-subject/${subjectId}`));
+};
+
+export const getFullSubject = (
+  subjectId: string
+): Promise<GetFullSubjectResponse> => {
+  return authorized((api) => api.get(`group-subject/${subjectId}/full`));
 };
 
 export const updateSubject = ({

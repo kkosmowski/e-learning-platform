@@ -1,7 +1,7 @@
 import {
   CreateSubjectPayload,
-  FullSubject,
-  FullSubjectDto,
+  SimpleSubject,
+  SimpleSubjectDto,
   Subject,
   SubjectDto,
   SubjectForm,
@@ -15,7 +15,7 @@ export const mapSubjectDtoToSubject = (subjectDto: SubjectDto): Subject => ({
   id: subjectDto.id,
   name: `${subjectDto.subject.name} (${subjectDto.group.name})`,
   category: subjectDto.subject,
-  subjectClass: subjectDto.group,
+  subjectClass: mapClassDtoToClass(subjectDto.group),
   teacher: mapUserDtoToUser(subjectDto.teacher),
 });
 
@@ -35,14 +35,13 @@ export const mapSubjectFormToCreatSubjectPayload = (
   };
 };
 
-export const mapFullSubjectDtoToFullSubject = (
-  subjectDto: FullSubjectDto
-): FullSubject => ({
+export const mapSimpleSubjectDtoToSimpleSubject = (
+  subjectDto: SimpleSubjectDto
+): SimpleSubject => ({
   id: subjectDto.id,
   name: `${subjectDto.subject.name} (${subjectDto.group.name})`,
   category: subjectDto.subject,
-  subjectClass: mapClassDtoToClass(subjectDto.group),
-  teacher: mapUserDtoToUser(subjectDto.teacher),
+  subjectClass: subjectDto.group,
 });
 
 export const mapSubjectToUpdateSubjectPayload = (

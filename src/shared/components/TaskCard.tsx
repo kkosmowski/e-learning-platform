@@ -8,10 +8,8 @@ import {
   Typography,
 } from '@mui/material';
 import { Fragment, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
 
-import { SimpleTaskSubmission, Task } from 'shared/types/task';
-import { isTeacher } from 'shared/utils/user.utils';
+import { TaskSubmission, Task } from 'shared/types/task';
 import { isPastDate } from 'shared/utils/date.utils';
 import { Role, User } from 'shared/types/user';
 import ActionToolbar from './ActionToolbar';
@@ -22,7 +20,7 @@ import TaskDetails from './TaskDetails';
 
 interface TaskCardProps {
   task: Task;
-  submissions?: SimpleTaskSubmission[];
+  submissions?: TaskSubmission[];
   subjectStudents?: User[];
   short?: boolean;
   onClick?: () => void;

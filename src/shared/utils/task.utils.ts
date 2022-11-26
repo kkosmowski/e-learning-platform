@@ -10,7 +10,7 @@ import {
   TaskType,
   UpdateTaskPayload,
 } from 'shared/types/task';
-import { mapUserDtoToUser } from './user.utils';
+import { mapSimpleUserDtoToSimpleUser } from './user.utils';
 import { dateStringToUTCString } from './date.utils';
 import {
   TASK_HOMEWORK_ENDING_SOON_TIME_IN_MINUTES,
@@ -53,7 +53,7 @@ export const mapTaskDtoToTask = (dto: TaskDto): Task => ({
   type: dto.type,
   name: dto.name,
   content: dto.content,
-  createdBy: mapUserDtoToUser(dto.created_by),
+  createdBy: mapSimpleUserDtoToSimpleUser(dto.created_by),
   createdAt: new Date(dateStringToUTCString(dto.created_at)),
   startTime: new Date(dateStringToUTCString(dto.start_time)),
   endTime: new Date(dateStringToUTCString(dto.end_time)),
@@ -103,5 +103,5 @@ export const mapTaskSubmissionDtoToTaskSubmission = (
   dto: TaskSubmissionDto
 ): TaskSubmission => ({
   ...mapSimpleTaskSubmissionDtoToSimpleTaskSubmission(dto),
-  createdBy: mapUserDtoToUser(dto.user),
+  createdBy: mapSimpleUserDtoToSimpleUser(dto.user),
 });

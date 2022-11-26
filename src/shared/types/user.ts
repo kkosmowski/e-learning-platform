@@ -15,19 +15,29 @@ export interface User extends Person {
   createdAt: string;
 }
 
+export interface SimpleUser {
+  id: string;
+  firstName: string;
+  lastName: string;
+  fullName: string;
+}
+
 export enum Role {
   Student = 'student',
   Teacher = 'teacher',
   Admin = 'admin',
 }
 
-export interface UserDto {
+export interface SimpleUserDto {
   id: string;
+  first_name: string;
+  last_name: string;
+}
+
+export interface UserDto extends SimpleUserDto {
   created_at: string;
   is_active: boolean;
   email: string;
-  first_name: string;
-  last_name: string;
   role: Role;
 }
 

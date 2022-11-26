@@ -10,9 +10,11 @@ export default function SubjectLayout() {
   const { navigate, back } = useCustomNavigate();
   const { subjectId } = useParams<{ subjectId: string }>();
   const { currentUser } = useAuth();
-  const { currentSubject, isLoading } = useSubjectQuery(subjectId, currentUser);
+  const { simpleSubject, isLoading } = useSubjectQuery(subjectId, currentUser, {
+    simple: true,
+  });
 
-  if (!currentSubject) {
+  if (!simpleSubject) {
     if (isLoading) {
       return <PageLoading />;
     }
@@ -21,7 +23,7 @@ export default function SubjectLayout() {
   }
 
   return (
-    <CommonViewLayout headerTitle={currentSubject.name}>
+    <CommonViewLayout headerTitle={simpleSubject.name}>
       <Outlet />
     </CommonViewLayout>
   );

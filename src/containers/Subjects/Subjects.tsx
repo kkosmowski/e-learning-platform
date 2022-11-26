@@ -13,7 +13,7 @@ import { Centered } from 'shared/components/Container';
 import useCustomNavigate from 'hooks/use-custom-navigate';
 import PageLoading from 'shared/components/PageLoading';
 import { useSubjectsQuery } from 'shared/queries';
-import { Subject } from 'shared/types/subject';
+import { SimpleSubject } from 'shared/types/subject';
 import { useAuth } from 'contexts/auth';
 import ViewHeader from 'shared/components/ViewHeader';
 import { Role } from 'shared/types/user';
@@ -30,7 +30,7 @@ const groupByKey = 'groupBy';
 
 const getSubjectsBatch = (
   key: 'category' | 'subjectClass',
-  items: Subject[]
+  items: SimpleSubject[]
 ) => {
   const labels = Array.from(
     new Set(items.map((item) => item[key].name).sort())
@@ -55,7 +55,9 @@ const defaultGroupBy = GroupSubjectsBy.None;
 export default function Subjects() {
   const { navigate } = useCustomNavigate();
   const { currentUser } = useAuth();
-  const { subjects, isLoading, isSuccess } = useSubjectsQuery(currentUser);
+  const { subjects, isLoading, isSuccess } = useSubjectsQuery(currentUser, {
+    simple: true,
+  });
   const [searchParams, setSearchParams] = useSearchParams();
   const searchParamsGroupBy = searchParams.get(groupByKey) as GroupSubjectsBy;
   const storedGroupBy = getGroupByFromLocalStorage();
@@ -103,7 +105,7 @@ export default function Subjects() {
     );
   }, [groupBy, setSearchParams]);
 
-  const renderSubjects = (subjectsToRender: Subject[]) => {
+  const renderSubjects = (subjectsToRender: SimpleSubject[]) => {
     if (isTeacher) {
       return filteredSubjects?.map((batch) => (
         <SubjectsBatch

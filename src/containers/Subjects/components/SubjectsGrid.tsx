@@ -6,10 +6,10 @@ import {
   Typography,
 } from '@mui/material';
 
-import { Subject } from 'shared/types/subject';
+import { SimpleSubject } from 'shared/types/subject';
 
 interface SubjectGridProps {
-  subjects: Subject[];
+  subjects: SimpleSubject[];
   onSubjectClick: (subjectId: string) => void;
 }
 
