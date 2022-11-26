@@ -6,17 +6,29 @@ import {
   SubjectDto,
   SubjectForm,
   SubjectToUpdate,
+  SubjectWithClass,
+  SubjectWithClassDto,
   UpdateSubjectPayload,
 } from 'shared/types/subject';
 import { mapUserDtoToUser } from './user.utils';
 import { mapClassDtoToClass } from './class.utils';
 
-export const mapSubjectDtoToSubject = (subjectDto: SubjectDto): Subject => ({
-  id: subjectDto.id,
-  name: `${subjectDto.subject.name} (${subjectDto.group.name})`,
-  category: subjectDto.subject,
-  subjectClass: mapClassDtoToClass(subjectDto.group),
-  teacher: mapUserDtoToUser(subjectDto.teacher),
+export const mapSubjectWithClassDtoDtoToSubjectWithClass = (
+  dto: SubjectWithClassDto
+): SubjectWithClass => ({
+  id: dto.id,
+  name: `${dto.subject.name} (${dto.group.name})`,
+  category: dto.subject,
+  subjectClass: mapClassDtoToClass(dto.group),
+  teacher: mapUserDtoToUser(dto.teacher),
+});
+
+export const mapSubjectDtoToSubject = (dto: SubjectDto): Subject => ({
+  id: dto.id,
+  name: `${dto.subject.name} (${dto.group.name})`,
+  category: dto.subject,
+  subjectClass: dto.group,
+  teacher: mapUserDtoToUser(dto.teacher),
 });
 
 export const mapSubjectFormToCreatSubjectPayload = (
@@ -36,12 +48,12 @@ export const mapSubjectFormToCreatSubjectPayload = (
 };
 
 export const mapSimpleSubjectDtoToSimpleSubject = (
-  subjectDto: SimpleSubjectDto
+  dto: SimpleSubjectDto
 ): SimpleSubject => ({
-  id: subjectDto.id,
-  name: `${subjectDto.subject.name} (${subjectDto.group.name})`,
-  category: subjectDto.subject,
-  subjectClass: subjectDto.group,
+  id: dto.id,
+  name: `${dto.subject.name} (${dto.group.name})`,
+  category: dto.subject,
+  subjectClass: dto.group,
 });
 
 export const mapSubjectToUpdateSubjectPayload = (

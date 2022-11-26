@@ -95,9 +95,7 @@ export function useUsersQuery() {
             ? usersQuery.data.map((user) => (user.id === data.id ? data : user))
             : [],
         });
-        queryClient.setQueryData(['user', data.id], {
-          data: userQuery.data ? data : undefined,
-        });
+        queryClient.setQueryData(['user', data.id], { data });
         if (onSuccess) onSuccess(mapUserDtoToUser(data));
       },
       onError: (err) => {
