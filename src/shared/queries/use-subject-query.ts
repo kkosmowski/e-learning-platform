@@ -4,14 +4,17 @@ import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 
-import { getSubject, updateSubject } from 'api/subject';
+import { getFullSubject, getSubject, updateSubject } from 'api/subject';
 import {
+  GetFullSubjectResponse,
   GetSubjectResponse,
-  FullSubject,
+  SimpleSubject,
+  Subject,
   UpdateSubjectResponse,
 } from 'shared/types/subject';
 import {
-  mapFullSubjectDtoToFullSubject,
+  mapSimpleSubjectDtoToSimpleSubject,
+  mapSubjectDtoToSubject,
   mapSubjectToUpdateSubjectPayload,
 } from 'shared/utils/subject.utils';
 import { getErrorDetail } from 'shared/utils/common.utils';
@@ -20,7 +23,11 @@ import useCustomNavigate from 'hooks/use-custom-navigate';
 
 export function useSubjectQuery(
   subjectId: string | undefined,
-  currentUser: User | null | undefined
+  currentUser: User | null | undefined,
+  options: {
+    full?: boolean;
+    simple?: boolean;
+  }
 ) {
   const queryClient = useQueryClient();
   const { navigate } = useCustomNavigate();
@@ -31,12 +38,12 @@ export function useSubjectQuery(
     navigate('..');
   };
 
-  const fetchQuery = useQuery<GetSubjectResponse, AxiosError, FullSubject>(
+  const fetchQuery = useQuery<GetSubjectResponse, AxiosError, SimpleSubject>(
     ['subject', subjectId],
     () => getSubject(subjectId || ''),
     {
-      enabled: Boolean(subjectId && currentUser),
-      select: ({ data }) => mapFullSubjectDtoToFullSubject(data),
+      enabled: Boolean(subjectId && currentUser && options?.simple),
+      select: ({ data }) => mapSimpleSubjectDtoToSimpleSubject(data),
       retry: false,
       onSuccess: () => {
         setErrorText('');
@@ -47,6 +54,23 @@ export function useSubjectQuery(
       },
     }
   );
+
+  const detailedFetchQuery = useQuery<
+    GetFullSubjectResponse,
+    AxiosError,
+    Subject
+  >(['subject', subjectId, 'full'], () => getFullSubject(subjectId || ''), {
+    enabled: Boolean(subjectId && currentUser && options?.full),
+    select: ({ data }) => mapSubjectDtoToSubject(data),
+    retry: false,
+    onSuccess: () => {
+      setErrorText('');
+    },
+    onError: (error) => {
+      setErrorText(t(error.message));
+      toast.error(t(error.message));
+    },
+  });
 
   const { mutate: handleUpdate } = useMutation<
     UpdateSubjectResponse,
@@ -77,11 +101,12 @@ export function useSubjectQuery(
   );
 
   return {
-    currentSubject: fetchQuery.data,
-    isLoading: fetchQuery.isLoading,
-    isSuccess: fetchQuery.isSuccess,
+    simpleSubject: fetchQuery.data,
+    subject: detailedFetchQuery.data,
+    isLoading: fetchQuery.isLoading || detailedFetchQuery.isLoading,
+    isSuccess: fetchQuery.isSuccess || detailedFetchQuery.isSuccess,
     error: errorText,
     updateSubject: handleUpdate,
-    isFetched: fetchQuery.isFetched,
+    isFetched: fetchQuery.isFetched || detailedFetchQuery.isFetched,
   };
 }

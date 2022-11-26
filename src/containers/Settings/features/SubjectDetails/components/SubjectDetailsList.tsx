@@ -2,10 +2,10 @@ import { List, ListItem } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 import ListGridItem from 'shared/components/ListGridItem';
-import { FullSubject } from 'shared/types/subject';
+import { Subject } from 'shared/types/subject';
 
 interface SubjectDetailsListProps {
-  subject: FullSubject;
+  subject: Subject;
 }
 
 export default function SubjectDetailsList(props: SubjectDetailsListProps) {

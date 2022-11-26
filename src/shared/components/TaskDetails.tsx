@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next';
 import format from 'date-fns/format';
 
 import { Status } from 'shared/types/shared';
-import { SimpleTaskSubmission, Task } from 'shared/types/task';
+import { TaskSubmission, Task } from 'shared/types/task';
 import { User } from 'shared/types/user';
 import ItemCategory from './ItemCategory';
 import { isStudent, isTeacher } from 'shared/utils/user.utils';
@@ -23,7 +23,7 @@ import TimeLeft from './TimeLeft';
 interface TaskDetailsProps {
   task: Task;
   currentUser: User;
-  submissions?: SimpleTaskSubmission[];
+  submissions?: TaskSubmission[];
   subjectStudents?: User[];
 }
 
@@ -38,7 +38,7 @@ const getStatusIcon = (status: Status): SvgIconComponent => {
   }
 };
 
-const prepareSubmissionsString = (submissions: SimpleTaskSubmission[]) => {
+const prepareSubmissionsString = (submissions: TaskSubmission[]) => {
   const allSubmissions = submissions.length;
   const sentSubmissions = submissions.filter(
     ({ status }) => status !== Status.NOT_SUBMITTED

@@ -12,7 +12,9 @@ export default function SubjectsManagement() {
   const { t } = useTranslation('settings');
   const { navigate } = useCustomNavigate();
   const { currentUser } = useAuth();
-  const { subjects, isLoading, isSuccess } = useSubjectsQuery(currentUser);
+  const { fullSubjects, isLoading, isSuccess } = useSubjectsQuery(currentUser, {
+    full: true,
+  });
 
   const handleSubjectClick = (subjectId: string) => {
     navigate(`./${subjectId}`);
@@ -45,9 +47,9 @@ export default function SubjectsManagement() {
       <TableContainer component={Paper}>
         {isLoading && <PageLoading />}
         {!isLoading && isSuccess ? (
-          subjects?.length ? (
+          fullSubjects?.length ? (
             <SubjectsTable
-              subjects={subjects}
+              subjects={fullSubjects}
               onClick={handleSubjectClick}
               onClassClick={handleClassClick}
               onTeacherClick={handleTeacherClick}

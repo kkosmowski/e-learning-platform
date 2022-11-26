@@ -20,8 +20,8 @@ export default function SubjectDetails(props: SubjectDetailsProps) {
   const { t } = useTranslation('settings', { keyPrefix: 'subjects.details' });
   const { navigate, back } = useCustomNavigate();
   const { currentUser } = useAuth();
-  const { currentSubject, isSuccess, isLoading, error, updateSubject } =
-    useSubjectQuery(subjectId, currentUser);
+  const { subject, isSuccess, isLoading, error, updateSubject } =
+    useSubjectQuery(subjectId, currentUser, { full: true });
 
   const navigateToEdit = () => {
     navigate('./edit');
@@ -34,11 +34,11 @@ export default function SubjectDetails(props: SubjectDetailsProps) {
 
   return (
     <CommonViewLayout
-      headerTitle={currentSubject?.name || ''}
+      headerTitle={subject?.name || ''}
       maxWidth={600}
       CenteredProps={{ innerSx: { gap: 3 } }}
     >
-      {isSuccess && currentSubject && (
+      {isSuccess && subject && (
         <>
           {!isEditMode && (
             <Button
@@ -54,13 +54,13 @@ export default function SubjectDetails(props: SubjectDetailsProps) {
             <CardContent>
               {isEditMode ? (
                 <SubjectEditForm
-                  subject={currentSubject}
+                  subject={subject}
                   error={error}
                   onSubmit={updateSubject}
                   onCancel={() => back()}
                 />
               ) : (
-                <SubjectDetailsList subject={currentSubject} />
+                <SubjectDetailsList subject={subject} />
               )}
             </CardContent>
           </Card>

@@ -3,13 +3,13 @@ import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 
-import { SubjectDto, SubjectForm } from 'shared/types/subject';
+import { SimpleSubjectDto, SubjectForm } from 'shared/types/subject';
 import { createSubject } from 'api/subject';
 import { getErrorDetail } from 'shared/utils/common.utils';
 import useCustomNavigate from 'hooks/use-custom-navigate';
 
 type MutationFnPayload = { values: SubjectForm; show?: boolean };
-type MutationFnReturnData = { data: SubjectDto; show?: boolean };
+type MutationFnReturnData = { data: SimpleSubjectDto; show?: boolean };
 
 export default function useCreateSubjectQuery() {
   const { t } = useTranslation('settings');

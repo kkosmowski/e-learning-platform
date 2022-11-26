@@ -1,15 +1,13 @@
-import { ContentItem } from './shared';
-import { Subject, SubjectDto } from './subject';
 import { AxiosResponse } from 'axios';
-import { User, UserDto } from './user';
 
-// @todo change to commented code when mocked data is no longer used
-// export interface Notice extends ContentItem {
-export interface Notice extends Omit<ContentItem, 'createdBy'> {
-  createdBy: User; // @todo remove when no mocked data is used
+import { ContentItem } from './shared';
+import { SimpleSubject, SimpleSubjectDto } from './subject';
+import { SimpleUserDto } from './user';
+
+export interface Notice extends ContentItem {
   publishTime: Date;
   isPublished: boolean;
-  subject: Subject;
+  subject: SimpleSubject;
 }
 
 export interface NoticeForm {
@@ -23,8 +21,8 @@ export interface NoticeForm {
 
 export interface NoticeDto {
   id: string;
-  created_by: UserDto;
-  group_subject: SubjectDto;
+  created_by: SimpleUserDto;
+  group_subject: SimpleSubjectDto;
   name: string;
   content: string;
   created_at: string;

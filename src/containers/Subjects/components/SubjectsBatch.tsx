@@ -1,12 +1,12 @@
 import { ReactNode } from 'react';
 import { Stack, Typography } from '@mui/material';
 
-import { Subject } from 'shared/types/subject';
+import { SimpleSubject } from 'shared/types/subject';
 import SubjectsGrid from './SubjectsGrid';
 
 interface SubjectsBatchProps {
   label: ReactNode;
-  subjects: Subject[];
+  subjects: SimpleSubject[];
   onSubjectClick: (subjectId: string) => void;
 }
 

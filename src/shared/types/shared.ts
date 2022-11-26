@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { User } from './user';
+import { SimpleUser } from './user';
 
 export enum Status {
   NOT_SUBMITTED = 'not_submitted',
@@ -9,7 +9,7 @@ export enum Status {
 
 export interface BaseItem {
   id: string;
-  createdBy?: User; // @todo change to mandatory when mocked data is no longer used
+  createdBy: SimpleUser; // @todo change to mandatory when mocked data is no longer used
   createdAt: Date;
   // updatedBy?: User;
   // updatedOn?: string; // ISOString
