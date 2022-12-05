@@ -10,11 +10,12 @@ import { AxiosResponse } from 'axios';
 //   student: User;
 // }
 //
+
 export enum GradeType {
   Assignment = 'assignment',
   Activity = 'activity',
-  Average = 'average',
   Behaviour = 'behaviour',
+  Average = 'average',
   Proposed = 'proposed',
   Final = 'final',
 }

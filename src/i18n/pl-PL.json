@@ -178,8 +178,36 @@
       "placeholder": {
         "subject": "Wybierz przedmiot",
         "student": "Wybierz ucznia",
-        "task": "Wybierz zadanie (opcjonalnie)"
+        "task": "Wybierz zadanie (opcjonalnie)",
+        "name": "Nazwa oceny (opcjonalnie)"
+      },
+      "gradeType": {
+        "label": "Rodzaj oceny",
+        "assignment": "Ocena za zadanie",
+        "activity": "Ocena za aktywność",
+        "behaviour": "Ocena za zachowanie"
       }
+    },
+    "helperText": {
+      "setSubjectToSetStudent": "Aby wybrać ucznia, najpier wybierz przedmiot",
+      "setSubjectToSetTask": "Aby wybrać zadanie, najpierw wybierz przediot",
+      "setSubjectToSetName": "Aby nadać nazwę ocenie, najpierw wybierz przedmiot",
+      "nonAssignmentGrade": "Wybór zadania jest możliwy tylko gdy ocena wystawiana jest za zadanie",
+      "assignmentGrade": "Nazwa oceny jest dostępna tylko gdy ocena wystawiana jest za zachowanie lub aktywność"
+    },
+    "value": {
+      "0,5": "Niedostateczna (1)",
+      "1": "Niedostateczna (1)",
+      "1,5": "Niedostateczna (1)",
+      "2": "Dopuszczająca (2)",
+      "2,5": "Dopuszczająca+ (2.5)",
+      "3": "Dostateczna (3)",
+      "3,5": "Dostateczna+ (3.5)",
+      "4": "Dobra (4)",
+      "4,5": "Dobra+ (4.5)",
+      "5": "Bardzo dobra (5)",
+      "5,5": "Bardzo dobra+ (5.5)",
+      "6": "Celująca (6)"
     }
   },
   "actions": {

@@ -1,28 +1,37 @@
-import { SyntheticEvent, useCallback, useEffect, useMemo } from 'react';
+import {
+  SyntheticEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { TFunction } from 'i18next';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import {
   Autocomplete,
+  Box,
   FormControl,
+  FormHelperText,
   MenuItem,
   Select,
   TextField,
 } from '@mui/material';
 
-import { CreateGradeForm } from 'shared/types/grade';
+import { CreateGradeForm, GradeType } from 'shared/types/grade';
 import {
   gradeValueRequiredError,
   studentRequiredError,
   subjectRequiredError,
 } from 'shared/consts/error';
 import {
+  useAllTasksQuery,
   useSubjectsQuery,
   useSubjectStudentsQuery,
-  useAllTasksQuery,
 } from 'shared/queries';
 import { SimpleSubject } from 'shared/types/subject';
-import { Task } from '../types/task';
+import GradeTypeSelect from 'shared/components/GradeTypeSelect';
+import GradeValueSelect from 'shared/components/GradeValueSelect';
 
 interface UseGradeFormProps {
   initialValues: CreateGradeForm;
@@ -33,6 +42,7 @@ interface UseGradeFormProps {
 
 export function useGradeForm(props: UseGradeFormProps) {
   const { initialValues, submitButtonLabel, onSubmit, t } = props;
+  const [gradeType, setGradeType] = useState<GradeType>(GradeType.Assignment);
   const { students = [], fetchStudents } = useSubjectStudentsQuery();
   const {
     tasks = [],
@@ -91,10 +101,6 @@ export function useGradeForm(props: UseGradeFormProps) {
     values,
   } = formik;
 
-  // useEffect(() => {
-  //   console.log(values);
-  // }, [values]);
-
   useEffect(() => {
     if (values.subjectId) {
       fetchStudents(values.subjectId);
@@ -108,6 +114,10 @@ export function useGradeForm(props: UseGradeFormProps) {
 
   const handleTaskChange = (event: SyntheticEvent, value: string | null) => {
     setFieldValue('taskId', value);
+  };
+
+  const handleValueChange = (value: number) => {
+    setFieldValue('value', value);
   };
 
   const Form = (
@@ -128,7 +138,7 @@ export function useGradeForm(props: UseGradeFormProps) {
           displayEmpty
           {...(!values.subjectId && {
             renderValue: () => t('grade:create.placeholder.subject'),
-            inputProps: { sx: { opacity: 0.42 } },
+            inputProps: { sx: { opacity: 0.6 } },
           })}
           onBlur={handleBlur}
           onChange={handleChange}
@@ -161,37 +171,72 @@ export function useGradeForm(props: UseGradeFormProps) {
           onBlur={handleBlur}
           onChange={handleStudentChange}
         />
+        {!values.subjectId && (
+          <FormHelperText>
+            {t('helperText.setSubjectToSetStudent')}
+          </FormHelperText>
+        )}
       </FormControl>
 
-      <FormControl>
-        <Autocomplete
-          disabled={!values.subjectId}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              name="taskId"
-              placeholder={t('grade:create.placeholder.task')}
-              error={touched.taskId && Boolean(errors.taskId)}
-              helperText={touched.taskId && errors.taskId && t(errors.taskId)}
-            />
+      <Box sx={{ pl: 4 }}>
+        <GradeTypeSelect value={gradeType} onChange={setGradeType} />
+      </Box>
+
+      {gradeType === GradeType.Assignment ? (
+        <FormControl>
+          <Autocomplete
+            disabled={!values.subjectId}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                name="taskId"
+                placeholder={t('grade:create.placeholder.task')}
+                error={touched.taskId && Boolean(errors.taskId)}
+                helperText={touched.taskId && errors.taskId && t(errors.taskId)}
+              />
+            )}
+            value={values.taskId}
+            options={subjectTasksIds}
+            getOptionLabel={getTaskOptionLabel}
+            onBlur={handleBlur}
+            onChange={handleTaskChange}
+            ListboxProps={{
+              onScroll: (event) => {
+                const node = event.currentTarget;
+                const scrolledEnough =
+                  node.scrollTop + node.clientHeight === node.scrollHeight;
+                if (scrolledEnough && hasNextTasksPage && !isFetchingNextPage) {
+                  void fetchNextPage();
+                }
+              },
+            }}
+          />
+          {!values.subjectId && (
+            <FormHelperText>
+              {t('helperText.setSubjectToSetTask')}
+            </FormHelperText>
           )}
-          value={values.taskId}
-          options={subjectTasksIds}
-          getOptionLabel={getTaskOptionLabel}
-          onBlur={handleBlur}
-          onChange={handleTaskChange}
-          ListboxProps={{
-            onScroll: (event) => {
-              const node = event.currentTarget;
-              const scrolledEnough =
-                node.scrollTop + node.clientHeight === node.scrollHeight;
-              if (scrolledEnough && hasNextTasksPage && !isFetchingNextPage) {
-                void fetchNextPage();
-              }
-            },
-          }}
-        />
-      </FormControl>
+        </FormControl>
+      ) : (
+        <FormControl>
+          <TextField
+            name="name"
+            disabled={!values.subjectId}
+            placeholder={t('grade:create.placeholder.name')}
+            error={touched.taskId && Boolean(errors.taskId)}
+            value={values.name}
+            onBlur={handleBlur}
+            onChange={handleChange}
+          />
+          {!values.subjectId && (
+            <FormHelperText>
+              {t('helperText.setSubjectToSetName')}
+            </FormHelperText>
+          )}
+        </FormControl>
+      )}
+
+      <GradeValueSelect value={values.value} onChange={handleValueChange} />
     </form>
   );
 

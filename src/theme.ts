@@ -102,6 +102,16 @@ const baseThemeOptions: ThemeOptions = {
           '&': { paddingLeft: '14px' },
           backgroundColor: background[50],
         },
+        input: {
+          '::-webkit-input-placeholder': {
+            opacity: 0.7,
+          },
+        },
+        root: {
+          '&.Mui-disabled': {
+            backgroundColor: background[200],
+          },
+        },
       },
     },
     MuiTooltip: {
