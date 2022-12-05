@@ -18,7 +18,7 @@ const gradeTooltips = [GradeType.Average, GradeType.Proposed, GradeType.Final];
 
 export default function GradeRow(props: GradeRowProps) {
   const {
-    grade: { value, source, type, createdAt, student },
+    grade: { value, task, createdAt, user },
     showDivider,
     showNames,
     keepEmptyColumns,
@@ -37,26 +37,26 @@ export default function GradeRow(props: GradeRowProps) {
           p: 1,
           gridTemplateColumns: `10fr 120px ${
             keepEmptyColumns || showNames ? 'minmax(180px, 3fr)' : ''
-          } ${keepEmptyColumns || source ? '5fr' : ''} 40px`,
+          } ${keepEmptyColumns || task ? '5fr' : ''} 40px`,
           ...((keepEmptyColumns || showNames) && { minWidth: 640 }),
         }}
       >
         <Grid item>
-          <Typography
-            sx={{ flex: 2, display: 'inline-flex', alignItems: 'center' }}
-          >
-            {source && type === GradeType.Assignment
-              ? source.name
-              : t(`grades.${type}`)}
+          {/*<Typography*/}
+          {/*  sx={{ flex: 2, display: 'inline-flex', alignItems: 'center' }}*/}
+          {/*>*/}
+          {/*  {source && type === GradeType.Assignment*/}
+          {/*    ? source.name*/}
+          {/*    : t(`grades.${type}`)}*/}
 
-            {gradeTooltips.includes(type) && (
-              <Tooltip title={t(`grades.tooltip.${type}`)}>
-                <HelpOutline
-                  sx={{ fontSize: 16, color: 'text.secondary', ml: 0.5 }}
-                />
-              </Tooltip>
-            )}
-          </Typography>
+          {/*  {gradeTooltips.includes(type) && (*/}
+          {/*    <Tooltip title={t(`grades.tooltip.${type}`)}>*/}
+          {/*      <HelpOutline*/}
+          {/*        sx={{ fontSize: 16, color: 'text.secondary', ml: 0.5 }}*/}
+          {/*      />*/}
+          {/*    </Tooltip>*/}
+          {/*  )}*/}
+          {/*</Typography>*/}
         </Grid>
 
         <Grid item>
@@ -77,17 +77,17 @@ export default function GradeRow(props: GradeRowProps) {
                 component="span"
                 sx={{ color: 'text.secondary', fontSize: 13 }}
               >
-                {student.fullName}
+                {user.fullName}
               </Typography>
             )}
           </Grid>
         )}
 
-        {(keepEmptyColumns || source) && (
+        {(keepEmptyColumns || task) && (
           <Grid item>
-            {source && (
+            {task && (
               <ItemCategory
-                type={source.type}
+                type={task.type}
                 sx={{ flex: 1, color: 'text.secondary' }}
               />
             )}

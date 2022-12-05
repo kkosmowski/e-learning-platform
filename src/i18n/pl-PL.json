@@ -113,7 +113,11 @@
       "message": "Wiadomość",
       "attachedFile": "Załączony plik",
       "downloadFile": "Pobierz",
-      "sentOn": "Wysłano"
+      "sentOn": "Wysłano",
+      "evaluate": "Oceń rozwiązanie",
+      "evaluateDialog": {
+        "title": "Ocena rozwiązania zadania"
+      }
     },
     "submitSolution": "Prześlij rozwiązanie",
     "taskMessagePlaceholder": "Napisz odpowiedź bądź opcjonalny komentarz",
@@ -166,6 +170,16 @@
       "updateSuccess": "Zaktualizowano ogłoszenie \"{{ name }}\"",
       "publishSuccess": "Opublikowano ogłoszenie \"{{ name }}\"",
       "deleteSuccess": "Usunięto ogłoszenie \"{{ name }}\""
+    }
+  },
+  "grade": {
+    "create": {
+      "title": "Wystaw ocenę",
+      "placeholder": {
+        "subject": "Wybierz przedmiot",
+        "student": "Wybierz ucznia",
+        "task": "Wybierz zadanie (opcjonalnie)"
+      }
     }
   },
   "actions": {

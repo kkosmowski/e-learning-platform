@@ -113,7 +113,11 @@
       "message": "Message",
       "attachedFile": "Attached file",
       "downloadFile": "Download",
-      "sentOn": "Sent on"
+      "sentOn": "Sent on",
+      "evaluate": "Evaluate submission",
+      "evaluateDialog": {
+        "title": "Task submission evaluation"
+      }
     },
     "submitSolution": "Submit a solution",
     "taskMessagePlaceholder": "Type your answer or leave additional comment",
@@ -166,6 +170,16 @@
       "updateSuccess": "Successfully updated notice \"{{ name }}\"",
       "publishSuccess": "Successfully published notice \"{{ name }}\"",
       "deleteSuccess": "Successfully published notice \"{{ name }}\""
+    }
+  },
+  "grade": {
+    "create": {
+      "title": "Assign a grade",
+      "placeholder": {
+        "subject": "Select a subject",
+        "student": "Select a student",
+        "task": "Select a task (optional)"
+      }
     }
   },
   "actions": {

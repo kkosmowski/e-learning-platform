@@ -21,16 +21,17 @@ import {
 import { getErrorDetail } from 'shared/utils/common.utils';
 import { User } from 'shared/types/user';
 import useCustomNavigate from 'hooks/use-custom-navigate';
+import { useAuth } from 'contexts/auth';
 
 export function useSubjectQuery(
   subjectId: string | undefined,
-  currentUser: User | null | undefined,
   options: {
     full?: boolean;
     simple?: boolean;
   }
 ) {
   const queryClient = useQueryClient();
+  const { currentUser } = useAuth();
   const { navigate } = useCustomNavigate();
   const [errorText, setErrorText] = useState('');
   const { t } = useTranslation();

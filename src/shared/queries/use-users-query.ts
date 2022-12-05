@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -67,10 +67,10 @@ export function useUsersQuery() {
     }
   );
 
-  const fetchUsers = (props: GetUsersProps) => {
+  const fetchUsers = useCallback((props: GetUsersProps) => {
     setGetUsersProps(props);
     setGetUsersEnabled(true);
-  };
+  }, []);
 
   const fetchUser = (userId: string) => {
     setGetUserId(userId);

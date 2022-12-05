@@ -70,8 +70,6 @@ export function useTasksQuery(options: {
     console.error(
       'Tasks query: Trying to fetch subjects tasks/homework with enabled array empty.'
     );
-  } else if (!subjectId && !taskId) {
-    console.error('Tasks query: Neither subjectId nor taskId was provided.');
   }
 
   const tasksQuery = useInfiniteQuery(

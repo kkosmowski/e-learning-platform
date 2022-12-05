@@ -12,7 +12,7 @@ export default function SubjectsManagement() {
   const { t } = useTranslation('settings');
   const { navigate } = useCustomNavigate();
   const { currentUser } = useAuth();
-  const { fullSubjects, isLoading, isSuccess } = useSubjectsQuery(currentUser, {
+  const { fullSubjects, isLoading, isSuccess } = useSubjectsQuery({
     full: true,
   });
 

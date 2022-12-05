@@ -35,7 +35,7 @@ export default function TaskSubmissionList(props: TaskSubmissionListProps) {
             </AccordionSummary>
 
             <AccordionDetails>
-              <TaskSubmissionItem taskSubmission={submission} />
+              <TaskSubmissionItem taskSubmission={submission} teacherView />
             </AccordionDetails>
           </Accordion>
         );

@@ -1,6 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { Class, ClassDto, SubjectClass } from './class';
 import { User, UserDto } from './user';
+import { TaskDto } from './task';
 
 export interface SubjectCategory {
   id: string;
@@ -83,6 +84,7 @@ export type UpdateSubjectCategoryResponse = AxiosResponse<SubjectCategory>;
 export type GetSubjectsResponse = AxiosResponse<SimpleSubjectDto[]>;
 export type GetFullSubjectsResponse = AxiosResponse<SubjectDto[]>;
 export type GetSubjectResponse = AxiosResponse<SimpleSubjectDto>;
+export type GetSubjectTasksResponse = AxiosResponse<TaskDto[]>;
 export type GetFullSubjectResponse = AxiosResponse<SubjectWithClassDto>;
 export type CreateSubjectResponse = AxiosResponse<SimpleSubjectDto>;
 export type UpdateSubjectResponse = AxiosResponse<SimpleSubjectDto>;
