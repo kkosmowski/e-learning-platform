@@ -1,18 +1,23 @@
 import { useTranslation } from 'react-i18next';
-import { SyntheticEvent, useState } from 'react';
+import { SyntheticEvent, useEffect, useState } from 'react';
 import { Box, Rating } from '@mui/material';
 import { Star as StarIcon } from '@mui/icons-material';
 import { TFunction } from 'i18next';
 
 interface GradeValueSelectProps {
-  value: number | null;
+  value: number;
   onChange: (value: number) => void;
 }
 
 function getLabelText(value: number, t: TFunction) {
+  if (!value) return '';
   return t(
     `value.${value % 1 ? String(value).replace('.', ',') : String(value)}`
   );
+}
+
+function fixLowValue(value: number) {
+  return value > -1 && value < 2 ? 1 : value;
 }
 
 export default function GradValueSelect(props: GradeValueSelectProps) {
@@ -21,7 +26,7 @@ export default function GradValueSelect(props: GradeValueSelectProps) {
   const { t } = useTranslation('grade');
 
   const handleChange = (event: SyntheticEvent, newValue: number | null) => {
-    if (newValue) onChange(newValue);
+    if (newValue) onChange(fixLowValue(newValue));
   };
 
   return (
@@ -44,11 +49,8 @@ export default function GradValueSelect(props: GradeValueSelectProps) {
         }}
         emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
       />
-      {value !== null && (
-        <Box sx={{ ml: 2 }}>
-          {getLabelText(hover !== -1 ? hover : value, t)}
-        </Box>
-      )}
+
+      <Box sx={{ ml: 2 }}>{getLabelText(hover !== -1 ? hover : value, t)}</Box>
     </Box>
   );
 }

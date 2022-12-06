@@ -22,7 +22,7 @@ export default function AssignNewGrade(props: AssignNewGradeProps) {
       studentId: '',
       taskId: taskId || null,
       name: '',
-      value: null,
+      value: 0,
     }),
     [taskId]
   );

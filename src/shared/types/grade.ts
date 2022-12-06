@@ -47,7 +47,7 @@ export interface CreateGradeForm {
   studentId: string;
   taskId: string | null;
   name: string;
-  value: number | null;
+  value: number;
 }
 
 // payloads
