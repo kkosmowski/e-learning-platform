@@ -1,21 +1,17 @@
-import {
-  SyntheticEvent,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import { SyntheticEvent, useCallback, useEffect, useMemo } from 'react';
 import { TFunction } from 'i18next';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import {
   Autocomplete,
   Box,
+  Button,
   FormControl,
   FormHelperText,
   MenuItem,
   Select,
   TextField,
+  Tooltip,
 } from '@mui/material';
 
 import { CreateGradeForm, GradeType } from 'shared/types/grade';
@@ -32,6 +28,7 @@ import {
 import { SimpleSubject } from 'shared/types/subject';
 import GradeTypeSelect from 'shared/components/GradeTypeSelect';
 import GradeValueSelect from 'shared/components/GradeValueSelect';
+import useCustomNavigate from 'hooks/use-custom-navigate';
 
 interface UseGradeFormProps {
   initialValues: CreateGradeForm;
@@ -42,8 +39,8 @@ interface UseGradeFormProps {
 
 export function useGradeForm(props: UseGradeFormProps) {
   const { initialValues, submitButtonLabel, onSubmit, t } = props;
-  const [gradeType, setGradeType] = useState<GradeType>(GradeType.Assignment);
   const { students = [], fetchStudents } = useSubjectStudentsQuery();
+  const { back } = useCustomNavigate();
   const {
     tasks = [],
     fetchTasks,
@@ -74,18 +71,39 @@ export function useGradeForm(props: UseGradeFormProps) {
     [tasks]
   );
 
+  const onPreSubmit = (form: CreateGradeForm) => {
+    const formWithoutUnnecessaryValues = {
+      subjectId: form.subjectId,
+      studentId: form.studentId,
+      gradeType: form.gradeType,
+      ...(form.gradeType === GradeType.Assignment
+        ? { taskId: form.taskId, name: '' }
+        : { taskId: null, name: form.name }),
+      value: form.value,
+    };
+    onSubmit(formWithoutUnnecessaryValues);
+  };
+
   const formik = useFormik<CreateGradeForm>({
     initialValues,
     validateOnBlur: false,
     validateOnMount: true,
     validationSchema: yup.object().shape({
-      subject: yup.object().nullable().required(subjectRequiredError),
-      student: yup.object().nullable().required(studentRequiredError),
-      task: yup.object().nullable(),
-      name: yup.string().nullable(),
-      value: yup.number().nullable().required(gradeValueRequiredError),
+      subjectId: yup.string().nullable().required(subjectRequiredError),
+      studentId: yup.string().nullable().required(studentRequiredError),
+      gradeType: yup.mixed().oneOf(Object.values(GradeType)),
+      taskId: yup.string().nullable().when('gradeType', {
+        is: GradeType.Assignment,
+        then: yup.string().required(),
+      }),
+      name: yup.string().nullable().when('gradeType', {
+        is: GradeType.Assignment,
+        then: yup.string().nullable(),
+        otherwise: yup.string().required(),
+      }),
+      value: yup.number().required(gradeValueRequiredError),
     }),
-    onSubmit,
+    onSubmit: onPreSubmit,
   });
 
   const {
@@ -100,6 +118,31 @@ export function useGradeForm(props: UseGradeFormProps) {
     touched,
     values,
   } = formik;
+
+  useEffect(() => {
+    console.log(errors);
+  }, [errors]);
+
+  useEffect(() => {
+    console.log(values);
+  }, [values]);
+
+  const isUntouched = useMemo(
+    () =>
+      values.subjectId === initialValues.subjectId &&
+      values.studentId === initialValues.studentId &&
+      values.taskId === initialValues.taskId &&
+      values.name === initialValues.name &&
+      values.value === initialValues.value,
+    [values, initialValues]
+  );
+
+  const submitButtonTooltip = useMemo(() => {
+    if (isValid && !isUntouched) return '';
+    return isUntouched
+      ? t('common:tooltip.formUntouched')
+      : t('error:INVALID_FORM');
+  }, [t, isValid, isUntouched]);
 
   useEffect(() => {
     if (values.subjectId) {
@@ -179,10 +222,10 @@ export function useGradeForm(props: UseGradeFormProps) {
       </FormControl>
 
       <Box sx={{ pl: 4 }}>
-        <GradeTypeSelect value={gradeType} onChange={setGradeType} />
+        <GradeTypeSelect value={values.gradeType} onChange={handleChange} />
       </Box>
 
-      {gradeType === GradeType.Assignment ? (
+      {values.gradeType === GradeType.Assignment ? (
         <FormControl>
           <Autocomplete
             disabled={!values.subjectId}
@@ -237,6 +280,24 @@ export function useGradeForm(props: UseGradeFormProps) {
       )}
 
       <GradeValueSelect value={values.value} onChange={handleValueChange} />
+
+      <Box sx={{ display: 'flex', gap: 3, '*': { flex: 1 } }}>
+        <Tooltip title={submitButtonTooltip}>
+          <Box sx={{ display: 'flex', '*': { flex: 1 } }}>
+            <Button
+              type="submit"
+              variant="contained"
+              disabled={!isValid || isUntouched}
+            >
+              {submitButtonLabel}
+            </Button>
+          </Box>
+        </Tooltip>
+
+        <Button color="secondary" onClick={() => back()}>
+          {t('common:cancel')}
+        </Button>
+      </Box>
     </form>
   );
 

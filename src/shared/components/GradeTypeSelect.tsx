@@ -11,7 +11,7 @@ import { GradeType } from 'shared/types/grade';
 
 interface GradeTypeSelectProps {
   value: GradeType;
-  onChange: (value: GradeType) => void;
+  onChange: (event: ChangeEvent, value: GradeType) => void;
 }
 
 export default function GradeTypeSelect(props: GradeTypeSelectProps) {
@@ -19,7 +19,7 @@ export default function GradeTypeSelect(props: GradeTypeSelectProps) {
   const { t } = useTranslation('grade');
 
   const handleChange = (event: ChangeEvent, val: string) => {
-    onChange(val as GradeType);
+    onChange(event, val as GradeType);
   };
 
   return (
@@ -28,6 +28,7 @@ export default function GradeTypeSelect(props: GradeTypeSelectProps) {
 
       <RadioGroup
         aria-labelledby="grade-type-label"
+        name="gradeType"
         value={value}
         onChange={handleChange}
       >

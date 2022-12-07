@@ -186,11 +186,12 @@
         "assignment": "Ocena za zadanie",
         "activity": "Ocena za aktywność",
         "behaviour": "Ocena za zachowanie"
-      }
+      },
+      "submit": "Wystaw"
     },
     "helperText": {
       "setSubjectToSetStudent": "Aby wybrać ucznia, najpier wybierz przedmiot",
-      "setSubjectToSetTask": "Aby wybrać zadanie, najpierw wybierz przediot",
+      "setSubjectToSetTask": "Aby wybrać zadanie, najpierw wybierz przedmiot",
       "setSubjectToSetName": "Aby nadać nazwę ocenie, najpierw wybierz przedmiot",
       "nonAssignmentGrade": "Wybór zadania jest możliwy tylko gdy ocena wystawiana jest za zadanie",
       "assignmentGrade": "Nazwa oceny jest dostępna tylko gdy ocena wystawiana jest za zachowanie lub aktywność"

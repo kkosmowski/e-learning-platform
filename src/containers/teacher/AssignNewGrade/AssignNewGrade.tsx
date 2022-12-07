@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useGradeQuery } from 'shared/queries';
 import { useGradeForm } from 'shared/hooks';
 import SectionTitle from 'shared/components/SectionTitle';
-import { CreateGradeForm } from 'shared/types/grade';
+import { CreateGradeForm, GradeType } from 'shared/types/grade';
 
 interface AssignNewGradeProps {
   taskId?: string;
@@ -20,6 +20,7 @@ export default function AssignNewGrade(props: AssignNewGradeProps) {
     () => ({
       subjectId: '',
       studentId: '',
+      gradeType: GradeType.Assignment,
       taskId: taskId || null,
       name: '',
       value: 0,
@@ -29,7 +30,7 @@ export default function AssignNewGrade(props: AssignNewGradeProps) {
 
   const { Form } = useGradeForm({
     initialValues,
-    submitButtonLabel: t('evaluate'),
+    submitButtonLabel: t('grade:create.submit'),
     onSubmit: createGrade,
     t,
   });

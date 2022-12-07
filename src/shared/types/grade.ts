@@ -45,6 +45,7 @@ export interface Grade {
 export interface CreateGradeForm {
   subjectId: string;
   studentId: string;
+  gradeType: GradeType;
   taskId: string | null;
   name: string;
   value: number;

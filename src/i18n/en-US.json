@@ -186,7 +186,8 @@
         "assignment": "Assignment grade",
         "activity": "Activity grade",
         "behaviour": "Behaviour grade"
-      }
+      },
+      "submit": "Assign"
     },
     "helperText": {
       "setSubjectToSetStudent": "To select student, first select subject",
