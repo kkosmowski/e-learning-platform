@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import { Fragment, useMemo } from 'react';
 
-import { TaskSubmission, Task } from 'shared/types/task';
+import { Task, SimpleTaskSubmission } from 'shared/types/task';
 import { isPastDate } from 'shared/utils/date.utils';
 import { Role, User } from 'shared/types/user';
 import ActionToolbar from './ActionToolbar';
@@ -20,7 +20,7 @@ import TaskDetails from './TaskDetails';
 
 interface TaskCardProps {
   task: Task;
-  submissions?: TaskSubmission[];
+  submissions?: SimpleTaskSubmission[];
   subjectStudents?: User[];
   short?: boolean;
   onClick?: () => void;
