@@ -84,7 +84,7 @@ export default function GradeRow(props: GradeRowProps) {
                   flex: 2,
                   display: 'inline-flex',
                   alignItems: 'center',
-                  ...(type === VirtualGradeType.FINAL && { fontWeight: 500 }),
+                  ...(type === VirtualGradeType.FINAL && { fontWeight: 600 }),
                 }}
               >
                 {t(`grade:type.${type}`)}
