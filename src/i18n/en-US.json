@@ -198,7 +198,10 @@
     },
     "type": {
       "assignment": "Assignment grades",
-      "nonAssignment": "Activity & behaviour grades"
+      "nonAssignment": "Activity & behaviour grades",
+      "average": "Average grade",
+      "proposed": "Proposed grade",
+      "final": "Final grade"
     },
     "helperText": {
       "setSubjectToSetStudent": "To select student, first select subject",
@@ -246,9 +249,6 @@
     "test": "Test",
     "activity": "Activity",
     "behaviour": "Behaviour",
-    "average": "Average",
-    "proposed": "Proposed",
-    "final": "Final",
     "writtenBy": "Written by <1>{{ author }}</1>",
     "publishedOn": "Published on <1>{{ date }}</1>",
     "welcome": "Welcome",
