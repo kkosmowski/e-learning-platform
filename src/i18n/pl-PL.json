@@ -187,7 +187,10 @@
         "activity": "Ocena za aktywność",
         "behaviour": "Ocena za zachowanie"
       },
-      "submit": "Wystaw"
+      "submit": "Wystaw",
+      "toast": {
+        "success": "Wystawiono nową ocenę"
+      }
     },
     "helperText": {
       "setSubjectToSetStudent": "Aby wybrać ucznia, najpier wybierz przedmiot",

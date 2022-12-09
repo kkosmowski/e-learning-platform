@@ -187,7 +187,10 @@
         "activity": "Activity grade",
         "behaviour": "Behaviour grade"
       },
-      "submit": "Assign"
+      "submit": "Assign",
+      "toast": {
+        "success": "Successfully assigned a grade"
+      }
     },
     "helperText": {
       "setSubjectToSetStudent": "To select student, first select subject",

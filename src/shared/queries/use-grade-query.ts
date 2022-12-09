@@ -11,7 +11,7 @@ import { CreateGradeForm, CreateGradeResponse } from 'shared/types/grade';
 
 export function useGradeQuery() {
   const { t } = useTranslation('grade');
-  const { navigate } = useCustomNavigate();
+  const { back } = useCustomNavigate();
   const queryClient = useQueryClient();
 
   const { mutate: handleCreate } = useMutation<
@@ -19,14 +19,10 @@ export function useGradeQuery() {
     AxiosError,
     CreateGradeForm
   >((form) => createGrade(mapCreateGradeFormToCreateGradePayload(form)), {
-    onSuccess: async ({ data }: CreateGradeResponse) => {
-      // toast.success(t('create.toast.success', { name: data.name }));
+    onSuccess: async () => {
+      toast.success(t('create.toast.success'));
       await queryClient.invalidateQueries(['grades']);
-      // navigate(
-      //   `./../../${data.type === GradeType.Grade ? 'tasks' : 'homework'}/${
-      //     data.id
-      //   }`
-      // );
+      back();
     },
     onError: (err) => {
       const error = getErrorDetail(err);
