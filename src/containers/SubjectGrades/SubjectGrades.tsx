@@ -1,13 +1,14 @@
 import { isStudent, isTeacher } from 'shared/utils/user.utils';
-import { CURRENT_USER } from 'shared/consts/user';
 import SubjectGradesStudent from './SubjectGradesStudent';
 import SubjectGradesTeacher from './SubjectGradesTeacher';
+import { useAuth } from 'contexts/auth';
 
 export default function SubjectGrades() {
-  if (isTeacher(CURRENT_USER)) {
+  const { currentUser } = useAuth();
+  if (isTeacher(currentUser)) {
     return <SubjectGradesTeacher />;
   }
-  if (isStudent(CURRENT_USER)) {
+  if (isStudent(currentUser)) {
     return <SubjectGradesStudent />;
   }
 

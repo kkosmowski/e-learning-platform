@@ -12,12 +12,15 @@ import { AxiosResponse } from 'axios';
 //
 
 export enum GradeType {
-  Assignment = 'assignment',
-  Activity = 'activity',
-  Behaviour = 'behaviour',
-  Average = 'average',
-  Proposed = 'proposed',
-  Final = 'final',
+  ASSIGNMENT = 'assignment',
+  ACTIVITY = 'activity',
+  BEHAVIOUR = 'behaviour',
+}
+
+export enum CalculatedGradeType {
+  AVERAGE = 'average',
+  PROPOSED = 'proposed',
+  FINAL = 'final',
 }
 
 export interface GradeDto {
@@ -25,6 +28,7 @@ export interface GradeDto {
   group_subject: SimpleSubjectDto;
   user: SimpleUserDto;
   task?: TaskDto;
+  type: GradeType;
   name?: string;
   value: number;
   created_at: string;
@@ -36,6 +40,7 @@ export interface Grade {
   subject: SimpleSubject;
   user: SimpleUser;
   task?: Task;
+  type: GradeType;
   name?: string;
   value: number;
   createdAt: Date;
@@ -45,7 +50,7 @@ export interface Grade {
 export interface CreateGradeForm {
   subjectId: string;
   studentId: string;
-  gradeType: GradeType;
+  type: GradeType;
   taskId: string | null;
   name: string;
   value: number;
@@ -57,6 +62,7 @@ export interface CreateGradePayload {
   group_subject_id: string;
   student_id: string;
   task_id?: string;
+  type: GradeType;
   name?: string;
   value: number;
 }
@@ -70,3 +76,5 @@ export interface UpdateGradePayload {
 
 export type CreateGradeResponse = AxiosResponse<GradeDto>;
 export type UpdateGradeResponse = AxiosResponse<GradeDto>;
+export type GetGradeResponse = AxiosResponse<GradeDto>;
+export type GetGradesResponse = AxiosResponse<GradeDto[]>;

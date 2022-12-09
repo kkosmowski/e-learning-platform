@@ -1,6 +1,8 @@
 import {
   Assignment,
   HomeWork,
+  MoodBad,
+  PanTool,
   Quiz,
   SvgIconComponent,
 } from '@mui/icons-material';
@@ -9,9 +11,10 @@ import { Box, SxProps, Typography } from '@mui/material';
 
 import { TaskType } from 'shared/types/task';
 import { TestType } from 'shared/types/test';
+import { GradeType } from 'shared/types/grade';
 
 interface ItemCategoryProps {
-  type: TaskType | TestType;
+  type: TaskType | TestType | GradeType;
   sx?: SxProps;
 }
 
@@ -28,6 +31,12 @@ export default function ItemCategory(props: ItemCategoryProps) {
   } else if (type === TaskType.Homework) {
     Icon = HomeWork;
     translationKey = TaskType.Homework;
+  } else if (type === GradeType.ACTIVITY) {
+    Icon = PanTool;
+    translationKey = GradeType.ACTIVITY;
+  } else if (type === GradeType.BEHAVIOUR) {
+    Icon = MoodBad;
+    translationKey = GradeType.BEHAVIOUR;
   } else {
     Icon = Quiz;
     translationKey = 'test';

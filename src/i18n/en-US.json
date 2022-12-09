@@ -173,6 +173,10 @@
     }
   },
   "grade": {
+    "title": {
+      "assignedGrades": "Assigned grades",
+      "yourGrades": "Your grades"
+    },
     "create": {
       "title": "Assign a grade",
       "placeholder": {
@@ -181,7 +185,7 @@
         "task": "Select a task (optional)",
         "name": "Grade name (optional)"
       },
-      "gradeType": {
+      "type": {
         "label": "Grade type",
         "assignment": "Assignment grade",
         "activity": "Activity grade",
@@ -191,6 +195,10 @@
       "toast": {
         "success": "Successfully assigned a grade"
       }
+    },
+    "type": {
+      "assignment": "Assignment grades",
+      "nonAssignment": "Activity & behaviour grades"
     },
     "helperText": {
       "setSubjectToSetStudent": "To select student, first select subject",
@@ -212,7 +220,8 @@
       "5": "Very good (B)",
       "5,5": "Very good+ (B+)",
       "6": "Excellent (A)"
-    }
+    },
+    "noItems": "There are no grades yet"
   },
   "actions": {
     "tooltip": {
@@ -235,6 +244,8 @@
     "task": "Task",
     "homework": "Homework",
     "test": "Test",
+    "activity": "Activity",
+    "behaviour": "Behaviour",
     "writtenBy": "Written by <1>{{ author }}</1>",
     "publishedOn": "Published on <1>{{ date }}</1>",
     "welcome": "Welcome",

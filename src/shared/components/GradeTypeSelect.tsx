@@ -28,24 +28,24 @@ export default function GradeTypeSelect(props: GradeTypeSelectProps) {
 
       <RadioGroup
         aria-labelledby="grade-type-label"
-        name="gradeType"
+        name="type"
         value={value}
         onChange={handleChange}
       >
         <FormControlLabel
-          value={GradeType.Assignment}
+          value={GradeType.ASSIGNMENT}
           control={<Radio />}
-          label={t('create.gradeType.assignment')}
+          label={t('create.type.assignment')}
         />
         <FormControlLabel
-          value={GradeType.Activity}
+          value={GradeType.ACTIVITY}
           control={<Radio />}
-          label={t('create.gradeType.activity')}
+          label={t('create.type.activity')}
         />
         <FormControlLabel
-          value={GradeType.Behaviour}
+          value={GradeType.BEHAVIOUR}
           control={<Radio />}
-          label={t('create.gradeType.behaviour')}
+          label={t('create.type.behaviour')}
         />
       </RadioGroup>
     </FormControl>
