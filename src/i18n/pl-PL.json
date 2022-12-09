@@ -198,7 +198,10 @@
     },
     "type": {
       "assignment": "Oceny za zadania",
-      "nonAssignment": "Oceny za aktywność i zachowanie"
+      "nonAssignment": "Oceny za aktywność i zachowanie",
+      "average": "Średnia ocena",
+      "proposed": "Proponowana ocena",
+      "final": "Końcowa ocena"
     },
     "helperText": {
       "setSubjectToSetStudent": "Aby wybrać ucznia, najpier wybierz przedmiot",

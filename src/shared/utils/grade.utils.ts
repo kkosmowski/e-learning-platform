@@ -4,6 +4,8 @@ import {
   Grade,
   GradeDto,
   GradeType,
+  VirtualGrade,
+  VirtualGradeType,
 } from 'shared/types/grade';
 import { SimpleSubject } from '../types/subject';
 import { SimpleUserDto } from '../types/user';
@@ -71,3 +73,18 @@ export const mapCreateGradeFormToCreateGradePayload = (
   ...(form.name && { name: form.name }),
   value: form.value!,
 });
+
+export const isVirtualGrade = (
+  grade: Grade | VirtualGrade
+): grade is VirtualGrade =>
+  Object.values(VirtualGradeType).includes((grade as VirtualGrade).type);
+
+export const fixGradeValue = (
+  value: number | undefined
+): number | string | undefined => {
+  if (value === undefined) return undefined;
+  if (value % 1 === 0) return value;
+
+  if ((value * 10) % 1 === 0) return value.toFixed(1);
+  return value.toFixed(2);
+};

@@ -1,9 +1,12 @@
 import {
   Assignment,
+  Adjust,
+  DoneAll,
   HomeWork,
   MoodBad,
   PanTool,
   Quiz,
+  ShowChart,
   SvgIconComponent,
 } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
@@ -11,10 +14,10 @@ import { Box, SxProps, Typography } from '@mui/material';
 
 import { TaskType } from 'shared/types/task';
 import { TestType } from 'shared/types/test';
-import { GradeType } from 'shared/types/grade';
+import { VirtualGradeType, GradeType } from 'shared/types/grade';
 
 interface ItemCategoryProps {
-  type: TaskType | TestType | GradeType;
+  type: TaskType | TestType | VirtualGradeType | GradeType;
   sx?: SxProps;
 }
 
