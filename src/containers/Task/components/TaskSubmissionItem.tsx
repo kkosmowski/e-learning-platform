@@ -2,12 +2,12 @@ import { Box, Link, styled, Stack, Typography, Button } from '@mui/material';
 import format from 'date-fns/format';
 import { useTranslation } from 'react-i18next';
 
-import { TaskSubmission } from 'shared/types/task';
+import { SimpleTaskSubmission } from 'shared/types/task';
 import { useState } from 'react';
 import TaskEvaluationDialog from './TaskEvaluationDialog';
 
 interface TaskSubmissionItemProps {
-  taskSubmission: TaskSubmission;
+  taskSubmission: SimpleTaskSubmission;
   teacherView?: boolean;
 }
 
@@ -20,6 +20,10 @@ export default function TaskSubmissionItem(props: TaskSubmissionItemProps) {
     if (teacherView) {
       setEvaluationOpened(true);
     }
+  };
+
+  const closeEvaluationDialog = () => {
+    setEvaluationOpened(false);
   };
 
   return (
@@ -73,6 +77,7 @@ export default function TaskSubmissionItem(props: TaskSubmissionItemProps) {
       <TaskEvaluationDialog
         open={evaluationOpened}
         taskId={taskSubmission.taskId}
+        onClose={closeEvaluationDialog}
       />
     </>
   );

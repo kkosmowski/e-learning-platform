@@ -28,19 +28,18 @@ import {
 import { SimpleSubject } from 'shared/types/subject';
 import GradeTypeSelect from 'shared/components/GradeTypeSelect';
 import GradeValueSelect from 'shared/components/GradeValueSelect';
-import useCustomNavigate from 'hooks/use-custom-navigate';
 
 interface UseGradeFormProps {
   initialValues: CreateGradeForm;
   submitButtonLabel: string;
   onSubmit: (form: CreateGradeForm) => void;
+  onCancel: () => void;
   t: TFunction;
 }
 
 export function useGradeForm(props: UseGradeFormProps) {
-  const { initialValues, submitButtonLabel, onSubmit, t } = props;
+  const { initialValues, submitButtonLabel, onSubmit, onCancel, t } = props;
   const { students = [], fetchStudents } = useSubjectStudentsQuery();
-  const { back } = useCustomNavigate();
   const {
     tasks = [],
     fetchTasks,
@@ -112,20 +111,10 @@ export function useGradeForm(props: UseGradeFormProps) {
     handleBlur,
     handleChange,
     handleSubmit,
-    setFieldError,
-    setFieldTouched,
     setFieldValue,
     touched,
     values,
   } = formik;
-
-  useEffect(() => {
-    console.log(errors);
-  }, [errors]);
-
-  useEffect(() => {
-    console.log(values);
-  }, [values]);
 
   const isUntouched = useMemo(
     () =>
@@ -294,7 +283,7 @@ export function useGradeForm(props: UseGradeFormProps) {
           </Box>
         </Tooltip>
 
-        <Button color="secondary" onClick={() => back()}>
+        <Button color="secondary" onClick={() => onCancel()}>
           {t('common:cancel')}
         </Button>
       </Box>

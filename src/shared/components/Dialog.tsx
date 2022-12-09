@@ -24,6 +24,7 @@ export default function Dialog(props: DialogProps) {
     open,
     title,
     content,
+    sx,
     showCancel,
     showSubmit,
     submitLabel,
@@ -33,7 +34,7 @@ export default function Dialog(props: DialogProps) {
   const { t } = useTranslation();
 
   return (
-    <MuiDialog open={open}>
+    <MuiDialog open={open} sx={sx}>
       <MuiDialogTitle>{title}</MuiDialogTitle>
 
       <MuiDialogContent>{content}</MuiDialogContent>
