@@ -70,3 +70,5 @@ export interface UpdateGradePayload {
 
 export type CreateGradeResponse = AxiosResponse<GradeDto>;
 export type UpdateGradeResponse = AxiosResponse<GradeDto>;
+export type GetGradeResponse = AxiosResponse<GradeDto>;
+export type GetGradesResponse = AxiosResponse<GradeDto[]>;
