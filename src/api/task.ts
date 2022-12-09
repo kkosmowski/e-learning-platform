@@ -37,6 +37,17 @@ export const getLatestTasks = (
     api.get(`group-subject/${subjectId}/latest-tasks?limit=${limit}`)
   );
 
+export const getFinishedOrSubmittedTasks = (
+  subjectId: string,
+  studentId: string,
+  offset: number
+): Promise<GetTasksResponse> =>
+  authorized((api) =>
+    api.get(
+      `group-subject/${subjectId}/tasks/${studentId}?limit=${TASK_LIST_PAGE_SIZE}&offset=${offset}`
+    )
+  );
+
 export const getTask = (taskId: string): Promise<GetTaskResponse> =>
   authorized((api) => api.get(`task/${taskId}`));
 

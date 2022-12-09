@@ -1,41 +1,12 @@
 import { useCallback, useMemo, useState } from 'react';
-import {
-  useInfiniteQuery,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from '@tanstack/react-query';
-import { AxiosError } from 'axios';
-import toast from 'react-hot-toast';
-import { useTranslation } from 'react-i18next';
+import { useInfiniteQuery } from '@tanstack/react-query';
 
-import {
-  GetTaskResponse,
-  GetLatestTasksResponse,
-  TaskDto,
-  TaskType,
-  LatestTasksDto,
-  LatestTasks,
-  UpdateTaskResponse,
-  TaskForm,
-} from 'shared/types/task';
-import {
-  deleteTask,
-  getLatestTasks,
-  getSubjectTasks,
-  getTask,
-  updateTask,
-} from 'api/task';
-import {
-  mapTaskDtoToTask,
-  mapTaskFormToUpdateTaskPayload,
-  mapTaskSubmissionDtoToTaskSubmission,
-} from 'shared/utils/task.utils';
+import { TaskDto } from 'shared/types/task';
+import { getSubjectTasks } from 'api/task';
+import { mapTaskDtoToTask } from 'shared/utils/task.utils';
 import { useAuth } from 'contexts/auth';
-import { TASK_LIST_PAGE_SIZE, VISIBLE_LATEST_TASKS } from 'shared/consts/task';
-import { EmptyResponse, Paginated } from 'shared/types/shared';
-import useCustomNavigate from 'hooks/use-custom-navigate';
-import { GetUsersProps } from '../types/user';
+import { TASK_LIST_PAGE_SIZE } from 'shared/consts/task';
+import { Paginated } from 'shared/types/shared';
 
 const getNextPageParam = (
   { total_count }: Paginated<TaskDto>,

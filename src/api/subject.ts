@@ -76,9 +76,3 @@ export const getSubjectStudents = (
 ): Promise<GetUsersResponse> => {
   return authorized((api) => api.get(`group-subject/${subjectId}/users`));
 };
-
-export const getSubjectTasks = (
-  subjectId: string
-): Promise<GetSubjectTasksResponse> => {
-  return authorized((api) => api.get(`group-subject/${subjectId}/tasks`));
-};
