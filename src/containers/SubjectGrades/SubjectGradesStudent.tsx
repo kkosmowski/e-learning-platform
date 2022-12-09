@@ -1,54 +1,95 @@
+import { useEffect, useMemo } from 'react';
+import { useParams } from 'react-router-dom';
 import { Box, Card, CardContent, styled } from '@mui/material';
 
 import { Centered } from 'shared/components/Container';
 import GradeCard from 'shared/components/GradeCard';
-import GradeRow from 'shared/components/GradeRow';
 import { divideGrades } from 'shared/utils/grade.utils';
+import { useGradesQuery } from 'shared/queries/use-grades-query';
+import {
+  VirtualGradeType,
+  Grade,
+  GradeType,
+  VirtualGrade,
+} from 'shared/types/grade';
+import GradeRow from 'shared/components/GradeRow';
+import { SimpleSubject } from '../../shared/types/subject';
+import { SimpleUser } from '../../shared/types/user';
+import { Task } from '../../shared/types/task';
+import { useAuth } from '../../contexts/auth';
+import { useSubjectQuery } from '../../shared/queries';
+
+const getAverageGrade = (grades: Grade[]): number =>
+  grades.reduce((sum, { value }) => sum + value, 0) / grades.length;
 
 export default function SubjectGradesStudent() {
-  const { assignmentGrades, nonAssignmentGrades } = divideGrades([]);
-  // const averageAssignmentsGrade: Grade = {
-  //   id: 'average-grade',
-  //   value: average(
-  //     assignmentGrades.map((grade) => grade.value),
-  //     2
-  //   ),
-  //   type: CalculatedGradeType.AVERAGE,
-  //   createdAt: new Date(),
-  //   student: STUDENT,
-  // };
-  // const proposedSubjectGrade: Grade = {
-  //   id: 'proposed-grade',
-  //   value: 4.5,
-  //   type: CalculatedGradeType.PROPOSED,
-  //   createdAt: new Date(2022, 5, 26, 23, 52, 11),
-  //   student: STUDENT,
-  // };
-  // const finalSubjectGrade: Grade = {
-  //   id: 'final-grade',
-  //   value: 0,
-  //   type: CalculatedGradeType.FINAL,
-  //   createdAt: new Date(),
-  //   student: STUDENT,
-  // };
+  const { subjectId } = useParams();
+  const { currentUser } = useAuth();
+  const { subject } = useSubjectQuery(subjectId, {
+    simple: true,
+  });
+  const { subjectGrades, fetchSubjectGrades } = useGradesQuery();
+  const { assignmentGrades, nonAssignmentGrades } = divideGrades(subjectGrades);
+
+  const averageAssignmentsGrade: VirtualGrade = useMemo(
+    () => ({
+      id: 'average',
+      subject: subject!,
+      user: currentUser!,
+      type: VirtualGradeType.AVERAGE,
+      value: getAverageGrade(assignmentGrades),
+      createdBy: subject?.teacher,
+    }),
+    [assignmentGrades, currentUser, subject]
+  );
+
+  const proposedSubjectGrade: VirtualGrade = useMemo(
+    () => ({
+      id: 'proposed',
+      subject: subject!,
+      user: currentUser!,
+      type: VirtualGradeType.PROPOSED,
+      createdBy: subject?.teacher,
+    }),
+    [currentUser, subject]
+  );
+
+  const finalSubjectGrade: VirtualGrade = useMemo(
+    () => ({
+      id: 'final',
+      subject: subject!,
+      user: currentUser!,
+      type: VirtualGradeType.FINAL,
+      createdBy: subject?.teacher,
+    }),
+    [currentUser, subject]
+  );
+
+  useEffect(() => {
+    if (subjectId) {
+      fetchSubjectGrades(subjectId);
+    }
+  }, [subjectId, fetchSubjectGrades]);
 
   return (
     <Centered innerSx={{ gap: 2 }}>
       <Box sx={{ display: 'flex', gap: 2 }}>
-        <GradeCard grades={assignmentGrades} sx={{ flex: 3 }} />
-        <GradeCard grades={nonAssignmentGrades} sx={{ flex: 2 }} />
+        <GradeCard hideDate grades={assignmentGrades} sx={{ flex: 2 }} />
+        <GradeCard
+          hideDate
+          shortName
+          grades={nonAssignmentGrades}
+          sx={{ flex: 2 }}
+        />
       </Box>
 
       {/* @todo: change to grid to avoid empty Box */}
       <Box sx={{ display: 'flex', gap: 2 }}>
         <ProposedGradeCard sx={{ flex: 3 }}>
           <CardContent>
-            {/*<GradeRow grade={averageAssignmentsGrade} hideDate showDivider />*/}
-            {/*<GradeRow grade={proposedSubjectGrade} showDivider />*/}
-            {/*<GradeRow*/}
-            {/*  grade={finalSubjectGrade}*/}
-            {/*  hideDate={!finalSubjectGrade.value}*/}
-            {/*/>*/}
+            <GradeRow grade={averageAssignmentsGrade} showDivider />
+            <GradeRow grade={proposedSubjectGrade} showDivider />
+            <GradeRow grade={finalSubjectGrade} />
           </CardContent>
         </ProposedGradeCard>
 

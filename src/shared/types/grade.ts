@@ -17,7 +17,7 @@ export enum GradeType {
   BEHAVIOUR = 'behaviour',
 }
 
-export enum CalculatedGradeType {
+export enum VirtualGradeType {
   AVERAGE = 'average',
   PROPOSED = 'proposed',
   FINAL = 'final',
@@ -45,6 +45,15 @@ export interface Grade {
   value: number;
   createdAt: Date;
   createdBy: SimpleUser;
+}
+
+export interface VirtualGrade {
+  id: string;
+  subject: SimpleSubject;
+  user: SimpleUser;
+  type: VirtualGradeType;
+  value?: number;
+  createdAt?: Date;
 }
 
 export interface CreateGradeForm {

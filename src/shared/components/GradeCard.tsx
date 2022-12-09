@@ -5,13 +5,16 @@ import GradeRow from './GradeRow';
 
 interface GradeCardProps {
   grades: Grade[];
+  shortName?: boolean;
   showNames?: boolean;
+  hideDate?: boolean;
   keepEmptyColumns?: boolean; // maintains alignment of different grade types
   sx?: SxProps;
 }
 
 export default function GradeCard(props: GradeCardProps) {
-  const { grades, showNames, keepEmptyColumns, sx } = props;
+  const { grades, shortName, showNames, hideDate, keepEmptyColumns, sx } =
+    props;
 
   return (
     <Card sx={sx}>
@@ -21,7 +24,9 @@ export default function GradeCard(props: GradeCardProps) {
             <GradeRow
               key={grade.id}
               grade={grade}
+              shortName={shortName}
               showNames={showNames}
+              hideDate={hideDate}
               keepEmptyColumns={keepEmptyColumns}
               showDivider={index !== grades.length - 1}
             />

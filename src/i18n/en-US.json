@@ -198,7 +198,10 @@
     },
     "type": {
       "assignment": "Assignment grades",
-      "nonAssignment": "Activity & behaviour grades"
+      "nonAssignment": "Activity & behaviour grades",
+      "average": "Average grade",
+      "proposed": "Proposed grade",
+      "final": "Final grade"
     },
     "helperText": {
       "setSubjectToSetStudent": "To select student, first select subject",
