@@ -6,6 +6,7 @@ import { useGradeQuery } from 'shared/queries';
 import { useGradeForm } from 'shared/hooks';
 import SectionTitle from 'shared/components/SectionTitle';
 import { CreateGradeForm, GradeType } from 'shared/types/grade';
+import useCustomNavigate from 'hooks/use-custom-navigate';
 
 interface AssignNewGradeProps {
   taskId?: string;
@@ -14,6 +15,7 @@ interface AssignNewGradeProps {
 export default function AssignNewGrade(props: AssignNewGradeProps) {
   const { taskId } = props;
   const createGrade = useGradeQuery();
+  const { back } = useCustomNavigate();
   const { t } = useTranslation('grade');
 
   const initialValues: CreateGradeForm = useMemo(
@@ -28,10 +30,16 @@ export default function AssignNewGrade(props: AssignNewGradeProps) {
     [taskId]
   );
 
+  const handleSubmit = (form: CreateGradeForm) => {
+    createGrade(form);
+    back();
+  };
+
   const { Form } = useGradeForm({
     initialValues,
     submitButtonLabel: t('grade:create.submit'),
-    onSubmit: createGrade,
+    onSubmit: handleSubmit,
+    onCancel: back,
     t,
   });
 

@@ -1,9 +1,10 @@
+import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { Box, Link, styled, Stack, Typography, Button } from '@mui/material';
 import format from 'date-fns/format';
 import { useTranslation } from 'react-i18next';
 
-import { TaskSubmission } from 'shared/types/task';
-import { useState } from 'react';
+import { TaskSubmission, TaskEvaluationDialogData } from 'shared/types/task';
 import TaskEvaluationDialog from './TaskEvaluationDialog';
 
 interface TaskSubmissionItemProps {
@@ -13,13 +14,26 @@ interface TaskSubmissionItemProps {
 
 export default function TaskSubmissionItem(props: TaskSubmissionItemProps) {
   const { taskSubmission, teacherView } = props;
+  const { subjectId } = useParams();
   const [evaluationOpened, setEvaluationOpened] = useState(false);
+  const [taskEvaluationDialogData, setTaskEvaluationDialogData] = useState<
+    TaskEvaluationDialogData | undefined
+  >();
   const { t } = useTranslation('task');
 
   const openEvaluationDialog = () => {
-    if (teacherView) {
+    if (teacherView && subjectId) {
+      setTaskEvaluationDialogData({
+        subjectId,
+        taskId: taskSubmission.taskId,
+        studentId: taskSubmission.createdBy.id,
+      });
       setEvaluationOpened(true);
     }
+  };
+
+  const closeEvaluationDialog = () => {
+    setEvaluationOpened(false);
   };
 
   return (
@@ -70,10 +84,13 @@ export default function TaskSubmissionItem(props: TaskSubmissionItemProps) {
           </Button>
         )}
       </Stack>
-      <TaskEvaluationDialog
-        open={evaluationOpened}
-        taskId={taskSubmission.taskId}
-      />
+      {evaluationOpened && (
+        <TaskEvaluationDialog
+          open
+          data={taskEvaluationDialogData}
+          onClose={closeEvaluationDialog}
+        />
+      )}
     </>
   );
 }

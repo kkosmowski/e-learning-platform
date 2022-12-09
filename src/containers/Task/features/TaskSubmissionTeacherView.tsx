@@ -30,7 +30,12 @@ export default function TaskSubmissionTeacherView(
   }
 
   if (isSuccess && taskSubmissions.length) {
-    return <TaskSubmissionList submissions={taskSubmissions} />;
+    return (
+      <TaskSubmissionList
+        submissions={taskSubmissions}
+        taskEndTime={task.endTime}
+      />
+    );
   }
 
   return null;

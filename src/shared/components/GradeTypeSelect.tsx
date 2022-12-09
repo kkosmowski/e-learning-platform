@@ -24,7 +24,7 @@ export default function GradeTypeSelect(props: GradeTypeSelectProps) {
 
   return (
     <FormControl>
-      <FormLabel id="grade-type-label">{t('create.gradeType.label')}</FormLabel>
+      <FormLabel id="grade-type-label">{t('create.type.label')}</FormLabel>
 
       <RadioGroup
         aria-labelledby="grade-type-label"

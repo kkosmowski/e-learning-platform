@@ -9,10 +9,10 @@ import {
   GetTaskSubmissionResponse,
   SubmitTaskPayload,
   SubmitTaskResponse,
-  SimpleTaskSubmissionDto,
+  TaskSubmissionDto,
 } from 'shared/types/task';
 import { getTaskSubmission, updateTaskSubmission } from 'api/task';
-import { mapSimpleTaskSubmissionDtoToSimpleTaskSubmission } from 'shared/utils/task.utils';
+import { mapTaskSubmissionDtoToTaskSubmission } from 'shared/utils/task.utils';
 
 export function useTaskSubmissionQuery(taskId?: string, enabled?: boolean) {
   const { currentUser } = useAuth();
@@ -28,7 +28,7 @@ export function useTaskSubmissionQuery(taskId?: string, enabled?: boolean) {
   const taskSubmissionQuery = useQuery<
     GetTaskSubmissionResponse,
     AxiosError,
-    SimpleTaskSubmissionDto
+    TaskSubmissionDto
   >(
     ['task-submission', taskId, currentUser?.id],
     () => getTaskSubmission(taskId || ''),
@@ -57,9 +57,7 @@ export function useTaskSubmissionQuery(taskId?: string, enabled?: boolean) {
   const taskSubmission = useMemo(
     () =>
       taskSubmissionQuery.data
-        ? mapSimpleTaskSubmissionDtoToSimpleTaskSubmission(
-            taskSubmissionQuery.data
-          )
+        ? mapTaskSubmissionDtoToTaskSubmission(taskSubmissionQuery.data)
         : undefined,
     [taskSubmissionQuery.data]
   );
