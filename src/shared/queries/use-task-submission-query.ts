@@ -2,23 +2,21 @@ import { useMemo } from 'react';
 import { AxiosError } from 'axios';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
+import toast from 'react-hot-toast';
 
 import { useAuth } from 'contexts/auth';
-import useCustomNavigate from 'hooks/use-custom-navigate';
 import {
   GetTaskSubmissionResponse,
-  TaskSubmissionDto,
   SubmitTaskPayload,
   SubmitTaskResponse,
+  SimpleTaskSubmissionDto,
 } from 'shared/types/task';
 import { getTaskSubmission, updateTaskSubmission } from 'api/task';
-import { mapTaskSubmissionDtoToTaskSubmission } from 'shared/utils/task.utils';
-import toast from 'react-hot-toast';
+import { mapSimpleTaskSubmissionDtoToSimpleTaskSubmission } from 'shared/utils/task.utils';
 
 export function useTaskSubmissionQuery(taskId?: string, enabled?: boolean) {
   const { currentUser } = useAuth();
   const queryClient = useQueryClient();
-  const { navigate, back } = useCustomNavigate();
   const { t } = useTranslation('task');
 
   if (!taskId) {
@@ -30,7 +28,7 @@ export function useTaskSubmissionQuery(taskId?: string, enabled?: boolean) {
   const taskSubmissionQuery = useQuery<
     GetTaskSubmissionResponse,
     AxiosError,
-    TaskSubmissionDto
+    SimpleTaskSubmissionDto
   >(
     ['task-submission', taskId, currentUser?.id],
     () => getTaskSubmission(taskId || ''),
@@ -59,7 +57,9 @@ export function useTaskSubmissionQuery(taskId?: string, enabled?: boolean) {
   const taskSubmission = useMemo(
     () =>
       taskSubmissionQuery.data
-        ? mapTaskSubmissionDtoToTaskSubmission(taskSubmissionQuery.data)
+        ? mapSimpleTaskSubmissionDtoToSimpleTaskSubmission(
+            taskSubmissionQuery.data
+          )
         : undefined,
     [taskSubmissionQuery.data]
   );

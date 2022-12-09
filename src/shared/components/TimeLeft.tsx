@@ -4,13 +4,13 @@ import format from 'date-fns/format';
 import { useTranslation } from 'react-i18next';
 
 import { Status } from 'shared/types/shared';
-import { TaskSubmission, Task } from 'shared/types/task';
+import { Task, SimpleTaskSubmission } from 'shared/types/task';
 import { timeLeft } from 'shared/utils/date.utils';
 import { getTimeLeftTextColor } from 'shared/utils/task.utils';
 
 interface TimeLeftProps {
   task: Task;
-  taskSubmission?: TaskSubmission;
+  taskSubmission?: SimpleTaskSubmission;
 }
 
 export default function TimeLeft(props: TimeLeftProps) {
