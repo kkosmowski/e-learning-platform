@@ -113,7 +113,11 @@
       "message": "Message",
       "attachedFile": "Attached file",
       "downloadFile": "Download",
-      "sentOn": "Sent on"
+      "sentOn": "Sent on",
+      "evaluate": "Evaluate submission",
+      "evaluateDialog": {
+        "title": "Task submission evaluation"
+      }
     },
     "submitSolution": "Submit a solution",
     "taskMessagePlaceholder": "Type your answer or leave additional comment",
@@ -166,6 +170,48 @@
       "updateSuccess": "Successfully updated notice \"{{ name }}\"",
       "publishSuccess": "Successfully published notice \"{{ name }}\"",
       "deleteSuccess": "Successfully published notice \"{{ name }}\""
+    }
+  },
+  "grade": {
+    "create": {
+      "title": "Assign a grade",
+      "placeholder": {
+        "subject": "Select a subject",
+        "student": "Select a student",
+        "task": "Select a task (optional)",
+        "name": "Grade name (optional)"
+      },
+      "gradeType": {
+        "label": "Grade type",
+        "assignment": "Assignment grade",
+        "activity": "Activity grade",
+        "behaviour": "Behaviour grade"
+      },
+      "submit": "Assign",
+      "toast": {
+        "success": "Successfully assigned a grade"
+      }
+    },
+    "helperText": {
+      "setSubjectToSetStudent": "To select student, first select subject",
+      "setSubjectToSetTask": "To select task, first select subject",
+      "setSubjectToSetName": "To set grade name, first select subject",
+      "nonAssignmentGrade": "Task is needed only when grade is an assignment grade",
+      "assignmentGrade": "Grade name is needed only when grade is assigned for behaviour or activity"
+    },
+    "value": {
+      "0,5": "Unsatisfactory (F)",
+      "1": "Unsatisfactory (F)",
+      "1,5": "Unsatisfactory (F)",
+      "2": "Poor (E)",
+      "2,5": "Poor+ (E+)",
+      "3": "Satisfactory (D)",
+      "3,5": "Satisfactory+ (D+)",
+      "4": "Good (C)",
+      "4,5": "Good+ (C+)",
+      "5": "Very good (B)",
+      "5,5": "Very good+ (B+)",
+      "6": "Excellent (A)"
     }
   },
   "actions": {

@@ -24,3 +24,8 @@ export const emailTakenError = 'error:EMAIL_TAKEN';
 export const classNameRequiredError = 'error:Class_NAME_REQUIRED';
 export const classNameTakenError = 'error:Class_NAME_TAKEN';
 export const classTeacherRequiredError = 'error:Class_TEACHER_REQUIRED';
+
+// grade errors
+export const subjectRequiredError = 'error:SUBJECT_REQUIRED';
+export const studentRequiredError = 'error:STUDENT_REQUIRED';
+export const gradeValueRequiredError = 'error:GRADE_VALUE_REQUIRED';

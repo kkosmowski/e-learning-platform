@@ -1,4 +1,16 @@
-import { Grade } from 'shared/types/grade';
+import {
+  CreateGradeForm,
+  CreateGradePayload,
+  Grade,
+  GradeDto,
+} from 'shared/types/grade';
+import { SimpleSubject } from '../types/subject';
+import { SimpleUserDto } from '../types/user';
+import { TaskDto } from '../types/task';
+import { mapSimpleSubjectDtoToSimpleSubject } from './subject.utils';
+import { mapSimpleUserDtoToSimpleUser } from './user.utils';
+import { mapTaskDtoToTask } from './task.utils';
+import { dateStringToUTCString } from './date.utils';
 
 export const divideGrades = (
   grades: Grade[],
@@ -18,7 +30,7 @@ export const divideGrades = (
       break;
     }
 
-    if (grade.source && assignmentGrades.length !== limit) {
+    if (grade.task && assignmentGrades.length !== limit) {
       assignmentGrades.push(grade);
     } else if (nonAssignmentGrades.length !== limit) {
       nonAssignmentGrades.push(grade);
@@ -27,3 +39,24 @@ export const divideGrades = (
 
   return { assignmentGrades, nonAssignmentGrades };
 };
+
+export const mapGradeDtoToGrade = (dto: GradeDto): Grade => ({
+  id: dto.id,
+  subject: mapSimpleSubjectDtoToSimpleSubject(dto.group_subject),
+  user: mapSimpleUserDtoToSimpleUser(dto.user),
+  ...(dto.task && { task: mapTaskDtoToTask(dto.task) }),
+  ...(dto.name && { name: dto.name }),
+  value: dto.value,
+  createdAt: new Date(dateStringToUTCString(dto.created_at)),
+  createdBy: mapSimpleUserDtoToSimpleUser(dto.created_by),
+});
+
+export const mapCreateGradeFormToCreateGradePayload = (
+  form: CreateGradeForm
+): CreateGradePayload => ({
+  group_subject_id: form.subjectId,
+  student_id: form.studentId,
+  ...(form.taskId && { task_id: form.taskId }),
+  ...(form.name && { name: form.name }),
+  value: form.value!,
+});

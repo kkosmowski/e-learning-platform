@@ -55,7 +55,7 @@ const defaultGroupBy = GroupSubjectsBy.None;
 export default function Subjects() {
   const { navigate } = useCustomNavigate();
   const { currentUser } = useAuth();
-  const { subjects, isLoading, isSuccess } = useSubjectsQuery(currentUser, {
+  const { subjects, isLoading, isSuccess } = useSubjectsQuery({
     simple: true,
   });
   const [searchParams, setSearchParams] = useSearchParams();

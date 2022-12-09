@@ -13,15 +13,14 @@ import {
   mapSimpleSubjectDtoToSimpleSubject,
   mapSubjectDtoToSubject,
 } from 'shared/utils/subject.utils';
-import { User } from 'shared/types/user';
+import { useAuth } from 'contexts/auth';
 
-export function useSubjectsQuery(
-  currentUser: User | null | undefined,
-  options: {
-    simple?: boolean;
-    full?: boolean;
-  }
-) {
+export function useSubjectsQuery(options: {
+  simple?: boolean;
+  full?: boolean;
+}) {
+  const { currentUser } = useAuth();
+
   const fetchQuery = useQuery<
     GetSubjectsResponse,
     AxiosError,

@@ -4,13 +4,11 @@ import CommonViewLayout from 'layouts/CommonView';
 import useCustomNavigate from 'hooks/use-custom-navigate';
 import { useSubjectQuery } from 'shared/queries';
 import PageLoading from 'shared/components/PageLoading';
-import { useAuth } from 'contexts/auth';
 
 export default function SubjectLayout() {
   const { navigate, back } = useCustomNavigate();
   const { subjectId } = useParams<{ subjectId: string }>();
-  const { currentUser } = useAuth();
-  const { simpleSubject, isLoading } = useSubjectQuery(subjectId, currentUser, {
+  const { simpleSubject, isLoading } = useSubjectQuery(subjectId, {
     simple: true,
   });
 

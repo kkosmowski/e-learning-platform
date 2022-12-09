@@ -21,7 +21,7 @@ export default function SubjectDetails(props: SubjectDetailsProps) {
   const { navigate, back } = useCustomNavigate();
   const { currentUser } = useAuth();
   const { subject, isSuccess, isLoading, error, updateSubject } =
-    useSubjectQuery(subjectId, currentUser, { full: true });
+    useSubjectQuery(subjectId, { full: true });
 
   const navigateToEdit = () => {
     navigate('./edit');

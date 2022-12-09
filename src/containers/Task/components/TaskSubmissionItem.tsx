@@ -1,54 +1,80 @@
-import { Box, Link, styled, Stack, Typography } from '@mui/material';
+import { Box, Link, styled, Stack, Typography, Button } from '@mui/material';
 import format from 'date-fns/format';
 import { useTranslation } from 'react-i18next';
 
 import { TaskSubmission } from 'shared/types/task';
+import { useState } from 'react';
+import TaskEvaluationDialog from './TaskEvaluationDialog';
 
 interface TaskSubmissionItemProps {
   taskSubmission: TaskSubmission;
+  teacherView?: boolean;
 }
 
 export default function TaskSubmissionItem(props: TaskSubmissionItemProps) {
-  const { taskSubmission } = props;
+  const { taskSubmission, teacherView } = props;
+  const [evaluationOpened, setEvaluationOpened] = useState(false);
   const { t } = useTranslation('task');
 
+  const openEvaluationDialog = () => {
+    if (teacherView) {
+      setEvaluationOpened(true);
+    }
+  };
+
   return (
-    <Stack>
-      <Box component="section">
-        <Typography component="h4" color="text.secondary">
-          {t('submissions.message')}
-        </Typography>
-        {taskSubmission.comment ? (
-          <Quote>{taskSubmission.comment}</Quote>
-        ) : (
-          <Typography component="em">brak</Typography>
-        )}
-      </Box>
-
-      {taskSubmission.fileUrl && (
-        <Box component="section" sx={{ mt: 2 }}>
+    <>
+      <Stack spacing={3} sx={{ pt: 2 }}>
+        <Box component="section">
           <Typography component="h4" color="text.secondary">
-            {t('submissions.attachedFile')}
+            {t('submissions.message')}
           </Typography>
-
-          <Link
-            href={taskSubmission.fileUrl}
-            target="_blank"
-            rel="noreferrer"
-            sx={{ display: 'inline-block', p: 1 }}
-          >
-            {t('submissions.downloadFile')}
-          </Link>
+          {taskSubmission.comment ? (
+            <Quote>{taskSubmission.comment}</Quote>
+          ) : (
+            <Typography component="em">brak</Typography>
+          )}
         </Box>
-      )}
 
-      <Typography color="text.secondary" sx={{ mt: 3, fontSize: 14 }}>
-        {t('submissions.sentOn')}{' '}
-        <time dateTime={taskSubmission.createdAt.toISOString()}>
-          {format(taskSubmission.createdAt, 'dd-MM-yyyy HH:mm')}
-        </time>
-      </Typography>
-    </Stack>
+        {taskSubmission.fileUrl && (
+          <Box component="section">
+            <Typography component="h4" color="text.secondary">
+              {t('submissions.attachedFile')}
+            </Typography>
+
+            <Link
+              href={taskSubmission.fileUrl}
+              target="_blank"
+              rel="noreferrer"
+              sx={{ display: 'inline-block', p: 1 }}
+            >
+              {t('submissions.downloadFile')}
+            </Link>
+          </Box>
+        )}
+
+        <Typography color="text.secondary" sx={{ fontSize: 14 }}>
+          {t('submissions.sentOn')}{' '}
+          <time dateTime={taskSubmission.createdAt.toISOString()}>
+            {format(taskSubmission.createdAt, 'dd-MM-yyyy HH:mm')}
+          </time>
+        </Typography>
+
+        {teacherView && (
+          <Button
+            onClick={openEvaluationDialog}
+            sx={{ alignSelf: 'flex-end' }}
+            variant="contained"
+          >
+            {t('submissions.evaluate')}
+          </Button>
+        )}
+      </Stack>
+      <TaskEvaluationDialog
+        open={evaluationOpened}
+        taskId={taskSubmission.taskId}
+      />
+    </>
   );
 }
 
