@@ -20,6 +20,7 @@ export function useGradeQuery() {
     onSuccess: async () => {
       toast.success(t('create.toast.success'));
       await queryClient.invalidateQueries(['grades']);
+      await queryClient.invalidateQueries(['task-submissions']);
     },
     onError: (err) => {
       const error = getErrorDetail(err);

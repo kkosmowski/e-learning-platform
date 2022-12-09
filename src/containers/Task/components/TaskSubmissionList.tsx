@@ -9,8 +9,8 @@ import { useTranslation } from 'react-i18next';
 
 import { TaskSubmission } from 'shared/types/task';
 import { Status } from 'shared/types/shared';
+import { isPastDate } from 'shared/utils/date.utils';
 import TaskSubmissionItem from './TaskSubmissionItem';
-import { isPastDate } from '../../../shared/utils/date.utils';
 
 interface TaskSubmissionListProps {
   submissions: TaskSubmission[];

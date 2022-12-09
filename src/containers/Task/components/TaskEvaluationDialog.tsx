@@ -5,33 +5,34 @@ import Dialog from 'shared/components/Dialog';
 import { useGradeQuery } from 'shared/queries';
 import { CreateGradeForm, GradeType } from 'shared/types/grade';
 import { useGradeForm } from 'shared/hooks';
+import { TaskEvaluationDialogData } from 'shared/types/task';
 
 interface TaskEvaluationDialogProps {
   open: boolean;
-  taskId: string;
+  data: TaskEvaluationDialogData | undefined;
   onClose: () => void;
 }
 
 export default function TaskEvaluationDialog(props: TaskEvaluationDialogProps) {
-  const { open, taskId, onClose } = props;
+  const { open, data, onClose } = props;
   const createGrade = useGradeQuery();
   const { t } = useTranslation('grade');
 
   const initialValues: CreateGradeForm = useMemo(
     () => ({
-      subjectId: '',
-      studentId: '',
+      subjectId: data?.subjectId || '',
+      studentId: data?.studentId || '',
       type: GradeType.ASSIGNMENT,
-      taskId: taskId || null,
+      taskId: data?.taskId || '',
       name: '',
       value: 0,
     }),
-    [taskId]
+    [data]
   );
 
   const handleSubmit = (form: CreateGradeForm) => {
     createGrade(form);
-    onClose();
+    requestIdleCallback(onClose);
   };
 
   const { Form } = useGradeForm({
