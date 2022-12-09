@@ -34,7 +34,7 @@
     "general": {
       "latestNotices": "Ostatnie ogłoszenia",
       "yourGrades": "Twoje oceny",
-      "assignedGrades": "Przydzielone oceny",
+      "assignedGrades": "Wystawione oceny",
       "latestTasks": "Ostatnie zadania",
       "latestHomework": "Ostatnie zadania domowe"
     },
@@ -173,6 +173,10 @@
     }
   },
   "grade": {
+    "title": {
+      "assignedGrades": "Wystawione oceny",
+      "yourGrades": "Twoje oceny"
+    },
     "create": {
       "title": "Wystaw ocenę",
       "placeholder": {
@@ -181,7 +185,7 @@
         "task": "Wybierz zadanie (opcjonalnie)",
         "name": "Nazwa oceny (opcjonalnie)"
       },
-      "gradeType": {
+      "type": {
         "label": "Rodzaj oceny",
         "assignment": "Ocena za zadanie",
         "activity": "Ocena za aktywność",
@@ -191,6 +195,10 @@
       "toast": {
         "success": "Wystawiono nową ocenę"
       }
+    },
+    "type": {
+      "assignment": "Oceny za zadania",
+      "nonAssignment": "Oceny za aktywność i zachowanie"
     },
     "helperText": {
       "setSubjectToSetStudent": "Aby wybrać ucznia, najpier wybierz przedmiot",
@@ -212,7 +220,8 @@
       "5": "Bardzo dobra (5)",
       "5,5": "Bardzo dobra+ (5.5)",
       "6": "Celująca (6)"
-    }
+    },
+    "noItems": "Brak ocen do wyświetlenia"
   },
   "actions": {
     "tooltip": {
@@ -235,6 +244,8 @@
     "task": "Zadanie",
     "homework": "Zadanie domowe",
     "test": "Test",
+    "activity": "Aktywność",
+    "behaviour": "Zachowanie",
     "writtenBy": "Napisał(a) <1>{{ author }}</1>",
     "publishedOn": "Opublikowano <1>{{ date }}</1>",
     "welcome": "Witaj",

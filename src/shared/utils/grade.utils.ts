@@ -3,6 +3,7 @@ import {
   CreateGradePayload,
   Grade,
   GradeDto,
+  GradeType,
 } from 'shared/types/grade';
 import { SimpleSubject } from '../types/subject';
 import { SimpleUserDto } from '../types/user';
@@ -13,7 +14,7 @@ import { mapTaskDtoToTask } from './task.utils';
 import { dateStringToUTCString } from './date.utils';
 
 export const divideGrades = (
-  grades: Grade[],
+  grades?: Grade[],
   limit?: number
 ): {
   assignmentGrades: Grade[];
@@ -22,18 +23,26 @@ export const divideGrades = (
   const assignmentGrades: Grade[] = [];
   const nonAssignmentGrades: Grade[] = [];
 
-  for (const grade of grades) {
-    if (
-      assignmentGrades.length === limit &&
-      nonAssignmentGrades.length === limit
-    ) {
-      break;
-    }
+  if (grades) {
+    for (const grade of grades) {
+      if (
+        assignmentGrades.length === limit &&
+        nonAssignmentGrades.length === limit
+      ) {
+        break;
+      }
 
-    if (grade.task && assignmentGrades.length !== limit) {
-      assignmentGrades.push(grade);
-    } else if (nonAssignmentGrades.length !== limit) {
-      nonAssignmentGrades.push(grade);
+      if (
+        grade.type === GradeType.ASSIGNMENT &&
+        assignmentGrades.length !== limit
+      ) {
+        assignmentGrades.push(grade);
+      } else if (
+        grade.type !== GradeType.ASSIGNMENT &&
+        nonAssignmentGrades.length !== limit
+      ) {
+        nonAssignmentGrades.push(grade);
+      }
     }
   }
 
@@ -44,6 +53,7 @@ export const mapGradeDtoToGrade = (dto: GradeDto): Grade => ({
   id: dto.id,
   subject: mapSimpleSubjectDtoToSimpleSubject(dto.group_subject),
   user: mapSimpleUserDtoToSimpleUser(dto.user),
+  type: dto.type,
   ...(dto.task && { task: mapTaskDtoToTask(dto.task) }),
   ...(dto.name && { name: dto.name }),
   value: dto.value,
@@ -56,6 +66,7 @@ export const mapCreateGradeFormToCreateGradePayload = (
 ): CreateGradePayload => ({
   group_subject_id: form.subjectId,
   student_id: form.studentId,
+  type: form.type,
   ...(form.taskId && { task_id: form.taskId }),
   ...(form.name && { name: form.name }),
   value: form.value!,

@@ -75,8 +75,8 @@ export function useGradeForm(props: UseGradeFormProps) {
     const formWithoutUnnecessaryValues = {
       subjectId: form.subjectId,
       studentId: form.studentId,
-      gradeType: form.gradeType,
-      ...(form.gradeType === GradeType.Assignment
+      type: form.type,
+      ...(form.type === GradeType.ASSIGNMENT
         ? { taskId: form.taskId, name: '' }
         : { taskId: null, name: form.name }),
       value: form.value,
@@ -91,13 +91,13 @@ export function useGradeForm(props: UseGradeFormProps) {
     validationSchema: yup.object().shape({
       subjectId: yup.string().nullable().required(subjectRequiredError),
       studentId: yup.string().nullable().required(studentRequiredError),
-      gradeType: yup.mixed().oneOf(Object.values(GradeType)),
-      taskId: yup.string().nullable().when('gradeType', {
-        is: GradeType.Assignment,
+      type: yup.mixed().oneOf(Object.values(GradeType)),
+      taskId: yup.string().nullable().when('type', {
+        is: GradeType.ASSIGNMENT,
         then: yup.string().required(),
       }),
-      name: yup.string().nullable().when('gradeType', {
-        is: GradeType.Assignment,
+      name: yup.string().nullable().when('type', {
+        is: GradeType.ASSIGNMENT,
         then: yup.string().nullable(),
         otherwise: yup.string().required(),
       }),
@@ -222,10 +222,10 @@ export function useGradeForm(props: UseGradeFormProps) {
       </FormControl>
 
       <Box sx={{ pl: 4 }}>
-        <GradeTypeSelect value={values.gradeType} onChange={handleChange} />
+        <GradeTypeSelect value={values.type} onChange={handleChange} />
       </Box>
 
-      {values.gradeType === GradeType.Assignment ? (
+      {values.type === GradeType.ASSIGNMENT ? (
         <FormControl>
           <Autocomplete
             disabled={!values.subjectId}

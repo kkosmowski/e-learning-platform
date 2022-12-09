@@ -20,7 +20,7 @@ export default function AssignNewGrade(props: AssignNewGradeProps) {
     () => ({
       subjectId: '',
       studentId: '',
-      gradeType: GradeType.Assignment,
+      type: GradeType.ASSIGNMENT,
       taskId: taskId || null,
       name: '',
       value: 0,

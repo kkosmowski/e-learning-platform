@@ -1,10 +1,17 @@
-import { Divider, Grid, Tooltip, Typography } from '@mui/material';
-
-import { Grade, GradeType } from 'shared/types/grade';
-import ItemCategory from 'shared/components/ItemCategory';
+import {
+  Divider,
+  Grid,
+  Link as MuiLink,
+  Tooltip,
+  Typography,
+} from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import format from 'date-fns/format';
 import { HelpOutline } from '@mui/icons-material';
+import { Link, useParams } from 'react-router-dom';
+
+import { CalculatedGradeType, Grade, GradeType } from 'shared/types/grade';
+import ItemCategory from 'shared/components/ItemCategory';
 
 interface GradeRowProps {
   grade: Grade;
@@ -14,11 +21,15 @@ interface GradeRowProps {
   hideDate?: boolean;
 }
 
-const gradeTooltips = [GradeType.Average, GradeType.Proposed, GradeType.Final];
+const gradeTooltips = Object.values(CalculatedGradeType) as (
+  | CalculatedGradeType
+  | GradeType
+)[];
 
 export default function GradeRow(props: GradeRowProps) {
+  const { subjectId } = useParams();
   const {
-    grade: { value, task, createdAt, user },
+    grade: { value, type, task, name, createdAt, user },
     showDivider,
     showNames,
     keepEmptyColumns,
@@ -37,26 +48,33 @@ export default function GradeRow(props: GradeRowProps) {
           p: 1,
           gridTemplateColumns: `10fr 120px ${
             keepEmptyColumns || showNames ? 'minmax(180px, 3fr)' : ''
-          } ${keepEmptyColumns || task ? '5fr' : ''} 40px`,
+          } 5fr 40px`,
           ...((keepEmptyColumns || showNames) && { minWidth: 640 }),
         }}
       >
         <Grid item>
-          {/*<Typography*/}
-          {/*  sx={{ flex: 2, display: 'inline-flex', alignItems: 'center' }}*/}
-          {/*>*/}
-          {/*  {source && type === GradeType.Assignment*/}
-          {/*    ? source.name*/}
-          {/*    : t(`grades.${type}`)}*/}
+          <Typography
+            sx={{ flex: 2, display: 'inline-flex', alignItems: 'center' }}
+          >
+            {task ? (
+              <MuiLink
+                component={Link}
+                to={`/subjects/${subjectId}/tasks/${task.id}`}
+              >
+                {task.name}
+              </MuiLink>
+            ) : (
+              name
+            )}
 
-          {/*  {gradeTooltips.includes(type) && (*/}
-          {/*    <Tooltip title={t(`grades.tooltip.${type}`)}>*/}
-          {/*      <HelpOutline*/}
-          {/*        sx={{ fontSize: 16, color: 'text.secondary', ml: 0.5 }}*/}
-          {/*      />*/}
-          {/*    </Tooltip>*/}
-          {/*  )}*/}
-          {/*</Typography>*/}
+            {gradeTooltips.includes(type) && (
+              <Tooltip title={t(`grades.tooltip.${type}`)}>
+                <HelpOutline
+                  sx={{ fontSize: 16, color: 'text.secondary', ml: 0.5 }}
+                />
+              </Tooltip>
+            )}
+          </Typography>
         </Grid>
 
         <Grid item>
@@ -83,19 +101,21 @@ export default function GradeRow(props: GradeRowProps) {
           </Grid>
         )}
 
-        {(keepEmptyColumns || task) && (
-          <Grid item>
-            {task && (
-              <ItemCategory
-                type={task.type}
-                sx={{ flex: 1, color: 'text.secondary' }}
-              />
-            )}
-          </Grid>
-        )}
+        <Grid item>
+          <ItemCategory
+            type={task ? task.type : type}
+            sx={{ flex: 1, color: 'text.secondary' }}
+          />
+        </Grid>
 
         <Grid item>
-          <Typography sx={{ fontSize: 'inherit', fontWeight: 'bold' }}>
+          <Typography
+            sx={{
+              fontSize: 'inherit',
+              fontWeight: 'bold',
+              ...(value === 1 && { color: 'text.error' }),
+            }}
+          >
             {value || '—'}
           </Typography>
         </Grid>
