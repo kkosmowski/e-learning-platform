@@ -2,6 +2,7 @@ export * from './use-all-tasks-query';
 export * from './use-classes-query';
 export * from './use-create-notice-query';
 export * from './use-create-task-query';
+export * from './use-finished-submitted-tasks-query';
 export * from './use-grade-query';
 export * from './use-notice-query';
 export * from './use-notices-query';

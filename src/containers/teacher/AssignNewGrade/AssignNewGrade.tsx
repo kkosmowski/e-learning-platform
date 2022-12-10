@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { Card, CardContent } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
 
 import { useGradeQuery } from 'shared/queries';
 import { useGradeForm } from 'shared/hooks';
@@ -14,20 +15,21 @@ interface AssignNewGradeProps {
 
 export default function AssignNewGrade(props: AssignNewGradeProps) {
   const { taskId } = props;
+  const { subjectId } = useParams();
   const createGrade = useGradeQuery();
   const { back } = useCustomNavigate();
   const { t } = useTranslation('grade');
 
   const initialValues: CreateGradeForm = useMemo(
     () => ({
-      subjectId: '',
+      subjectId: subjectId || '',
       studentId: '',
       type: GradeType.ASSIGNMENT,
       taskId: taskId || null,
       name: '',
       value: 0,
     }),
-    [taskId]
+    [subjectId, taskId]
   );
 
   const handleSubmit = (form: CreateGradeForm) => {
@@ -37,6 +39,7 @@ export default function AssignNewGrade(props: AssignNewGradeProps) {
 
   const { Form } = useGradeForm({
     initialValues,
+    hide: ['subjectId'],
     requireModifying: true,
     submitButtonLabel: t('grade:create.submit'),
     onSubmit: handleSubmit,

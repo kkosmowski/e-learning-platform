@@ -27,6 +27,10 @@ export default function TaskEvaluationDialog(props: TaskEvaluationDialogProps) {
   const { t } = useTranslation('grade');
   const assumedLowestValueToastRef = useRef<string | null>(null);
 
+  useEffect(() => {
+    toast.dismiss();
+  }, []);
+
   const hideAssumedLowestValueToast = useCallback(() => {
     if (assumedLowestValueToastRef.current) {
       toast.dismiss(assumedLowestValueToastRef.current);
@@ -69,6 +73,7 @@ export default function TaskEvaluationDialog(props: TaskEvaluationDialogProps) {
   const { Form } = useGradeForm({
     initialValues,
     requireModifying: false,
+    hide: ['subjectId', 'type'],
     submitButtonLabel: t('create.submit'),
     onSubmit: handleSubmit,
     onCancel: onClose,

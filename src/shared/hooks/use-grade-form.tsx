@@ -21,17 +21,17 @@ import {
   subjectRequiredError,
 } from 'shared/consts/error';
 import {
-  useAllTasksQuery,
+  useFinishedOrSubmittedTasksQuery,
   useSubjectsQuery,
   useSubjectStudentsQuery,
 } from 'shared/queries';
 import { SimpleSubject } from 'shared/types/subject';
 import GradeTypeSelect from 'shared/components/GradeTypeSelect';
 import GradeValueSelect from 'shared/components/GradeValueSelect';
-import { useFinishedOrSubmittedTasksQuery } from '../queries/use-finished-submitted-tasks-query';
 
 interface UseGradeFormProps {
   initialValues: CreateGradeForm;
+  hide?: (keyof CreateGradeForm)[];
   submitButtonLabel: string;
   requireModifying: boolean;
   onSubmit: (form: CreateGradeForm) => void;
@@ -42,6 +42,7 @@ interface UseGradeFormProps {
 export function useGradeForm(props: UseGradeFormProps) {
   const {
     initialValues,
+    hide,
     requireModifying,
     submitButtonLabel,
     onSubmit,
@@ -148,7 +149,6 @@ export function useGradeForm(props: UseGradeFormProps) {
       fetchStudents(values.subjectId);
 
       if (values.studentId) {
-        console.log('fetch', values.studentId);
         fetchTasks({
           subjectId: values.subjectId,
           studentId: values.studentId,
@@ -178,27 +178,29 @@ export function useGradeForm(props: UseGradeFormProps) {
         gap: 16,
       }}
     >
-      <FormControl>
-        <Select
-          name="subjectId"
-          disabled={!teacherSubjects?.length}
-          value={values.subjectId}
-          error={touched.subjectId && Boolean(errors.subjectId)}
-          displayEmpty
-          {...(!values.subjectId && {
-            renderValue: () => t('grade:create.placeholder.subject'),
-            inputProps: { sx: { opacity: 0.6 } },
-          })}
-          onBlur={handleBlur}
-          onChange={handleChange}
-        >
-          {teacherSubjects?.map((subject: SimpleSubject) => (
-            <MenuItem key={subject.id} value={subject.id}>
-              {subject.name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+      {!hide?.includes('subjectId') && (
+        <FormControl>
+          <Select
+            name="subjectId"
+            disabled={!teacherSubjects?.length}
+            value={values.subjectId}
+            error={touched.subjectId && Boolean(errors.subjectId)}
+            displayEmpty
+            {...(!values.subjectId && {
+              renderValue: () => t('grade:create.placeholder.subject'),
+              inputProps: { sx: { opacity: 0.6 } },
+            })}
+            onBlur={handleBlur}
+            onChange={handleChange}
+          >
+            {teacherSubjects?.map((subject: SimpleSubject) => (
+              <MenuItem key={subject.id} value={subject.id}>
+                {subject.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      )}
 
       <FormControl>
         <Autocomplete
@@ -227,9 +229,11 @@ export function useGradeForm(props: UseGradeFormProps) {
         )}
       </FormControl>
 
-      <Box sx={{ pl: 4 }}>
-        <GradeTypeSelect value={values.type} onChange={handleChange} />
-      </Box>
+      {!hide?.includes('type') && (
+        <Box sx={{ pl: 4 }}>
+          <GradeTypeSelect value={values.type} onChange={handleChange} />
+        </Box>
+      )}
 
       {values.type === GradeType.ASSIGNMENT ? (
         <FormControl>
