@@ -109,12 +109,15 @@
     "submissions": {
       "noItems": "Brak przesłanych rozwiązań",
       "notSubmittedYet": "Nie przesłane",
+      "graded": "Ocenione",
       "yourSubmissionToTask": "Twoja odpowiedź na zadanie",
       "message": "Wiadomość",
+      "noMessage": "brak",
       "attachedFile": "Załączony plik",
       "downloadFile": "Pobierz",
       "sentOn": "Wysłano",
       "evaluate": "Oceń rozwiązanie",
+      "alreadyEvaluated": "Rozwiązanie ocenione",
       "evaluateDialog": {
         "title": "Ocena rozwiązania zadania"
       }

@@ -11,6 +11,7 @@ import { TaskSubmission } from 'shared/types/task';
 import { Status } from 'shared/types/shared';
 import { isPastDate } from 'shared/utils/date.utils';
 import TaskSubmissionItem from './TaskSubmissionItem';
+import { Check, Close } from '@mui/icons-material';
 
 interface TaskSubmissionListProps {
   submissions: TaskSubmission[];
@@ -27,6 +28,7 @@ export default function TaskSubmissionList(props: TaskSubmissionListProps) {
     <Stack>
       {submissions.map((submission) => {
         const notSubmitted = submission.status === Status.NOT_SUBMITTED;
+        const graded = submission.status === Status.GRADED;
         return (
           <Accordion
             key={submission.id}
@@ -34,15 +36,31 @@ export default function TaskSubmissionList(props: TaskSubmissionListProps) {
           >
             <AccordionSummary>
               <Typography component="h3">
-                {submission.createdBy.fullName}
+                {submission.createdBy.fullName}{' '}
                 {notSubmitted && (
-                  <span> ({t('submissions.notSubmittedYet')})</span>
+                  <Typography
+                    component="span"
+                    color="text.secondary"
+                    sx={sxProps.status}
+                  >
+                    ( <Close fontSize="small" />{' '}
+                    {t('submissions.notSubmittedYet')})
+                  </Typography>
+                )}
+                {graded && (
+                  <Typography
+                    component="span"
+                    color="primary"
+                    sx={sxProps.status}
+                  >
+                    ( <Check fontSize="small" /> {t('submissions.graded')})
+                  </Typography>
                 )}
               </Typography>
             </AccordionSummary>
 
             <AccordionDetails>
-              <TaskSubmissionItem taskSubmission={submission} teacherView />
+              <TaskSubmissionItem submission={submission} teacherView />
             </AccordionDetails>
           </Accordion>
         );
@@ -50,3 +68,10 @@ export default function TaskSubmissionList(props: TaskSubmissionListProps) {
     </Stack>
   );
 }
+
+const sxProps = {
+  status: {
+    display: 'inline-flex',
+    alignItems: 'center',
+  },
+};

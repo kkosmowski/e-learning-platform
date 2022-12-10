@@ -109,12 +109,15 @@
     "submissions": {
       "noItems": "There are no submitted solutions yet.",
       "notSubmittedYet": "Not submitted yet",
+      "graded": "Evaluated",
       "yourSubmissionToTask": "Your submission to task",
       "message": "Message",
+      "noMessage": "none",
       "attachedFile": "Attached file",
       "downloadFile": "Download",
       "sentOn": "Sent on",
       "evaluate": "Evaluate submission",
+      "alreadyEvaluated": "Already evaluated",
       "evaluateDialog": {
         "title": "Task submission evaluation"
       }

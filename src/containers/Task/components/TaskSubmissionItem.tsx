@@ -1,32 +1,39 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Box, Link, styled, Stack, Typography, Button } from '@mui/material';
+import { Box, Button, Link, Stack, styled, Typography } from '@mui/material';
 import format from 'date-fns/format';
 import { useTranslation } from 'react-i18next';
 
-import { TaskSubmission, TaskEvaluationDialogData } from 'shared/types/task';
+import {
+  SimpleTaskSubmission,
+  TaskEvaluationDialogData,
+  TaskSubmission,
+} from 'shared/types/task';
 import TaskEvaluationDialog from './TaskEvaluationDialog';
+import { Status } from 'shared/types/shared';
+import { isTaskSubmission } from 'shared/utils/task.utils';
 
 interface TaskSubmissionItemProps {
-  taskSubmission: TaskSubmission;
+  submission: SimpleTaskSubmission | TaskSubmission;
   teacherView?: boolean;
 }
 
 export default function TaskSubmissionItem(props: TaskSubmissionItemProps) {
-  const { taskSubmission, teacherView } = props;
+  const { submission, teacherView } = props;
   const { subjectId } = useParams();
   const [evaluationOpened, setEvaluationOpened] = useState(false);
   const [taskEvaluationDialogData, setTaskEvaluationDialogData] = useState<
     TaskEvaluationDialogData | undefined
   >();
   const { t } = useTranslation('task');
+  const { status } = submission;
 
   const openEvaluationDialog = () => {
-    if (teacherView && subjectId) {
+    if (teacherView && subjectId && isTaskSubmission(submission)) {
       setTaskEvaluationDialogData({
         subjectId,
-        taskId: taskSubmission.taskId,
-        studentId: taskSubmission.createdBy.id,
+        taskId: submission.taskId,
+        studentId: submission.createdBy.id,
       });
       setEvaluationOpened(true);
     }
@@ -43,21 +50,21 @@ export default function TaskSubmissionItem(props: TaskSubmissionItemProps) {
           <Typography component="h4" color="text.secondary">
             {t('submissions.message')}
           </Typography>
-          {taskSubmission.comment ? (
-            <Quote>{taskSubmission.comment}</Quote>
+          {submission.comment ? (
+            <Quote>{submission.comment}</Quote>
           ) : (
-            <Typography component="em">brak</Typography>
+            <Typography component="em">{t('submissions.noMessage')}</Typography>
           )}
         </Box>
 
-        {taskSubmission.fileUrl && (
+        {submission.fileUrl && (
           <Box component="section">
             <Typography component="h4" color="text.secondary">
               {t('submissions.attachedFile')}
             </Typography>
 
             <Link
-              href={taskSubmission.fileUrl}
+              href={submission.fileUrl}
               target="_blank"
               rel="noreferrer"
               sx={{ display: 'inline-block', p: 1 }}
@@ -67,20 +74,27 @@ export default function TaskSubmissionItem(props: TaskSubmissionItemProps) {
           </Box>
         )}
 
-        <Typography color="text.secondary" sx={{ fontSize: 14 }}>
-          {t('submissions.sentOn')}{' '}
-          <time dateTime={taskSubmission.createdAt.toISOString()}>
-            {format(taskSubmission.createdAt, 'dd-MM-yyyy HH:mm')}
-          </time>
-        </Typography>
+        {submission.createdAt && (
+          <Typography color="text.secondary" sx={{ fontSize: 14 }}>
+            {t('submissions.sentOn')}{' '}
+            <time dateTime={submission.createdAt.toISOString()}>
+              {format(submission.createdAt, 'dd-MM-yyyy HH:mm')}
+            </time>
+          </Typography>
+        )}
 
         {teacherView && (
           <Button
             onClick={openEvaluationDialog}
             sx={{ alignSelf: 'flex-end' }}
             variant="contained"
+            disabled={status === Status.GRADED}
           >
-            {t('submissions.evaluate')}
+            {t(
+              status === Status.GRADED
+                ? 'submissions.alreadyEvaluated'
+                : 'submissions.evaluate'
+            )}
           </Button>
         )}
       </Stack>
