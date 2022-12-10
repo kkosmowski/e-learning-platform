@@ -7,6 +7,7 @@ import {
   UpdateGradePayload,
   UpdateGradeResponse,
 } from 'shared/types/grade';
+import { EmptyResponse } from 'shared/types/shared';
 
 export const createGrade = (
   payload: CreateGradePayload
@@ -29,6 +30,9 @@ export const getTaskGrades = (taskId: string): Promise<GetGradesResponse> =>
 
 export const getGrade = (taskId: string): Promise<GetGradeResponse> =>
   authorized((api) => api.get(`grade/task/${taskId}/student`));
+
+export const evaluateNotSubmitted = (taskId: string): Promise<EmptyResponse> =>
+  authorized((api) => api.get(`grade/task/${taskId}/evaluate-not-submitted`));
 
 export const getSubjectGrades = (
   subjectId: string

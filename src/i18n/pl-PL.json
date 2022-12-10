@@ -122,7 +122,8 @@
       "alreadyEvaluated": "Rozwiązanie ocenione",
       "evaluateDialog": {
         "title": "Ocena rozwiązania zadania"
-      }
+      },
+      "gradeNotSubmittedWith": "Wystaw 1 wszystkim, którzy nie przesłali pracy"
     },
     "submitSolution": "Prześlij rozwiązanie",
     "taskMessagePlaceholder": "Napisz odpowiedź bądź opcjonalny komentarz",

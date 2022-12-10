@@ -1,10 +1,12 @@
-import { Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-import { useTaskSubmissionsQuery } from 'shared/queries';
+import { useGradesQuery, useTaskSubmissionsQuery } from 'shared/queries';
 import { Task } from 'shared/types/task';
 import PageLoading from 'shared/components/PageLoading';
 import TaskSubmissionList from '../components/TaskSubmissionList';
+import { Status } from '../../../shared/types/shared';
+import { useMemo } from 'react';
 
 interface TaskSubmissionTeacherViewProps {
   task: Task;
@@ -17,7 +19,14 @@ export default function TaskSubmissionTeacherView(
   const { taskSubmissions, isLoading, isSuccess } = useTaskSubmissionsQuery(
     task.id
   );
+  const { bulkEvaluate } = useGradesQuery();
   const { t } = useTranslation('task');
+  const allSubmissionsSent = useMemo(
+    () =>
+      taskSubmissions.filter(({ status }) => status !== Status.NOT_SUBMITTED)
+        .length === taskSubmissions.length,
+    [taskSubmissions]
+  );
 
   if (isLoading) {
     return <PageLoading />;
@@ -29,12 +38,29 @@ export default function TaskSubmissionTeacherView(
     );
   }
 
+  const handleEvaluateNotSubmitted = () => {
+    // @todo: confirmation dialog
+    bulkEvaluate(task.id);
+  };
+
   if (isSuccess && taskSubmissions.length) {
     return (
-      <TaskSubmissionList
-        submissions={taskSubmissions}
-        taskEndTime={task.endTime}
-      />
+      <>
+        {task.mandatory && task.isFinished && !allSubmissionsSent && (
+          <Button
+            variant="contained"
+            sx={{ alignSelf: 'flex-start' }}
+            onClick={handleEvaluateNotSubmitted}
+          >
+            {t('submissions.gradeNotSubmittedWith', { grade: 1 })}
+          </Button>
+        )}
+
+        <TaskSubmissionList
+          submissions={taskSubmissions}
+          isFinished={task.isFinished}
+        />
+      </>
     );
   }
 

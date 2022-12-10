@@ -122,7 +122,8 @@
       "alreadyEvaluated": "Already evaluated",
       "evaluateDialog": {
         "title": "Task submission evaluation"
-      }
+      },
+      "gradeNotSubmittedWith": "Grade everyone who hasn't submitted with {{ grade }}"
     },
     "submitSolution": "Submit a solution",
     "taskMessagePlaceholder": "Type your answer or leave additional comment",

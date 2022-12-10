@@ -11,7 +11,7 @@ import {
   UpdateTaskPayload,
 } from 'shared/types/task';
 import { mapSimpleUserDtoToSimpleUser } from './user.utils';
-import { dateStringToUTCString } from './date.utils';
+import { dateStringToUTCString, isPastDate } from './date.utils';
 import {
   TASK_HOMEWORK_ENDING_SOON_TIME_IN_MINUTES,
   TASK_HOMEWORK_ENDING_VERY_SOON_TIME_IN_MINUTES,
@@ -57,9 +57,8 @@ export const mapTaskDtoToTask = (dto: TaskDto): Task => ({
   createdAt: new Date(dateStringToUTCString(dto.created_at)),
   startTime: new Date(dateStringToUTCString(dto.start_time)),
   endTime: new Date(dateStringToUTCString(dto.end_time)),
-  isPublished:
-    new Date(dateStringToUTCString(dto.start_time)).getTime() <
-    new Date().getTime(),
+  isPublished: isPastDate(new Date(dateStringToUTCString(dto.start_time))),
+  isFinished: isPastDate(new Date(dateStringToUTCString(dto.end_time))),
   canBeDeletedBefore: new Date(
     dateStringToUTCString(dto.can_be_deleted_before)
   ),

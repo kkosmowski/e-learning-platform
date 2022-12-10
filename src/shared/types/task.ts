@@ -9,6 +9,7 @@ export interface Task extends ContentItem {
   startTime: Date;
   endTime: Date;
   isPublished: boolean;
+  isFinished: boolean;
   canBeDeletedBefore: Date;
 }
 

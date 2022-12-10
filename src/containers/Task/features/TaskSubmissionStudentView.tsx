@@ -15,7 +15,6 @@ import { useTranslation } from 'react-i18next';
 import { Task } from 'shared/types/task';
 import { useGradeQuery, useTaskSubmissionQuery } from 'shared/queries';
 import { Status } from 'shared/types/shared';
-import { isPastDate } from 'shared/utils/date.utils';
 import TaskSubmissionItem from '../components/TaskSubmissionItem';
 import SubmitTaskForm from '../components/SubmitTaskForm';
 
@@ -36,8 +35,6 @@ export default function TaskSubmissionStudentView(
     taskSubmission?.status !== Status.NOT_SUBMITTED
   );
 
-  const isPastDeadline = !!task && isPastDate(new Date(task.endTime));
-
   const handleTaskSubmit = (formData: FormData): void => {
     submitSolution({ taskId: task.id, formData });
   };
@@ -46,12 +43,14 @@ export default function TaskSubmissionStudentView(
       {!hasAlreadySubmitted && !isSubmitFormVisible && (
         <Box>
           <Tooltip
-            title={isPastDeadline ? t('tooltip.cannotSubmitPastDeadline') : ''}
+            title={
+              task?.isFinished ? t('tooltip.cannotSubmitPastDeadline') : ''
+            }
           >
             <span>
               <Button
                 variant="contained"
-                disabled={isPastDeadline || hasAlreadySubmitted}
+                disabled={task?.isFinished || hasAlreadySubmitted}
                 onClick={() => setIsSubmitFormVisible(true)}
               >
                 {t('submitSolution')}

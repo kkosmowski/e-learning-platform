@@ -6,23 +6,20 @@ import {
   Typography,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { Check, Close } from '@mui/icons-material';
 
 import { TaskSubmission } from 'shared/types/task';
 import { Status } from 'shared/types/shared';
-import { isPastDate } from 'shared/utils/date.utils';
 import TaskSubmissionItem from './TaskSubmissionItem';
-import { Check, Close } from '@mui/icons-material';
 
 interface TaskSubmissionListProps {
   submissions: TaskSubmission[];
-  taskEndTime: Date;
+  isFinished: boolean;
 }
 
 export default function TaskSubmissionList(props: TaskSubmissionListProps) {
-  const { submissions, taskEndTime } = props;
+  const { submissions, isFinished } = props;
   const { t } = useTranslation('task');
-
-  const pastDeadline = isPastDate(taskEndTime);
 
   return (
     <Stack>
@@ -30,10 +27,7 @@ export default function TaskSubmissionList(props: TaskSubmissionListProps) {
         const notSubmitted = submission.status === Status.NOT_SUBMITTED;
         const graded = submission.status === Status.GRADED;
         return (
-          <Accordion
-            key={submission.id}
-            disabled={notSubmitted && !pastDeadline}
-          >
+          <Accordion key={submission.id} disabled={notSubmitted && !isFinished}>
             <AccordionSummary>
               <Typography component="h3">
                 {submission.createdBy.fullName}{' '}
@@ -62,7 +56,7 @@ export default function TaskSubmissionList(props: TaskSubmissionListProps) {
             <AccordionDetails>
               <TaskSubmissionItem
                 submission={submission}
-                pastDeadline={pastDeadline}
+                isFinished={isFinished}
                 teacherView
               />
             </AccordionDetails>
