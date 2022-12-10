@@ -28,6 +28,7 @@ import {
 import { SimpleSubject } from 'shared/types/subject';
 import GradeTypeSelect from 'shared/components/GradeTypeSelect';
 import GradeValueSelect from 'shared/components/GradeValueSelect';
+import { useFinishedOrSubmittedTasksQuery } from '../queries/use-finished-submitted-tasks-query';
 
 interface UseGradeFormProps {
   initialValues: CreateGradeForm;
@@ -46,7 +47,7 @@ export function useGradeForm(props: UseGradeFormProps) {
     hasNextTasksPage,
     fetchNextPage,
     isFetchingNextPage,
-  } = useAllTasksQuery();
+  } = useFinishedOrSubmittedTasksQuery();
   const { subjects: teacherSubjects } = useSubjectsQuery({
     simple: true,
   });
@@ -136,9 +137,16 @@ export function useGradeForm(props: UseGradeFormProps) {
   useEffect(() => {
     if (values.subjectId) {
       fetchStudents(values.subjectId);
-      fetchTasks(values.subjectId);
+
+      if (values.studentId) {
+        console.log('fetch', values.studentId);
+        fetchTasks({
+          subjectId: values.subjectId,
+          studentId: values.studentId,
+        });
+      }
     }
-  }, [fetchStudents, fetchTasks, values.subjectId]);
+  }, [fetchStudents, fetchTasks, values.subjectId, values.studentId]);
 
   const handleStudentChange = (event: SyntheticEvent, value: string | null) => {
     setFieldValue('studentId', value);
