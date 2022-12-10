@@ -103,6 +103,7 @@ export interface TaskEvaluationDialogData {
   subjectId: string;
   taskId: string;
   studentId: string;
+  suggestedGrade: number;
 }
 
 // payloads

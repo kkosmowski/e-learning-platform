@@ -1,11 +1,18 @@
-import { useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import toast from 'react-hot-toast';
+import { Info } from '@mui/icons-material';
+import { Stack } from '@mui/material';
 
 import Dialog from 'shared/components/Dialog';
 import { useGradeQuery } from 'shared/queries';
 import { CreateGradeForm, GradeType } from 'shared/types/grade';
 import { useGradeForm } from 'shared/hooks';
 import { TaskEvaluationDialogData } from 'shared/types/task';
+import { SECOND } from 'shared/consts/date';
+import TextButton from 'shared/components/TextButton';
+import { useLocalStorage } from 'shared/hooks';
+import { assumedLowestValueToast } from 'shared/consts/shared';
 
 interface TaskEvaluationDialogProps {
   open: boolean;
@@ -16,7 +23,31 @@ interface TaskEvaluationDialogProps {
 export default function TaskEvaluationDialog(props: TaskEvaluationDialogProps) {
   const { open, data, onClose } = props;
   const createGrade = useGradeQuery();
+  const { get, set } = useLocalStorage(); // @todo if this case repeats, implement useHideToast (hide, isHidden)
   const { t } = useTranslation('grade');
+  const assumedLowestValueToastRef = useRef<string | null>(null);
+
+  const hideAssumedLowestValueToast = useCallback(() => {
+    if (assumedLowestValueToastRef.current) {
+      toast.dismiss(assumedLowestValueToastRef.current);
+      assumedLowestValueToastRef.current = null;
+    }
+    set(assumedLowestValueToast, 1);
+  }, [set]);
+
+  useEffect(() => {
+    if (data?.suggestedGrade && !get(assumedLowestValueToast)) {
+      assumedLowestValueToastRef.current = toast(
+        <Stack alignItems="flex-end">
+          {t('toast.assumedLowestValue')}
+          <TextButton onClick={hideAssumedLowestValueToast}>
+            {t('common:dontShowThis')}
+          </TextButton>
+        </Stack>,
+        { icon: <Info color="primary" />, duration: 10 * SECOND }
+      );
+    }
+  }, [data?.suggestedGrade, get, hideAssumedLowestValueToast, t]);
 
   const initialValues: CreateGradeForm = useMemo(
     () => ({
@@ -25,7 +56,7 @@ export default function TaskEvaluationDialog(props: TaskEvaluationDialogProps) {
       type: GradeType.ASSIGNMENT,
       taskId: data?.taskId || '',
       name: '',
-      value: 0,
+      value: data?.suggestedGrade || 0,
     }),
     [data]
   );
@@ -37,6 +68,7 @@ export default function TaskEvaluationDialog(props: TaskEvaluationDialogProps) {
 
   const { Form } = useGradeForm({
     initialValues,
+    requireModifying: false,
     submitButtonLabel: t('create.submit'),
     onSubmit: handleSubmit,
     onCancel: onClose,

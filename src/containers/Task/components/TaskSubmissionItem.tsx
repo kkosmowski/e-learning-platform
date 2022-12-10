@@ -15,11 +15,12 @@ import { isTaskSubmission } from 'shared/utils/task.utils';
 
 interface TaskSubmissionItemProps {
   submission: SimpleTaskSubmission | TaskSubmission;
+  pastDeadline?: boolean;
   teacherView?: boolean;
 }
 
 export default function TaskSubmissionItem(props: TaskSubmissionItemProps) {
-  const { submission, teacherView } = props;
+  const { submission, pastDeadline, teacherView } = props;
   const { subjectId } = useParams();
   const [evaluationOpened, setEvaluationOpened] = useState(false);
   const [taskEvaluationDialogData, setTaskEvaluationDialogData] = useState<
@@ -34,6 +35,8 @@ export default function TaskSubmissionItem(props: TaskSubmissionItemProps) {
         subjectId,
         taskId: submission.taskId,
         studentId: submission.createdBy.id,
+        suggestedGrade:
+          pastDeadline && submission.status === Status.NOT_SUBMITTED ? 1 : 0,
       });
       setEvaluationOpened(true);
     }

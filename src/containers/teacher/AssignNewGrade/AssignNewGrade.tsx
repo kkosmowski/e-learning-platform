@@ -37,6 +37,7 @@ export default function AssignNewGrade(props: AssignNewGradeProps) {
 
   const { Form } = useGradeForm({
     initialValues,
+    requireModifying: true,
     submitButtonLabel: t('grade:create.submit'),
     onSubmit: handleSubmit,
     onCancel: back,

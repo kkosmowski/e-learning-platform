@@ -33,13 +33,21 @@ import { useFinishedOrSubmittedTasksQuery } from '../queries/use-finished-submit
 interface UseGradeFormProps {
   initialValues: CreateGradeForm;
   submitButtonLabel: string;
+  requireModifying: boolean;
   onSubmit: (form: CreateGradeForm) => void;
   onCancel: () => void;
   t: TFunction;
 }
 
 export function useGradeForm(props: UseGradeFormProps) {
-  const { initialValues, submitButtonLabel, onSubmit, onCancel, t } = props;
+  const {
+    initialValues,
+    requireModifying,
+    submitButtonLabel,
+    onSubmit,
+    onCancel,
+    t,
+  } = props;
   const { students = [], fetchStudents } = useSubjectStudentsQuery();
   const {
     tasks = [],
@@ -119,12 +127,13 @@ export function useGradeForm(props: UseGradeFormProps) {
 
   const isUntouched = useMemo(
     () =>
+      requireModifying &&
       values.subjectId === initialValues.subjectId &&
       values.studentId === initialValues.studentId &&
       values.taskId === initialValues.taskId &&
       values.name === initialValues.name &&
       values.value === initialValues.value,
-    [values, initialValues]
+    [requireModifying, values, initialValues]
   );
 
   const submitButtonTooltip = useMemo(() => {

@@ -227,6 +227,9 @@
       "5,5": "Very good+ (B+)",
       "6": "Excellent (A)"
     },
+    "toast": {
+      "assumedLowestValue": "Automatically selected grade F, because no submission was delivered in time.\nIt is only a guess though."
+    },
     "noItems": "There are no grades yet"
   },
   "actions": {
@@ -247,6 +250,7 @@
     "submit": "Submit",
     "confirm": "Confirm",
     "cancel": "Cancel",
+    "dontShowThis": "Don't show this",
     "task": "Task",
     "homework": "Homework",
     "test": "Test",

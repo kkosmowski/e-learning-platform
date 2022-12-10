@@ -227,6 +227,9 @@
       "5,5": "Bardzo dobra+ (5.5)",
       "6": "Celująca (6)"
     },
+    "toast": {
+      "assumedLowestValue": "Ocena 1 została automatycznie wybrana, ponieważ uczeń nie dostarczył rozwiązania.\nJest to tylko sugestia."
+    },
     "noItems": "Brak ocen do wyświetlenia"
   },
   "actions": {
@@ -247,6 +250,7 @@
     "submit": "Wyślij",
     "confirm": "Potwierdź",
     "cancel": "Anuluj",
+    "dontShowThis": "Nie pokazuj tego",
     "task": "Zadanie",
     "homework": "Zadanie domowe",
     "test": "Test",
