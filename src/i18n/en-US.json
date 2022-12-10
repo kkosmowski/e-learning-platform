@@ -109,12 +109,15 @@
     "submissions": {
       "noItems": "There are no submitted solutions yet.",
       "notSubmittedYet": "Not submitted yet",
+      "graded": "Evaluated",
       "yourSubmissionToTask": "Your submission to task",
       "message": "Message",
+      "noMessage": "none",
       "attachedFile": "Attached file",
       "downloadFile": "Download",
       "sentOn": "Sent on",
       "evaluate": "Evaluate submission",
+      "alreadyEvaluated": "Already evaluated",
       "evaluateDialog": {
         "title": "Task submission evaluation"
       }
@@ -224,6 +227,9 @@
       "5,5": "Very good+ (B+)",
       "6": "Excellent (A)"
     },
+    "toast": {
+      "assumedLowestValue": "Automatically selected grade F, because no submission was delivered in time.\nIt is only a guess though."
+    },
     "noItems": "There are no grades yet"
   },
   "actions": {
@@ -244,6 +250,7 @@
     "submit": "Submit",
     "confirm": "Confirm",
     "cancel": "Cancel",
+    "dontShowThis": "Don't show this",
     "task": "Task",
     "homework": "Homework",
     "test": "Test",

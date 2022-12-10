@@ -94,7 +94,9 @@ export const mapSimpleTaskSubmissionDtoToSimpleTaskSubmission = (
   id: dto.id,
   taskId: dto.task_id,
   status: dto.status,
-  createdAt: new Date(dateStringToUTCString(dto.created_at)),
+  ...(dto.created_at && {
+    createdAt: new Date(dateStringToUTCString(dto.created_at)),
+  }),
   fileUrl: dto.file_url,
   comment: dto.comment,
 });
@@ -105,3 +107,7 @@ export const mapTaskSubmissionDtoToTaskSubmission = (
   ...mapSimpleTaskSubmissionDtoToSimpleTaskSubmission(dto),
   createdBy: mapSimpleUserDtoToSimpleUser(dto.user),
 });
+
+export const isTaskSubmission = (
+  submission: SimpleTaskSubmission | TaskSubmission
+): submission is TaskSubmission => !!(submission as TaskSubmission).createdBy;

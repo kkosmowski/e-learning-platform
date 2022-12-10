@@ -21,25 +21,34 @@ import {
   subjectRequiredError,
 } from 'shared/consts/error';
 import {
-  useAllTasksQuery,
+  useFinishedOrSubmittedTasksQuery,
   useSubjectsQuery,
   useSubjectStudentsQuery,
 } from 'shared/queries';
 import { SimpleSubject } from 'shared/types/subject';
 import GradeTypeSelect from 'shared/components/GradeTypeSelect';
 import GradeValueSelect from 'shared/components/GradeValueSelect';
-import { useFinishedOrSubmittedTasksQuery } from '../queries/use-finished-submitted-tasks-query';
 
 interface UseGradeFormProps {
   initialValues: CreateGradeForm;
+  hide?: (keyof CreateGradeForm)[];
   submitButtonLabel: string;
+  requireModifying: boolean;
   onSubmit: (form: CreateGradeForm) => void;
   onCancel: () => void;
   t: TFunction;
 }
 
 export function useGradeForm(props: UseGradeFormProps) {
-  const { initialValues, submitButtonLabel, onSubmit, onCancel, t } = props;
+  const {
+    initialValues,
+    hide,
+    requireModifying,
+    submitButtonLabel,
+    onSubmit,
+    onCancel,
+    t,
+  } = props;
   const { students = [], fetchStudents } = useSubjectStudentsQuery();
   const {
     tasks = [],
@@ -119,12 +128,13 @@ export function useGradeForm(props: UseGradeFormProps) {
 
   const isUntouched = useMemo(
     () =>
+      requireModifying &&
       values.subjectId === initialValues.subjectId &&
       values.studentId === initialValues.studentId &&
       values.taskId === initialValues.taskId &&
       values.name === initialValues.name &&
       values.value === initialValues.value,
-    [values, initialValues]
+    [requireModifying, values, initialValues]
   );
 
   const submitButtonTooltip = useMemo(() => {
@@ -139,7 +149,6 @@ export function useGradeForm(props: UseGradeFormProps) {
       fetchStudents(values.subjectId);
 
       if (values.studentId) {
-        console.log('fetch', values.studentId);
         fetchTasks({
           subjectId: values.subjectId,
           studentId: values.studentId,
@@ -169,27 +178,29 @@ export function useGradeForm(props: UseGradeFormProps) {
         gap: 16,
       }}
     >
-      <FormControl>
-        <Select
-          name="subjectId"
-          disabled={!teacherSubjects?.length}
-          value={values.subjectId}
-          error={touched.subjectId && Boolean(errors.subjectId)}
-          displayEmpty
-          {...(!values.subjectId && {
-            renderValue: () => t('grade:create.placeholder.subject'),
-            inputProps: { sx: { opacity: 0.6 } },
-          })}
-          onBlur={handleBlur}
-          onChange={handleChange}
-        >
-          {teacherSubjects?.map((subject: SimpleSubject) => (
-            <MenuItem key={subject.id} value={subject.id}>
-              {subject.name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+      {!hide?.includes('subjectId') && (
+        <FormControl>
+          <Select
+            name="subjectId"
+            disabled={!teacherSubjects?.length}
+            value={values.subjectId}
+            error={touched.subjectId && Boolean(errors.subjectId)}
+            displayEmpty
+            {...(!values.subjectId && {
+              renderValue: () => t('grade:create.placeholder.subject'),
+              inputProps: { sx: { opacity: 0.6 } },
+            })}
+            onBlur={handleBlur}
+            onChange={handleChange}
+          >
+            {teacherSubjects?.map((subject: SimpleSubject) => (
+              <MenuItem key={subject.id} value={subject.id}>
+                {subject.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      )}
 
       <FormControl>
         <Autocomplete
@@ -218,9 +229,11 @@ export function useGradeForm(props: UseGradeFormProps) {
         )}
       </FormControl>
 
-      <Box sx={{ pl: 4 }}>
-        <GradeTypeSelect value={values.type} onChange={handleChange} />
-      </Box>
+      {!hide?.includes('type') && (
+        <Box sx={{ pl: 4 }}>
+          <GradeTypeSelect value={values.type} onChange={handleChange} />
+        </Box>
+      )}
 
       {values.type === GradeType.ASSIGNMENT ? (
         <FormControl>

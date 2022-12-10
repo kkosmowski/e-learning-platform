@@ -25,7 +25,7 @@ export interface TaskSubmissionForm {
 export interface SimpleTaskSubmission {
   id: string;
   taskId: string;
-  createdAt: Date;
+  createdAt?: Date;
   status: Status;
   fileUrl: string;
   comment: string;
@@ -65,7 +65,7 @@ export interface TaskDto {
 export interface SimpleTaskSubmissionDto {
   id: string;
   task_id: string;
-  created_at: string;
+  created_at?: string;
   status: Status;
   file_url: string;
   comment: string;
@@ -103,6 +103,7 @@ export interface TaskEvaluationDialogData {
   subjectId: string;
   taskId: string;
   studentId: string;
+  suggestedGrade: number;
 }
 
 // payloads
@@ -137,6 +138,6 @@ export type GetLatestTasksResponse = AxiosResponse<LatestTasksDto>;
 export type GetTaskResponse = AxiosResponse<TaskDto>;
 export type GetTaskSubmissionResponse = AxiosResponse<TaskSubmissionDto>;
 export type GetTaskSubmissionsResponse = AxiosResponse<TaskSubmissionDto[]>;
-export type SubmitTaskResponse = AxiosResponse<TaskSubmissionDto>;
+export type SubmitTaskResponse = AxiosResponse<SimpleTaskSubmissionDto>;
 export type CreateTaskResponse = AxiosResponse<TaskDto>;
 export type UpdateTaskResponse = AxiosResponse<TaskDto>;

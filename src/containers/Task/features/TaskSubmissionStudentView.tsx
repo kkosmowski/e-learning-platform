@@ -68,7 +68,7 @@ export default function TaskSubmissionStudentView(
 
               <Card>
                 <CardContent>
-                  <TaskSubmissionItem taskSubmission={taskSubmission} />
+                  <TaskSubmissionItem submission={taskSubmission} />
                 </CardContent>
               </Card>
             </Stack>
