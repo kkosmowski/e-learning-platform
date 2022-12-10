@@ -13,11 +13,8 @@ import {
   VirtualGrade,
 } from 'shared/types/grade';
 import GradeRow from 'shared/components/GradeRow';
-import { SimpleSubject } from '../../shared/types/subject';
-import { SimpleUser } from '../../shared/types/user';
-import { Task } from '../../shared/types/task';
-import { useAuth } from '../../contexts/auth';
-import { useSubjectQuery } from '../../shared/queries';
+import { useAuth } from 'contexts/auth';
+import { useSubjectQuery } from 'shared/queries';
 
 const getAverageGrade = (grades: Grade[]): number =>
   grades.reduce((sum, { value }) => sum + value, 0) / grades.length;

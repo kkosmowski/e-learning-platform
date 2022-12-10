@@ -2,6 +2,7 @@ import { authorized } from './axios';
 import {
   CreateGradePayload,
   CreateGradeResponse,
+  GetGradeResponse,
   GetGradesResponse,
   UpdateGradePayload,
   UpdateGradeResponse,
@@ -25,6 +26,9 @@ export const getStudentGrades = (
 
 export const getTaskGrades = (taskId: string): Promise<GetGradesResponse> =>
   authorized((api) => api.get(`grade/task/${taskId}`));
+
+export const getGrade = (taskId: string): Promise<GetGradeResponse> =>
+  authorized((api) => api.get(`grade/task/${taskId}/student`));
 
 export const getSubjectGrades = (
   subjectId: string

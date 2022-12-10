@@ -3,7 +3,7 @@ import { Card, CardContent } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
-import { useGradeQuery } from 'shared/queries';
+import { useCreateGradeQuery } from 'shared/queries';
 import { useGradeForm } from 'shared/hooks';
 import SectionTitle from 'shared/components/SectionTitle';
 import { CreateGradeForm, GradeType } from 'shared/types/grade';
@@ -16,7 +16,7 @@ interface AssignNewGradeProps {
 export default function AssignNewGrade(props: AssignNewGradeProps) {
   const { taskId } = props;
   const { subjectId } = useParams();
-  const createGrade = useGradeQuery();
+  const createGrade = useCreateGradeQuery();
   const { back } = useCustomNavigate();
   const { t } = useTranslation('grade');
 
