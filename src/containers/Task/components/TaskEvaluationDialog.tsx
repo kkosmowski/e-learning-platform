@@ -5,7 +5,7 @@ import { Info } from '@mui/icons-material';
 import { Stack } from '@mui/material';
 
 import Dialog from 'shared/components/Dialog';
-import { useGradeQuery } from 'shared/queries';
+import { useCreateGradeQuery } from 'shared/queries';
 import { CreateGradeForm, GradeType } from 'shared/types/grade';
 import { useGradeForm } from 'shared/hooks';
 import { TaskEvaluationDialogData } from 'shared/types/task';
@@ -22,7 +22,7 @@ interface TaskEvaluationDialogProps {
 
 export default function TaskEvaluationDialog(props: TaskEvaluationDialogProps) {
   const { open, data, onClose } = props;
-  const createGrade = useGradeQuery();
+  const createGrade = useCreateGradeQuery();
   const { get, set } = useLocalStorage(); // @todo if this case repeats, implement useHideToast (hide, isHidden)
   const { t } = useTranslation('grade');
   const assumedLowestValueToastRef = useRef<string | null>(null);

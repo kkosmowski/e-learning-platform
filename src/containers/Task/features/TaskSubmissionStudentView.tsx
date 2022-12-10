@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import {
+  Alert,
   Box,
   Button,
   Card,
   CardContent,
+  Chip,
   Stack,
   Tooltip,
   Typography,
@@ -11,7 +13,7 @@ import {
 import { useTranslation } from 'react-i18next';
 
 import { Task } from 'shared/types/task';
-import { useTaskSubmissionQuery } from 'shared/queries';
+import { useGradeQuery, useTaskSubmissionQuery } from 'shared/queries';
 import { Status } from 'shared/types/shared';
 import { isPastDate } from 'shared/utils/date.utils';
 import TaskSubmissionItem from '../components/TaskSubmissionItem';
@@ -27,6 +29,7 @@ export default function TaskSubmissionStudentView(
   const { task } = props;
   const [isSubmitFormVisible, setIsSubmitFormVisible] = useState(false);
   const { taskSubmission, submitSolution } = useTaskSubmissionQuery(task.id);
+  const { grade } = useGradeQuery(task.id);
   const { t } = useTranslation('task');
 
   const hasAlreadySubmitted = Boolean(
@@ -61,9 +64,20 @@ export default function TaskSubmissionStudentView(
       {hasAlreadySubmitted
         ? !!taskSubmission && (
             <Stack gap={2}>
+              {grade && (
+                <Alert sx={sxProps.receivedGrade} severity="info" elevation={1}>
+                  <Typography>{t('submissions.receivedGrade')}</Typography>
+                  {/* @todo switch to lowest grade when implemented */}
+                  <Chip
+                    sx={sxProps.gradeValue}
+                    color={grade.value === 1 ? 'error' : 'primary'}
+                    label={grade.value}
+                  />
+                </Alert>
+              )}
+
               <Typography variant="h3">
-                {t('submissions.yourSubmissionToTask')}{' '}
-                <strong>{task.name}</strong>
+                {t('submissions.yourSubmission')}
               </Typography>
 
               <Card>
@@ -83,3 +97,25 @@ export default function TaskSubmissionStudentView(
     </>
   );
 }
+
+const sxProps = {
+  receivedGrade: {
+    mb: 2,
+    '.MuiAlert-icon': {
+      alignItems: 'center',
+    },
+    '.MuiAlert-message': {
+      display: 'inline-flex',
+      alignItems: 'center',
+      columnGap: 1,
+    },
+  },
+  gradeValue: {
+    fontWeight: 800,
+    fontSize: 16,
+    height: 28,
+    '.MuiChip-label': {
+      px: 1.175,
+    },
+  },
+};

@@ -1,11 +1,11 @@
 import { useMemo, useState } from 'react';
 import { AxiosError } from 'axios';
+import { useQuery } from '@tanstack/react-query';
 
 import { GetGradesResponse, GradeDto } from 'shared/types/grade';
 import { getStudentGrades, getSubjectGrades, getTaskGrades } from 'api/grade';
-import { useAuth } from '../../contexts/auth';
-import { useQuery } from '@tanstack/react-query';
-import { mapGradeDtoToGrade } from '../utils/grade.utils';
+import { useAuth } from 'contexts/auth';
+import { mapGradeDtoToGrade } from 'shared/utils/grade.utils';
 
 export function useGradesQuery() {
   const { currentUser } = useAuth();
