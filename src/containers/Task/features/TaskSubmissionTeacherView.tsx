@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { Button, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
@@ -5,8 +6,8 @@ import { useGradesQuery, useTaskSubmissionsQuery } from 'shared/queries';
 import { Task } from 'shared/types/task';
 import PageLoading from 'shared/components/PageLoading';
 import TaskSubmissionList from '../components/TaskSubmissionList';
-import { Status } from '../../../shared/types/shared';
-import { useMemo } from 'react';
+import { Status } from 'shared/types/shared';
+import { useConfirmationDialog } from 'shared/hooks';
 
 interface TaskSubmissionTeacherViewProps {
   task: Task;
@@ -21,6 +22,7 @@ export default function TaskSubmissionTeacherView(
   );
   const { bulkEvaluate } = useGradesQuery();
   const { t } = useTranslation('task');
+  const { confirmAction, confirmationDialog } = useConfirmationDialog();
   const allSubmissionsSent = useMemo(
     () =>
       taskSubmissions.filter(({ status }) => status !== Status.NOT_SUBMITTED)
@@ -38,9 +40,15 @@ export default function TaskSubmissionTeacherView(
     );
   }
 
-  const handleEvaluateNotSubmitted = () => {
-    // @todo: confirmation dialog
-    bulkEvaluate(task.id);
+  const handleEvaluateNotSubmitted = async () => {
+    const shouldEvaluate = await confirmAction({
+      title: 'task:confirm.bulkEvaluateTitle',
+      message: 'task:confirm.bulkEvaluateMessage',
+      confirmLabel: 'common:delete',
+      confirmColor: 'primary',
+    });
+
+    if (shouldEvaluate) bulkEvaluate(task.id);
   };
 
   if (isSuccess && taskSubmissions.length) {
@@ -60,6 +68,8 @@ export default function TaskSubmissionTeacherView(
           submissions={taskSubmissions}
           isFinished={task.isFinished}
         />
+
+        {confirmationDialog}
       </>
     );
   }
