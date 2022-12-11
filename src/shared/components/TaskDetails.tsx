@@ -38,14 +38,6 @@ const getStatusIcon = (status: Status): SvgIconComponent => {
   }
 };
 
-const prepareSubmissionsString = (submissions: SimpleTaskSubmission[]) => {
-  const allSubmissions = submissions.length;
-  const sentSubmissions = submissions.filter(
-    ({ status }) => status !== Status.NOT_SUBMITTED
-  ).length;
-  return `${sentSubmissions} / ${allSubmissions}`;
-};
-
 const statusColors: Record<Status, string> = {
   [Status.NOT_SUBMITTED]: '',
   [Status.SUBMITTED]: 'text.info',
@@ -62,15 +54,9 @@ export default function TaskDetails(props: TaskDetailsProps) {
   const StatusIcon = isUserStudent && getStatusIcon(status);
   const isPastDeadline = isPastDate(task.endTime);
 
-  const sentSubmissionsString = prepareSubmissionsString(submissions);
-
-  const allStudentsSubmitted = useMemo(
-    () =>
-      isUserTeacher &&
-      !!submissions &&
-      !!subjectStudents &&
-      submissions.length === subjectStudents.length,
-    [isUserTeacher, submissions, subjectStudents]
+  const sentSubmissions = useMemo(
+    () => submissions.filter(({ createdAt }) => !!createdAt),
+    [submissions]
   );
 
   return (
@@ -114,7 +100,7 @@ export default function TaskDetails(props: TaskDetailsProps) {
 
         {isUserTeacher && submissions && subjectStudents && (
           <Box sx={{ display: 'flex', alignItems: 'center', columnGap: 1 }}>
-            {allStudentsSubmitted ? (
+            {sentSubmissions.length === submissions.length ? (
               <CheckCircle sx={{ fontSize: 16 }} color="success" />
             ) : (
               <CheckCircleOutline
@@ -123,7 +109,7 @@ export default function TaskDetails(props: TaskDetailsProps) {
               />
             )}
 
-            <span>{sentSubmissionsString}</span>
+            <span>{`${sentSubmissions.length} / ${submissions.length}`}</span>
           </Box>
         )}
       </Stack>
