@@ -1,17 +1,28 @@
 import { useMemo, useState } from 'react';
 import { AxiosError } from 'axios';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
 
 import { GetGradesResponse, GradeDto } from 'shared/types/grade';
-import { getStudentGrades, getSubjectGrades, getTaskGrades } from 'api/grade';
+import {
+  evaluateNotSubmitted,
+  getStudentGrades,
+  getSubjectGrades,
+  getTaskGrades,
+} from 'api/grade';
 import { useAuth } from 'contexts/auth';
 import { mapGradeDtoToGrade } from 'shared/utils/grade.utils';
+import { getErrorDetail } from 'shared/utils/common.utils';
+import { EmptyResponse } from 'shared/types/shared';
 
 export function useGradesQuery() {
   const { currentUser } = useAuth();
   const [studentId, setStudentId] = useState('');
   const [taskId, setTaskId] = useState('');
   const [subjectId, setSubjectId] = useState('');
+  const { t } = useTranslation('grade');
+  const queryClient = useQueryClient();
 
   const studentGradesQuery = useQuery<
     GetGradesResponse,
@@ -38,6 +49,22 @@ export function useGradesQuery() {
   >(['grades', 'subject', subjectId], () => getSubjectGrades(subjectId), {
     enabled: Boolean(currentUser && subjectId),
     select: ({ data }) => data,
+  });
+
+  const { mutate: bulkEvaluate } = useMutation<
+    EmptyResponse,
+    AxiosError,
+    string
+  >(evaluateNotSubmitted, {
+    onSuccess: async () => {
+      toast.success(t('create.toast.success'));
+      await queryClient.invalidateQueries(['grades']);
+      await queryClient.invalidateQueries(['task-submissions']);
+    },
+    onError: (err) => {
+      const error = getErrorDetail(err);
+      toast.error(t(error));
+    },
   });
 
   const studentGrades = useMemo(
@@ -78,5 +105,6 @@ export function useGradesQuery() {
     fetchStudentGrades: setStudentId,
     fetchTaskGrades: setTaskId,
     fetchSubjectGrades: setSubjectId,
+    bulkEvaluate,
   };
 }

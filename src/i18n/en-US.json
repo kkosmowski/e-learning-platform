@@ -122,7 +122,8 @@
       "alreadyEvaluated": "Already evaluated",
       "evaluateDialog": {
         "title": "Task submission evaluation"
-      }
+      },
+      "gradeNotSubmittedWith": "Grade everyone who hasn't submitted with {{ grade }}"
     },
     "submitSolution": "Submit a solution",
     "taskMessagePlaceholder": "Type your answer or leave additional comment",
@@ -143,7 +144,9 @@
       "deleteTitle": "Deleting a task",
       "deleteMessage": "Are you sure you want to delete this task? This operation cannot be undone.",
       "finishNowTitle": "Finishing a task",
-      "finishNowMessage": "Are you sure you want to finish this task right now? This operation cannot be undone."
+      "finishNwMessage": "Are you sure you want to finish this task right now? This operation cannot be undone.",
+      "bulkEvaluateTitle": "Evaluating multiple students",
+      "bulkEvaluateMessage": "Are you sure you want to assign grade 1 to every student, who did not send a submission? This operation cannot be undone."
     },
     "toast": {
       "updateSuccess": "Successfully updated task \"{{ name }}\""
