@@ -1,17 +1,13 @@
 import { useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { Box, Card, CardContent, styled } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 import { Centered } from 'shared/components/Container';
 import GradeCard from 'shared/components/GradeCard';
 import { divideGrades } from 'shared/utils/grade.utils';
 import { useGradesQuery } from 'shared/queries/use-grades-query';
-import {
-  VirtualGradeType,
-  Grade,
-  GradeType,
-  VirtualGrade,
-} from 'shared/types/grade';
+import { VirtualGradeType, Grade, VirtualGrade } from 'shared/types/grade';
 import GradeRow from 'shared/components/GradeRow';
 import { useAuth } from 'contexts/auth';
 import { useSubjectQuery } from 'shared/queries';
@@ -22,6 +18,7 @@ const getAverageGrade = (grades: Grade[]): number =>
 export default function SubjectGradesStudent() {
   const { subjectId } = useParams();
   const { currentUser } = useAuth();
+  const { t } = useTranslation('grade');
   const { subject } = useSubjectQuery(subjectId, {
     simple: true,
   });
@@ -71,10 +68,16 @@ export default function SubjectGradesStudent() {
   return (
     <Centered innerSx={{ gap: 2 }}>
       <Box sx={{ display: 'flex', gap: 2 }}>
-        <GradeCard hideDate grades={assignmentGrades} sx={{ flex: 2 }} />
+        <GradeCard
+          hideDate
+          title={t('type.assignment')}
+          grades={assignmentGrades}
+          sx={{ flex: 2 }}
+        />
         <GradeCard
           hideDate
           shortName
+          title={t('type.nonAssignment')}
           grades={nonAssignmentGrades}
           sx={{ flex: 2 }}
         />
