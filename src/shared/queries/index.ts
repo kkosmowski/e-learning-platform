@@ -4,6 +4,7 @@ export * from './use-create-notice-query';
 export * from './use-create-task-query';
 export * from './use-finished-submitted-tasks-query';
 export * from './use-create-grade-query';
+export * from './use-latest-grades-query';
 export * from './use-grade-query';
 export * from './use-grades-query';
 export * from './use-notice-query';

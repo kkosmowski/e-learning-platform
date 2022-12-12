@@ -1,17 +1,12 @@
 import { useTranslation } from 'react-i18next';
-import { Box } from '@mui/material';
+import { Box, Stack } from '@mui/material';
 
 import SectionTitle from 'shared/components/SectionTitle';
 import TextButton from 'shared/components/TextButton';
 import GradeCard from 'shared/components/GradeCard';
-import { divideGrades } from 'shared/utils/grade.utils';
-import { Grade } from 'shared/types/grade';
-import {
-  LATEST_GRADES_VISIBLE_STUDENT_COUNT,
-  LATEST_GRADES_VISIBLE_TEACHER_COUNT,
-} from 'shared/consts/grade';
 import { isStudent, isTeacher } from 'shared/utils/user.utils';
 import { useAuth } from 'contexts/auth';
+import { useLatestGradesQuery } from 'shared/queries';
 
 interface LatestGradesProps {
   subjectId: string;
@@ -25,20 +20,7 @@ export default function LatestGrades(props: LatestGradesProps) {
   const { currentUser } = useAuth();
   const isUserTeacher = isTeacher(currentUser);
   const isUserStudent = isStudent(currentUser);
-
-  // @todo fetch different grades when teacher and when student
-  const grades: Grade[] = [];
-  let assignmentGrades: Grade[] = [];
-  let nonAssignmentGrades: Grade[] = [];
-
-  if (isUserStudent) {
-    const dividedGrades = divideGrades(
-      grades,
-      LATEST_GRADES_VISIBLE_STUDENT_COUNT
-    );
-    assignmentGrades = dividedGrades.assignmentGrades;
-    nonAssignmentGrades = dividedGrades.nonAssignmentGrades;
-  }
+  const { latestGrades } = useLatestGradesQuery(subjectId);
 
   return (
     <>
@@ -49,7 +31,7 @@ export default function LatestGrades(props: LatestGradesProps) {
             : t('general.yourGrades')}
         </span>
 
-        {!!grades.length && (
+        {latestGrades.length && (
           <TextButton sx={{ ml: 2 }} onClick={onMoreClick}>
             {t('common:viewMore')}
           </TextButton>
@@ -62,23 +44,7 @@ export default function LatestGrades(props: LatestGradesProps) {
         )}
       </SectionTitle>
 
-      <Box sx={{ display: 'flex', gap: 2 }}>
-        {isUserTeacher && (
-          <GradeCard
-            grades={grades.slice(0, LATEST_GRADES_VISIBLE_TEACHER_COUNT)}
-            sx={{ flex: 1 }}
-            showNames
-            keepEmptyColumns
-          />
-        )}
-
-        {isUserStudent && (
-          <>
-            <GradeCard grades={assignmentGrades} sx={{ flex: 3 }} />
-            <GradeCard grades={nonAssignmentGrades} sx={{ flex: 2 }} />
-          </>
-        )}
-      </Box>
+      <GradeCard grades={latestGrades} showNames keepEmptyColumns />
     </>
   );
 }

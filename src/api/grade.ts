@@ -38,3 +38,11 @@ export const getSubjectGrades = (
   subjectId: string
 ): Promise<GetGradesResponse> =>
   authorized((api) => api.get(`grade/group-subject/${subjectId}`));
+
+export const getLatestGrades = (
+  subjectId: string,
+  limit: number
+): Promise<GetGradesResponse> =>
+  authorized((api) =>
+    api.get(`group-subject/${subjectId}/latest-grades?limit=${limit}`)
+  );
