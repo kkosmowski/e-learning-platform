@@ -23,7 +23,7 @@ export const updateGrade = ({
 export const getStudentGrades = (
   studentId: string
 ): Promise<GetGradesResponse> =>
-  authorized((api) => api.get(`grade/student/${studentId}`));
+  authorized((api) => api.get(`grade/${studentId}`));
 
 export const getTaskGrades = (taskId: string): Promise<GetGradesResponse> =>
   authorized((api) => api.get(`grade/task/${taskId}`));

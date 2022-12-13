@@ -10,7 +10,7 @@ const resources = {
 };
 
 const options: InitOptions = {
-  lng: 'en',
+  lng: 'pl',
   resources,
   interpolation: {
     escapeValue: false,

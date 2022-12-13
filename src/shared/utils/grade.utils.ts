@@ -7,9 +7,6 @@ import {
   VirtualGrade,
   VirtualGradeType,
 } from 'shared/types/grade';
-import { SimpleSubject } from '../types/subject';
-import { SimpleUserDto } from '../types/user';
-import { TaskDto } from '../types/task';
 import { mapSimpleSubjectDtoToSimpleSubject } from './subject.utils';
 import { mapSimpleUserDtoToSimpleUser } from './user.utils';
 import { mapTaskDtoToTask } from './task.utils';
@@ -87,4 +84,14 @@ export const fixGradeValue = (
 
   if ((value * 10) % 1 === 0) return value.toFixed(1);
   return value.toFixed(2);
+};
+
+export const getAverageGrade = (grades: Grade[]): number => {
+  const assignmentGrades = grades.filter(
+    ({ type }) => type === GradeType.ASSIGNMENT
+  );
+  return (
+    assignmentGrades.reduce((sum, { value }) => sum + value, 0) /
+    assignmentGrades.length
+  );
 };

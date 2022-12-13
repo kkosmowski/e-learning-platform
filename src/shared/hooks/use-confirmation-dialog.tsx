@@ -1,4 +1,4 @@
-import { ReactElement, useState } from 'react';
+import { ReactElement, ReactNode, useState } from 'react';
 import {
   Button,
   ButtonProps,
@@ -10,9 +10,11 @@ import {
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
+type TranslatableObject = { key: string; props: Record<string, string> };
+
 interface ConfirmActionProps {
-  title: string | { key: string; props: Record<string, string> };
-  message: string | { key: string; props: Record<string, string> };
+  title: string | TranslatableObject;
+  message: string | TranslatableObject | ReactNode;
   confirmLabel?: string;
   confirmColor?: ButtonProps['color'];
   cancelLabel?: string;
@@ -38,6 +40,15 @@ export function useConfirmationDialog() {
         resolve(value);
       };
 
+      const messageJsx =
+        typeof message === 'string'
+          ? t(message)
+          : (message as TranslatableObject).key
+          ? t((message as TranslatableObject).key, {
+              ...(message as TranslatableObject).props,
+            })
+          : message;
+
       setConfirmationDialog(
         <Dialog
           open={true}
@@ -53,20 +64,17 @@ export function useConfirmationDialog() {
           </DialogTitle>
 
           <DialogContent>
-            <DialogContentText>
-              {typeof message === 'string'
-                ? t(message)
-                : t(message.key, { ...message.props })}
-            </DialogContentText>
+            <DialogContentText>{messageJsx}</DialogContentText>
           </DialogContent>
 
           <DialogActions>
             <Button color="inherit" onClick={() => onResolve(false)}>
               {t(cancelLabel)}
             </Button>
+
             <Button
-              color={confirmColor}
               variant="contained"
+              color={confirmColor}
               onClick={() => onResolve(true)}
             >
               {t(confirmLabel)}

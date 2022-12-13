@@ -235,7 +235,33 @@
     "toast": {
       "assumedLowestValue": "Ocena 1 została automatycznie wybrana, ponieważ uczeń nie dostarczył rozwiązania.\nJest to tylko sugestia."
     },
+    "final": {
+      "proposeFinalGrade": "Wystaw proponowaną ocenę końcową",
+      "changeProposedFinalGrade": "Zmień proponowaną ocenę końcową",
+      "confirmFinalGrade": "Zatwierdź ocenę końcową",
+      "dialog": {
+        "title": {
+          "propose": "Potwierdź wystawienie proponowanej oceny końcowej",
+          "confirm": "Potwierdź zatwierdzenie oceny końcowej"
+        },
+        "message": "Wybierz ocenę proponowaną jako <0>ocenę końcową</0> dla <0>{{ studentName }}</0>.<br />Ta ocena może być później zmieniona, do póki nie zostanie zatwierdzona ocena końcowa.<br /><br />Obecna <0>średnia</0> to <0>{{ averageGrade }}</0>.",
+        "current": "Wybrana proponowana ocena to <0>{{ value }}</0>.",
+        "largeDifference": "Wybrana proponowana ocena to <0>{{ value }}</0>. Ocena ta znacząco różni się od <0>średniej</0>. Czy to na pewno odpowiednia ocena?",
+        "selectValue": "Aby wystawić proponowaną ocenę końcową, najpierw musisz ją wybrać."
+      },
+      "confirm": {
+        "proposeTitle": "Potwierdź zatwierdzenie oceny końcowej",
+        "proposeMessage": "Wystawiasz proponowaną ocenę końcową równą <0>{{ value }}</0> uczniowi <0>{{ studentName }}</0>. Upewnij się, że wszystkie dane są poprawne:<br /><br />- <0>uczeń</0> (czy to na pewno ten?)<br />- <0>ocena</0> (wzięta pod uwagę średnia ocen i oceny za aktywność i zachowanie)<br />- <0>przedmiot</0> (czy jest on poprawny?)",
+        "confirmTitle": "Potwierdź zatwierdzenie oceny końcowej",
+        "confirmMessage": "Wystawiasz <0>ocenę końćową</0> równą <0>{{ value }}</0> uczniowi <0>{{ studentName }}</0>. Upewnij się, że wszystkie dane są poprawne:<br /><br />- <0>uczeń</0> (czy to na pewno ten?)<br />- <0>ocena</0> (wzięta pod uwagę średnia ocen i oceny za aktywność i zachowanie)<br />- <0>przedmiot</0> (czy jest on poprawny?)"
+      }
+    },
+    "propose": "Wystaw proponowaną ocenę końcową",
+    "confirm": "Zatwierdź ocenę końcową",
     "noItems": "Brak ocen do wyświetlenia"
+  },
+  "user": {
+    "grades": "Oceny"
   },
   "actions": {
     "tooltip": {

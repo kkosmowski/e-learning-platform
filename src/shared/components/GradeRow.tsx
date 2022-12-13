@@ -19,7 +19,7 @@ import {
 import ItemCategory from 'shared/components/ItemCategory';
 import { fixGradeValue, isVirtualGrade } from 'shared/utils/grade.utils';
 import { Task } from 'shared/types/task';
-import { ellipsisSx } from '../consts/styles';
+import { ellipsisSx } from 'shared/consts/styles';
 
 interface GradeRowProps {
   grade: Grade | VirtualGrade;
@@ -138,12 +138,13 @@ export default function GradeRow(props: GradeRowProps) {
         {(keepEmptyColumns || showNames) && (
           <Grid item>
             {showNames && (
-              <Typography
-                component="span"
+              <MuiLink
+                component={Link}
                 sx={{ color: 'text.secondary', fontSize: 13 }}
+                to={`/subjects/${subjectId}/grades/${user.id}`}
               >
                 {user.fullName}
-              </Typography>
+              </MuiLink>
             )}
           </Grid>
         )}
