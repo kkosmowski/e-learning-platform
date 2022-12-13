@@ -46,7 +46,7 @@
       "proposed": "Proponowana ocena",
       "final": "Ocena końcowa",
       "tooltip": {
-        "average": "Ocena automatycznie obliczana na podstawie ocen za zadania. Nauczyciel może ją zmienić w zależności od ocen za zachowanie i aktywność.",
+        "average": "Ocena automatycznie obliczana na podstawie ocen za zadania. Między innymi na jej podstawie nauczyciel wystawia ocenę końcową.",
         "proposed": "Ręcznie wybrana ocena przez nauczyciela jako proponowana ocena za przedmiot. Została wystawiona na podstawie wszystkich zdobytych ocen.",
         "final": "Ręcznie wybrana ocena przez nauczyciela jako ocena końcowa. Jest to ostateczna decyzja, której nie można zmienić."
       },
@@ -201,7 +201,9 @@
       },
       "submit": "Wystaw",
       "toast": {
-        "success": "Wystawiono nową ocenę"
+        "success": "Wystawiono nową ocenę",
+        "proposedSuccess": "Wystawiono proponowaną ocenę końcową",
+        "confirmSuccess": "Wystawiono ocenę końcową"
       }
     },
     "type": {
@@ -236,27 +238,35 @@
       "assumedLowestValue": "Ocena 1 została automatycznie wybrana, ponieważ uczeń nie dostarczył rozwiązania.\nJest to tylko sugestia."
     },
     "final": {
-      "proposeFinalGrade": "Wystaw proponowaną ocenę końcową",
-      "changeProposedFinalGrade": "Zmień proponowaną ocenę końcową",
-      "confirmFinalGrade": "Zatwierdź ocenę końcową",
       "dialog": {
         "title": {
           "propose": "Potwierdź wystawienie proponowanej oceny końcowej",
+          "change": "Potwierdź zmianę proponowanej oceny końcowej",
           "confirm": "Potwierdź zatwierdzenie oceny końcowej"
         },
-        "message": "Wybierz ocenę proponowaną jako <0>ocenę końcową</0> dla <0>{{ studentName }}</0>.<br />Ta ocena może być później zmieniona, do póki nie zostanie zatwierdzona ocena końcowa.<br /><br />Obecna <0>średnia</0> to <0>{{ averageGrade }}</0>.",
+        "message": {
+          "propose": "Wybierz ocenę proponowaną jako <0>ocenę końcową</0> dla <0>{{ studentName }}</0>.<br />Ta ocena może być później zmieniona, do póki nie zostanie zatwierdzona ocena końcowa.<br /><br />Obecna <0>średnia</0> to <0>{{ averageGrade }}</0>.",
+          "change": "Wybierz ocenę proponowaną jako <0>ocenę końcową</0> dla <0>{{ studentName }}</0>.<br />Ta ocena może być zmieniona do póki nie zostanie zatwierdzona ocena końcowa.<br /><br />Obecna <0>średnia</0> to <0>{{ averageGrade }}</0>.",
+          "confirm": "Obecna <0>proponowana ocena końcowa</0> dla ucznia <0>{{ studentName }}</0> to <0>{{ proposedGrade }}</0>.<br /><br />Jeżeli ta ocena zostanie zatwierdzona jako końcowa, <0>późniejsze zmiany nie będą możliwe</0>."
+        },
+        "checkbox": {
+          "propose": "Rozumiem i chcę wystawić proponowaną ocenę końcową",
+          "change": "Rozumiem i chcę zmienić proponowaną ocenę końcową",
+          "confirm": "Rozumiem i chcę zatwierdzić ocenę końcową"
+        },
         "current": "Wybrana proponowana ocena to <0>{{ value }}</0>.",
         "largeDifference": "Wybrana proponowana ocena to <0>{{ value }}</0>. Ocena ta znacząco różni się od <0>średniej</0>. Czy to na pewno odpowiednia ocena?",
         "selectValue": "Aby wystawić proponowaną ocenę końcową, najpierw musisz ją wybrać."
       },
       "confirm": {
-        "proposeTitle": "Potwierdź zatwierdzenie oceny końcowej",
+        "proposeTitle": "Potwierdź wystawienie proponowanej oceny końcowej",
         "proposeMessage": "Wystawiasz proponowaną ocenę końcową równą <0>{{ value }}</0> uczniowi <0>{{ studentName }}</0>. Upewnij się, że wszystkie dane są poprawne:<br /><br />- <0>uczeń</0> (czy to na pewno ten?)<br />- <0>ocena</0> (wzięta pod uwagę średnia ocen i oceny za aktywność i zachowanie)<br />- <0>przedmiot</0> (czy jest on poprawny?)",
         "confirmTitle": "Potwierdź zatwierdzenie oceny końcowej",
         "confirmMessage": "Wystawiasz <0>ocenę końćową</0> równą <0>{{ value }}</0> uczniowi <0>{{ studentName }}</0>. Upewnij się, że wszystkie dane są poprawne:<br /><br />- <0>uczeń</0> (czy to na pewno ten?)<br />- <0>ocena</0> (wzięta pod uwagę średnia ocen i oceny za aktywność i zachowanie)<br />- <0>przedmiot</0> (czy jest on poprawny?)"
       }
     },
     "propose": "Wystaw proponowaną ocenę końcową",
+    "change": "Zmień proponowaną ocenę końcową",
     "confirm": "Zatwierdź ocenę końcową",
     "noItems": "Brak ocen do wyświetlenia"
   },

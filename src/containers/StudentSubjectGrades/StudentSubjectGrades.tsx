@@ -3,32 +3,44 @@ import { useParams } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
 import { Box, Button, Typography } from '@mui/material';
 
-import { useGradesQuery, useUsersQuery } from 'shared/queries';
+import {
+  useCreateGradeQuery,
+  useGradesQuery,
+  useUsersQuery,
+} from 'shared/queries';
 import GradeCard from 'shared/components/GradeCard';
 import VirtualGrades from 'shared/components/VirtualGrades';
 import { Centered } from 'shared/components/Container';
 import SectionTitle from 'shared/components/SectionTitle';
 import { VirtualGradeType } from 'shared/types/grade';
 import { useConfirmationDialog } from 'shared/hooks';
-import FinalGradeDialog from './components/FinalGradeDialog';
+import FinalGradeDialog, {
+  FinalGradeDialogType,
+} from './components/FinalGradeDialog';
 import { getAverageGrade } from 'shared/utils/grade.utils';
+import colors from 'colors';
 
 export default function StudentSubjectGrades() {
   const { subjectId, studentId } = useParams();
   const { fetchUser, currentUser: student } = useUsersQuery();
+  const {
+    handleCreateProposed: createProposedGrade,
+    handleUpdateProposed: updateProposedGrade,
+    handleCreateFinal: createFinalGrade,
+  } = useCreateGradeQuery();
   const { fetchStudentGrades, studentGrades } = useGradesQuery();
   const averageGrade = studentGrades?.length
     ? getAverageGrade(studentGrades)
     : 0;
   const { t } = useTranslation('user');
-  const [finalGradeDialogState, setFinalGradeDialogState] = useState<
-    'propose' | 'confirm' | null
-  >(null);
+  const [finalGradeDialogType, setFinalGradeDialogType] =
+    useState<FinalGradeDialogType | null>(null);
   const { confirmAction, confirmationDialog } = useConfirmationDialog();
 
-  const hasProposedGrade = !!studentGrades?.find(
+  const proposedGrade = studentGrades?.find(
     (grade) => grade.type === VirtualGradeType.PROPOSED
   );
+  const hasProposedGrade = !!proposedGrade;
   const hasFinalGrade = !!studentGrades?.find(
     (grade) => grade.type === VirtualGradeType.FINAL
   );
@@ -45,29 +57,47 @@ export default function StudentSubjectGrades() {
     }
   }, [fetchStudentGrades, student?.id]);
 
-  const openFinalGradeDialog = (type: 'propose' | 'confirm') => {
-    setFinalGradeDialogState(type);
+  const openFinalGradeDialog = (type: FinalGradeDialogType) => {
+    setFinalGradeDialogType(type);
   };
 
   const closeFinalGradeDialog = () => {
-    setFinalGradeDialogState(null);
+    setFinalGradeDialogType(null);
   };
 
   const handleFinalGradeDialogSubmit = (
-    type: 'propose' | 'confirm',
+    type: FinalGradeDialogType,
     value: number
   ) => {
-    if (type === 'propose') {
-      void handleProposeFinalGrade(value);
+    if (type === 'propose' || type === 'change') {
+      void handleProposeFinalGrade(value, type);
     } else {
       void handleConfirmFinalGrade(value);
     }
   };
 
-  const proposeFinalGrade = (value: number) => {};
-  const confirmFinalGrade = () => {};
+  const proposeFinalGrade = (value: number) => {
+    if (subjectId && studentId) {
+      createProposedGrade({ subjectId, studentId, value });
+    }
+  };
 
-  const handleProposeFinalGrade = async (value: number) => {
+  const updateProposition = (value: number) => {
+    if (subjectId && studentId) {
+      updateProposedGrade({ subjectId, studentId, value });
+    }
+  };
+
+  const confirmFinalGrade = () => {
+    if (subjectId && studentId) {
+      createFinalGrade({ subjectId, studentId });
+    }
+  };
+
+  const handleProposeFinalGrade = async (
+    value: number,
+    type: 'propose' | 'change'
+  ) => {
     const shouldPropose = await confirmAction({
       title: 'grade:final.confirm.proposeTitle',
       message: (
@@ -75,14 +105,21 @@ export default function StudentSubjectGrades() {
           i18nKey={'grade:final.confirm.proposeMessage'}
           values={{ value: String(value), studentName: student?.fullName }}
         >
-          <strong />
+          <strong style={{ color: colors.text.primary }} />
         </Trans>
       ),
       confirmColor: 'primary',
-      confirmLabel: 'grade:propose',
+      confirmLabel: `grade:${type}`,
     });
 
-    if (shouldPropose) proposeFinalGrade(value);
+    if (shouldPropose) {
+      closeFinalGradeDialog();
+      if (type === 'propose') {
+        proposeFinalGrade(value);
+      } else {
+        updateProposition(value);
+      }
+    }
   };
 
   const handleConfirmFinalGrade = async (value: number) => {
@@ -93,14 +130,17 @@ export default function StudentSubjectGrades() {
           i18nKey={'grade:final.confirm.confirmMessage'}
           values={{ value: String(value), studentName: student?.fullName }}
         >
-          <strong />
+          <strong style={{ color: colors.text.primary }} />
         </Trans>
       ),
       confirmColor: 'primary',
       confirmLabel: 'confirm',
     });
 
-    if (shouldConfirm) confirmFinalGrade();
+    if (shouldConfirm) {
+      closeFinalGradeDialog();
+      confirmFinalGrade();
+    }
   };
 
   return (
@@ -122,17 +162,21 @@ export default function StudentSubjectGrades() {
             <Button
               variant="contained"
               color="primary"
-              onClick={() => openFinalGradeDialog('propose')}
+              disabled={hasFinalGrade}
+              onClick={() =>
+                openFinalGradeDialog(hasProposedGrade ? 'change' : 'propose')
+              }
             >
-              {t('grade:final.proposeFinalGrade')}
+              {t(`grade:${hasProposedGrade ? 'change' : 'propose'}`)}
             </Button>
+
             <Button
               variant="contained"
               color="primary"
               disabled={!hasProposedGrade || hasFinalGrade}
               onClick={() => openFinalGradeDialog('confirm')}
             >
-              {t('grade:final.confirmFinalGrade')}
+              {t('grade:confirm')}
             </Button>
           </Box>
         </>
@@ -140,11 +184,12 @@ export default function StudentSubjectGrades() {
         <>{t('noItems')}</>
       )}
 
-      {!!finalGradeDialogState && !!student && (
+      {!!finalGradeDialogType && !!student && (
         <FinalGradeDialog
-          state={finalGradeDialogState}
+          type={finalGradeDialogType}
           student={student}
           averageGrade={averageGrade}
+          proposedGrade={proposedGrade?.value}
           onSubmit={handleFinalGradeDialogSubmit}
           onClose={closeFinalGradeDialog}
         />

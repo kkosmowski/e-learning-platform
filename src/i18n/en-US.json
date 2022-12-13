@@ -46,7 +46,7 @@
       "proposed": "Proposed",
       "final": "Final grade",
       "tooltip": {
-        "average": "Automatically calculated, average grade of all assignment grades assessed. Teacher may adjust this grade depending on activity and behaviour grades.",
+        "average": "Automatically calculated, average grade of all assignment grades assessed. Based on this and other factors, teacher chooses the final grade.",
         "proposed": "Manually selected by the teacher, proposed grade for this subject. It was selected based on the average assignment grade visible above as well as activity and behaviour grades.",
         "final": "Manually selected by the teacher, final grade for this subject. This grade is definitive and cannot be modified."
       },
@@ -201,7 +201,9 @@
       },
       "submit": "Assign",
       "toast": {
-        "success": "Successfully assigned a grade"
+        "success": "Successfully assigned a grade",
+        "proposedSuccess": "Successfully assigned the proposed final grade",
+        "confirmSuccess": "Successfully confirmed the final grade"
       }
     },
     "type": {
@@ -236,15 +238,22 @@
       "assumedLowestValue": "Automatically selected grade F, because no submission was delivered in time.\nIt is only a guess though."
     },
     "final": {
-      "proposeFinalGrade": "Propose the final grade",
-      "changeProposedFinalGrade": "Change the proposed final grade",
-      "confirmFinalGrade": "Confirm the final grade",
       "dialog": {
         "title": {
           "propose": "Proposing the final grade",
+          "change": "Change the proposed final grade",
           "confirm": "Confirming the final grade"
         },
-        "message": "Select a grade to propose as the <0>final grade</0> for student <0>{{ studentName }}</0>.<br />This grade can be modified later, until it is confirmed as the final grade.<br /><br />Current <0>average grade</0> is <0>{{ averageGrade }}</0>.",
+        "message": {
+          "propose": "Select a grade to propose as the <0>final grade</0> for student <0>{{ studentName }}</0>.<br />This grade can be modified later, until it is confirmed as the final grade.<br /><br />Current <0>average grade</0> is <0>{{ averageGrade }}</0>.",
+          "change": "Select a grade to propose as the <0>final grade</0> for student <0>{{ studentName }}</0>.<br />This grade can be modified until it is confirmed as the final grade.<br /><br />Current <0>average grade</0> is <0>{{ averageGrade }}</0>.",
+          "confirm": "Current <0>proposed final grade</0> for student <0>{{ studentName }}</0> is <0>{{ proposedGrade }}.<br />If this grade is selected as the final one, <0>it cannot be later modified."
+        },
+        "checkbox": {
+          "propose": "I understand and I want to assign the proposed final grade",
+          "change": "I understand and I want to change the proposed final grade",
+          "confirm": "I understand and I want to confirm the final grade"
+        },
         "current": "Currently selected grade is <0>{{ value }}</0>.",
         "largeDifference": "Currently selected grade is <0>{{ value }}</0>, which is significantly different than the <0>average grade</0>. Are you sure this grade is appropriate?",
         "selectValue": "To propose a grade, first choose appropriate one."
@@ -257,6 +266,7 @@
       }
     },
     "propose": "Propose the final grade",
+    "change": "Change the proposed final grade",
     "confirm": "Confirm the final grade",
     "noItems": "There are no grades yet"
   },

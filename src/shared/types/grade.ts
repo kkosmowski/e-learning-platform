@@ -65,6 +65,17 @@ export interface CreateGradeForm {
   value: number;
 }
 
+export interface CreateProposedGrade {
+  subjectId: string;
+  studentId: string;
+  value: number;
+}
+
+export interface CreateFinalGrade {
+  subjectId: string;
+  studentId: string;
+}
+
 // payloads
 
 export interface CreateGradePayload {
@@ -74,6 +85,17 @@ export interface CreateGradePayload {
   type: GradeType | VirtualGradeType;
   name?: string;
   value: number;
+}
+
+export interface CreateProposedGradePayload {
+  group_subject_id: string;
+  student_id: string;
+  value: number;
+}
+
+export interface CreateFinalGradePayload {
+  group_subject_id: string;
+  student_id: string;
 }
 
 export interface UpdateGradePayload {

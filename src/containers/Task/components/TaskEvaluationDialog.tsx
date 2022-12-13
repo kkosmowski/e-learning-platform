@@ -22,7 +22,7 @@ interface TaskEvaluationDialogProps {
 
 export default function TaskEvaluationDialog(props: TaskEvaluationDialogProps) {
   const { open, data, onClose } = props;
-  const createGrade = useCreateGradeQuery();
+  const { handleCreate: createGrade } = useCreateGradeQuery();
   const { get, set } = useLocalStorage(); // @todo if this case repeats, implement useHideToast (hide, isHidden)
   const { t } = useTranslation('grade');
   const assumedLowestValueToastRef = useRef<string | null>(null);

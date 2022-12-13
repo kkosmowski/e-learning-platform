@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import {
   Box,
   Button,
@@ -12,33 +12,46 @@ import { Trans, useTranslation } from 'react-i18next';
 
 import Dialog from 'shared/components/Dialog';
 import { User } from 'shared/types/user';
+import LabelledCheckbox from 'shared/components/LabelledCheckbox';
+import colors from 'colors';
+
+export type FinalGradeDialogType = 'propose' | 'change' | 'confirm';
 
 interface FinalGradeDialogProps {
-  state: 'propose' | 'confirm';
+  type: FinalGradeDialogType;
   student: User;
   averageGrade: number;
-  onSubmit: (type: 'propose' | 'confirm', value: number) => void;
+  proposedGrade?: number;
+  onSubmit: (type: FinalGradeDialogType, value: number) => void;
   onClose: () => void;
 }
 
 const grades = [1, 2, 2.5, 3, 3.5, 4, 4.5, 5];
 
 export default function FinalGradeDialog(props: FinalGradeDialogProps) {
-  const [value, setValue] = useState(0);
-  const { state, student, averageGrade, onSubmit, onClose } = props;
+  const { type, student, averageGrade, proposedGrade, onSubmit, onClose } =
+    props;
+  const [value, setValue] = useState(proposedGrade || 0);
+  const [understood, setUnderstood] = useState(false);
   const { t } = useTranslation('grade');
 
-  const titleKey = `final.dialog.title.${state}`;
-  const isLargeDifference =
-    Math.abs(value - averageGrade) > (averageGrade > 5.5 ? 1 : 0.5);
-  const subTextKey = value
-    ? isLargeDifference
-      ? 'grade:final.dialog.largeDifference'
-      : 'grade:final.dialog.current'
-    : 'grade:final.dialog.selectValue';
+  const titleKey = `final.dialog.title.${type}`;
+  const isLargeDifference = useMemo(
+    () => Math.abs(value - averageGrade) > (averageGrade > 5.5 ? 1 : 0.5),
+    [value, averageGrade]
+  );
+  const subTextKey = useMemo(
+    () =>
+      value
+        ? isLargeDifference
+          ? 'grade:final.dialog.largeDifference'
+          : 'grade:final.dialog.current'
+        : 'grade:final.dialog.selectValue',
+    [value, isLargeDifference]
+  );
 
   const handleSubmit = () => {
-    onSubmit(state, value);
+    onSubmit(type, value);
   };
 
   return (
@@ -55,42 +68,60 @@ export default function FinalGradeDialog(props: FinalGradeDialogProps) {
           <Stack gap={2}>
             <Typography>
               <Trans
-                i18nKey={'grade:final.dialog.message'}
-                values={{ studentName: student.fullName, averageGrade }}
+                i18nKey={`grade:final.dialog.message.${type}`}
+                values={{
+                  studentName: student.fullName,
+                  averageGrade,
+                  proposedGrade,
+                }}
               >
-                <strong />
+                <strong style={{ color: colors.text.primary }} />
               </Trans>
             </Typography>
 
-            <ToggleButtonGroup
-              exclusive
-              value={value}
-              onChange={(e, val) => setValue(val)}
-            >
-              {grades.map((value) => (
-                <GradeButton key={value} value={value}>
-                  {value}
-                </GradeButton>
-              ))}
-            </ToggleButtonGroup>
+            {type !== 'confirm' && (
+              <ToggleButtonGroup
+                exclusive
+                value={value}
+                onChange={(e, val) => setValue(val)}
+              >
+                {grades.map((value) => (
+                  <GradeButton key={value} value={value}>
+                    {value}
+                  </GradeButton>
+                ))}
+              </ToggleButtonGroup>
+            )}
 
-            <Typography
-              {...(value && {
-                color: isLargeDifference ? 'text.warning' : 'primary',
-              })}
-            >
-              <Trans i18nKey={subTextKey} values={{ value, averageGrade }}>
-                <strong />
-              </Trans>
-            </Typography>
+            {type !== 'confirm' && (
+              <Typography
+                {...(value && {
+                  color: isLargeDifference ? 'text.warning' : 'primary',
+                })}
+              >
+                <Trans i18nKey={subTextKey} values={{ value, averageGrade }}>
+                  <strong />
+                </Trans>
+              </Typography>
+            )}
+
+            <LabelledCheckbox
+              label={t(`grade:final.dialog.checkbox.${type}`)}
+              value={understood}
+              onChange={(e) => setUnderstood(e.target.checked)}
+            />
 
             <Box sx={{ display: 'flex', gap: 2 }}>
               <Button
                 variant="contained"
-                disabled={!value}
+                disabled={
+                  !value ||
+                  !understood ||
+                  (value === proposedGrade && type !== 'confirm')
+                }
                 onClick={handleSubmit}
               >
-                {t('propose')}
+                {t(type)}
               </Button>
 
               <Button

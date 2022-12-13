@@ -1,6 +1,10 @@
 import {
+  CreateFinalGradePayload,
+  CreateFinalGrade,
   CreateGradeForm,
   CreateGradePayload,
+  CreateProposedGrade,
+  CreateProposedGradePayload,
   Grade,
   GradeDto,
   GradeType,
@@ -69,6 +73,21 @@ export const mapCreateGradeFormToCreateGradePayload = (
   ...(form.taskId && { task_id: form.taskId }),
   ...(form.name && { name: form.name }),
   value: form.value!,
+});
+
+export const mapCreateProposedGradeToCreateProposedGradePayload = (
+  form: CreateProposedGrade
+): CreateProposedGradePayload => ({
+  group_subject_id: form.subjectId,
+  student_id: form.studentId,
+  value: form.value!,
+});
+
+export const mapCreateFinalGradeToCreateFinalGradePayload = (
+  form: CreateFinalGrade
+): CreateFinalGradePayload => ({
+  group_subject_id: form.subjectId,
+  student_id: form.studentId,
 });
 
 export const isVirtualGrade = (

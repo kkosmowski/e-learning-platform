@@ -16,7 +16,7 @@ interface AssignNewGradeProps {
 export default function AssignNewGrade(props: AssignNewGradeProps) {
   const { taskId } = props;
   const { subjectId } = useParams();
-  const createGrade = useCreateGradeQuery();
+  const { handleCreate: createGrade } = useCreateGradeQuery();
   const { back } = useCustomNavigate();
   const { t } = useTranslation('grade');
 

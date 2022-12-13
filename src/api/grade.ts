@@ -1,7 +1,9 @@
 import { authorized } from './axios';
 import {
+  CreateFinalGradePayload,
   CreateGradePayload,
   CreateGradeResponse,
+  CreateProposedGradePayload,
   GetGradeResponse,
   GetGradesResponse,
   UpdateGradePayload,
@@ -14,11 +16,26 @@ export const createGrade = (
 ): Promise<CreateGradeResponse> =>
   authorized((api) => api.post('grade', payload));
 
+export const createProposedGrade = (
+  payload: CreateProposedGradePayload
+): Promise<CreateGradeResponse> =>
+  authorized((api) => api.post('grade/proposed', payload));
+
+export const createFinalGrade = (
+  payload: CreateFinalGradePayload
+): Promise<CreateGradeResponse> =>
+  authorized((api) => api.post('grade/final', payload));
+
 export const updateGrade = ({
   id,
   ...data
 }: UpdateGradePayload): Promise<UpdateGradeResponse> =>
   authorized((api) => api.patch(`grade/${id}`, data));
+
+export const updateProposedGrade = (
+  payload: CreateProposedGradePayload
+): Promise<CreateGradeResponse> =>
+  authorized((api) => api.put('grade/proposed', payload));
 
 export const getStudentGrades = (
   studentId: string
