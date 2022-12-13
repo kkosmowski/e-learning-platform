@@ -206,6 +206,14 @@
         "confirmSuccess": "Wystawiono ocenę końcową"
       }
     },
+    "update": {
+      "title": "Zmień ocenę",
+      "message": {
+        "assignment": "Modyfikujesz ocenę ucznia <0>{{ studentName }}</0><br />za zadanie <0>{{ taskName }}</0> (z dnia {{ date }}).",
+        "behaviour": "Modyfikujesz ocenę ucznia <0>{{ studentName }}</0><br />za <0>zachowanie</0> (z dnia {{ date }}).",
+        "activity": "Modyfikujesz ocenę ucznia <0>{{ studentName }}</0><br />za <0>aktywność</0> (z dnia {{ date }})."
+      }
+    },
     "type": {
       "assignment": "Oceny za zadania",
       "nonAssignment": "Oceny za aktywność i zachowanie",

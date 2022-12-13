@@ -206,6 +206,14 @@
         "confirmSuccess": "Successfully confirmed the final grade"
       }
     },
+    "update": {
+      "title": "Update the grade",
+      "message": {
+        "assignment": "You are modifying grade of <0>{{ studentName }}</0><br />received for task <0>{{ taskName }}</0> (created at {{ date }}).",
+        "behaviour": "You are modifying grade of <0>{{ studentName }}</0><br />received for <0>behaviour</0> (created at {{ date }}).",
+        "activity": "You are modifying grade of <0>{{ studentName }}</0><br />received for <0>activity</0> (created at {{ date }})."
+      }
+    },
     "type": {
       "assignment": "Assignment grades",
       "nonAssignment": "Activity & behaviour grades",

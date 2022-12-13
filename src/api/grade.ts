@@ -27,10 +27,11 @@ export const createFinalGrade = (
   authorized((api) => api.post('grade/final', payload));
 
 export const updateGrade = ({
-  id,
+  gradeId,
+  studentId,
   ...data
 }: UpdateGradePayload): Promise<UpdateGradeResponse> =>
-  authorized((api) => api.patch(`grade/${id}`, data));
+  authorized((api) => api.put(`grade/${gradeId}/student/${studentId}`, data));
 
 export const updateProposedGrade = (
   payload: CreateProposedGradePayload
