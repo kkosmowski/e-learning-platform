@@ -71,6 +71,11 @@ export interface CreateProposedGrade {
   value: number;
 }
 
+export interface CreateFinalGrade {
+  subjectId: string;
+  studentId: string;
+}
+
 // payloads
 
 export interface CreateGradePayload {
@@ -86,6 +91,11 @@ export interface CreateProposedGradePayload {
   group_subject_id: string;
   student_id: string;
   value: number;
+}
+
+export interface CreateFinalGradePayload {
+  group_subject_id: string;
+  student_id: string;
 }
 
 export interface UpdateGradePayload {

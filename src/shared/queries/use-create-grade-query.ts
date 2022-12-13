@@ -5,11 +5,18 @@ import { useTranslation } from 'react-i18next';
 
 import { getErrorDetail } from 'shared/utils/common.utils';
 import {
+  mapCreateFinalGradeToCreateFinalGradePayload,
   mapCreateGradeFormToCreateGradePayload,
   mapCreateProposedGradeToCreateProposedGradePayload,
 } from 'shared/utils/grade.utils';
-import { createGrade, createProposedGrade } from 'api/grade';
 import {
+  createFinalGrade,
+  createGrade,
+  createProposedGrade,
+  updateProposedGrade,
+} from 'api/grade';
+import {
+  CreateFinalGrade,
   CreateGradeForm,
   CreateGradeResponse,
   CreateProposedGrade,
@@ -35,6 +42,27 @@ export function useCreateGradeQuery() {
     },
   });
 
+  const { mutate: handleUpdateProposed } = useMutation<
+    CreateGradeResponse,
+    AxiosError,
+    CreateProposedGrade
+  >(
+    (grade) =>
+      updateProposedGrade(
+        mapCreateProposedGradeToCreateProposedGradePayload(grade)
+      ),
+    {
+      onSuccess: async () => {
+        toast.success(t('update.toast.proposedSuccess'));
+        await queryClient.invalidateQueries(['grades']);
+      },
+      onError: (err) => {
+        const error = getErrorDetail(err);
+        toast.error(t(error));
+      },
+    }
+  );
+
   const { mutate: handleCreateProposed } = useMutation<
     CreateGradeResponse,
     AxiosError,
@@ -56,8 +84,29 @@ export function useCreateGradeQuery() {
     }
   );
 
+  const { mutate: handleCreateFinal } = useMutation<
+    CreateGradeResponse,
+    AxiosError,
+    CreateFinalGrade
+  >(
+    (grade) =>
+      createFinalGrade(mapCreateFinalGradeToCreateFinalGradePayload(grade)),
+    {
+      onSuccess: async () => {
+        toast.success(t('create.toast.finalSuccess'));
+        await queryClient.invalidateQueries(['grades']);
+      },
+      onError: (err) => {
+        const error = getErrorDetail(err);
+        toast.error(t(error));
+      },
+    }
+  );
+
   return {
     handleCreate,
     handleCreateProposed,
+    handleUpdateProposed,
+    handleCreateFinal,
   };
 }
