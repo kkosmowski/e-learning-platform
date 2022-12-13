@@ -4,9 +4,16 @@ import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 
 import { getErrorDetail } from 'shared/utils/common.utils';
-import { mapCreateGradeFormToCreateGradePayload } from 'shared/utils/grade.utils';
-import { createGrade } from 'api/grade';
-import { CreateGradeForm, CreateGradeResponse } from 'shared/types/grade';
+import {
+  mapCreateGradeFormToCreateGradePayload,
+  mapCreateProposedGradeToCreateProposedGradePayload,
+} from 'shared/utils/grade.utils';
+import { createGrade, createProposedGrade } from 'api/grade';
+import {
+  CreateGradeForm,
+  CreateGradeResponse,
+  CreateProposedGrade,
+} from 'shared/types/grade';
 
 export function useCreateGradeQuery() {
   const { t } = useTranslation('grade');
@@ -28,5 +35,29 @@ export function useCreateGradeQuery() {
     },
   });
 
-  return handleCreate;
+  const { mutate: handleCreateProposed } = useMutation<
+    CreateGradeResponse,
+    AxiosError,
+    CreateProposedGrade
+  >(
+    (grade) =>
+      createProposedGrade(
+        mapCreateProposedGradeToCreateProposedGradePayload(grade)
+      ),
+    {
+      onSuccess: async () => {
+        toast.success(t('create.toast.proposedSuccess'));
+        await queryClient.invalidateQueries(['grades']);
+      },
+      onError: (err) => {
+        const error = getErrorDetail(err);
+        toast.error(t(error));
+      },
+    }
+  );
+
+  return {
+    handleCreate,
+    handleCreateProposed,
+  };
 }

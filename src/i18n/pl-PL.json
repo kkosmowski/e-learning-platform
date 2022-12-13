@@ -46,7 +46,7 @@
       "proposed": "Proponowana ocena",
       "final": "Ocena końcowa",
       "tooltip": {
-        "average": "Ocena automatycznie obliczana na podstawie ocen za zadania. Nauczyciel może ją zmienić w zależności od ocen za zachowanie i aktywność.",
+        "average": "Ocena automatycznie obliczana na podstawie ocen za zadania. Między innymi na jej podstawie nauczyciel wystawia ocenę końcową.",
         "proposed": "Ręcznie wybrana ocena przez nauczyciela jako proponowana ocena za przedmiot. Została wystawiona na podstawie wszystkich zdobytych ocen.",
         "final": "Ręcznie wybrana ocena przez nauczyciela jako ocena końcowa. Jest to ostateczna decyzja, której nie można zmienić."
       },
@@ -201,7 +201,9 @@
       },
       "submit": "Wystaw",
       "toast": {
-        "success": "Wystawiono nową ocenę"
+        "success": "Wystawiono nową ocenę",
+        "proposedSuccess": "Wystawiono proponowaną ocenę końcową",
+        "confirmSuccess": "Wystawiono ocenę końcową"
       }
     },
     "type": {

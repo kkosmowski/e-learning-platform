@@ -1,8 +1,8 @@
 import { Box, Card, CardContent, SxProps, Typography } from '@mui/material';
-
-import { Grade } from 'shared/types/grade';
-import GradeRow from './GradeRow';
 import { useTranslation } from 'react-i18next';
+
+import { Grade, VirtualGradeType } from 'shared/types/grade';
+import GradeRow from './GradeRow';
 
 interface GradeCardProps {
   title?: string;
@@ -26,14 +26,19 @@ export default function GradeCard(props: GradeCardProps) {
   } = props;
   const { t } = useTranslation('grade');
 
+  const filteredGrades = grades.filter(
+    ({ type }) =>
+      type !== VirtualGradeType.PROPOSED && type !== VirtualGradeType.FINAL
+  );
+
   return (
     <Card sx={sx}>
       <CardContent sx={{ overflow: 'auto' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           {title && <Typography>{title}</Typography>}
 
-          {grades.length ? (
-            grades.map((grade, index) => (
+          {filteredGrades.length ? (
+            filteredGrades.map((grade, index) => (
               <GradeRow
                 key={grade.id}
                 grade={grade}
@@ -41,7 +46,7 @@ export default function GradeCard(props: GradeCardProps) {
                 showNames={showNames}
                 hideDate={hideDate}
                 keepEmptyColumns={keepEmptyColumns}
-                showDivider={index !== grades.length - 1}
+                showDivider={index !== filteredGrades.length - 1}
               />
             ))
           ) : (

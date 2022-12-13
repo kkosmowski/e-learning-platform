@@ -46,7 +46,7 @@
       "proposed": "Proposed",
       "final": "Final grade",
       "tooltip": {
-        "average": "Automatically calculated, average grade of all assignment grades assessed. Teacher may adjust this grade depending on activity and behaviour grades.",
+        "average": "Automatically calculated, average grade of all assignment grades assessed. Based on this and other factors, teacher chooses the final grade.",
         "proposed": "Manually selected by the teacher, proposed grade for this subject. It was selected based on the average assignment grade visible above as well as activity and behaviour grades.",
         "final": "Manually selected by the teacher, final grade for this subject. This grade is definitive and cannot be modified."
       },
@@ -201,7 +201,9 @@
       },
       "submit": "Assign",
       "toast": {
-        "success": "Successfully assigned a grade"
+        "success": "Successfully assigned a grade",
+        "proposedSuccess": "Successfully assigned the proposed final grade",
+        "confirmSuccess": "Successfully confirmed the final grade"
       }
     },
     "type": {

@@ -3,7 +3,11 @@ import { useParams } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
 import { Box, Button, Typography } from '@mui/material';
 
-import { useGradesQuery, useUsersQuery } from 'shared/queries';
+import {
+  useCreateGradeQuery,
+  useGradesQuery,
+  useUsersQuery,
+} from 'shared/queries';
 import GradeCard from 'shared/components/GradeCard';
 import VirtualGrades from 'shared/components/VirtualGrades';
 import { Centered } from 'shared/components/Container';
@@ -16,6 +20,7 @@ import { getAverageGrade } from 'shared/utils/grade.utils';
 export default function StudentSubjectGrades() {
   const { subjectId, studentId } = useParams();
   const { fetchUser, currentUser: student } = useUsersQuery();
+  const { handleCreateProposed: createProposedGrade } = useCreateGradeQuery();
   const { fetchStudentGrades, studentGrades } = useGradesQuery();
   const averageGrade = studentGrades?.length
     ? getAverageGrade(studentGrades)
@@ -64,7 +69,11 @@ export default function StudentSubjectGrades() {
     }
   };
 
-  const proposeFinalGrade = (value: number) => {};
+  const proposeFinalGrade = (value: number) => {
+    if (subjectId && studentId) {
+      createProposedGrade({ subjectId, studentId, value });
+    }
+  };
   const confirmFinalGrade = () => {};
 
   const handleProposeFinalGrade = async (value: number) => {
@@ -82,7 +91,10 @@ export default function StudentSubjectGrades() {
       confirmLabel: 'grade:propose',
     });
 
-    if (shouldPropose) proposeFinalGrade(value);
+    if (shouldPropose) {
+      closeFinalGradeDialog();
+      proposeFinalGrade(value);
+    }
   };
 
   const handleConfirmFinalGrade = async (value: number) => {
@@ -100,7 +112,10 @@ export default function StudentSubjectGrades() {
       confirmLabel: 'confirm',
     });
 
-    if (shouldConfirm) confirmFinalGrade();
+    if (shouldConfirm) {
+      closeFinalGradeDialog();
+      confirmFinalGrade();
+    }
   };
 
   return (

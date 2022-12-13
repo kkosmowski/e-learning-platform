@@ -58,16 +58,16 @@ export default function VirtualGrades(props: VirtualGradesProps) {
 
   const proposedGrade = useMemo(
     () =>
-      // @todo ||
+      grades.filter(({ type }) => type == VirtualGradeType.PROPOSED)[0] ||
       defaultProposedGrade,
-    [defaultProposedGrade]
+    [grades, defaultProposedGrade]
   );
 
   const finalGrade = useMemo(
     () =>
-      // @todo ||
+      grades.filter(({ type }) => type == VirtualGradeType.FINAL)[0] ||
       defaultFinalGrade,
-    [defaultFinalGrade]
+    [grades, defaultFinalGrade]
   );
 
   if (!averageGrade || !proposedGrade || !finalGrade) return null;
