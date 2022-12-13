@@ -235,7 +235,33 @@
     "toast": {
       "assumedLowestValue": "Automatically selected grade F, because no submission was delivered in time.\nIt is only a guess though."
     },
+    "final": {
+      "proposeFinalGrade": "Propose the final grade",
+      "changeProposedFinalGrade": "Change the proposed final grade",
+      "confirmFinalGrade": "Confirm the final grade",
+      "dialog": {
+        "title": {
+          "propose": "Proposing the final grade",
+          "confirm": "Confirming the final grade"
+        },
+        "message": "Select a grade to propose as the <0>final grade</0> for student <0>{{ studentName }}</0>.<br />This grade can be modified later, until it is confirmed as the final grade.<br /><br />Current <0>average grade</0> is <0>{{ averageGrade }}</0>.",
+        "current": "Currently selected grade is <0>{{ value }}</0>.",
+        "largeDifference": "Currently selected grade is <0>{{ value }}</0>, which is significantly different than the <0>average grade</0>. Are you sure this grade is appropriate?",
+        "selectValue": "To propose a grade, first choose appropriate one."
+      },
+      "confirm": {
+        "proposeTitle": "Proposing the final grade",
+        "proposeMessage": "You are about to propose the final grade <0>{{ value }}</0> for student <0>{{ studentName }}</0>. Please double check everything is set correctly:<br /><br />- <0>student</0> (definitely this one?)<br />- <0>grade</0> (considering average value and activity & behaviour grades)<br />- <0>subject</0> (is this the correct one?)",
+        "confirmTitle": "Confirming the final grade",
+        "confirmMessage": "You are about to confirm the <0>final grade</0> <0>{{ value }}</0> for student <0>{{ studentName }}</0>. Please double check everything is set correctly:<br /><br />- <0>student</0> (definitely this one?)<br />- <0>grade</0> (considering average value and activity & behaviour grades)<br />- <0>subject</0> (is this the correct one?)"
+      }
+    },
+    "propose": "Propose the final grade",
+    "confirm": "Confirm the final grade",
     "noItems": "There are no grades yet"
+  },
+  "user": {
+    "grades": "Grades"
   },
   "actions": {
     "tooltip": {

@@ -9,7 +9,6 @@ import {
   GetFullSubjectResponse,
   GetSubjectResponse,
   SimpleSubject,
-  Subject,
   SubjectWithClass,
   UpdateSubjectResponse,
 } from 'shared/types/subject';

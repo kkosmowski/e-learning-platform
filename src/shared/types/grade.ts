@@ -28,7 +28,7 @@ export interface GradeDto {
   group_subject: SimpleSubjectDto;
   user: SimpleUserDto;
   task?: TaskDto;
-  type: GradeType;
+  type: GradeType | VirtualGradeType;
   name?: string;
   value: number;
   created_at: string;
@@ -40,7 +40,7 @@ export interface Grade {
   subject: SimpleSubject;
   user: SimpleUser;
   task?: Task;
-  type: GradeType;
+  type: GradeType | VirtualGradeType;
   name?: string;
   value: number;
   createdAt: Date;
@@ -71,7 +71,7 @@ export interface CreateGradePayload {
   group_subject_id: string;
   student_id: string;
   task_id?: string;
-  type: GradeType;
+  type: GradeType | VirtualGradeType;
   name?: string;
   value: number;
 }

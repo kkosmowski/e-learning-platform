@@ -33,6 +33,7 @@ import TeacherGuard from 'shared/guards/TeacherGuard';
 import { RouteObjectWithId } from 'shared/types/routing';
 import { TaskType } from 'shared/types/task';
 import { Role } from 'shared/types/user';
+import StudentSubjectGrades from '../../containers/StudentSubjectGrades';
 
 export const features: RouteObjectWithId[] = [
   {
@@ -171,6 +172,14 @@ export const features: RouteObjectWithId[] = [
                 element: (
                   <TeacherGuard redirectTo="/404">
                     <AssignNewGrade />
+                  </TeacherGuard>
+                ),
+              },
+              {
+                path: ':studentId',
+                element: (
+                  <TeacherGuard redirectTo="/404">
+                    <StudentSubjectGrades />
                   </TeacherGuard>
                 ),
               },
