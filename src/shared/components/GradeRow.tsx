@@ -193,8 +193,8 @@ export default function GradeRow(props: GradeRowProps) {
         {options?.length && (
           <>
             <Grid item>
-              <IconButton onClick={showOptions}>
-                <MoreVert />
+              <IconButton size="small" sx={{ m: '-3px' }} onClick={showOptions}>
+                <MoreVert fontSize="small" />
               </IconButton>
             </Grid>
 

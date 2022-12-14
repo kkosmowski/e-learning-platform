@@ -1,5 +1,6 @@
 export * from './use-class-form';
 export * from './use-confirmation-dialog';
+export * from './use-edit-grade';
 export * from './use-grade-form';
 export * from './use-local-storage';
 export * from './use-notice-form';
