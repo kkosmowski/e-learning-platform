@@ -509,7 +509,7 @@
     "SUBJECT_NAME_TAKEN": "Kategoria przedmiotu o tej nazwie już istnieje.",
     "INCORRECT CREDENTIALS": "Niepoprawny e-mail bądź hasło.",
     "USER_NOT_FOUND": "Nie znaleziono użytkownika.",
-    "USER_INACTIVE": "To konto nie jest aktywne.",
+    "USER_INACTIVE": "Konto nieaktywne.",
     "Class_NAME_REQUIRED": "Nazwa klasy jest wymagana.",
     "Class_NAME_TAKEN": "Ta nazwa klasy jest już zajęta.",
     "Class_TEACHER_REQUIRED": "Wybierz wychowawcę klasy.",

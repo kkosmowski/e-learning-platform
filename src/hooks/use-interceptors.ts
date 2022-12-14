@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { AxiosError } from 'axios';
 
 import { api } from 'api/axios';
-import { getErrorDetail } from 'shared/utils/common.utils';
 
 export default function useInterceptors(signOut: () => void) {
   useEffect(() => {
@@ -12,7 +11,13 @@ export default function useInterceptors(signOut: () => void) {
         if (error.response?.status === 401) {
           signOut();
         }
-        throw new Error(getErrorDetail(error));
+        throw new AxiosError(
+          error.message,
+          error.code,
+          error.config,
+          error.request,
+          error.response
+        );
       }
     );
 

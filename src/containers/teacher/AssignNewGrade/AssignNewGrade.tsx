@@ -34,7 +34,7 @@ export default function AssignNewGrade(props: AssignNewGradeProps) {
 
   const handleSubmit = (form: CreateGradeForm) => {
     createGrade(form);
-    back();
+    requestIdleCallback(() => back());
   };
 
   const { Form } = useGradeForm({
