@@ -1,6 +1,6 @@
 import {
-  CreateFinalGradePayload,
   CreateFinalGrade,
+  CreateFinalGradePayload,
   CreateGradeForm,
   CreateGradePayload,
   CreateProposedGrade,
@@ -36,12 +36,17 @@ export const divideGrades = (
       }
 
       if (
-        grade.type === GradeType.ASSIGNMENT &&
+        [
+          GradeType.ASSIGNMENT,
+          VirtualGradeType.PROPOSED,
+          VirtualGradeType.FINAL,
+        ].includes(grade.type) &&
         assignmentGrades.length !== limit
       ) {
         assignmentGrades.push(grade);
       } else if (
-        grade.type !== GradeType.ASSIGNMENT &&
+        (grade.type === GradeType.ACTIVITY ||
+          grade.type === GradeType.BEHAVIOUR) &&
         nonAssignmentGrades.length !== limit
       ) {
         nonAssignmentGrades.push(grade);
