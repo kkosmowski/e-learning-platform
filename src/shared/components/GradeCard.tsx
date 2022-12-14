@@ -2,7 +2,7 @@ import { Box, Card, CardContent, SxProps, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 import { Grade, VirtualGradeType } from 'shared/types/grade';
-import GradeRow from './GradeRow';
+import GradeRow, { GradeRowOption } from './GradeRow';
 
 interface GradeCardProps {
   title?: string;
@@ -11,6 +11,7 @@ interface GradeCardProps {
   showNames?: boolean;
   hideDate?: boolean;
   keepEmptyColumns?: boolean; // maintains alignment of different grade types
+  options?: GradeRowOption[];
   sx?: SxProps;
 }
 
@@ -23,6 +24,7 @@ export default function GradeCard(props: GradeCardProps) {
     hideDate,
     keepEmptyColumns,
     sx,
+    options,
   } = props;
   const { t } = useTranslation('grade');
 
@@ -47,6 +49,7 @@ export default function GradeCard(props: GradeCardProps) {
                 hideDate={hideDate}
                 keepEmptyColumns={keepEmptyColumns}
                 showDivider={index !== filteredGrades.length - 1}
+                options={options}
               />
             ))
           ) : (

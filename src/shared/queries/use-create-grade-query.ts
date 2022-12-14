@@ -13,6 +13,7 @@ import {
   createFinalGrade,
   createGrade,
   createProposedGrade,
+  updateGrade,
   updateProposedGrade,
 } from 'api/grade';
 import {
@@ -20,6 +21,7 @@ import {
   CreateGradeForm,
   CreateGradeResponse,
   CreateProposedGrade,
+  UpdateGradePayload,
 } from 'shared/types/grade';
 
 export function useCreateGradeQuery() {
@@ -33,6 +35,22 @@ export function useCreateGradeQuery() {
   >((form) => createGrade(mapCreateGradeFormToCreateGradePayload(form)), {
     onSuccess: async () => {
       toast.success(t('create.toast.success'));
+      await queryClient.invalidateQueries(['grades']);
+      await queryClient.invalidateQueries(['task-submissions']);
+    },
+    onError: (err) => {
+      const error = getErrorDetail(err);
+      toast.error(t(error));
+    },
+  });
+
+  const { mutate: handleUpdate } = useMutation<
+    CreateGradeResponse,
+    AxiosError,
+    UpdateGradePayload
+  >(updateGrade, {
+    onSuccess: async () => {
+      toast.success(t('update.toast.success'));
       await queryClient.invalidateQueries(['grades']);
       await queryClient.invalidateQueries(['task-submissions']);
     },
@@ -105,6 +123,7 @@ export function useCreateGradeQuery() {
 
   return {
     handleCreate,
+    handleUpdate,
     handleCreateProposed,
     handleUpdateProposed,
     handleCreateFinal,

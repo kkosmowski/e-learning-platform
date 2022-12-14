@@ -99,7 +99,8 @@ export interface CreateFinalGradePayload {
 }
 
 export interface UpdateGradePayload {
-  id: string;
+  gradeId: string;
+  studentId: string;
   value: number;
 }
 

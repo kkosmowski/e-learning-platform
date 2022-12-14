@@ -1,12 +1,12 @@
 import { useTranslation } from 'react-i18next';
-import { Box, Stack } from '@mui/material';
 
 import SectionTitle from 'shared/components/SectionTitle';
 import TextButton from 'shared/components/TextButton';
 import GradeCard from 'shared/components/GradeCard';
-import { isStudent, isTeacher } from 'shared/utils/user.utils';
+import { isTeacher } from 'shared/utils/user.utils';
 import { useAuth } from 'contexts/auth';
 import { useLatestGradesQuery } from 'shared/queries';
+import { useEditGrade } from 'shared/hooks';
 
 interface LatestGradesProps {
   subjectId: string;
@@ -19,8 +19,8 @@ export default function LatestGrades(props: LatestGradesProps) {
   const { t } = useTranslation('subject');
   const { currentUser } = useAuth();
   const isUserTeacher = isTeacher(currentUser);
-  const isUserStudent = isStudent(currentUser);
   const { latestGrades } = useLatestGradesQuery(subjectId);
+  const { options, Dialog } = useEditGrade(latestGrades, isUserTeacher);
 
   return (
     <>
@@ -44,7 +44,14 @@ export default function LatestGrades(props: LatestGradesProps) {
         )}
       </SectionTitle>
 
-      <GradeCard grades={latestGrades} showNames keepEmptyColumns />
+      <GradeCard
+        grades={latestGrades}
+        showNames
+        keepEmptyColumns
+        options={options}
+      />
+
+      {Dialog}
     </>
   );
 }

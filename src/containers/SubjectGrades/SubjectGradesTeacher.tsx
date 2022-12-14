@@ -11,6 +11,7 @@ import { divideGrades } from 'shared/utils/grade.utils';
 import { useGradesQuery } from 'shared/queries/use-grades-query';
 import TextButton from 'shared/components/TextButton';
 import useCustomNavigate from 'hooks/use-custom-navigate';
+import { useEditGrade } from 'shared/hooks';
 
 enum TeacherGradesTab {
   Assignment = 'assignment',
@@ -25,6 +26,7 @@ export default function SubjectGradesTeacher() {
   const [currentTab, setCurrentTab] = useState<TeacherGradesTab>(
     TeacherGradesTab.Assignment
   );
+  const { options, Dialog } = useEditGrade(subjectGrades);
   const { t } = useTranslation('grade');
 
   const handleTabChange = (event: SyntheticEvent, tab: TeacherGradesTab) => {
@@ -71,7 +73,7 @@ export default function SubjectGradesTeacher() {
       <TabPanel value={TeacherGradesTab.Assignment} currentTab={currentTab}>
         {/* @todo: filter & sort */}
         {assignmentGrades.length ? (
-          <GradeCard grades={assignmentGrades} showNames />
+          <GradeCard grades={assignmentGrades} showNames options={options} />
         ) : (
           <Card>
             <Typography sx={{ p: 2 }}>{t('noItems')}</Typography>
@@ -82,13 +84,15 @@ export default function SubjectGradesTeacher() {
       <TabPanel value={TeacherGradesTab.NonAssignment} currentTab={currentTab}>
         {/* @todo: filter & sort */}
         {nonAssignmentGrades.length ? (
-          <GradeCard grades={nonAssignmentGrades} showNames />
+          <GradeCard grades={nonAssignmentGrades} showNames options={options} />
         ) : (
           <Card>
             <Typography sx={{ p: 2 }}>{t('noItems')}</Typography>
           </Card>
         )}
       </TabPanel>
+
+      {Dialog}
     </Centered>
   );
 }

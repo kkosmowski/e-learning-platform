@@ -1,13 +1,17 @@
+import { MouseEvent, ReactNode, useState } from 'react';
 import {
   Divider,
   Grid,
+  IconButton,
   Link as MuiLink,
+  Menu,
+  MenuItem,
   Tooltip,
   Typography,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import format from 'date-fns/format';
-import { HelpOutline } from '@mui/icons-material';
+import { HelpOutline, MoreVert } from '@mui/icons-material';
 import { Link, useParams } from 'react-router-dom';
 
 import {
@@ -21,6 +25,11 @@ import { fixGradeValue, isVirtualGrade } from 'shared/utils/grade.utils';
 import { Task } from 'shared/types/task';
 import { ellipsisSx } from 'shared/consts/styles';
 
+export interface GradeRowOption {
+  label: ReactNode;
+  onClick: (gradeId: string) => void;
+}
+
 interface GradeRowProps {
   grade: Grade | VirtualGrade;
   shortName?: boolean;
@@ -28,6 +37,7 @@ interface GradeRowProps {
   showNames?: boolean;
   keepEmptyColumns?: boolean;
   hideDate?: boolean;
+  options?: GradeRowOption[];
 }
 
 const gradeTooltips = Object.values(VirtualGradeType) as (
@@ -44,9 +54,11 @@ export default function GradeRow(props: GradeRowProps) {
     showNames,
     keepEmptyColumns,
     hideDate = false,
+    options,
   } = props;
   const { t } = useTranslation('subject');
   const { value, type, createdAt, user } = grade;
+  const [menuAnchor, setMenuAnchor] = useState<HTMLButtonElement | null>(null);
   let name: string | undefined = undefined;
   let task: Task | undefined = undefined;
 
@@ -56,6 +68,14 @@ export default function GradeRow(props: GradeRowProps) {
     name = grade.name;
     task = grade.task;
   }
+
+  const showOptions = (event: MouseEvent<HTMLButtonElement>) => {
+    setMenuAnchor(event.currentTarget);
+  };
+
+  const hideOptions = () => {
+    setMenuAnchor(null);
+  };
 
   return (
     <>
@@ -70,7 +90,7 @@ export default function GradeRow(props: GradeRowProps) {
             !keepEmptyColumns && hideDate ? '' : '140px'
           } ${keepEmptyColumns || showNames ? 'minmax(180px, 3fr)' : ''} ${
             !keepEmptyColumns && isVirtual ? '' : 'minmax(140px, 5fr)'
-          } 40px`,
+          } 40px ${options?.length ? '40px' : ''}`,
           ...((keepEmptyColumns || showNames) && { minWidth: 640 }),
           ...(type === VirtualGradeType.FINAL &&
             !!value && { color: 'primary.main' }),
@@ -169,6 +189,42 @@ export default function GradeRow(props: GradeRowProps) {
             {fixGradeValue(value) || '—'}
           </Typography>
         </Grid>
+
+        {options?.length && (
+          <>
+            <Grid item>
+              <IconButton size="small" sx={{ m: '-3px' }} onClick={showOptions}>
+                <MoreVert fontSize="small" />
+              </IconButton>
+            </Grid>
+
+            <Menu
+              open={!!menuAnchor}
+              anchorEl={menuAnchor}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              onClose={hideOptions}
+            >
+              {options.map((option) => (
+                <MenuItem
+                  key={String(option.label)}
+                  onClick={() => {
+                    option.onClick(grade.id);
+                    hideOptions();
+                  }}
+                >
+                  {option.label}
+                </MenuItem>
+              ))}
+            </Menu>
+          </>
+        )}
       </Grid>
 
       {showDivider && <Divider />}

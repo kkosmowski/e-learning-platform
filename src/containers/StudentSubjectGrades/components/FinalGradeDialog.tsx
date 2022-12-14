@@ -14,6 +14,7 @@ import Dialog from 'shared/components/Dialog';
 import { User } from 'shared/types/user';
 import LabelledCheckbox from 'shared/components/LabelledCheckbox';
 import colors from 'colors';
+import GradeValueSelect from 'shared/components/GradeValueSelect';
 
 export type FinalGradeDialogType = 'propose' | 'change' | 'confirm';
 
@@ -25,8 +26,6 @@ interface FinalGradeDialogProps {
   onSubmit: (type: FinalGradeDialogType, value: number) => void;
   onClose: () => void;
 }
-
-const grades = [1, 2, 2.5, 3, 3.5, 4, 4.5, 5];
 
 export default function FinalGradeDialog(props: FinalGradeDialogProps) {
   const { type, student, averageGrade, proposedGrade, onSubmit, onClose } =
@@ -80,17 +79,7 @@ export default function FinalGradeDialog(props: FinalGradeDialogProps) {
             </Typography>
 
             {type !== 'confirm' && (
-              <ToggleButtonGroup
-                exclusive
-                value={value}
-                onChange={(e, val) => setValue(val)}
-              >
-                {grades.map((value) => (
-                  <GradeButton key={value} value={value}>
-                    {value}
-                  </GradeButton>
-                ))}
-              </ToggleButtonGroup>
+              <GradeValueSelect value={value} onChange={setValue} />
             )}
 
             {type !== 'confirm' && (
@@ -138,11 +127,3 @@ export default function FinalGradeDialog(props: FinalGradeDialogProps) {
     />
   );
 }
-
-const GradeButton = styled(ToggleButton)(() => ({
-  width: 48,
-  height: 48,
-  font: 'inherit',
-  fontSize: 16,
-  fontWeight: 700,
-}));

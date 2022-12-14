@@ -80,6 +80,14 @@ const baseThemeOptions: ThemeOptions = {
         },
       },
     },
+    MuiGrid: {
+      styleOverrides: {
+        root: {
+          marginRight: '-8px',
+          width: 'calc(100% + 16px)',
+        },
+      },
+    },
     MuiPaper: {
       defaultProps: {
         square: true,
