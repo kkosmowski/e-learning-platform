@@ -10,7 +10,7 @@ export function useEditGrade(grades: Grade[] | undefined, showOptions = true) {
   const { handleUpdate: updateGrade } = useCreateGradeQuery();
   const { t } = useTranslation();
 
-  const handleEdit = useCallback(
+  const editGrade = useCallback(
     (gradeId: string) => {
       const gradeToEdit = grades?.find((grade) => grade.id === gradeId);
 
@@ -45,11 +45,11 @@ export function useEditGrade(grades: Grade[] | undefined, showOptions = true) {
         ? [
             {
               label: t('common:edit'),
-              onClick: handleEdit,
+              onClick: editGrade,
             },
           ]
         : undefined,
-    [handleEdit, showOptions, t]
+    [editGrade, showOptions, t]
   );
 
   const Dialog = useMemo(
@@ -64,5 +64,5 @@ export function useEditGrade(grades: Grade[] | undefined, showOptions = true) {
     [closeEditDialog, editedGrade, handleGradeUpdate]
   );
 
-  return { options, Dialog };
+  return { options, editGrade, Dialog };
 }

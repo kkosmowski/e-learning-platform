@@ -120,6 +120,7 @@
       "sentOn": "Wysłano",
       "evaluate": "Oceń rozwiązanie",
       "alreadyEvaluated": "Rozwiązanie ocenione",
+      "editGrade": "Zmień ocenę",
       "evaluateDialog": {
         "title": "Ocena rozwiązania zadania"
       },

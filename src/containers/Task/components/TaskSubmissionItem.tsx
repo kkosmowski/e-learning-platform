@@ -17,10 +17,11 @@ interface TaskSubmissionItemProps {
   submission: SimpleTaskSubmission | TaskSubmission;
   isFinished?: boolean;
   teacherView?: boolean;
+  onGradeEdit?: (studentId: string) => void;
 }
 
 export default function TaskSubmissionItem(props: TaskSubmissionItemProps) {
-  const { submission, isFinished, teacherView } = props;
+  const { submission, isFinished, teacherView, onGradeEdit } = props;
   const { subjectId } = useParams();
   const [evaluationOpened, setEvaluationOpened] = useState(false);
   const [taskEvaluationDialogData, setTaskEvaluationDialogData] = useState<
@@ -44,6 +45,12 @@ export default function TaskSubmissionItem(props: TaskSubmissionItemProps) {
 
   const closeEvaluationDialog = () => {
     setEvaluationOpened(false);
+  };
+
+  const handleEditGrade = () => {
+    if (isTaskSubmission(submission) && onGradeEdit) {
+      onGradeEdit(submission.createdBy.id);
+    }
   };
 
   return (
@@ -87,18 +94,25 @@ export default function TaskSubmissionItem(props: TaskSubmissionItemProps) {
         )}
 
         {teacherView && (
-          <Button
-            onClick={openEvaluationDialog}
-            sx={{ alignSelf: 'flex-end' }}
-            variant="contained"
-            disabled={status === Status.GRADED}
-          >
-            {t(
-              status === Status.GRADED
-                ? 'submissions.alreadyEvaluated'
-                : 'submissions.evaluate'
+          <Box sx={{ display: 'flex', gap: 2, alignSelf: 'flex-end' }}>
+            {status === Status.GRADED && (
+              <Button onClick={handleEditGrade} variant="contained">
+                {t('submissions.editGrade')}
+              </Button>
             )}
-          </Button>
+
+            <Button
+              onClick={openEvaluationDialog}
+              variant="contained"
+              disabled={status === Status.GRADED}
+            >
+              {t(
+                status === Status.GRADED
+                  ? 'submissions.alreadyEvaluated'
+                  : 'submissions.evaluate'
+              )}
+            </Button>
+          </Box>
         )}
       </Stack>
       {evaluationOpened && (

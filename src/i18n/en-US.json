@@ -120,6 +120,7 @@
       "sentOn": "Sent on",
       "evaluate": "Evaluate submission",
       "alreadyEvaluated": "Already evaluated",
+      "editGrade": "Change the grade",
       "evaluateDialog": {
         "title": "Task submission evaluation"
       },
