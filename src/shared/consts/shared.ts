@@ -7,3 +7,11 @@ export const defaultToastDuration = mediumToastDuration;
 export const assumedLowestValueToast = 'hidden.toast.assumedLowestValue';
 
 export const defaultDebounce = 400;
+
+export enum GroupSubjectsBy {
+  None = 'none',
+  Category = 'category',
+  Class = 'class',
+}
+
+export const groupByKey = 'groupBy';
