@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { Typography } from '@mui/material';
 
 import SectionTitle from 'shared/components/SectionTitle';
 import TextButton from 'shared/components/TextButton';
@@ -7,6 +8,7 @@ import { isTeacher } from 'shared/utils/user.utils';
 import { useAuth } from 'contexts/auth';
 import { useLatestGradesQuery } from 'shared/queries';
 import { useEditGrade } from 'shared/hooks';
+import PageLoading from 'shared/components/PageLoading';
 
 interface LatestGradesProps {
   subjectId: string;
@@ -19,7 +21,8 @@ export default function LatestGrades(props: LatestGradesProps) {
   const { t } = useTranslation('subject');
   const { currentUser } = useAuth();
   const isUserTeacher = isTeacher(currentUser);
-  const { latestGrades } = useLatestGradesQuery(subjectId);
+  const { latestGrades, isLoading, isSuccess } =
+    useLatestGradesQuery(subjectId);
   const { options, Dialog } = useEditGrade(latestGrades, isUserTeacher);
 
   return (
@@ -31,7 +34,7 @@ export default function LatestGrades(props: LatestGradesProps) {
             : t('general.yourGrades')}
         </span>
 
-        {latestGrades.length && (
+        {!!latestGrades.length && (
           <TextButton sx={{ ml: 2 }} onClick={onMoreClick}>
             {t('common:viewMore')}
           </TextButton>
@@ -44,12 +47,20 @@ export default function LatestGrades(props: LatestGradesProps) {
         )}
       </SectionTitle>
 
-      <GradeCard
-        grades={latestGrades}
-        showNames
-        keepEmptyColumns
-        options={options}
-      />
+      {isSuccess ? (
+        latestGrades.length ? (
+          <GradeCard
+            grades={latestGrades}
+            showNames={isUserTeacher}
+            keepEmptyColumns={isUserTeacher}
+            options={options}
+          />
+        ) : (
+          <Typography color="text.secondary">{t('grade:noItems')}</Typography>
+        )
+      ) : isLoading ? (
+        <PageLoading />
+      ) : null}
 
       {Dialog}
     </>

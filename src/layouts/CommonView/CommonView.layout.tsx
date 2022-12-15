@@ -7,7 +7,7 @@ import { Centered, CenteredProps } from 'shared/components/Container';
 import useCustomNavigate from 'hooks/use-custom-navigate';
 
 interface CommonViewLayoutProps {
-  headerTitle: ReactNode;
+  headerTitle?: ReactNode;
   children: ReactNode;
   maxWidth?: number;
   hideBackButton?: boolean;
@@ -42,11 +42,13 @@ export default function CommonViewLayout(props: CommonViewLayoutProps) {
 
   return (
     <Stack sx={{ flex: 1 }}>
-      <ViewHeaderTitle
-        title={headerTitle}
-        hideBackButton={hideBackButton}
-        onBack={() => back()}
-      />
+      {headerTitle && (
+        <ViewHeaderTitle
+          title={headerTitle}
+          hideBackButton={hideBackButton}
+          onBack={() => back()}
+        />
+      )}
 
       <Centered {...actualCenteredProps}>
         <Wrapper {...WrapperProps}>{children}</Wrapper>

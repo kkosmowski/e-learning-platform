@@ -26,8 +26,8 @@
     "class": "Klasami",
     "all": "Wszystkie przedmioty",
     "noItems": {
-      "teacher": "Brak prowadzonych przedmiotów.",
-      "student": "Brak przypisanych przedmiotów."
+      "teacher": "Brak prowadzonych przedmiotów do wyświetlenia.",
+      "student": "Brak przypisanych przedmiotów do wyświetlenia."
     }
   },
   "subject": {
@@ -107,7 +107,7 @@
       "graded": "Ocenione"
     },
     "submissions": {
-      "noItems": "Brak przesłanych rozwiązań",
+      "noItems": "Brak przesłanych rozwiązań do wyświetlenia.",
       "notSubmittedYet": "Nie przesłane",
       "graded": "Ocenione",
       "yourScore": "Twoja ocena",
@@ -133,8 +133,8 @@
     "hoursLeft": "godziny",
     "minutesLeft": "minut",
     "noItems": {
-      "task": "Brak zadań.",
-      "homework": "Brak zadań domowych."
+      "task": "Brak zadań do wyświetlenia.",
+      "homework": "Brak zadań domowych do wyświetlenia."
     },
     "tooltip": {
       "startTime": "Czas rozpoczęcia",
@@ -167,7 +167,6 @@
     "edit": {
       "title": "Modyfikuj ogłoszenie"
     },
-    "noItems": "Brak ogłoszeń.",
     "confirm": {
       "publishNowTitle": "Potwierdź publikację ogłoszenia",
       "publishNowMessage": "Czy na pewno opublikować wybrane ogłoszenie? Tej operacji nie da się cofnąć.",
@@ -179,7 +178,8 @@
       "updateSuccess": "Zaktualizowano ogłoszenie \"{{ name }}\"",
       "publishSuccess": "Opublikowano ogłoszenie \"{{ name }}\"",
       "deleteSuccess": "Usunięto ogłoszenie \"{{ name }}\""
-    }
+    },
+    "noItems": "Brak ogłoszeń do wyświetlenia."
   },
   "grade": {
     "title": {
@@ -277,7 +277,7 @@
     "propose": "Wystaw proponowaną ocenę końcową",
     "change": "Zmień proponowaną ocenę końcową",
     "confirm": "Zatwierdź ocenę końcową",
-    "noItems": "Brak ocen do wyświetlenia"
+    "noItems": "Brak ocen do wyświetlenia."
   },
   "user": {
     "grades": "Oceny"
@@ -387,7 +387,7 @@
         "deleteTitle": "Potwierdź usunięcie kategorii przedmiotu",
         "deleteMessage": "Czy na pewno usunąć kategorię \"{{name}}\"? Tej operacji nie da się cofnąć."
       },
-      "noItems": "Brak kategorii przedmiotów."
+      "noItems": "Brak kategorii przedmiotów do wyświetlenia."
     },
     "classes": {
       "title": "Zarządzanie klasami",
@@ -422,7 +422,7 @@
       "create": {
         "title": "Utwórz nowy przedmiot"
       },
-      "noItems": "Brak przedmiotów.",
+      "noItems": "Brak przedmiotów do wyświetlenia.",
       "details": {
         "category": "Kategoria",
         "class": "Klasa",
@@ -487,7 +487,7 @@
           "deactivateSuccess": "Dezaktywowano użytkownika \"{{name}}\"."
         }
       },
-      "noItems": "Brak użytkowników"
+      "noItems": "Brak użytkowników do wyświetlenia."
     }
   },
   "404": {
