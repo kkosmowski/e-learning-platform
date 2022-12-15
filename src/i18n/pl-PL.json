@@ -294,6 +294,10 @@
       "deleteDisabled": "Nie można usunąć tego elementu"
     }
   },
+  "sidenav": {
+    "students": "Uczniowie",
+    "subjects": "Przedmioty"
+  },
   "common": {
     "back": "Wróć",
     "viewMore": "Więcej",

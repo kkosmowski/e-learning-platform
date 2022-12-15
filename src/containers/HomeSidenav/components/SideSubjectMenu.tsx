@@ -1,4 +1,5 @@
 import { ListItem, Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 import { SimpleSubject } from 'shared/types/subject';
 import useCustomNavigate from 'hooks/use-custom-navigate';
@@ -17,6 +18,7 @@ export default function SideSubjectMenu(props: SideSubjectMenuProps) {
   const { navigate } = useCustomNavigate();
   const isTeacher = currentUser?.role === Role.Teacher;
   const { groupedSubjects } = useGroupBySubject(subjects, isTeacher);
+  const { t } = useTranslation('sidenav');
 
   const navigateToSubject = (subjectId: string) => {
     navigate(`/subjects/${subjectId}`);
@@ -31,6 +33,7 @@ export default function SideSubjectMenu(props: SideSubjectMenuProps) {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'flex-start',
+            justifyContent: 'stretch',
           }}
         >
           <span>{batch.label}</span>
@@ -48,7 +51,7 @@ export default function SideSubjectMenu(props: SideSubjectMenuProps) {
 
   return (
     <>
-      <Typography>Przejdź do przedmiotu</Typography>
+      <Typography sx={{ fontWeight: 600 }}>{t('subjects')}</Typography>
 
       {renderSubjects()}
     </>

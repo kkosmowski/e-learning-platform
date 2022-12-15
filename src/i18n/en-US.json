@@ -294,6 +294,10 @@
       "deleteDisabled": "Cannot delete this item"
     }
   },
+  "sidenav": {
+    "students": "Students",
+    "subjects": "Subjects"
+  },
   "common": {
     "back": "Back",
     "viewMore": "View more",
