@@ -1,5 +1,5 @@
 import { Fragment, ReactNode } from 'react';
-import { Box, BoxTypeMap } from '@mui/material';
+import { Box, BoxTypeMap, Stack } from '@mui/material';
 import { DefaultComponentProps } from '@mui/material/OverridableComponent';
 
 import ViewHeaderTitle from 'shared/components/ViewHeaderTitle';
@@ -10,11 +10,13 @@ interface CommonViewLayoutProps {
   headerTitle: ReactNode;
   children: ReactNode;
   maxWidth?: number;
+  hideBackButton?: boolean;
   CenteredProps?: Partial<CenteredProps>;
 }
 
 export default function CommonViewLayout(props: CommonViewLayoutProps) {
-  const { headerTitle, CenteredProps, maxWidth, children } = props;
+  const { headerTitle, CenteredProps, maxWidth, hideBackButton, children } =
+    props;
   const { back } = useCustomNavigate();
   const actualCenteredProps: Partial<CenteredProps> = { ...CenteredProps };
 
@@ -39,12 +41,16 @@ export default function CommonViewLayout(props: CommonViewLayoutProps) {
   }
 
   return (
-    <>
-      <ViewHeaderTitle title={headerTitle} onBack={() => back()} />
+    <Stack sx={{ flex: 1 }}>
+      <ViewHeaderTitle
+        title={headerTitle}
+        hideBackButton={hideBackButton}
+        onBack={() => back()}
+      />
 
       <Centered {...actualCenteredProps}>
         <Wrapper {...WrapperProps}>{children}</Wrapper>
       </Centered>
-    </>
+    </Stack>
   );
 }

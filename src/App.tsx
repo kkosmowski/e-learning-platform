@@ -8,6 +8,17 @@ import plLocale from 'date-fns/locale/pl';
 import routes from 'routes';
 import createQueryClient from 'shared/utils/create-query-client';
 import i18next from './i18n/i18next';
+import { GlobalStyles } from '@mui/material';
+
+const globalStyles = (
+  <GlobalStyles
+    styles={{
+      '*, *::before, *::after': {
+        boxSizing: 'border-box',
+      },
+    }}
+  />
+);
 
 const queryClient = createQueryClient();
 
@@ -18,6 +29,7 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={locale}>
         {useRoutes(routes)}
+        {globalStyles}
       </LocalizationProvider>
     </QueryClientProvider>
   );

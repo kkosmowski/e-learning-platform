@@ -1,22 +1,36 @@
-import { Drawer } from '@mui/material';
+import { Drawer, SxProps } from '@mui/material';
+import { ReactNode } from 'react';
 
-import { Menu } from './index';
+import { consts } from 'theme';
 
-export default function Sidenav() {
+interface SidenavProps {
+  children: ReactNode;
+  sx?: SxProps;
+}
+
+export default function Sidenav(props: SidenavProps) {
+  const { children, sx } = props;
   return (
     <Drawer
       anchor="left"
       variant="permanent"
-      sx={{ gridArea: 'sidenav', overflow: 'hidden' }}
+      sx={{
+        overflow: 'hidden',
+        '&&': {
+          flex: `0 0 ${consts.menuWidth}px`,
+        },
+      }}
       PaperProps={{
         sx: {
           position: 'static',
           overflowX: 'hidden',
+          p: 2,
+          ...sx,
         },
       }}
       open
     >
-      <Menu />
+      {children}
     </Drawer>
   );
 }
