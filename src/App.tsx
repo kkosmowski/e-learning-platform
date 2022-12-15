@@ -4,11 +4,12 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import enUSLocale from 'date-fns/locale/en-US';
 import plLocale from 'date-fns/locale/pl';
+import { GlobalStyles } from '@mui/material';
 
 import routes from 'routes';
 import createQueryClient from 'shared/utils/create-query-client';
 import i18next from './i18n/i18next';
-import { GlobalStyles } from '@mui/material';
+import { PreferencesProvider } from 'contexts/preferences';
 
 const globalStyles = (
   <GlobalStyles
@@ -28,8 +29,10 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={locale}>
-        {useRoutes(routes)}
-        {globalStyles}
+        <PreferencesProvider>
+          {useRoutes(routes)}
+          {globalStyles}
+        </PreferencesProvider>
       </LocalizationProvider>
     </QueryClientProvider>
   );

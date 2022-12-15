@@ -1,62 +1,18 @@
-import { useEffect, useMemo, useState } from 'react';
-import {
-  Box,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-  Stack,
-} from '@mui/material';
-import { useSearchParams } from 'react-router-dom';
-import { Trans, useTranslation } from 'react-i18next';
+import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 
-import { Centered } from 'shared/components/Container';
 import useCustomNavigate from 'hooks/use-custom-navigate';
 import PageLoading from 'shared/components/PageLoading';
 import { useSubjectsQuery } from 'shared/queries';
 import { SimpleSubject } from 'shared/types/subject';
 import { useAuth } from 'contexts/auth';
-import ViewHeader from 'shared/components/ViewHeader';
 import { Role } from 'shared/types/user';
 import SubjectsBatch from './components/SubjectsBatch';
 import SubjectsGrid from './components/SubjectsGrid';
 import { LayoutFix } from 'layouts/LayoutFix';
-import SubjectSidenav from 'containers/SubjectSidenav';
-import CommonViewLayout from '../../layouts/CommonView';
-import HomeSidenav from '../HomeSidenav';
-
-enum GroupSubjectsBy {
-  None = 'none',
-  Category = 'category',
-  Class = 'class',
-}
-
-const groupByKey = 'groupBy';
-
-const getSubjectsBatch = (
-  key: 'category' | 'subjectClass',
-  items: SimpleSubject[]
-) => {
-  const labels = Array.from(
-    new Set(items.map((item) => item[key].name).sort())
-  );
-  return labels.map((label) => ({
-    label,
-    subjects: items.filter((item) => item[key].name === label),
-  }));
-};
-
-const setGroupByInLocalStorage = (newGroupBy: GroupSubjectsBy) => {
-  localStorage.setItem(groupByKey, newGroupBy);
-};
-
-const getGroupByFromLocalStorage = (): GroupSubjectsBy | null => {
-  const storedGroupBy = localStorage.getItem(groupByKey);
-  return storedGroupBy ? (storedGroupBy as GroupSubjectsBy) : null;
-};
-
-const defaultGroupBy = GroupSubjectsBy.None;
+import CommonViewLayout from 'layouts/CommonView';
+import HomeSidenav from 'containers/HomeSidenav';
+import { useGroupBySubject } from 'shared/hooks';
 
 export default function Subjects() {
   const { navigate } = useCustomNavigate();
@@ -64,56 +20,23 @@ export default function Subjects() {
   const { subjects, isLoading, isSuccess } = useSubjectsQuery({
     simple: true,
   });
-  const [searchParams, setSearchParams] = useSearchParams();
-  const searchParamsGroupBy = searchParams.get(groupByKey) as GroupSubjectsBy;
-  const storedGroupBy = getGroupByFromLocalStorage();
-  const [groupBy, setGroupBy] = useState<GroupSubjectsBy>(
-    searchParamsGroupBy || storedGroupBy || defaultGroupBy
-  );
   const isTeacher = useMemo(
     () => currentUser?.role === Role.Teacher,
     [currentUser]
   );
+  const { groupedSubjects, GroupSubjects } = useGroupBySubject(
+    subjects,
+    isTeacher
+  );
   const { t } = useTranslation('subjects');
-  const filteredSubjects = useMemo(() => {
-    if (!subjects) return undefined;
-
-    if (isTeacher) {
-      if (groupBy === GroupSubjectsBy.Category) {
-        return getSubjectsBatch('category', subjects);
-      }
-      if (groupBy === GroupSubjectsBy.Class) {
-        return getSubjectsBatch('subjectClass', subjects);
-      }
-    }
-
-    return [
-      {
-        label: <Trans i18nKey="subjects:all" />,
-        subjects,
-      },
-    ];
-  }, [subjects, groupBy, isTeacher]);
 
   const handleSubjectClick = (subjectId: string): void => {
     navigate(subjectId);
   };
 
-  const handleGroupByChange = (event: SelectChangeEvent) => {
-    const newGroupBy = event.target.value as GroupSubjectsBy;
-    setGroupBy(newGroupBy);
-    setGroupByInLocalStorage(newGroupBy);
-  };
-
-  useEffect(() => {
-    setSearchParams(
-      groupBy === GroupSubjectsBy.None ? {} : { [groupByKey]: groupBy }
-    );
-  }, [groupBy, setSearchParams]);
-
   const renderSubjects = (subjectsToRender: SimpleSubject[]) => {
     if (isTeacher) {
-      return filteredSubjects?.map((batch) => (
+      return groupedSubjects?.map((batch) => (
         <SubjectsBatch
           key={batch.label as string}
           {...batch}
@@ -134,29 +57,7 @@ export default function Subjects() {
     <LayoutFix>
       <HomeSidenav />
 
-      <CommonViewLayout
-        hideBackButton
-        headerTitle={
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <InputLabel id="group-subjects-by-label">{t('groupBy')}</InputLabel>
-
-            <FormControl sx={{ width: 200 }} size="small">
-              <Select
-                id="group-subjects-by"
-                labelId="group-subjects-by-label"
-                value={groupBy}
-                onChange={handleGroupByChange}
-              >
-                <MenuItem value={GroupSubjectsBy.None}>{t('none')}</MenuItem>
-                <MenuItem value={GroupSubjectsBy.Category}>
-                  {t('category')}
-                </MenuItem>
-                <MenuItem value={GroupSubjectsBy.Class}>{t('class')}</MenuItem>
-              </Select>
-            </FormControl>
-          </Box>
-        }
-      >
+      <CommonViewLayout hideBackButton headerTitle={GroupSubjects}>
         {isLoading && <PageLoading />}
 
         {isSuccess
