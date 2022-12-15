@@ -1,18 +1,15 @@
-import { Box, styled } from '@mui/material';
+import { Box, Stack, styled } from '@mui/material';
 import { Outlet } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 
 import { background } from 'colors';
-import { consts } from 'theme';
 import { defaultToastDuration } from 'shared/consts/shared';
-import { Navbar, Sidenav } from './components';
+import { Navbar } from './components';
 
 export default function ApplicationLayout() {
   return (
     <Wrapper>
       <Navbar />
-
-      <Sidenav />
 
       <Main component="main">
         <Outlet />
@@ -31,11 +28,7 @@ export default function ApplicationLayout() {
   );
 }
 
-const Wrapper = styled(Box)(() => ({
-  display: 'grid',
-  gridTemplateAreas: `'navbar navbar' 'sidenav main'`,
-  gridTemplateRows: `${consts.navbarHeight}px 1fr`,
-  gridTemplateColumns: `${consts.menuWidth}px 1fr`,
+const Wrapper = styled(Stack)(() => ({
   flex: 1,
   overflow: 'hidden',
 }));

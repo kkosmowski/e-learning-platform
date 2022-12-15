@@ -5,17 +5,27 @@ import { Centered } from 'shared/components/Container';
 
 export default function ViewHeader({
   children,
+  height,
   sx,
 }: {
   children: ReactNode;
+  height?: string | number;
   sx?: SxProps;
 }) {
   return (
     <>
       <Centered
-        sx={{ flexShrink: 0 }}
+        sx={{
+          flexShrink: 0,
+          height: height || 56,
+          p: 0,
+          justifyContent: 'center',
+        }}
         bgcolor="background.default"
-        innerSx={{ flexDirection: 'row', ...sx }}
+        innerSx={{
+          flexDirection: 'row',
+          ...sx,
+        }}
       >
         {children}
       </Centered>

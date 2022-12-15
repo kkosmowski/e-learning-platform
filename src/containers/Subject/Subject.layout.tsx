@@ -4,9 +4,15 @@ import CommonViewLayout from 'layouts/CommonView';
 import useCustomNavigate from 'hooks/use-custom-navigate';
 import { useSubjectQuery } from 'shared/queries';
 import PageLoading from 'shared/components/PageLoading';
+import SubjectSidenav from 'containers/SubjectSidenav';
+import { LayoutFix } from 'layouts/LayoutFix';
+import { useAuth } from 'contexts/auth';
+import { isTeacher } from 'shared/utils/user.utils';
+import HomeSidenav from 'containers/HomeSidenav';
 
 export default function SubjectLayout() {
-  const { navigate, back } = useCustomNavigate();
+  const { navigate } = useCustomNavigate();
+  const { currentUser } = useAuth();
   const { subjectId } = useParams<{ subjectId: string }>();
   const { simpleSubject, isLoading } = useSubjectQuery(subjectId, {
     simple: true,
@@ -21,8 +27,12 @@ export default function SubjectLayout() {
   }
 
   return (
-    <CommonViewLayout headerTitle={simpleSubject.name}>
-      <Outlet />
-    </CommonViewLayout>
+    <LayoutFix>
+      {isTeacher(currentUser) ? <SubjectSidenav /> : <HomeSidenav />}
+
+      <CommonViewLayout headerTitle={simpleSubject.name}>
+        <Outlet />
+      </CommonViewLayout>
+    </LayoutFix>
   );
 }

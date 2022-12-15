@@ -11,10 +11,7 @@ export default function Navbar() {
   if (!currentUser) return null;
 
   return (
-    <AppBar
-      sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, gridArea: 'navbar' }}
-      elevation={0}
-    >
+    <AppBar sx={{ position: 'static' }} elevation={0}>
       <Toolbar>
         <School sx={{ mr: 3 }} />
 

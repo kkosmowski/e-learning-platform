@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
 import {
+  Box,
   FormControl,
   InputLabel,
   MenuItem,
   Select,
   SelectChangeEvent,
+  Stack,
 } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
@@ -19,6 +21,10 @@ import ViewHeader from 'shared/components/ViewHeader';
 import { Role } from 'shared/types/user';
 import SubjectsBatch from './components/SubjectsBatch';
 import SubjectsGrid from './components/SubjectsGrid';
+import { LayoutFix } from 'layouts/LayoutFix';
+import SubjectSidenav from 'containers/SubjectSidenav';
+import CommonViewLayout from '../../layouts/CommonView';
+import HomeSidenav from '../HomeSidenav';
 
 enum GroupSubjectsBy {
   None = 'none',
@@ -125,31 +131,32 @@ export default function Subjects() {
   };
 
   return (
-    <>
-      {isTeacher && (
-        <ViewHeader
-          sx={{ display: 'flex', alignItems: 'center', columnGap: 2 }}
-        >
-          <InputLabel id="group-subjects-by-label">{t('groupBy')}</InputLabel>
+    <LayoutFix>
+      <HomeSidenav />
 
-          <FormControl sx={{ width: 200 }} size="small">
-            <Select
-              id="group-subjects-by"
-              labelId="group-subjects-by-label"
-              value={groupBy}
-              onChange={handleGroupByChange}
-            >
-              <MenuItem value={GroupSubjectsBy.None}>{t('none')}</MenuItem>
-              <MenuItem value={GroupSubjectsBy.Category}>
-                {t('category')}
-              </MenuItem>
-              <MenuItem value={GroupSubjectsBy.Class}>{t('class')}</MenuItem>
-            </Select>
-          </FormControl>
-        </ViewHeader>
-      )}
+      <CommonViewLayout
+        hideBackButton
+        headerTitle={
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <InputLabel id="group-subjects-by-label">{t('groupBy')}</InputLabel>
 
-      <Centered>
+            <FormControl sx={{ width: 200 }} size="small">
+              <Select
+                id="group-subjects-by"
+                labelId="group-subjects-by-label"
+                value={groupBy}
+                onChange={handleGroupByChange}
+              >
+                <MenuItem value={GroupSubjectsBy.None}>{t('none')}</MenuItem>
+                <MenuItem value={GroupSubjectsBy.Category}>
+                  {t('category')}
+                </MenuItem>
+                <MenuItem value={GroupSubjectsBy.Class}>{t('class')}</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+        }
+      >
         {isLoading && <PageLoading />}
 
         {isSuccess
@@ -157,7 +164,7 @@ export default function Subjects() {
             ? renderSubjects(subjects)
             : t(`noItems.${currentUser?.role}`)
           : null}
-      </Centered>
-    </>
+      </CommonViewLayout>
+    </LayoutFix>
   );
 }
