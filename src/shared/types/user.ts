@@ -1,4 +1,6 @@
 import { AxiosResponse } from 'axios';
+import { SimpleClass, SimpleClassDto } from './class';
+import { SimpleSubject, SimpleSubjectDto } from './subject';
 
 export interface Person {
   id: string;
@@ -13,6 +15,11 @@ export interface User extends Person {
   active: boolean;
   // admin?: boolean;
   createdAt: string;
+}
+
+export interface UserWithDetails extends User {
+  subjectClass?: SimpleClass;
+  subjects?: SimpleSubject[];
 }
 
 export interface SimpleUser {
@@ -39,6 +46,15 @@ export interface UserDto extends SimpleUserDto {
   is_active: boolean;
   email: string;
   role: Role;
+}
+
+export interface UserWithDetailsDto extends SimpleUserDto {
+  created_at: string;
+  is_active: boolean;
+  email: string;
+  role: Role;
+  group?: SimpleClassDto;
+  group_subjects?: SimpleSubjectDto[];
 }
 
 export type CreateUserForm = Pick<
@@ -69,3 +85,4 @@ export type FetchMeResponse = AxiosResponse<UserDto>;
 export type CreateUserResponse = AxiosResponse<UserDto>;
 export type GetUsersResponse = AxiosResponse<UserDto[]>;
 export type GetUserResponse = AxiosResponse<UserDto>;
+export type GetUserWithDetailsResponse = AxiosResponse<UserWithDetailsDto>;

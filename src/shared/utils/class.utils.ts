@@ -3,6 +3,8 @@ import {
   ClassDto,
   ClassForm,
   CreateClassPayload,
+  SimpleClass,
+  SimpleClassDto,
   UpdateClassPayload,
 } from 'shared/types/class';
 import { mapUserDtoToUser } from './user.utils';
@@ -36,5 +38,15 @@ export const mapClassDtoToClass = (dto: ClassDto): Class => {
     name: dto.name,
     teacher: mapUserDtoToUser(dto.teacher),
     students: dto.students.map(mapUserDtoToUser),
+  };
+};
+
+export const mapSimpleClassDtoToSimpleClass = (
+  dto: SimpleClassDto
+): SimpleClass => {
+  return {
+    id: dto.id,
+    name: dto.name,
+    studentsCount: dto.students_count,
   };
 };

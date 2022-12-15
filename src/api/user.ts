@@ -7,6 +7,7 @@ import {
   GetUsersResponse,
   GetUserResponse,
   UpdateUserPayload,
+  GetUserWithDetailsResponse,
 } from 'shared/types/user';
 import { EmptyResponse } from 'shared/types/shared';
 
@@ -44,6 +45,11 @@ export const getUsers = (props: GetUsersProps): Promise<GetUsersResponse> => {
 
 export const getUser = (userId: string): Promise<GetUserResponse> =>
   authorized((api) => api.get(`user/${userId}`));
+
+export const getUserWithDetails = (
+  userId: string
+): Promise<GetUserWithDetailsResponse> =>
+  authorized((api) => api.get(`user/admin/${userId}`));
 
 export const updateUser = (
   payload: UpdateUserPayload

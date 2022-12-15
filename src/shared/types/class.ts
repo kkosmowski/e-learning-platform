@@ -5,12 +5,13 @@ import { User, UserDto } from 'shared/types/user';
 export interface SimpleClass {
   id: string;
   name: string;
-  teacher: User;
+  // teacher: User;
   studentsCount: number;
 }
 
 export interface SimpleClassDto extends Omit<SimpleClass, 'studentsCount'> {
   students_count: number;
+  teacher: UserDto;
 }
 
 export interface ClassDto {

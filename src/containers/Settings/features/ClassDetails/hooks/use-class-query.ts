@@ -69,6 +69,8 @@ export default function useClassQuery(
     {
       onSuccess: async ({ data }) => {
         queryClient.setQueryData(['class', classId], { data });
+        await queryClient.invalidateQueries({ queryKey: ['userWithDetails'] });
+        await queryClient.invalidateQueries({ queryKey: ['userWithDetails'] });
         navigateBack();
         toast.success('Class updated');
       },

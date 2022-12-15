@@ -96,6 +96,7 @@ export function useUsersQuery() {
             : [],
         });
         queryClient.setQueryData(['user', data.id], { data });
+        void queryClient.invalidateQueries(['userWithDetails', data.id]);
         if (onSuccess) onSuccess(mapUserDtoToUser(data));
       },
       onError: (err) => {
@@ -117,6 +118,7 @@ export function useUsersQuery() {
             ? usersQuery.data.filter((user) => user.id !== deletedUserId)
             : [],
         });
+        void queryClient.invalidateQueries(['userWithDetails', deletedUserId]);
         void queryClient.invalidateQueries(['user', deletedUserId]);
         toast.success(t('users.deleteSuccessToast'));
       },

@@ -329,6 +329,9 @@
     "email": "Email address",
     "status": "Status",
     "userType": "Type",
+    "studentOf": "Student of class",
+    "teacherOf": "Teacher of class",
+    "noClass": "no class",
     "activate": "Activate",
     "deactivate": "Deactivate",
     "tooltip": {
@@ -385,7 +388,7 @@
       },
       "confirm": {
         "deleteTitle": "Deleting a subject category",
-        "deleteMessage": "Are you sure you want to delete \"{{name}}\" category? This operation cannot be undone."
+        "deleteMessage": "Are you sure you want to delete <0>{{name}}</0> category? This operation cannot be undone."
       },
       "noItems": "There are no subject categories yet."
     },
@@ -481,6 +484,10 @@
           "activateMessage": "Are you sure you want to activate user \"{{name}}\"?",
           "deactivateTitle": "Confirm user deactivation",
           "deactivateMessage": "Are you sure you want to deactivate user \"{{name}}\"?"
+        },
+        "memberOf": {
+          "teacher": "Teaches following subjects",
+          "student": "Learns following subjects"
         },
         "toast": {
           "activateSuccess": "User \"{{name}}\" activated.",

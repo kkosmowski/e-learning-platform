@@ -8,7 +8,6 @@ import { useSubjectQuery } from 'shared/queries';
 import SubjectDetailsList from './components/SubjectDetailsList';
 import SubjectEditForm from './components/SubjectEditForm';
 import useCustomNavigate from 'hooks/use-custom-navigate';
-import { useAuth } from 'contexts/auth';
 
 interface SubjectDetailsProps {
   mode: 'view' | 'edit';
@@ -19,7 +18,6 @@ export default function SubjectDetails(props: SubjectDetailsProps) {
   const { id: subjectId } = useParams<{ id: string }>();
   const { t } = useTranslation('settings', { keyPrefix: 'subjects.details' });
   const { navigate, back } = useCustomNavigate();
-  const { currentUser } = useAuth();
   const { subject, isSuccess, isLoading, error, updateSubject } =
     useSubjectQuery(subjectId, { full: true });
 

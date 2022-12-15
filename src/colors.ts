@@ -129,15 +129,6 @@ const colors = {
   },
 };
 
-export const gradeColors = [
-  error[500], // 1 (F)
-  '#e76e18', // 2 (E)
-  warning[500], // 3 (D)
-  '#b4d728', // 4 (C)
-  success[500], // 5 (B)
-  info[600], // 6 (A)
-];
-
 export const unpublishedNoticeColor = '#fff1d6';
 
 export default colors;

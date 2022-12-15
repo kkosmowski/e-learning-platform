@@ -1,5 +1,6 @@
-import { List, ListItem } from '@mui/material';
+import { Link as MuiLink, List, ListItem } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 import ListGridItem from 'shared/components/ListGridItem';
 import { SubjectWithClass } from 'shared/types/subject';
@@ -36,7 +37,13 @@ export default function SubjectDetailsList(props: SubjectDetailsListProps) {
           <List disablePadding dense sx={{ flex: 2 }}>
             {subject.subjectClass.students.map((student) => (
               <ListItem key={student.id} disableGutters>
-                {student.fullName}
+                <MuiLink
+                  component={Link}
+                  sx={{ flex: 2 }}
+                  to={`/settings/user/${student.id}`}
+                >
+                  {student.fullName}
+                </MuiLink>
               </ListItem>
             ))}
           </List>
