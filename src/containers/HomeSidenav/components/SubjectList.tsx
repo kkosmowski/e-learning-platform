@@ -10,8 +10,9 @@ interface SubjectListProps {
 
 export default function SubjectList(props: SubjectListProps) {
   const { subjects, onNavigate } = props;
+
   return (
-    <List sx={{ display: 'flex', flexDirection: 'column' }}>
+    <List sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
       {subjects.map((subject) => (
         <SubjectListItemButton
           key={subject.id}
