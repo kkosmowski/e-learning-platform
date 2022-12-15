@@ -83,8 +83,10 @@ const baseThemeOptions: ThemeOptions = {
     MuiGrid: {
       styleOverrides: {
         root: {
-          marginRight: '-8px',
-          width: 'calc(100% + 16px)',
+          '&.MuiGrid-container': {
+            marginRight: '-8px',
+            width: 'calc(100% + 16px)',
+          },
         },
       },
     },

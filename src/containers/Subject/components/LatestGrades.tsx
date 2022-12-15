@@ -8,6 +8,7 @@ import { isTeacher } from 'shared/utils/user.utils';
 import { useAuth } from 'contexts/auth';
 import { useLatestGradesQuery } from 'shared/queries';
 import { useEditGrade } from 'shared/hooks';
+import PageLoading from 'shared/components/PageLoading';
 
 interface LatestGradesProps {
   subjectId: string;
@@ -20,7 +21,8 @@ export default function LatestGrades(props: LatestGradesProps) {
   const { t } = useTranslation('subject');
   const { currentUser } = useAuth();
   const isUserTeacher = isTeacher(currentUser);
-  const { latestGrades } = useLatestGradesQuery(subjectId);
+  const { latestGrades, isLoading, isSuccess } =
+    useLatestGradesQuery(subjectId);
   const { options, Dialog } = useEditGrade(latestGrades, isUserTeacher);
 
   return (
@@ -45,16 +47,20 @@ export default function LatestGrades(props: LatestGradesProps) {
         )}
       </SectionTitle>
 
-      {latestGrades.length ? (
-        <GradeCard
-          grades={latestGrades}
-          showNames
-          keepEmptyColumns
-          options={options}
-        />
-      ) : (
-        <Typography color="text.secondary">{t('grade:noItems')}</Typography>
-      )}
+      {isSuccess ? (
+        latestGrades.length ? (
+          <GradeCard
+            grades={latestGrades}
+            showNames={isUserTeacher}
+            keepEmptyColumns={isUserTeacher}
+            options={options}
+          />
+        ) : (
+          <Typography color="text.secondary">{t('grade:noItems')}</Typography>
+        )
+      ) : isLoading ? (
+        <PageLoading />
+      ) : null}
 
       {Dialog}
     </>
