@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { Typography } from '@mui/material';
 
 import SectionTitle from 'shared/components/SectionTitle';
 import TextButton from 'shared/components/TextButton';
@@ -31,7 +32,7 @@ export default function LatestGrades(props: LatestGradesProps) {
             : t('general.yourGrades')}
         </span>
 
-        {latestGrades.length && (
+        {!!latestGrades.length && (
           <TextButton sx={{ ml: 2 }} onClick={onMoreClick}>
             {t('common:viewMore')}
           </TextButton>
@@ -44,12 +45,16 @@ export default function LatestGrades(props: LatestGradesProps) {
         )}
       </SectionTitle>
 
-      <GradeCard
-        grades={latestGrades}
-        showNames
-        keepEmptyColumns
-        options={options}
-      />
+      {latestGrades.length ? (
+        <GradeCard
+          grades={latestGrades}
+          showNames
+          keepEmptyColumns
+          options={options}
+        />
+      ) : (
+        <Typography color="text.secondary">{t('grade:noItems')}</Typography>
+      )}
 
       {Dialog}
     </>

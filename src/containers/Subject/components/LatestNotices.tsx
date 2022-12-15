@@ -70,7 +70,7 @@ export default function LatestNotices(props: LatestNoticesProps) {
         ) : isLoading ? (
           <PageLoading />
         ) : (
-          <Typography color="text.secondary">{t('noItems')}</Typography>
+          <Typography color="text.secondary">{t('notice:noItems')}</Typography>
         )}
       </NoticesBox>
     </>

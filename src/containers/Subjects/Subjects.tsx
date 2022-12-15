@@ -57,7 +57,10 @@ export default function Subjects() {
     <LayoutFix>
       <HomeSidenav />
 
-      <CommonViewLayout hideBackButton headerTitle={GroupSubjects}>
+      <CommonViewLayout
+        hideBackButton
+        {...(isTeacher && { headerTitle: GroupSubjects })}
+      >
         {isLoading && <PageLoading />}
 
         {isSuccess
