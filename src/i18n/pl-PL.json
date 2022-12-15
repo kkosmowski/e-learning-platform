@@ -329,6 +329,9 @@
     "email": "Adres e-mail",
     "status": "Status",
     "userType": "Typ użytkownika",
+    "studentOf": "Uczeń klasy",
+    "teacherOf": "Wychowawca klasy",
+    "noClass": "brak",
     "activate": "Aktywuj",
     "deactivate": "Dezaktywuj",
     "tooltip": {
@@ -385,7 +388,7 @@
       },
       "confirm": {
         "deleteTitle": "Potwierdź usunięcie kategorii przedmiotu",
-        "deleteMessage": "Czy na pewno usunąć kategorię \"{{name}}\"? Tej operacji nie da się cofnąć."
+        "deleteMessage": "Czy na pewno usunąć kategorię <0>{{name}}</0>? Tej operacji nie da się cofnąć."
       },
       "noItems": "Brak kategorii przedmiotów do wyświetlenia."
     },
@@ -481,6 +484,10 @@
           "activateMessage": "Czy na pewno aktywować użytkownika \"{{name}}\"?",
           "deactivateTitle": "Potwierdź dezaktywację użytkownika",
           "deactivateMessage": "Czy na pewno dezaktywować użytkownika \"{{name}}\"?"
+        },
+        "memberOf": {
+          "teacher": "Nauczyciel prowadzi przedmioty",
+          "student": "Uczeń bierze udział w przedmiotach"
         },
         "toast": {
           "activateSuccess": "Aktywowano użytkownika \"{{name}}\".",

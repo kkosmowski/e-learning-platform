@@ -3,6 +3,8 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import {
   Button,
+  Card,
+  CardContent,
   MenuItem,
   Select,
   Stack,
@@ -67,72 +69,81 @@ export default function CreateUser() {
   } = formik;
 
   return (
-    <form onSubmit={handleSubmit}>
-      <Stack spacing={2} sx={{ maxWidth: 600 }}>
-        <TextField
-          name="email"
-          placeholder={t('users.form.placeholder.email')}
-          value={values.email}
-          error={touched.email && Boolean(errors.email)}
-          helperText={touched.email && errors.email && t(errors.email)}
-          autoFocus
-          inputProps={{
-            ref: emailInputRef,
-          }}
-          onBlur={handleBlur}
-          onChange={handleChange}
-        />
+    <Card sx={{ maxWidth: 600 }}>
+      <CardContent>
+        <form onSubmit={handleSubmit}>
+          <Stack spacing={2}>
+            <TextField
+              name="email"
+              placeholder={t('users.form.placeholder.email')}
+              value={values.email}
+              error={touched.email && Boolean(errors.email)}
+              helperText={touched.email && errors.email && t(errors.email)}
+              autoFocus
+              inputProps={{
+                ref: emailInputRef,
+              }}
+              onBlur={handleBlur}
+              onChange={handleChange}
+            />
 
-        <TextField
-          name="firstName"
-          placeholder={t('users.form.placeholder.firstName')}
-          value={values.firstName}
-          error={touched.firstName && Boolean(errors.firstName)}
-          helperText={
-            touched.firstName && errors.firstName && t(errors.firstName)
-          }
-          onBlur={handleBlur}
-          onChange={handleChange}
-        />
+            <TextField
+              name="firstName"
+              placeholder={t('users.form.placeholder.firstName')}
+              value={values.firstName}
+              error={touched.firstName && Boolean(errors.firstName)}
+              helperText={
+                touched.firstName && errors.firstName && t(errors.firstName)
+              }
+              onBlur={handleBlur}
+              onChange={handleChange}
+            />
 
-        <TextField
-          name="lastName"
-          placeholder={t('users.form.placeholder.lastName')}
-          value={values.lastName}
-          error={touched.lastName && Boolean(errors.lastName)}
-          helperText={touched.lastName && errors.lastName && t(errors.lastName)}
-          onBlur={handleBlur}
-          onChange={handleChange}
-        />
+            <TextField
+              name="lastName"
+              placeholder={t('users.form.placeholder.lastName')}
+              value={values.lastName}
+              error={touched.lastName && Boolean(errors.lastName)}
+              helperText={
+                touched.lastName && errors.lastName && t(errors.lastName)
+              }
+              onBlur={handleBlur}
+              onChange={handleChange}
+            />
 
-        <Select<Role>
-          name="role"
-          value={values.role}
-          error={touched.role && Boolean(errors.role)}
-          onBlur={handleBlur}
-          onChange={handleChange}
-        >
-          {Object.values(Role).map((role: Role) => (
-            <MenuItem key={role} value={role}>
-              {t(`common:${role}`)}
-            </MenuItem>
-          ))}
-        </Select>
+            <Select<Role>
+              name="role"
+              value={values.role}
+              error={touched.role && Boolean(errors.role)}
+              onBlur={handleBlur}
+              onChange={handleChange}
+            >
+              {Object.values(Role).map((role: Role) => (
+                <MenuItem key={role} value={role}>
+                  {t(`common:${role}`)}
+                </MenuItem>
+              ))}
+            </Select>
 
-        {touched.email && touched.firstName && touched.lastName && !isValid && (
-          <Typography sx={{ color: error[500] }}>
-            {t(invalidFormError)}
-          </Typography>
-        )}
+            {touched.email &&
+              touched.firstName &&
+              touched.lastName &&
+              !isValid && (
+                <Typography sx={{ color: error[500] }}>
+                  {t(invalidFormError)}
+                </Typography>
+              )}
 
-        <Button variant="contained" disabled={!isValid} type="submit">
-          {t('users.button.create')}
-        </Button>
+            <Button variant="contained" disabled={!isValid} type="submit">
+              {t('users.button.create')}
+            </Button>
 
-        {errorText && (
-          <Typography sx={{ color: error[500] }}>{t(errorText)}</Typography>
-        )}
-      </Stack>
-    </form>
+            {errorText && (
+              <Typography sx={{ color: error[500] }}>{t(errorText)}</Typography>
+            )}
+          </Stack>
+        </form>
+      </CardContent>
+    </Card>
   );
 }

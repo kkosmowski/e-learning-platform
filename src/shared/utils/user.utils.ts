@@ -6,7 +6,11 @@ import {
   SimpleUserDto,
   User,
   UserDto,
+  UserWithDetails,
+  UserWithDetailsDto,
 } from 'shared/types/user';
+import { mapSimpleClassDtoToSimpleClass } from './class.utils';
+import { mapSimpleSubjectDtoToSimpleSubject } from './subject.utils';
 
 export const isStudent = (user?: User | null): boolean =>
   user?.role === Role.Student;
@@ -28,6 +32,16 @@ export const mapUserDtoToUser = (dto: UserDto): User => ({
   role: dto.role,
   createdAt: dto.created_at,
   active: dto.is_active,
+});
+
+export const mapUserWithDetailsDtoToUserWithDetails = (
+  dto: UserWithDetailsDto
+): UserWithDetails => ({
+  ...mapUserDtoToUser(dto),
+  ...(dto.group && { subjectClass: mapSimpleClassDtoToSimpleClass(dto.group) }),
+  ...(dto.group_subjects && {
+    subjects: dto.group_subjects.map(mapSimpleSubjectDtoToSimpleSubject),
+  }),
 });
 
 export const mapPartialUserToUserDto = (

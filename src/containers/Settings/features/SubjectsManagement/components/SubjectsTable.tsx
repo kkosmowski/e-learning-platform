@@ -42,7 +42,7 @@ export default function SubjectsTable(props: SubjectsTableProps) {
   };
 
   return (
-    <Table size="small">
+    <Table>
       <TableStyles />
       <SubjectsTableHead />
       <TableBody>
@@ -95,6 +95,10 @@ const SubjectsTableHead = () => {
 const TableStyles = () => (
   <GlobalStyles
     styles={{
+      '.MuiTableCell-root.MuiTableCell-root': {
+        paddingTop: 12,
+        paddingBottom: 12,
+      },
       '.subjects-table__row--category': {
         width: '35%',
       },

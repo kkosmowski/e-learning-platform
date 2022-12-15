@@ -1,13 +1,14 @@
-import { Box, List } from '@mui/material';
+import { Box, Link as MuiLink, List } from '@mui/material';
 import { Close, Done } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 import ListGridItem from 'shared/components/ListGridItem';
-import { User } from 'shared/types/user';
+import { UserWithDetails } from 'shared/types/user';
 
 interface UserInfoProps {
-  user: User;
-  fields?: (keyof User)[];
+  user: UserWithDetails;
+  fields?: (keyof UserWithDetails)[];
 }
 
 export default function UserInfo(props: UserInfoProps) {
@@ -18,6 +19,25 @@ export default function UserInfo(props: UserInfoProps) {
     <List>
       {(!fields || fields.includes('role')) && (
         <ListGridItem label={t('userType')} value={t(user.role)} />
+      )}
+
+      {(!fields || fields.includes('subjectClass')) && (
+        <ListGridItem
+          label={t(`${user.role}Of`)}
+          value={
+            user.subjectClass ? (
+              <MuiLink
+                component={Link}
+                sx={{ flex: 2 }}
+                to={`/settings/classes/${user.subjectClass.id}`}
+              >
+                {user.subjectClass.name}
+              </MuiLink>
+            ) : (
+              t('noClass')
+            )
+          }
+        />
       )}
 
       {(!fields || fields.includes('active')) && (

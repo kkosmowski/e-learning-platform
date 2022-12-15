@@ -6,12 +6,10 @@ import PageLoading from 'shared/components/PageLoading';
 import SubjectsTable from './components/SubjectsTable';
 import { useSubjectsQuery } from 'shared/queries';
 import useCustomNavigate from 'hooks/use-custom-navigate';
-import { useAuth } from 'contexts/auth';
 
 export default function SubjectsManagement() {
   const { t } = useTranslation('settings');
   const { navigate } = useCustomNavigate();
-  const { currentUser } = useAuth();
   const { fullSubjects, isLoading, isSuccess } = useSubjectsQuery({
     full: true,
   });

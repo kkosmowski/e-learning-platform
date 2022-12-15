@@ -12,6 +12,8 @@ import UserInfo from './components/UserInfo';
 import UserEditForm from './components/UserEditForm';
 import PageLoading from 'shared/components/PageLoading';
 import useCustomNavigate from 'hooks/use-custom-navigate';
+import { useUserWithDetailsQuery } from 'shared/queries/use-user-with-details-query';
+import UserSubjectsInfo from './components/UserSubjectsInfo';
 
 interface UserDetailsProps {
   mode: 'view' | 'edit';
@@ -22,15 +24,14 @@ export default function UserDetails(props: UserDetailsProps) {
   const { id: userId } = useParams<{ id: string }>();
   const { navigate } = useCustomNavigate();
   const { t } = useTranslation('settings');
+  const { updateUser, deleteUser } = useUsersQuery();
   const {
-    currentUser,
+    userWithDetails,
     isLoading,
     isSuccess,
     isFetched,
-    fetchUser,
-    updateUser,
-    deleteUser,
-  } = useUsersQuery();
+    fetchUserWithDetails,
+  } = useUserWithDetailsQuery();
   const { confirmAction, confirmationDialog } = useConfirmationDialog();
 
   const navigateToEdit = () => {
@@ -39,33 +40,33 @@ export default function UserDetails(props: UserDetailsProps) {
 
   useEffect(() => {
     if (userId) {
-      fetchUser(userId);
+      fetchUserWithDetails(userId);
     }
-  }, [fetchUser, userId]);
+  }, [fetchUserWithDetails, userId]);
 
   useEffect(() => {
-    if (isFetched && !currentUser) {
+    if (isFetched && !userWithDetails) {
       navigate('/404');
     }
-  }, [isFetched, currentUser, navigate]);
+  }, [isFetched, userWithDetails, navigate]);
 
   const showStatusToggleDialog = async () => {
-    if (!currentUser) return;
+    if (!userWithDetails) return;
 
     const shouldUpdate = await confirmAction({
       title:
         'settings:users.details.confirm.' +
-        (currentUser.active ? 'deactivateTitle' : 'activateTitle'),
+        (userWithDetails.active ? 'deactivateTitle' : 'activateTitle'),
       message: {
         key:
           'settings:users.details.confirm.' +
-          (currentUser.active ? 'deactivateMessage' : 'activateMessage'),
-        props: { name: currentUser.fullName },
+          (userWithDetails.active ? 'deactivateMessage' : 'activateMessage'),
+        props: { name: userWithDetails.fullName },
       },
-      confirmLabel: currentUser.active
+      confirmLabel: userWithDetails.active
         ? 'common:deactivate'
         : 'common:activate',
-      confirmColor: currentUser.active ? 'error' : 'primary',
+      confirmColor: userWithDetails.active ? 'error' : 'primary',
     });
 
     if (shouldUpdate) {
@@ -74,30 +75,30 @@ export default function UserDetails(props: UserDetailsProps) {
   };
 
   const showDeleteDialog = async () => {
-    if (!currentUser) return;
+    if (!userWithDetails) return;
 
     const shouldDelete = await confirmAction({
       title: 'settings:users.confirm.deleteTitle',
       message: {
         key: 'settings:users.confirm.deleteMessage',
-        props: { name: currentUser.fullName },
+        props: { name: userWithDetails.fullName },
       },
       confirmLabel: 'common:delete',
       confirmColor: 'error',
     });
 
     if (shouldDelete) {
-      deleteUser(currentUser.id);
+      deleteUser(userWithDetails.id);
       navigate('./..');
     }
   };
 
   const updateUserStatus = async () => {
-    if (!currentUser) return;
+    if (!userWithDetails) return;
 
     updateUser({
-      id: currentUser.id,
-      active: !currentUser.active,
+      id: userWithDetails.id,
+      active: !userWithDetails.active,
       onSuccess: (updatedUser) => {
         const toastTranslationKey =
           'users.details.toast.' +
@@ -108,10 +109,10 @@ export default function UserDetails(props: UserDetailsProps) {
   };
 
   const handleUserUpdate = async (userData: UpdateUserForm) => {
-    if (!currentUser) return;
+    if (!userWithDetails) return;
 
     updateUser({
-      id: currentUser.id,
+      id: userWithDetails.id,
       ...userData,
       onSuccess: () => {
         toast.success(t('users.toast.updateSuccess'));
@@ -123,21 +124,31 @@ export default function UserDetails(props: UserDetailsProps) {
 
   return (
     <CommonViewLayout
-      headerTitle={currentUser?.fullName || ''}
-      maxWidth={600}
-      CenteredProps={{ innerSx: { gap: 3 } }}
+      headerTitle={userWithDetails?.fullName || ''}
+      maxWidth={1000}
+      CenteredProps={{
+        innerSx: {
+          gap: 3,
+          display: 'grid',
+          gridTemplateColumns: '2fr 1fr',
+          gridTemplateRows: 'auto 1fr 1fr',
+          gridTemplateAreas: '"controls controls" "generalInfo subjectsInfo"',
+          alignItems: 'flex-start',
+        },
+      }}
     >
       <Box
         sx={{
           display: 'flex',
           justifyContent: 'flex-start',
           gap: 2,
+          gridArea: 'controls',
         }}
       >
         {!isEditMode && (
           <Button
             variant="contained"
-            disabled={!currentUser}
+            disabled={!userWithDetails}
             onClick={navigateToEdit}
           >
             {t('common:edit')}
@@ -146,11 +157,11 @@ export default function UserDetails(props: UserDetailsProps) {
 
         <Button
           variant="contained"
-          color={currentUser?.active ? 'error' : 'primary'}
-          disabled={!currentUser}
+          color={userWithDetails?.active ? 'error' : 'primary'}
+          disabled={!userWithDetails}
           onClick={showStatusToggleDialog}
         >
-          {currentUser?.active
+          {userWithDetails?.active
             ? t('users.details.deactivate')
             : t('users.details.activate')}
         </Button>
@@ -158,7 +169,7 @@ export default function UserDetails(props: UserDetailsProps) {
         <Button
           variant="contained"
           color="error"
-          disabled={!currentUser}
+          disabled={!userWithDetails}
           onClick={showDeleteDialog}
         >
           {t('common:delete')}
@@ -167,20 +178,24 @@ export default function UserDetails(props: UserDetailsProps) {
 
       {/*{ error && <Typography color="error.500">{ error }</Typography> }*/}
 
-      <Card>
+      <Card sx={{ gridArea: 'generalInfo' }}>
         <CardContent>
-          {isSuccess && currentUser && (
+          {isSuccess && userWithDetails && (
             <UserInfo
-              user={currentUser}
-              {...(isEditMode && { fields: ['role', 'active'] })}
+              user={userWithDetails}
+              {...(isEditMode && {
+                fields: ['role', 'active', 'subjectClass'],
+              })}
             />
           )}
-          {isSuccess && currentUser && isEditMode && (
-            <UserEditForm user={currentUser} onSubmit={handleUserUpdate} />
+          {isSuccess && userWithDetails && isEditMode && (
+            <UserEditForm user={userWithDetails} onSubmit={handleUserUpdate} />
           )}
           {isLoading && <PageLoading />}
         </CardContent>
       </Card>
+
+      {userWithDetails && <UserSubjectsInfo user={userWithDetails} />}
 
       {confirmationDialog}
     </CommonViewLayout>

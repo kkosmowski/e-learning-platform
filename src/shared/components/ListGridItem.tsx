@@ -1,5 +1,11 @@
 import { ElementType, ReactNode } from 'react';
-import { Box, ListItem, styled, Typography } from '@mui/material';
+import {
+  Box,
+  Link as MuiLink,
+  ListItem,
+  styled,
+  Typography,
+} from '@mui/material';
 import { Link } from 'react-router-dom';
 
 interface ListGridItemProps {
@@ -12,9 +18,9 @@ interface ListGridItemProps {
 const getValueToRender = (value: ReactNode, link?: string): ReactNode => {
   if (typeof value === 'string') {
     return link ? (
-      <Typography sx={{ flex: 2 }}>
-        <Link to={link}>{value}</Link>
-      </Typography>
+      <MuiLink component={Link} sx={{ flex: 2 }} to={link}>
+        {value}
+      </MuiLink>
     ) : (
       <Typography sx={{ flex: 2 }}>{value}</Typography>
     );

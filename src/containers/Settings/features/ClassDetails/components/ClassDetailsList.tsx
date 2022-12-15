@@ -1,5 +1,6 @@
-import { List, ListItem } from '@mui/material';
+import { Link as MuiLink, List, ListItem } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 import { Class } from 'shared/types/class';
 import ListGridItem from 'shared/components/ListGridItem';
@@ -18,7 +19,15 @@ export default function ClassDetailsList(props: ClassDetailsListProps) {
 
       <ListGridItem
         label={t('teacher')}
-        value={currentClass.teacher.fullName}
+        value={
+          <MuiLink
+            component={Link}
+            sx={{ flex: 2 }}
+            to={`/settings/user/${currentClass.teacher.id}`}
+          >
+            {currentClass.teacher.fullName}
+          </MuiLink>
+        }
       />
 
       <ListGridItem
@@ -27,7 +36,13 @@ export default function ClassDetailsList(props: ClassDetailsListProps) {
           <List disablePadding dense sx={{ flex: 2 }}>
             {currentClass.students.map((student) => (
               <ListItem key={student.id} disableGutters>
-                {student.fullName}
+                <MuiLink
+                  component={Link}
+                  sx={{ flex: 2 }}
+                  to={`/settings/user/${student.id}`}
+                >
+                  {student.fullName}
+                </MuiLink>
               </ListItem>
             ))}
           </List>

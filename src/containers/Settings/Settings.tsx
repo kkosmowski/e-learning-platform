@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { Box, Card, CardContent, styled } from '@mui/material';
+import { Box, Card, CardActionArea, styled } from '@mui/material';
 
 import { consts } from 'theme';
 import CommonViewLayout from 'layouts/CommonView';
@@ -16,7 +16,7 @@ export default function Settings() {
         {categories.map(({ label, Icon, route }) => (
           <SettingsCategoryCard key={route} onClick={() => navigate(route)}>
             <SettingsCategoryCardContent>
-              <Icon sx={{ fontSize: 36 }} />
+              <Icon color="primary" sx={{ fontSize: 28 }} />
               {t(label)}
             </SettingsCategoryCardContent>
           </SettingsCategoryCard>
@@ -47,12 +47,13 @@ const SettingsCategoryCard = styled(Card)(() => ({
   flexDirection: 'column',
 }));
 
-const SettingsCategoryCardContent = styled(CardContent)(() => ({
+const SettingsCategoryCardContent = styled(CardActionArea)(() => ({
   flex: 1,
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
+  fontSize: 15,
   rowGap: 4,
   textAlign: 'center',
   lineHeight: 1.2,

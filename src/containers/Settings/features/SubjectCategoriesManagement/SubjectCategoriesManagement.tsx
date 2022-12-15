@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { Box, Button } from '@mui/material';
 
 import { SubjectCategory } from 'shared/types/subject';
@@ -9,6 +9,7 @@ import CreateNewCategoryForm from './components/CreateNewCategoryForm';
 import CommonViewLayout from 'layouts/CommonView';
 import PageLoading from 'shared/components/PageLoading';
 import SubjectCategoriesList from './components/SubjectCategoriesList';
+import colors from 'colors';
 
 export default function SubjectCategoriesManagement() {
   const { t } = useTranslation('settings', { keyPrefix: 'subjectCategories' });
@@ -40,10 +41,14 @@ export default function SubjectCategoriesManagement() {
     async (category: SubjectCategory) => {
       const shouldDelete = await confirmAction({
         title: 'settings:subjectCategories.confirm.deleteTitle',
-        message: {
-          key: 'settings:subjectCategories.confirm.deleteMessage',
-          props: { name: category.name },
-        },
+        message: (
+          <Trans
+            i18nKey="settings:subjectCategories.confirm.deleteMessage"
+            values={{ name: category.name }}
+          >
+            <strong style={{ color: colors.text.primary }} />
+          </Trans>
+        ),
         confirmLabel: 'common:delete',
         confirmColor: 'error',
       });
