@@ -3,6 +3,7 @@ import toast from 'react-hot-toast';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import {
   Class,
@@ -31,6 +32,7 @@ export default function useClassQuery(
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const [error, setError] = useState('');
+  const { t } = useTranslation('settings');
 
   const navigateBack = () => {
     navigate('..');
@@ -71,11 +73,11 @@ export default function useClassQuery(
         await queryClient.invalidateQueries({ queryKey: ['userWithDetails'] });
         await queryClient.invalidateQueries({ queryKey: ['userWithDetails'] });
         navigateBack();
-        toast.success('Class updated');
+        toast.success(t('classes.toast.updateSuccess'));
       },
       onError: (e) => {
         setError(getErrorDetail(e));
-        toast.error('There was an error');
+        toast.error(t('classes.toast.updateError'));
       },
     }
   );

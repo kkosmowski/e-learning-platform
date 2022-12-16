@@ -409,6 +409,11 @@
           "students": "Students"
         }
       },
+      "toast": {
+        "createSuccess": "Successfully created class \"{{ name }}\"",
+        "updateSuccess": "Successfully updated class",
+        "updateError": "There was an error when updating class"
+      },
       "noItems": "There are no classes yet."
     },
     "subjects": {
@@ -439,9 +444,10 @@
       "button": {
         "add": "Add new subject"
       },
-      "tooltip": {
-        "missingData": "Not all required data is provided",
-        "formUntouched": "Form data has not been modified"
+      "toast": {
+        "createSuccess": "Successfully created subject",
+        "updateSuccess": "Successfully updated subject",
+        "updateError": "There was an error when updating subject"
       }
     },
     "users": {

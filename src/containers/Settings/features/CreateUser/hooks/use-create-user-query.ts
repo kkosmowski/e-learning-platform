@@ -21,7 +21,7 @@ export default function useCreateUserQuery(
     CreateUserForm
   >((form) => createUser(mapCreateUserFormToCreateUserPayload(form)), {
     onSuccess: async () => {
-      toast.success(t('settings:users.createUser.success'));
+      toast.success(t('users.toast.createSuccess'));
       setErrorText('');
       formik.resetForm();
       await formik.validateForm();

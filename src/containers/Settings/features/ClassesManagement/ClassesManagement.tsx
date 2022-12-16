@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import {
   Box,
   Button,
+  Card,
+  CardContent,
   IconButton,
   List,
   ListItemButton,
@@ -39,7 +41,7 @@ export default function ClassesManagement() {
 
   return (
     <CommonViewLayout headerTitle={t('title')} maxWidth={600}>
-      <Box sx={{ height: 40, display: 'flex', alignItems: 'center' }}>
+      <Box sx={{ height: 40, display: 'flex', alignItems: 'center', mb: 2 }}>
         <Button variant="contained" onClick={navigateToClassCreatePage}>
           {t('button.add')}
         </Button>
@@ -47,30 +49,34 @@ export default function ClassesManagement() {
 
       {isSuccess ? (
         classes?.length ? (
-          <List sx={{ width: '100%' }}>
-            {classes.map((currentClass) => (
-              <ListItemButton
-                key={currentClass.id}
-                dense={true}
-                divider
-                sx={{ py: 1.5 }}
-                onClick={() => navigateToClassViewPage(currentClass.id)}
-              >
-                {currentClass.name}
-                <IconButton
-                  color="primary"
-                  size="small"
-                  sx={{ ml: 2 }}
-                  aria-label={t('common:edit')}
-                  onClick={(event) =>
-                    navigateToClassEditPage(currentClass.id, event)
-                  }
-                >
-                  <EditIcon />
-                </IconButton>
-              </ListItemButton>
-            ))}
-          </List>
+          <Card>
+            <CardContent>
+              <List sx={{ width: '100%' }} disablePadding>
+                {classes.map((currentClass, i) => (
+                  <ListItemButton
+                    key={currentClass.id}
+                    dense={true}
+                    divider={i !== classes.length - 1}
+                    sx={{ py: 1.5 }}
+                    onClick={() => navigateToClassViewPage(currentClass.id)}
+                  >
+                    {currentClass.name}
+                    <IconButton
+                      color="primary"
+                      size="small"
+                      sx={{ ml: 2 }}
+                      aria-label={t('common:edit')}
+                      onClick={(event) =>
+                        navigateToClassEditPage(currentClass.id, event)
+                      }
+                    >
+                      <EditIcon />
+                    </IconButton>
+                  </ListItemButton>
+                ))}
+              </List>
+            </CardContent>
+          </Card>
         ) : (
           <Typography>{t('noItems')}</Typography>
         )

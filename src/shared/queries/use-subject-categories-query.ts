@@ -34,9 +34,7 @@ export function useSubjectCategoriesQuery() {
     string
   >(createSubjectCategory, {
     onSuccess: async ({ data }) => {
-      toast.success(
-        t('subjectCategories.createSuccessToast', { name: data.name })
-      );
+      toast.success(t('subjectCategories.toast.createSuccess'));
       queryClient.setQueryData(['subject-categories'], {
         data: fetchQuery.data ? [...fetchQuery.data, data] : [data],
       });
@@ -53,7 +51,7 @@ export function useSubjectCategoriesQuery() {
     SubjectCategory
   >(updateSubjectCategory, {
     onSuccess: async ({ data }) => {
-      toast.success(t('subjectCategories.updateSuccessToast'));
+      toast.success(t('subjectCategories.toast.updateSuccess'));
       queryClient.setQueryData(['subject-categories'], {
         data: fetchQuery.data?.map((category) =>
           category.id === data.id ? data : category
@@ -72,7 +70,7 @@ export function useSubjectCategoriesQuery() {
     },
     {
       onSuccess: async (categoryId) => {
-        toast.success(t('subjectCategories.deleteSuccessToast'));
+        toast.success(t('subjectCategories.toast.deleteSuccess'));
         queryClient.setQueryData(['subject-categories'], {
           data: fetchQuery.data?.filter(
             (category) => category.id !== categoryId

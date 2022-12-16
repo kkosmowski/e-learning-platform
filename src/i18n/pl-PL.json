@@ -409,9 +409,10 @@
           "students": "Uczniowie"
         }
       },
-      "tooltip": {
-        "missingData": "Nie wypełniono wszystkich wymaganych pól",
-        "formUntouched": "Dane nie zostały zmodyfikowane"
+      "toast": {
+        "createSuccess": "Utworzono klasę \"{{ name }}\"",
+        "updateSuccess": "Zaktualizowano klasę",
+        "updateError": "Podczas aktualizacji klasy wystąpił błąd"
       },
       "noItems": "Brak istniejących klas."
     },
@@ -442,6 +443,11 @@
       },
       "button": {
         "add": "Dodaj przedmiot"
+      },
+      "toast": {
+        "createSuccess": "Utworzono przedmiot",
+        "updateSuccess": "Zaktualizowano przedmiot",
+        "updateError": "Podczas aktualizacji przedmiotu wystąpił błąd"
       }
     },
     "users": {
