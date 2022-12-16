@@ -1,9 +1,9 @@
 import { useParams } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 import { Centered } from 'shared/components/Container';
 import TaskCard from 'shared/components/TaskCard';
 import { isStudent, isTeacher } from 'shared/utils/user.utils';
-import useCustomNavigate from 'hooks/use-custom-navigate';
 import { useAuth } from 'contexts/auth';
 import {
   useTasksQuery,
@@ -15,7 +15,7 @@ import TaskSubmissionStudentView from './features/TaskSubmissionStudentView';
 import TaskSubmissionTeacherView from './features/TaskSubmissionTeacherView';
 
 export default function Task() {
-  const { navigate } = useCustomNavigate();
+  const navigate = useNavigate();
   const { subjectId, taskId } = useParams();
   const { currentUser } = useAuth();
   const isUserStudent = isStudent(currentUser);

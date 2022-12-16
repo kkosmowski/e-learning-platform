@@ -90,6 +90,13 @@ const baseThemeOptions: ThemeOptions = {
         },
       },
     },
+    MuiLink: {
+      styleOverrides: {
+        root: {
+          cursor: 'pointer',
+        },
+      },
+    },
     MuiPaper: {
       defaultProps: {
         square: true,

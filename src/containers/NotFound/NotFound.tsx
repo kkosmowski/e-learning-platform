@@ -1,11 +1,11 @@
 import { Button, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 import Container from 'shared/components/Container';
-import useCustomNavigate from 'hooks/use-custom-navigate';
 
 export default function NotFound() {
-  const { navigate } = useCustomNavigate();
+  const navigate = useNavigate();
   const { t } = useTranslation('404');
 
   const navigateHome = (): void => {

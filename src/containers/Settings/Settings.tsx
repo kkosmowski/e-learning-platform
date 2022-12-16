@@ -1,14 +1,14 @@
 import { useTranslation } from 'react-i18next';
 import { Box, Card, CardActionArea, styled } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 import { consts } from 'theme';
 import CommonViewLayout from 'layouts/CommonView';
 import { categories } from './consts/categories';
-import useCustomNavigate from 'hooks/use-custom-navigate';
 
 export default function Settings() {
   const { t } = useTranslation('settings');
-  const { navigate } = useCustomNavigate();
+  const navigate = useNavigate();
 
   return (
     <CommonViewLayout headerTitle={t('title')}>

@@ -1,13 +1,12 @@
-import { useMemo } from 'react';
-import { useParams } from 'react-router';
+import { useEffect, useMemo } from 'react';
 import { Button, Card, CardContent } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { useParams, useNavigate } from 'react-router-dom';
 
 import CommonViewLayout from 'layouts/CommonView';
 import ClassDetailsList from './components/ClassDetailsList';
 import ClassEditForm from './components/ClassEditForm';
 import useClassQuery from './hooks/use-class-query';
-import useCustomNavigate from 'hooks/use-custom-navigate';
 
 interface ClassDetailsProps {
   mode: 'view' | 'edit';
@@ -17,17 +16,17 @@ export default function ClassDetails(props: ClassDetailsProps) {
   const isEditMode = useMemo(() => props.mode === 'edit', [props.mode]);
   const { id: classId } = useParams<{ id: string }>();
   const { t } = useTranslation('settings', { keyPrefix: 'classes' });
-  const { navigate } = useCustomNavigate();
+  const navigate = useNavigate();
   const { currentClass, isSuccess, isLoading, error, updateClass } =
     useClassQuery(classId);
 
-  const navigateBack = () => {
-    navigate('..', { replace: true });
+  const navigateToEdit = () => {
+    navigate('edit');
   };
 
-  const navigateToEdit = () => {
-    navigate('./edit');
-  };
+  useEffect(() => {
+    console.log('test');
+  }, []);
 
   if (!isLoading && !isSuccess) {
     navigate('/404');
@@ -59,7 +58,7 @@ export default function ClassDetails(props: ClassDetailsProps) {
                   class={currentClass}
                   error={error}
                   onSubmit={updateClass}
-                  onCancel={navigateBack}
+                  onCancel={() => navigate(-1)}
                 />
               ) : (
                 <ClassDetailsList class={currentClass} />

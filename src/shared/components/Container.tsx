@@ -24,7 +24,7 @@ export default function Container(props: ContainerProps) {
         display: 'flex',
         flexDirection: 'column',
         overflow: 'auto',
-        p: typeof p !== 'undefined' ? p : 2,
+        p: typeof p !== 'undefined' ? p : '16px 16px 64px',
         ...(bg && { backgroundColor: bg }),
         ...sx,
       }}

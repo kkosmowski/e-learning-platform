@@ -1,14 +1,14 @@
 import { Box, Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 import { text } from 'colors';
 import { useAuth } from 'contexts/auth';
 import { features } from 'shared/consts/routing';
 import { isUserPermitted } from 'shared/utils/user.utils';
-import useCustomNavigate from 'hooks/use-custom-navigate';
 
 export default function NavbarMenu() {
-  const { navigate } = useCustomNavigate();
+  const navigate = useNavigate();
   const { currentUser } = useAuth();
   const { t } = useTranslation('nav');
 

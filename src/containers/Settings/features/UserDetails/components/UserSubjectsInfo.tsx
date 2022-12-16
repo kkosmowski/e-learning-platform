@@ -6,9 +6,9 @@ import {
   Typography,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 import { UserWithDetails } from 'shared/types/user';
-import useCustomNavigate from 'hooks/use-custom-navigate';
 
 interface UserSubjectsInfoProps {
   user: UserWithDetails;
@@ -19,7 +19,7 @@ export default function UserSubjectsInfo(props: UserSubjectsInfoProps) {
     user: { role, subjects },
   } = props;
   const { t } = useTranslation('settings');
-  const { navigate } = useCustomNavigate();
+  const navigate = useNavigate();
 
   if (!subjects?.length) {
     return null;

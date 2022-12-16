@@ -3,6 +3,7 @@ import { useParams } from 'react-router';
 import { Box, Button, Card, CardContent } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 import { UpdateUserForm } from 'shared/types/user';
 import CommonViewLayout from 'layouts/CommonView';
@@ -11,7 +12,6 @@ import { useUsersQuery } from 'shared/queries';
 import UserInfo from './components/UserInfo';
 import UserEditForm from './components/UserEditForm';
 import PageLoading from 'shared/components/PageLoading';
-import useCustomNavigate from 'hooks/use-custom-navigate';
 import { useUserWithDetailsQuery } from 'shared/queries/use-user-with-details-query';
 import UserSubjectsInfo from './components/UserSubjectsInfo';
 
@@ -22,7 +22,7 @@ interface UserDetailsProps {
 export default function UserDetails(props: UserDetailsProps) {
   const isEditMode = useMemo(() => props.mode === 'edit', [props.mode]);
   const { id: userId } = useParams<{ id: string }>();
-  const { navigate } = useCustomNavigate();
+  const navigate = useNavigate();
   const { t } = useTranslation('settings');
   const { updateUser, deleteUser } = useUsersQuery();
   const {
@@ -119,7 +119,7 @@ export default function UserDetails(props: UserDetailsProps) {
       },
     });
 
-    navigate('./..');
+    navigate(-1);
   };
 
   return (

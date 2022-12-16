@@ -1,10 +1,8 @@
 import { useMemo } from 'react';
 import { AxiosError } from 'axios';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { useTranslation } from 'react-i18next';
+import { useQuery } from '@tanstack/react-query';
 
 import { useAuth } from 'contexts/auth';
-import useCustomNavigate from 'hooks/use-custom-navigate';
 import {
   GetTaskSubmissionsResponse,
   TaskSubmissionDto,
@@ -14,9 +12,6 @@ import { mapTaskSubmissionDtoToTaskSubmission } from 'shared/utils/task.utils';
 
 export function useTaskSubmissionsQuery(taskId?: string, enabled?: boolean) {
   const { currentUser } = useAuth();
-  const queryClient = useQueryClient();
-  const { navigate, back } = useCustomNavigate();
-  const { t } = useTranslation('task');
 
   if (!taskId) {
     console.error(

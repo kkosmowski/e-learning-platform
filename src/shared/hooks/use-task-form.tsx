@@ -4,6 +4,7 @@ import { TFunction } from 'i18next';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { DateTimePicker } from '@mui/x-date-pickers';
+import { useNavigate } from 'react-router-dom';
 import {
   addHours,
   addMinutes,
@@ -19,7 +20,6 @@ import {
   publishTimeRequiredError,
   titleRequiredError,
 } from 'shared/consts/error';
-import useCustomNavigate from 'hooks/use-custom-navigate';
 import {
   DEFAULT_TASK_DURATION_IN_HOURS,
   MAX_TASK_DURATION_IN_HOURS,
@@ -56,7 +56,7 @@ export function useTaskForm(props: UseTaskFormProps) {
   const [endPickerOpened, setEndPickerOpened] = useState(false);
   const [startPickerValue, setStartPickerValue] = useState<Date | null>(null);
   const [endPickerValue, setEndPickerValue] = useState<Date | null>(null);
-  const { back } = useCustomNavigate();
+  const navigate = useNavigate();
   const isEditMode = Boolean(initialValues.name);
 
   const formik = useFormik<TaskForm>({
@@ -451,7 +451,7 @@ export function useTaskForm(props: UseTaskFormProps) {
           </Box>
         </Tooltip>
 
-        <Button color="secondary" onClick={() => back()}>
+        <Button color="secondary" onClick={() => navigate(-1)}>
           {t('common:cancel')}
         </Button>
       </Box>

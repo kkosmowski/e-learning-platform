@@ -2,15 +2,15 @@ import { useMemo } from 'react';
 import { Card, CardContent } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 import SectionTitle from 'shared/components/SectionTitle';
-import useCustomNavigate from 'hooks/use-custom-navigate';
 import { useNoticeQuery } from 'shared/queries/use-notice-query';
 import EditNoticeForm from './components/EditNoticeForm';
 
 export default function EditNotice() {
   const { subjectId, noticeId } = useParams();
-  const { navigate } = useCustomNavigate();
+  const navigate = useNavigate();
   const { t } = useTranslation('notice');
   const { notice, update, isError } = useNoticeQuery(noticeId);
   if (!subjectId || !noticeId || isError) {

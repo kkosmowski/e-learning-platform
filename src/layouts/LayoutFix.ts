@@ -7,4 +7,5 @@ export const LayoutFix = styled(Box)(() => ({
   '> *': {
     flex: 1,
   },
+  overflow: 'hidden',
 }));

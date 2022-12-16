@@ -1,17 +1,17 @@
 import { useParams } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 import { TaskType } from 'shared/types/task';
 import LatestGrades from './components/LatestGrades';
 import LatestNotices from './components/LatestNotices';
 import LatestTasks from './components/LatestTasks';
-import useCustomNavigate from 'hooks/use-custom-navigate';
 
 const getTaskRoute = (type: TaskType): string =>
   type === TaskType.Task ? 'tasks' : 'homework';
 
 export default function SubjectOverview() {
   const { subjectId } = useParams<{ subjectId: string }>();
-  const { navigate } = useCustomNavigate();
+  const navigate = useNavigate();
 
   const navigateToNotices = (): void => {
     navigate('notices');

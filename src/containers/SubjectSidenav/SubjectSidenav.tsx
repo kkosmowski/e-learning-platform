@@ -1,14 +1,13 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 import { Sidenav } from 'layouts/Application/components';
 import { useSubjectQuery } from 'shared/queries';
 import PageLoading from 'shared/components/PageLoading';
 import SideStudentsList from './SideStudentsList';
-import useCustomNavigate from 'hooks/use-custom-navigate';
 
 export default function SubjectSidenav() {
   const { subjectId } = useParams();
-  const { navigate } = useCustomNavigate();
+  const navigate = useNavigate();
   const { subject, isLoading, isSuccess } = useSubjectQuery(subjectId, {
     full: true,
   });

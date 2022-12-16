@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 import { getNotice, updateNotice } from 'api/notice';
 import {
@@ -16,12 +17,11 @@ import {
   mapNoticeFormToUpdateNoticePayload,
 } from 'shared/utils/notice.utils';
 import { useAuth } from 'contexts/auth';
-import useCustomNavigate from 'hooks/use-custom-navigate';
 
 export function useNoticeQuery(noticeId: string | undefined) {
   const { currentUser } = useAuth();
   const queryClient = useQueryClient();
-  const { back } = useCustomNavigate();
+  const navigate = useNavigate();
   const { t } = useTranslation('notice');
 
   const fetchQuery = useQuery<GetNoticeResponse, AxiosError, NoticeDto>(
@@ -50,7 +50,7 @@ export function useNoticeQuery(noticeId: string | undefined) {
       onSuccess: async ({ data }) => {
         queryClient.setQueryData(['notice', noticeId], { data });
         await queryClient.invalidateQueries(['notices']);
-        back();
+        navigate(-1);
         toast.success(t('toast.updateSuccess', { name: data.name }));
       },
       onError: (e) => {

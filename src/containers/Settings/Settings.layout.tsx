@@ -1,11 +1,11 @@
 import { useEffect, useMemo } from 'react';
 import { Outlet } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 import { useAuth } from 'contexts/auth';
 import Container from 'shared/components/Container';
 import { Role } from 'shared/types/user';
 import { isUserPermitted } from 'shared/utils/user.utils';
-import useCustomNavigate from 'hooks/use-custom-navigate';
 
 interface SettingsLayoutProps {
   limitedTo: Role;
@@ -14,7 +14,7 @@ interface SettingsLayoutProps {
 export default function SettingsLayout(props: SettingsLayoutProps) {
   const { limitedTo } = props;
   const { currentUser } = useAuth();
-  const { navigate } = useCustomNavigate();
+  const navigate = useNavigate();
   const userPermitted = useMemo(
     () => isUserPermitted(currentUser, limitedTo),
     [currentUser, limitedTo]

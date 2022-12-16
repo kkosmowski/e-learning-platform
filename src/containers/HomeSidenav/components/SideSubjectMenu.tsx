@@ -1,8 +1,8 @@
 import { ListItem, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 import { SimpleSubject } from 'shared/types/subject';
-import useCustomNavigate from 'hooks/use-custom-navigate';
 import { useGroupBySubject } from 'shared/hooks';
 import { useAuth } from 'contexts/auth';
 import { Role } from 'shared/types/user';
@@ -15,7 +15,7 @@ interface SideSubjectMenuProps {
 export default function SideSubjectMenu(props: SideSubjectMenuProps) {
   const { subjects } = props;
   const { currentUser } = useAuth();
-  const { navigate } = useCustomNavigate();
+  const navigate = useNavigate();
   const isTeacher = currentUser?.role === Role.Teacher;
   const { groupedSubjects } = useGroupBySubject(subjects, isTeacher);
   const { t } = useTranslation('sidenav');

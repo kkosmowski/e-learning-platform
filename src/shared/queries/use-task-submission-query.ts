@@ -12,10 +12,7 @@ import {
   SimpleTaskSubmissionDto,
 } from 'shared/types/task';
 import { getTaskSubmission, updateTaskSubmission } from 'api/task';
-import {
-  mapSimpleTaskSubmissionDtoToSimpleTaskSubmission,
-  mapTaskSubmissionDtoToTaskSubmission,
-} from 'shared/utils/task.utils';
+import { mapSimpleTaskSubmissionDtoToSimpleTaskSubmission } from 'shared/utils/task.utils';
 
 export function useTaskSubmissionQuery(taskId?: string, enabled?: boolean) {
   const { currentUser } = useAuth();
@@ -52,7 +49,7 @@ export function useTaskSubmissionQuery(taskId?: string, enabled?: boolean) {
       });
       toast.success(t('toast.submitSuccess'));
     },
-    onError: (e) => {
+    onError: () => {
       toast.error(t('error:ERROR'));
     },
   });

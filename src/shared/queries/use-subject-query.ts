@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 import { getFullSubject, getSubject, updateSubject } from 'api/subject';
 import {
@@ -19,7 +20,6 @@ import {
 } from 'shared/utils/subject.utils';
 import { getErrorDetail } from 'shared/utils/common.utils';
 import { User } from 'shared/types/user';
-import useCustomNavigate from 'hooks/use-custom-navigate';
 import { useAuth } from 'contexts/auth';
 
 export function useSubjectQuery(
@@ -31,7 +31,7 @@ export function useSubjectQuery(
 ) {
   const queryClient = useQueryClient();
   const { currentUser } = useAuth();
-  const { navigate } = useCustomNavigate();
+  const navigate = useNavigate();
   const [errorText, setErrorText] = useState('');
   const { t } = useTranslation();
 

@@ -9,16 +9,16 @@ import {
   Typography,
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
+import { useNavigate } from 'react-router-dom';
 
 import CommonViewLayout from 'layouts/CommonView';
 import PageLoading from 'shared/components/PageLoading';
 import { unknownError } from 'shared/consts/error';
 import { useClassesQuery } from 'shared/queries';
-import useCustomNavigate from 'hooks/use-custom-navigate';
 
 export default function ClassesManagement() {
   const { t } = useTranslation('settings', { keyPrefix: 'classes' });
-  const { navigate } = useCustomNavigate();
+  const navigate = useNavigate();
   const { classes, isSuccess, isLoading } = useClassesQuery();
 
   const navigateToClassCreatePage = () => {

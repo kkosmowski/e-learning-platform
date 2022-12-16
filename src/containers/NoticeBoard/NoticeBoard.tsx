@@ -2,17 +2,17 @@ import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 import { Masonry } from '@mui/lab';
+import { useNavigate } from 'react-router-dom';
 
 import { Centered } from 'shared/components/Container';
 import SectionTitle from 'shared/components/SectionTitle';
 import NoticeCard from 'shared/components/NoticeCard';
-import useCustomNavigate from 'hooks/use-custom-navigate';
 import { useNoticesQuery } from 'shared/queries/use-notices-query';
 import { useAuth } from 'contexts/auth';
 import PageLoading from 'shared/components/PageLoading';
 
 export default function NoticeBoard() {
-  const { navigate } = useCustomNavigate();
+  const navigate = useNavigate();
   const { t } = useTranslation('notice');
   const { subjectId } = useParams<{ subjectId: string }>();
   const { currentUser } = useAuth();

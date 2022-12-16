@@ -8,6 +8,7 @@ import {
 import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 import {
   GetTaskResponse,
@@ -34,7 +35,6 @@ import {
 import { useAuth } from 'contexts/auth';
 import { TASK_LIST_PAGE_SIZE, VISIBLE_LATEST_TASKS } from 'shared/consts/task';
 import { EmptyResponse, Paginated } from 'shared/types/shared';
-import useCustomNavigate from 'hooks/use-custom-navigate';
 
 const getNextPageParam = (
   { total_count }: Paginated<TaskDto>,
@@ -63,7 +63,7 @@ export function useTasksQuery(options: {
   const { subjectId, taskId, enabled = [] } = options;
   const { currentUser } = useAuth();
   const queryClient = useQueryClient();
-  const { navigate, back } = useCustomNavigate();
+  const navigate = useNavigate();
   const { t } = useTranslation('task');
 
   if (!enabled.length && subjectId) {
@@ -146,7 +146,7 @@ export function useTasksQuery(options: {
       onSuccess: async ({ data }) => {
         queryClient.setQueryData(['task', taskId], { data });
         await queryClient.invalidateQueries(['tasks']);
-        back();
+        navigate(-1);
         toast.success(t('toast.updateSuccess', { name: data.name }));
       },
       onError: (e) => {

@@ -1,7 +1,7 @@
 import { useParams, Outlet } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 import CommonViewLayout from 'layouts/CommonView';
-import useCustomNavigate from 'hooks/use-custom-navigate';
 import { useSubjectQuery } from 'shared/queries';
 import PageLoading from 'shared/components/PageLoading';
 import SubjectSidenav from 'containers/SubjectSidenav';
@@ -11,7 +11,7 @@ import { isTeacher } from 'shared/utils/user.utils';
 import HomeSidenav from 'containers/HomeSidenav';
 
 export default function SubjectLayout() {
-  const { navigate } = useCustomNavigate();
+  const navigate = useNavigate();
   const { currentUser } = useAuth();
   const { subjectId } = useParams<{ subjectId: string }>();
   const { simpleSubject, isLoading } = useSubjectQuery(subjectId, {

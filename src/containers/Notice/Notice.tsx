@@ -2,15 +2,15 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 import { Centered } from 'shared/components/Container';
 import NoticeCard from 'shared/components/NoticeCard';
-import useCustomNavigate from 'hooks/use-custom-navigate';
 import { useNoticeQuery } from 'shared/queries/use-notice-query';
 import PageLoading from 'shared/components/PageLoading';
 
 export default function Notice() {
-  const { navigate } = useCustomNavigate();
+  const navigate = useNavigate();
   const { noticeId } = useParams<{ noticeId: string }>();
   const { t } = useTranslation();
   const { notice, isLoading, isSuccess, isError } = useNoticeQuery(noticeId);

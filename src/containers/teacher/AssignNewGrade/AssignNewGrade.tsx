@@ -1,13 +1,12 @@
 import { useMemo } from 'react';
 import { Card, CardContent } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 import { useCreateGradeQuery } from 'shared/queries';
 import { useGradeForm } from 'shared/hooks';
 import SectionTitle from 'shared/components/SectionTitle';
 import { CreateGradeForm, GradeType } from 'shared/types/grade';
-import useCustomNavigate from 'hooks/use-custom-navigate';
 
 interface AssignNewGradeProps {
   taskId?: string;
@@ -17,7 +16,7 @@ export default function AssignNewGrade(props: AssignNewGradeProps) {
   const { taskId } = props;
   const { subjectId } = useParams();
   const { handleCreate: createGrade } = useCreateGradeQuery();
-  const { back } = useCustomNavigate();
+  const navigate = useNavigate();
   const { t } = useTranslation('grade');
 
   const initialValues: CreateGradeForm = useMemo(
@@ -34,7 +33,7 @@ export default function AssignNewGrade(props: AssignNewGradeProps) {
 
   const handleSubmit = (form: CreateGradeForm) => {
     createGrade(form);
-    requestIdleCallback(() => back());
+    requestIdleCallback(() => navigate('..'));
   };
 
   const { Form } = useGradeForm({
@@ -43,7 +42,7 @@ export default function AssignNewGrade(props: AssignNewGradeProps) {
     requireModifying: true,
     submitButtonLabel: t('grade:create.submit'),
     onSubmit: handleSubmit,
-    onCancel: back,
+    onCancel: () => navigate(-1),
     t,
   });
 
