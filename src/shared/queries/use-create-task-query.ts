@@ -2,16 +2,16 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 import { createTask } from 'api/task';
 import { getErrorDetail } from 'shared/utils/common.utils';
-import useCustomNavigate from 'hooks/use-custom-navigate';
 import { CreateTaskResponse, TaskForm, TaskType } from 'shared/types/task';
 import { mapTaskFormToCreateTaskPayload } from 'shared/utils/task.utils';
 
 export function useCreateTaskQuery() {
   const { t } = useTranslation('task');
-  const { navigate } = useCustomNavigate();
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const { mutate: handleCreate } = useMutation<

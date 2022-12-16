@@ -1,15 +1,15 @@
 import { Card, CardContent } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 import SectionTitle from 'shared/components/SectionTitle';
 import { useNoticeForm } from 'shared/hooks';
 import { useCreateNoticeQuery } from 'shared/queries';
-import useCustomNavigate from 'hooks/use-custom-navigate';
 
 export default function CreateNotice() {
   const { subjectId } = useParams();
-  const { navigate } = useCustomNavigate();
+  const navigate = useNavigate();
   const { t } = useTranslation('notice');
   const createNotice = useCreateNoticeQuery();
 

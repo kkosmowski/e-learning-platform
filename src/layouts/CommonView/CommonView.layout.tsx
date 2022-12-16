@@ -1,10 +1,10 @@
 import { Fragment, ReactNode } from 'react';
 import { Box, BoxTypeMap, Stack } from '@mui/material';
 import { DefaultComponentProps } from '@mui/material/OverridableComponent';
+import { useNavigate } from 'react-router-dom';
 
 import ViewHeaderTitle from 'shared/components/ViewHeaderTitle';
 import { Centered, CenteredProps } from 'shared/components/Container';
-import useCustomNavigate from 'hooks/use-custom-navigate';
 
 interface CommonViewLayoutProps {
   headerTitle?: ReactNode;
@@ -17,7 +17,7 @@ interface CommonViewLayoutProps {
 export default function CommonViewLayout(props: CommonViewLayoutProps) {
   const { headerTitle, CenteredProps, maxWidth, hideBackButton, children } =
     props;
-  const { back } = useCustomNavigate();
+  const navigate = useNavigate();
   const actualCenteredProps: Partial<CenteredProps> = { ...CenteredProps };
 
   const Wrapper = typeof maxWidth === 'number' ? Box : Fragment;
@@ -46,7 +46,7 @@ export default function CommonViewLayout(props: CommonViewLayoutProps) {
         <ViewHeaderTitle
           title={headerTitle}
           hideBackButton={hideBackButton}
-          onBack={() => back()}
+          onBack={() => navigate(-1)}
         />
       )}
 

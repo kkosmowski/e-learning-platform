@@ -2,18 +2,18 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 import { ClassForm, SimpleClassDto } from 'shared/types/class';
 import { createClass } from 'api/class';
 import { getErrorDetail } from 'shared/utils/common.utils';
-import useCustomNavigate from 'hooks/use-custom-navigate';
 
 type MutationFnPayload = { values: ClassForm; show?: boolean };
 type MutationFnReturnData = { data: SimpleClassDto; show?: boolean };
 
 export default function useCreateClassQuery() {
   const { t } = useTranslation('settings');
-  const { navigate } = useCustomNavigate();
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const { mutate: handleCreate } = useMutation<

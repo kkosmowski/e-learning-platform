@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
-import useCustomNavigate from 'hooks/use-custom-navigate';
 import PageLoading from 'shared/components/PageLoading';
 import { useSubjectsQuery } from 'shared/queries';
 import { SimpleSubject } from 'shared/types/subject';
@@ -15,7 +15,7 @@ import HomeSidenav from 'containers/HomeSidenav';
 import { useGroupBySubject } from 'shared/hooks';
 
 export default function Subjects() {
-  const { navigate } = useCustomNavigate();
+  const navigate = useNavigate();
   const { currentUser } = useAuth();
   const { subjects, isLoading, isSuccess } = useSubjectsQuery({
     simple: true,

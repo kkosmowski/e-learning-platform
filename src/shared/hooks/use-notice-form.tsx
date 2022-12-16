@@ -4,6 +4,7 @@ import { TFunction } from 'i18next';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { DateTimePicker } from '@mui/x-date-pickers';
+import { useNavigate } from 'react-router-dom';
 
 import { NoticeForm } from 'shared/types/notice';
 import {
@@ -11,7 +12,6 @@ import {
   publishTimeRequiredError,
   titleRequiredError,
 } from 'shared/consts/error';
-import useCustomNavigate from 'hooks/use-custom-navigate';
 import LabelledCheckbox from 'shared/components/LabelledCheckbox';
 
 interface UseNoticeFormProps {
@@ -26,7 +26,7 @@ export function useNoticeForm(props: UseNoticeFormProps) {
   const [isUntouched, setIsUntouched] = useState(true);
   const [datePickerOpened, setDatePickerOpened] = useState(false);
   const [datePickerValue, setDatePickerValue] = useState<Date | null>(null);
-  const { back } = useCustomNavigate();
+  const navigate = useNavigate();
 
   const formik = useFormik<NoticeForm>({
     initialValues,
@@ -167,7 +167,7 @@ export function useNoticeForm(props: UseNoticeFormProps) {
           </Box>
         </Tooltip>
 
-        <Button color="secondary" onClick={() => back()}>
+        <Button color="secondary" onClick={() => navigate(-1)}>
           {t('common:cancel')}
         </Button>
       </Box>

@@ -24,6 +24,7 @@ import ItemCategory from 'shared/components/ItemCategory';
 import { fixGradeValue, isVirtualGrade } from 'shared/utils/grade.utils';
 import { Task } from 'shared/types/task';
 import { ellipsisSx } from 'shared/consts/styles';
+import { useNavigate } from 'react-router';
 
 export interface GradeRowOption {
   label: ReactNode;
@@ -58,6 +59,7 @@ export default function GradeRow(props: GradeRowProps) {
   } = props;
   const { t } = useTranslation('subject');
   const { value, type, createdAt, user } = grade;
+  const navigate = useNavigate();
   const [menuAnchor, setMenuAnchor] = useState<HTMLButtonElement | null>(null);
   let name: string | undefined = undefined;
   let task: Task | undefined = undefined;
@@ -129,8 +131,9 @@ export default function GradeRow(props: GradeRowProps) {
               >
                 {task ? (
                   <MuiLink
-                    component={Link}
-                    to={`/subjects/${subjectId}/tasks/${task.id}`}
+                    onClick={() =>
+                      navigate(`/subjects/${subjectId}/tasks/${task?.id}`)
+                    }
                   >
                     {task.name}
                   </MuiLink>

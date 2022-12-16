@@ -8,13 +8,13 @@ import {
   Typography,
 } from '@mui/material';
 import { Fragment, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { Task, SimpleTaskSubmission } from 'shared/types/task';
 import { isPastDate } from 'shared/utils/date.utils';
 import { Role, User } from 'shared/types/user';
 import ActionToolbar from './ActionToolbar';
 import { useAuth } from 'contexts/auth';
-import useCustomNavigate from 'hooks/use-custom-navigate';
 import { TASK_VISIBLE_SHORT_TITLE_LENGTH } from 'shared/consts/task';
 import TaskDetails from './TaskDetails';
 
@@ -39,7 +39,7 @@ export default function TaskCard(props: TaskCardProps) {
     onDelete,
   } = props;
   const { currentUser } = useAuth();
-  const { navigate } = useCustomNavigate();
+  const navigate = useNavigate();
 
   const CardWrapper = onClick ? CardActionArea : Fragment;
 

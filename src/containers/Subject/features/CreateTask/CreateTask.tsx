@@ -1,10 +1,10 @@
 import { Card, CardContent } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
 import { TaskType } from 'shared/types/task';
 import SectionTitle from 'shared/components/SectionTitle';
-import useCustomNavigate from 'hooks/use-custom-navigate';
 import { useTaskForm } from 'shared/hooks';
 import { useCreateTaskQuery } from 'shared/queries/use-create-task-query';
 
@@ -15,7 +15,7 @@ interface CreateTaskProps {
 export default function CreateTask(props: CreateTaskProps) {
   const { type } = props;
   const { subjectId } = useParams();
-  const { navigate } = useCustomNavigate();
+  const navigate = useNavigate();
   const { t } = useTranslation('task');
   const createTask = useCreateTaskQuery();
 

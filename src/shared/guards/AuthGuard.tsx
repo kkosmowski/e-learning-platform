@@ -1,7 +1,7 @@
 import { ReactNode, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { useAuth } from 'contexts/auth';
-import useCustomNavigate from 'hooks/use-custom-navigate';
 
 interface AuthGuardProps {
   children: ReactNode;
@@ -9,7 +9,7 @@ interface AuthGuardProps {
 
 export default function AuthGuard(props: AuthGuardProps) {
   const { children } = props;
-  const { navigate } = useCustomNavigate();
+  const navigate = useNavigate();
   const { currentUser } = useAuth();
 
   useEffect(() => {

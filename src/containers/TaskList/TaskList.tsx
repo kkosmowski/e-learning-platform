@@ -4,17 +4,17 @@ import { useParams } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { Masonry } from '@mui/lab';
 import { useInView } from 'react-intersection-observer';
+import { useNavigate } from 'react-router-dom';
 
 import { Centered } from 'shared/components/Container';
 import TaskCard from 'shared/components/TaskCard';
 import { TaskType } from 'shared/types/task';
-import useCustomNavigate from 'hooks/use-custom-navigate';
 import { useTasksQuery } from 'shared/queries';
 import PageLoading from 'shared/components/PageLoading';
 import SectionTitle from 'shared/components/SectionTitle';
 
 export default function TaskList({ type }: { type: TaskType }) {
-  const { navigate } = useCustomNavigate();
+  const navigate = useNavigate();
   const { subjectId } = useParams();
   const { t } = useTranslation('task');
   const isTypeTask = type === TaskType.Task;

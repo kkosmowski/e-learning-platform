@@ -2,12 +2,12 @@ import { useMemo } from 'react';
 import { useParams } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { Button, Card, CardContent } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 import CommonViewLayout from 'layouts/CommonView';
 import { useSubjectQuery } from 'shared/queries';
 import SubjectDetailsList from './components/SubjectDetailsList';
 import SubjectEditForm from './components/SubjectEditForm';
-import useCustomNavigate from 'hooks/use-custom-navigate';
 
 interface SubjectDetailsProps {
   mode: 'view' | 'edit';
@@ -17,7 +17,7 @@ export default function SubjectDetails(props: SubjectDetailsProps) {
   const isEditMode = useMemo(() => props.mode === 'edit', [props.mode]);
   const { id: subjectId } = useParams<{ id: string }>();
   const { t } = useTranslation('settings', { keyPrefix: 'subjects.details' });
-  const { navigate, back } = useCustomNavigate();
+  const navigate = useNavigate();
   const { subject, isSuccess, isLoading, error, updateSubject } =
     useSubjectQuery(subjectId, { full: true });
 
@@ -55,7 +55,7 @@ export default function SubjectDetails(props: SubjectDetailsProps) {
                   subject={subject}
                   error={error}
                   onSubmit={updateSubject}
-                  onCancel={() => back()}
+                  onCancel={() => navigate(-1)}
                 />
               ) : (
                 <SubjectDetailsList subject={subject} />

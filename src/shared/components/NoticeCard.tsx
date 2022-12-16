@@ -12,6 +12,7 @@ import format from 'date-fns/format';
 import { useQueryClient } from '@tanstack/react-query';
 import { useParams } from 'react-router';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 import {
   BOARD_NOTICE_CONTENT_LENGTH,
@@ -22,7 +23,6 @@ import { Notice } from 'shared/types/notice';
 import { primary, unpublishedNoticeColor } from 'colors';
 import { Role } from 'shared/types/user';
 import { useAuth } from 'contexts/auth';
-import useCustomNavigate from 'hooks/use-custom-navigate';
 import { deleteNotice, publishNotice } from 'api/notice';
 import ActionToolbar from './ActionToolbar';
 
@@ -57,7 +57,7 @@ export default function NoticeCard(props: NoticeCardProps) {
   const { createdBy, content, name, publishTime, isPublished } = notice;
   const { subjectId } = useParams();
   const { currentUser } = useAuth();
-  const { navigate, back } = useCustomNavigate();
+  const navigate = useNavigate();
   const { t } = useTranslation('notice');
   const queryClient = useQueryClient();
 
@@ -106,7 +106,7 @@ export default function NoticeCard(props: NoticeCardProps) {
     await deleteNotice(notice.id);
     await queryClient.invalidateQueries(['notices', subjectId]);
     await queryClient.removeQueries(['notice', notice.id]);
-    back();
+    navigate(-1);
     toast.success(t('toast.deleteSuccess', { name: notice.name }));
   };
 

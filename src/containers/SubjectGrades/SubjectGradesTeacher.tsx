@@ -1,7 +1,7 @@
 import { SyntheticEvent, useEffect, useState } from 'react';
 import { Box, Card, Tab, Tabs, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 import { Centered } from 'shared/components/Container';
 import GradeCard from 'shared/components/GradeCard';
@@ -10,7 +10,6 @@ import SectionTitle from 'shared/components/SectionTitle';
 import { divideGrades } from 'shared/utils/grade.utils';
 import { useGradesQuery } from 'shared/queries/use-grades-query';
 import TextButton from 'shared/components/TextButton';
-import useCustomNavigate from 'hooks/use-custom-navigate';
 import { useEditGrade } from 'shared/hooks';
 
 enum TeacherGradesTab {
@@ -20,7 +19,7 @@ enum TeacherGradesTab {
 
 export default function SubjectGradesTeacher() {
   const { subjectId } = useParams();
-  const { navigate } = useCustomNavigate();
+  const navigate = useNavigate();
   const { subjectGrades, fetchSubjectGrades } = useGradesQuery();
   const { assignmentGrades, nonAssignmentGrades } = divideGrades(subjectGrades);
   const [currentTab, setCurrentTab] = useState<TeacherGradesTab>(

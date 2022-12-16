@@ -9,9 +9,9 @@ import {
   Typography,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 import { UpdateUserForm, User } from 'shared/types/user';
-import useCustomNavigate from 'hooks/use-custom-navigate';
 import {
   emailRequiredError,
   firstNameRequiredError,
@@ -30,7 +30,7 @@ export default function UserEditForm(props: UserEditFormProps) {
   const { user, onSubmit } = props;
   const { t } = useTranslation('settings');
   const [isUntouched, setIsUntouched] = useState(true);
-  const { navigate } = useCustomNavigate();
+  const navigate = useNavigate();
 
   const formik = useFormik<UpdateUserForm>({
     initialValues: {
@@ -50,7 +50,7 @@ export default function UserEditForm(props: UserEditFormProps) {
   });
 
   const handleCancel = () => {
-    navigate('..', { replace: true });
+    navigate(-1);
   };
 
   const {
