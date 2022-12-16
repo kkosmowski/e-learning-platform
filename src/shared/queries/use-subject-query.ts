@@ -33,7 +33,7 @@ export function useSubjectQuery(
   const { currentUser } = useAuth();
   const navigate = useNavigate();
   const [errorText, setErrorText] = useState('');
-  const { t } = useTranslation();
+  const { t } = useTranslation('settings');
 
   const navigateBack = () => {
     navigate('..');
@@ -92,11 +92,11 @@ export function useSubjectQuery(
       onSuccess: async ({ data }) => {
         queryClient.setQueryData(['subject', subjectId, 'full'], { data });
         navigateBack();
-        toast.success('Subject updated');
+        toast.success(t('subjects.toast.updateSuccess'));
       },
       onError: (e) => {
         setErrorText(getErrorDetail(e));
-        toast.error('There was an error');
+        toast.error(t('subjects.toast.updateError'));
       },
     }
   );

@@ -31,7 +31,7 @@ export default function useCreateSubjectQuery() {
     {
       onSuccess: async ({ data, show }) => {
         toast.success(
-          t('subjects.create.createSuccessToast', {
+          t('subjects.toast.createSuccess', {
             name: `${data.subject.name} (${data.group.name})`,
           })
         );

@@ -30,9 +30,7 @@ export default function useCreateClassQuery() {
     },
     {
       onSuccess: async ({ data, show }) => {
-        toast.success(
-          t('classes.create.createSuccessToast', { name: data.name })
-        );
+        toast.success(t('classes.toast.createSuccess', { name: data.name }));
         await queryClient.invalidateQueries(['classes']);
         navigate(show ? `../${data.id}` : '..');
       },

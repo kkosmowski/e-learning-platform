@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { Button } from '@mui/material';
+import { Button, Card, CardContent } from '@mui/material';
 
 import CommonViewLayout from 'layouts/CommonView';
 import { useClassForm } from 'shared/hooks';
@@ -42,7 +42,9 @@ export default function CreateClass() {
 
   return (
     <CommonViewLayout headerTitle={t('classes.create.title')} maxWidth={600}>
-      {Form}
+      <Card>
+        <CardContent>{Form}</CardContent>
+      </Card>
     </CommonViewLayout>
   );
 }
