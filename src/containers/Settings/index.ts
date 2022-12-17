@@ -13,6 +13,7 @@ import CreateSubject from './features/CreateSubject';
 
 import Users from './features/Users';
 import UserDetails from './features/UserDetails';
+import UsersManagement from './components/UsersManagement';
 import CreateUser from './features/CreateUser';
 
 export {
@@ -26,6 +27,7 @@ export {
   CreateSubject,
   Users,
   UserDetails,
+  UsersManagement,
   CreateUser,
 };
 

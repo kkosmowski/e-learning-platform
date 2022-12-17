@@ -16,6 +16,7 @@
       "home": "Strona główna",
       "subjects": "Przedmioty",
       "settings": "Ustawienia",
+      "grades": "Oceny",
       "signOut": "Wyloguj się"
     }
   },
@@ -58,6 +59,18 @@
       "grade": "Wystaw ocenę",
       "task": "Utwórz nowe zadanie",
       "homework": "Utwórz nowe zadanie domowe"
+    }
+  },
+  "grades": {
+    "title": "Wszystkie oceny",
+    "table": {
+      "key": {
+        "subjectName": "Przedmiot",
+        "grades": "Oceny",
+        "averageGrade": "Średnia",
+        "proposedGrade": "Proponowana",
+        "finalGrade": "Końcowa"
+      }
     }
   },
   "task": {

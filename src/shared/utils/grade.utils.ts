@@ -8,6 +8,8 @@ import {
   Grade,
   GradeDto,
   GradeType,
+  SubjectGrades,
+  SubjectGradesDto,
   VirtualGrade,
   VirtualGradeType,
 } from 'shared/types/grade';
@@ -93,6 +95,13 @@ export const mapCreateFinalGradeToCreateFinalGradePayload = (
 ): CreateFinalGradePayload => ({
   group_subject_id: form.subjectId,
   student_id: form.studentId,
+});
+
+export const mapSubjectGradesDtoToSubjectGrades = (
+  dto: SubjectGradesDto
+): SubjectGrades => ({
+  subjectName: dto.subject_name,
+  grades: dto.grades,
 });
 
 export const isVirtualGrade = (

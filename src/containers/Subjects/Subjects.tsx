@@ -9,7 +9,7 @@ import { useAuth } from 'contexts/auth';
 import { Role } from 'shared/types/user';
 import SubjectsBatch from './components/SubjectsBatch';
 import SubjectsGrid from './components/SubjectsGrid';
-import { LayoutFix } from 'layouts/LayoutFix';
+import LayoutFix from 'layouts/LayoutFix';
 import CommonViewLayout from 'layouts/CommonView';
 import HomeSidenav from 'containers/HomeSidenav';
 import { useGroupBySubject } from 'shared/hooks';

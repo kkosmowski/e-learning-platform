@@ -16,6 +16,7 @@
       "home": "Home",
       "subjects": "Subjects",
       "settings": "Settings",
+      "grades": "Grades",
       "signOut": "Sign out"
     }
   },
@@ -59,6 +60,9 @@
       "task": "Create new task",
       "homework": "Create new homework"
     }
+  },
+  "grades": {
+    "title": "All grades"
   },
   "task": {
     "title": {

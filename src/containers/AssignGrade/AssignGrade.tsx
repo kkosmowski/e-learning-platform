@@ -8,11 +8,11 @@ import { useGradeForm } from 'shared/hooks';
 import SectionTitle from 'shared/components/SectionTitle';
 import { CreateGradeForm, GradeType } from 'shared/types/grade';
 
-interface AssignNewGradeProps {
+interface AssignGradeProps {
   taskId?: string;
 }
 
-export default function AssignNewGrade(props: AssignNewGradeProps) {
+export default function AssignGrade(props: AssignGradeProps) {
   const { taskId } = props;
   const { subjectId } = useParams();
   const { handleCreate: createGrade } = useCreateGradeQuery();
