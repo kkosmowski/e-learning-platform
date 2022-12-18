@@ -1,6 +1,6 @@
 import { Box, styled } from '@mui/material';
 
-export const LayoutFix = styled(Box)(() => ({
+const LayoutFix = styled(Box)(() => ({
   display: 'flex',
   width: '100%',
   flex: 1,
@@ -9,3 +9,5 @@ export const LayoutFix = styled(Box)(() => ({
   },
   overflow: 'hidden',
 }));
+
+export default LayoutFix;

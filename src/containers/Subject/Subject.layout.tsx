@@ -5,7 +5,7 @@ import CommonViewLayout from 'layouts/CommonView';
 import { useSubjectQuery } from 'shared/queries';
 import PageLoading from 'shared/components/PageLoading';
 import SubjectSidenav from 'containers/SubjectSidenav';
-import { LayoutFix } from 'layouts/LayoutFix';
+import LayoutFix from 'layouts/LayoutFix';
 import { useAuth } from 'contexts/auth';
 import { isTeacher } from 'shared/utils/user.utils';
 import HomeSidenav from 'containers/HomeSidenav';

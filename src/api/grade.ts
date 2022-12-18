@@ -6,6 +6,7 @@ import {
   CreateProposedGradePayload,
   GetGradeResponse,
   GetGradesResponse,
+  GetGradesSummaryResponse,
   UpdateGradePayload,
   UpdateGradeResponse,
 } from 'shared/types/grade';
@@ -64,3 +65,6 @@ export const getLatestGrades = (
   authorized((api) =>
     api.get(`group-subject/${subjectId}/latest-grades?limit=${limit}`)
   );
+
+export const getGradesSummary = (): Promise<GetGradesSummaryResponse> =>
+  authorized((api) => api.get('grade/summary'));

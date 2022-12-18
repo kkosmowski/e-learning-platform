@@ -12,9 +12,9 @@ import Settings, {
   CreateSubject,
   Users,
   UserDetails,
+  UsersManagement,
   CreateUser,
 } from 'containers/Settings';
-import UsersManagement from 'containers/Settings/components/UsersManagement';
 import SubjectOverview, {
   SubjectLayout,
   CreateNotice,
@@ -28,12 +28,13 @@ import TaskList from 'containers/TaskList';
 import Task from 'containers/Task';
 import SubjectGrades from 'containers/SubjectGrades';
 import Subjects from 'containers/Subjects';
-import AssignNewGrade from 'containers/teacher/AssignNewGrade';
+import AssignGrade from 'containers/AssignGrade';
 import TeacherGuard from 'shared/guards/TeacherGuard';
 import { RouteObjectWithId } from 'shared/types/routing';
 import { TaskType } from 'shared/types/task';
 import { Role } from 'shared/types/user';
-import StudentSubjectGrades from '../../containers/StudentSubjectGrades';
+import StudentSubjectGrades from 'containers/StudentSubjectGrades';
+import Grades from 'containers/Grades';
 
 export const features: RouteObjectWithId[] = [
   {
@@ -171,7 +172,7 @@ export const features: RouteObjectWithId[] = [
                 path: 'new',
                 element: (
                   <TeacherGuard redirectTo="/404">
-                    <AssignNewGrade />
+                    <AssignGrade />
                   </TeacherGuard>
                 ),
               },
@@ -188,6 +189,12 @@ export const features: RouteObjectWithId[] = [
         ],
       },
     ],
+  },
+  {
+    id: 'grades',
+    path: 'grades',
+    element: <Grades />,
+    limitedTo: Role.Student,
   },
   // {
   //   path: 'profile',

@@ -56,6 +56,22 @@ export interface VirtualGrade {
   createdAt?: Date;
 }
 
+export interface GradesSummary {
+  average?: number;
+  proposed?: number;
+  final?: number;
+}
+
+export interface SubjectGradesDto {
+  subject_name: string;
+  grades: GradesSummary;
+}
+
+export interface SubjectGrades {
+  subjectName: string;
+  grades: GradesSummary;
+}
+
 export interface CreateGradeForm {
   subjectId: string;
   studentId: string;
@@ -110,3 +126,4 @@ export type CreateGradeResponse = AxiosResponse<GradeDto>;
 export type UpdateGradeResponse = AxiosResponse<GradeDto>;
 export type GetGradeResponse = AxiosResponse<GradeDto>;
 export type GetGradesResponse = AxiosResponse<GradeDto[]>;
+export type GetGradesSummaryResponse = AxiosResponse<SubjectGradesDto[]>;

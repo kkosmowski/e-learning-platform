@@ -1,5 +1,5 @@
 import { createTheme, ThemeOptions } from '@mui/material';
-import colors, { background, text } from 'colors';
+import colors, { background, secondary, text } from 'colors';
 
 export const consts = {
   navbarHeight: 64,
@@ -128,6 +128,17 @@ const baseThemeOptions: ThemeOptions = {
           '&.Mui-disabled': {
             backgroundColor: background[200],
           },
+        },
+      },
+    },
+    MuiTableCell: {
+      styleOverrides: {
+        head: {
+          fontWeight: 700,
+          color: secondary[700],
+        },
+        body: {
+          fontSize: 16,
         },
       },
     },
