@@ -62,7 +62,16 @@
     }
   },
   "grades": {
-    "title": "All grades"
+    "title": "All grades",
+    "table": {
+      "key": {
+        "subjectName": "Subject",
+        "averageGrade": "Average",
+        "proposedGrade": "Proposed",
+        "finalGrade": "Final"
+      }
+    },
+    "noItems": "No grades yet."
   },
   "task": {
     "title": {

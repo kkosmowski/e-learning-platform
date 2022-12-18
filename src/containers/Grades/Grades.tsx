@@ -46,7 +46,6 @@ export default function Grades() {
     () => gradesSummary?.map(mapSubjectGradesToDataRow) || [],
     [gradesSummary]
   );
-  const widths = ['auto', 120, 120, 120];
 
   return (
     <LayoutFix>
@@ -57,7 +56,9 @@ export default function Grades() {
           <CommonTable columns={columns} rows={rows} t={t} />
         ) : isLoading ? (
           <PageLoading />
-        ) : null}
+        ) : (
+          <>{t('noItems')}</>
+        )}
       </CommonViewLayout>
     </LayoutFix>
   );

@@ -66,12 +66,12 @@
     "table": {
       "key": {
         "subjectName": "Przedmiot",
-        "grades": "Oceny",
         "averageGrade": "Średnia",
         "proposedGrade": "Proponowana",
         "finalGrade": "Końcowa"
       }
-    }
+    },
+    "noItems": "Brak ocen do wyświetlenia."
   },
   "task": {
     "title": {
