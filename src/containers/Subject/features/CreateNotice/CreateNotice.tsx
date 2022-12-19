@@ -34,8 +34,16 @@ export default function CreateNotice() {
     <>
       <SectionTitle>{t('create.title')}</SectionTitle>
 
-      <Card>
-        <CardContent>{Form}</CardContent>
+      <Card sx={{ flex: 1 }}>
+        <CardContent
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            flex: 1,
+          }}
+        >
+          {Form}
+        </CardContent>
       </Card>
     </>
   );

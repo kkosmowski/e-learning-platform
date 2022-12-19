@@ -293,7 +293,10 @@
     "noItems": "Brak ocen do wyświetlenia."
   },
   "user": {
-    "grades": "Oceny"
+    "grades": {
+      "title": "Oceny",
+      "noItems": "Brak ocen do wyświetlenia."
+    }
   },
   "actions": {
     "tooltip": {

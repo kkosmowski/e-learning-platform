@@ -70,7 +70,6 @@ export default function SubmitTaskForm(props: SubmitTaskFormProps) {
   const fileNameAndSize = useMemo(() => {
     if (values.file) {
       const { name, size } = values.file;
-      console.log(values.file);
       return `${name} (${bytesToKilobytesOrMegabytes(
         size,
         MEGABYTE,

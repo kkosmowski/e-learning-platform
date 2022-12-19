@@ -293,7 +293,10 @@
     "noItems": "There are no grades yet."
   },
   "user": {
-    "grades": "Grades"
+    "grades": {
+      "title": "Grades",
+      "noItems": "There are no grades yet."
+    }
   },
   "actions": {
     "tooltip": {

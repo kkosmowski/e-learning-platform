@@ -1,4 +1,4 @@
-import { SyntheticEvent, useEffect, useState } from 'react';
+import { SyntheticEvent, useEffect, useMemo, useState } from 'react';
 import { Box, Card, Tab, Tabs, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -11,6 +11,7 @@ import { divideGrades } from 'shared/utils/grade.utils';
 import { useGradesQuery } from 'shared/queries/use-grades-query';
 import TextButton from 'shared/components/TextButton';
 import { useEditGrade } from 'shared/hooks';
+import PageLoading from '../../shared/components/PageLoading';
 
 enum TeacherGradesTab {
   Assignment = 'assignment',
@@ -20,11 +21,17 @@ enum TeacherGradesTab {
 export default function SubjectGradesTeacher() {
   const { subjectId } = useParams();
   const navigate = useNavigate();
-  const { subjectGrades, fetchSubjectGrades } = useGradesQuery();
-  const { assignmentGrades, nonAssignmentGrades } = divideGrades(subjectGrades);
+  const { subjectGrades, fetchSubjectGrades, isLoading, isSuccess } =
+    useGradesQuery();
   const [currentTab, setCurrentTab] = useState<TeacherGradesTab>(
     TeacherGradesTab.Assignment
   );
+
+  const { assignmentGrades, nonAssignmentGrades } = useMemo(
+    () => divideGrades(subjectGrades),
+    [subjectGrades]
+  );
+
   const { options, Dialog } = useEditGrade(subjectGrades);
   const { t } = useTranslation('grade');
 
@@ -71,11 +78,15 @@ export default function SubjectGradesTeacher() {
 
       <TabPanel value={TeacherGradesTab.Assignment} currentTab={currentTab}>
         {/* @todo: filter & sort */}
-        {assignmentGrades.length ? (
+        {isSuccess && assignmentGrades.length ? (
           <GradeCard grades={assignmentGrades} showNames options={options} />
         ) : (
           <Card>
-            <Typography sx={{ p: 2 }}>{t('noItems')}</Typography>
+            {isLoading ? (
+              <PageLoading px />
+            ) : (
+              <Typography sx={{ p: 2 }}>{t('noItems')}</Typography>
+            )}
           </Card>
         )}
       </TabPanel>

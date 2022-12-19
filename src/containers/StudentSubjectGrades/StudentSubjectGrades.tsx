@@ -19,6 +19,7 @@ import FinalGradeDialog, {
 } from './components/FinalGradeDialog';
 import { getAverageGrade } from 'shared/utils/grade.utils';
 import colors from 'colors';
+import PageLoading from '../../shared/components/PageLoading';
 
 export default function StudentSubjectGrades() {
   const { subjectId, studentId } = useParams();
@@ -28,7 +29,8 @@ export default function StudentSubjectGrades() {
     handleUpdateProposed: updateProposedGrade,
     handleCreateFinal: createFinalGrade,
   } = useCreateGradeQuery();
-  const { fetchStudentGrades, studentGrades } = useGradesQuery();
+  const { fetchStudentGrades, studentGrades, isLoading, isSuccess } =
+    useGradesQuery();
   const averageGrade = studentGrades?.length
     ? getAverageGrade(studentGrades)
     : 0;
@@ -144,17 +146,20 @@ export default function StudentSubjectGrades() {
   };
 
   return (
-    <Centered innerSx={{ gap: 2 }}>
+    <Centered
+      innerSx={{ gap: 2, overflow: 'hidden' }}
+      sx={{ overflow: 'hidden' }}
+    >
       <SectionTitle>
         <Typography sx={{ font: 'inherit', fontWeight: 600, mr: 2 }}>
-          {t('grades')}
+          {t('grades.title')}
         </Typography>
         {student?.fullName}
       </SectionTitle>
 
-      {studentGrades?.length && !!subjectId ? (
+      {isSuccess && studentGrades?.length && !!subjectId ? (
         <>
-          <GradeCard grades={studentGrades} />
+          <GradeCard grades={studentGrades} sx={{ overflow: 'hidden' }} />
 
           <VirtualGrades grades={studentGrades} subjectId={subjectId} />
 
@@ -180,8 +185,10 @@ export default function StudentSubjectGrades() {
             </Button>
           </Box>
         </>
+      ) : isLoading ? (
+        <PageLoading />
       ) : (
-        <>{t('noItems')}</>
+        <Typography color="text.secondary">{t('grades.noItems')}</Typography>
       )}
 
       {!!finalGradeDialogType && !!student && (

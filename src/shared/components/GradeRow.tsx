@@ -1,4 +1,4 @@
-import { MouseEvent, ReactNode, useState } from 'react';
+import { MouseEvent, ReactNode, useMemo, useState } from 'react';
 import {
   Divider,
   Grid,
@@ -79,6 +79,29 @@ export default function GradeRow(props: GradeRowProps) {
     setMenuAnchor(null);
   };
 
+  const gridSx = useMemo(
+    () => ({
+      gridTemplateColumns: `${shortName ? '50%' : '10fr'} ${
+        !keepEmptyColumns && hideDate ? '' : '140px'
+      } ${keepEmptyColumns || showNames ? 'minmax(180px, 3fr)' : ''} ${
+        !keepEmptyColumns && isVirtual ? '' : 'minmax(140px, 5fr)'
+      } 40px ${options?.length ? '40px' : ''}`,
+      ...((keepEmptyColumns || showNames) && { minWidth: 640 }),
+      ...(type === VirtualGradeType.FINAL &&
+        !!value && { color: 'primary.main' }),
+    }),
+    [
+      hideDate,
+      isVirtual,
+      keepEmptyColumns,
+      options?.length,
+      shortName,
+      showNames,
+      type,
+      value,
+    ]
+  );
+
   return (
     <>
       <Grid
@@ -88,14 +111,7 @@ export default function GradeRow(props: GradeRowProps) {
           display: 'grid',
           alignItems: 'center',
           p: 1,
-          gridTemplateColumns: `${shortName ? '50%' : '10fr'} ${
-            !keepEmptyColumns && hideDate ? '' : '140px'
-          } ${keepEmptyColumns || showNames ? 'minmax(180px, 3fr)' : ''} ${
-            !keepEmptyColumns && isVirtual ? '' : 'minmax(140px, 5fr)'
-          } 40px ${options?.length ? '40px' : ''}`,
-          ...((keepEmptyColumns || showNames) && { minWidth: 640 }),
-          ...(type === VirtualGradeType.FINAL &&
-            !!value && { color: 'primary.main' }),
+          ...gridSx,
         }}
       >
         <Grid item>

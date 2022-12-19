@@ -36,8 +36,14 @@ export default function EditNotice() {
     <>
       <SectionTitle>{t('edit.title')}</SectionTitle>
 
-      <Card>
-        <CardContent>
+      <Card sx={{ flex: 1 }}>
+        <CardContent
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            flex: 1,
+          }}
+        >
           {initialValues ? (
             <EditNoticeForm initialValues={initialValues} onSubmit={update} />
           ) : null}

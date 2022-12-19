@@ -24,10 +24,6 @@ export default function ClassDetails(props: ClassDetailsProps) {
     navigate('edit');
   };
 
-  useEffect(() => {
-    console.log('test');
-  }, []);
-
   if (!isLoading && !isSuccess) {
     navigate('/404');
     return null;
