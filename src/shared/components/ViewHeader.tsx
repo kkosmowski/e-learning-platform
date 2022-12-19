@@ -18,7 +18,8 @@ export default function ViewHeader({
         sx={{
           flexShrink: 0,
           height: height || 56,
-          p: 0,
+          py: 0,
+          px: 2,
           justifyContent: 'center',
         }}
         bgcolor="background.default"

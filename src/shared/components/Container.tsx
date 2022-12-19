@@ -16,15 +16,13 @@ export interface CenteredProps extends ContainerProps {
 }
 
 export default function Container(props: ContainerProps) {
-  const { children, bg, p, sx, ...systemProps } = props;
+  const { children, bg, sx, ...systemProps } = props;
 
   return (
     <Box
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        overflow: 'auto',
-        p: typeof p !== 'undefined' ? p : '16px 16px 64px',
         ...(bg && { backgroundColor: bg }),
         ...sx,
       }}
