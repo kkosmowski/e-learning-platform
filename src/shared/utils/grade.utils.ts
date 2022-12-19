@@ -123,8 +123,10 @@ export const getAverageGrade = (grades: Grade[]): number => {
   const assignmentGrades = grades.filter(
     ({ type }) => type === GradeType.ASSIGNMENT
   );
-  return (
-    assignmentGrades.reduce((sum, { value }) => sum + value, 0) /
-    assignmentGrades.length
+  return parseFloat(
+    (
+      assignmentGrades.reduce((sum, { value }) => sum + value, 0) /
+      assignmentGrades.length
+    ).toFixed(2)
   );
 };

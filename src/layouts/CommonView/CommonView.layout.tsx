@@ -37,12 +37,6 @@ export default function CommonViewLayout(props: CommonViewLayoutProps) {
         }
       : {};
 
-  if (WrapperProps && actualCenteredProps?.innerSx) {
-    // CenteredProps innerSx is already passed to Wrapper,
-    // adding these styles to inner Container in Centered is pointless
-    delete actualCenteredProps.innerSx;
-  }
-
   return (
     <Stack sx={{ flex: 1, overflow: 'hidden' }}>
       {headerTitle && (

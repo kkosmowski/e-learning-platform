@@ -27,7 +27,8 @@ export default function UsersManagement() {
     <CommonViewLayout
       headerTitle={t('title')}
       CenteredProps={{
-        sx: { pt: 0 },
+        sx: { pt: 0, overflow: 'hidden' },
+        innerSx: { overflow: 'hidden' },
       }}
     >
       <Tabs value={tab} onChange={handleTabChange} sx={{ mb: 2 }}>

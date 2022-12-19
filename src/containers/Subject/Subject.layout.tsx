@@ -30,7 +30,12 @@ export default function SubjectLayout() {
     <LayoutFix>
       {isTeacher(currentUser) ? <SubjectSidenav /> : <HomeSidenav />}
 
-      <CommonViewLayout headerTitle={simpleSubject.name}>
+      <CommonViewLayout
+        headerTitle={simpleSubject.name}
+        CenteredProps={{
+          innerSx: { flex: 1 },
+        }}
+      >
         <Outlet />
       </CommonViewLayout>
     </LayoutFix>

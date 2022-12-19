@@ -97,11 +97,27 @@ export function useGradesQuery() {
     ]
   );
 
+  const isSuccess = useMemo(
+    () =>
+      (!!studentId && studentGradesQuery.isSuccess) ||
+      (!!taskId && taskGradesQuery.isSuccess) ||
+      (!!subjectId && subjectGradesQuery.isSuccess),
+    [
+      studentGradesQuery.isSuccess,
+      studentId,
+      subjectGradesQuery.isSuccess,
+      subjectId,
+      taskGradesQuery.isSuccess,
+      taskId,
+    ]
+  );
+
   return {
     studentGrades,
     taskGrades,
     subjectGrades,
     isLoading,
+    isSuccess,
     fetchStudentGrades: setStudentId,
     fetchTaskGrades: setTaskId,
     fetchSubjectGrades: setSubjectId,

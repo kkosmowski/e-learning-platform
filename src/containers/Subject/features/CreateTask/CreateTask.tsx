@@ -43,8 +43,16 @@ export default function CreateTask(props: CreateTaskProps) {
     <>
       <SectionTitle>{t(`create.title.${type}`)}</SectionTitle>
 
-      <Card>
-        <CardContent>{Form}</CardContent>
+      <Card sx={{ flex: 1 }}>
+        <CardContent
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            flex: 1,
+          }}
+        >
+          {Form}
+        </CardContent>
       </Card>
     </>
   );

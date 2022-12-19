@@ -298,6 +298,7 @@ export function useTaskForm(props: UseTaskFormProps) {
         display: 'flex',
         flexDirection: 'column',
         gap: 16,
+        flex: 1,
       }}
     >
       <TextField
@@ -314,6 +315,17 @@ export function useTaskForm(props: UseTaskFormProps) {
       <TextField
         multiline
         rows={10}
+        sx={{ flex: 1 }}
+        InputProps={{
+          sx: {
+            display: 'flex',
+            flexDirection: 'column',
+            flex: 1,
+            textarea: {
+              flex: 1,
+            },
+          },
+        }}
         name="content"
         placeholder={t('form.placeholder.content')}
         value={values.content}
