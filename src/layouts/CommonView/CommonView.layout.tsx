@@ -18,7 +18,10 @@ export default function CommonViewLayout(props: CommonViewLayoutProps) {
   const { headerTitle, CenteredProps, maxWidth, hideBackButton, children } =
     props;
   const navigate = useNavigate();
-  const actualCenteredProps: Partial<CenteredProps> = { ...CenteredProps };
+  const actualCenteredProps: Partial<CenteredProps> = {
+    sx: { overflow: 'auto', p: '16px 16px 64px', flex: 1 },
+    ...CenteredProps,
+  };
 
   const Wrapper = typeof maxWidth === 'number' ? Box : Fragment;
 
@@ -41,7 +44,7 @@ export default function CommonViewLayout(props: CommonViewLayoutProps) {
   }
 
   return (
-    <Stack sx={{ flex: 1 }}>
+    <Stack sx={{ flex: 1, overflow: 'hidden' }}>
       {headerTitle && (
         <ViewHeaderTitle
           title={headerTitle}

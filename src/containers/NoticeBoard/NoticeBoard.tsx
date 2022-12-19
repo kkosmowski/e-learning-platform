@@ -26,7 +26,7 @@ export default function NoticeBoard() {
   };
 
   return (
-    <Centered>
+    <Centered p={0}>
       <SectionTitle>{t('title')}</SectionTitle>
 
       {isSuccess && notices?.length ? (
