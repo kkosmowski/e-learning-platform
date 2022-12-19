@@ -108,8 +108,8 @@ const baseThemeOptions: ThemeOptions = {
           borderRadius: 0,
         },
         adornedStart: {
-          gap: '14px',
-          backgroundColor: background[200],
+          // gap: '14px',
+          // backgroundColor: background[200],
         },
       },
     },

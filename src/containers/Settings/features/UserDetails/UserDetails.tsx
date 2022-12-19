@@ -125,13 +125,12 @@ export default function UserDetails(props: UserDetailsProps) {
   return (
     <CommonViewLayout
       headerTitle={userWithDetails?.fullName || ''}
-      maxWidth={1000}
       CenteredProps={{
         innerSx: {
           gap: 3,
           display: 'grid',
           gridTemplateColumns: '2fr 1fr',
-          gridTemplateRows: 'auto 1fr 1fr',
+          gridTemplateRows: 'auto 1fr',
           gridTemplateAreas: '"controls controls" "generalInfo subjectsInfo"',
           alignItems: 'flex-start',
         },

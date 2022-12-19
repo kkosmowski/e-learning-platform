@@ -170,6 +170,9 @@ const UsersTableHead = () => {
 const TableStyles = () => (
   <GlobalStyles
     styles={{
+      '.MuiTableContainer-root': {
+        marginBottom: 16,
+      },
       '.users-table__row--firstName': {
         width: '15%',
       },
