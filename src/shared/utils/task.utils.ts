@@ -8,6 +8,8 @@ import {
   TaskSubmission,
   TaskSubmissionDto,
   TaskType,
+  TaskWithSubmissions,
+  TaskWithSubmissionsDto,
   UpdateTaskPayload,
 } from 'shared/types/task';
 import { mapSimpleUserDtoToSimpleUser } from './user.utils';
@@ -22,7 +24,7 @@ import {
 export const getTimeLeftTextColor = (
   type: TaskType,
   diffInMinutes: number,
-  isSubmitted: boolean
+  isSubmitted = false
 ): string => {
   if (isSubmitted) {
     return 'text';
@@ -62,6 +64,17 @@ export const mapTaskDtoToTask = (dto: TaskDto): Task => ({
   canBeDeletedBefore: new Date(
     dateStringToUTCString(dto.can_be_deleted_before)
   ),
+});
+
+export const mapTaskWithSubmissionsDtoToTaskWithSubmissions = (
+  dto: TaskWithSubmissionsDto
+): TaskWithSubmissions => ({
+  ...mapTaskDtoToTask(dto),
+  received: dto.received,
+  expected: dto.expected,
+  submission: dto.submission
+    ? mapSimpleTaskSubmissionDtoToSimpleTaskSubmission(dto.submission)
+    : null,
 });
 
 export const mapTaskFormToUpdateTaskPayload = (

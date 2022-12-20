@@ -13,6 +13,12 @@ export interface Task extends ContentItem {
   canBeDeletedBefore: Date;
 }
 
+export interface TaskWithSubmissions extends Task {
+  received: number | null;
+  expected: number | null;
+  submission: SimpleTaskSubmission | null;
+}
+
 export enum TaskType {
   Task = 'task',
   Homework = 'homework',
@@ -63,6 +69,12 @@ export interface TaskDto {
   can_be_deleted_before: string;
 }
 
+export interface TaskWithSubmissionsDto extends TaskDto {
+  received: number | null;
+  expected: number | null;
+  submission: SimpleTaskSubmissionDto | null;
+}
+
 export interface SimpleTaskSubmissionDto {
   id: string;
   task_id: string;
@@ -87,17 +99,13 @@ export interface TaskForm {
 }
 
 export interface LatestTasksDto {
-  tasks: TaskDto[];
-  homework: TaskDto[];
-  task_submissions: TaskSubmissionDto[];
-  homework_submissions: TaskSubmissionDto[];
+  tasks: TaskWithSubmissionsDto[];
+  homework: TaskWithSubmissionsDto[];
 }
 
 export interface LatestTasks {
-  tasks?: Task[];
-  homework?: Task[];
-  taskSubmissions?: TaskSubmission[];
-  homeworkSubmissions?: TaskSubmission[];
+  tasks?: TaskWithSubmissions[];
+  homework?: TaskWithSubmissions[];
 }
 
 export interface TaskEvaluationDialogData {
@@ -134,9 +142,9 @@ export interface SubmitTaskPayload {
 
 // responses
 
-export type GetTasksResponse = AxiosResponse<Paginated<TaskDto>>;
+export type GetTasksResponse = AxiosResponse<Paginated<TaskWithSubmissionsDto>>;
 export type GetLatestTasksResponse = AxiosResponse<LatestTasksDto>;
-export type GetTaskResponse = AxiosResponse<TaskDto>;
+export type GetTaskResponse = AxiosResponse<TaskWithSubmissionsDto>;
 export type GetTaskSubmissionResponse = AxiosResponse<TaskSubmissionDto>;
 export type GetTaskSubmissionsResponse = AxiosResponse<TaskSubmissionDto[]>;
 export type SubmitTaskResponse = AxiosResponse<SimpleTaskSubmissionDto>;

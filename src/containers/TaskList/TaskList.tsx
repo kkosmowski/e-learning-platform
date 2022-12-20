@@ -54,8 +54,6 @@ export default function TaskList({ type }: { type: TaskType }) {
                 <TaskCard
                   key={task.id}
                   task={task}
-                  submissions={[]}
-                  subjectStudents={[]}
                   short
                   onClick={() => navigateToTask(task.id)}
                 />

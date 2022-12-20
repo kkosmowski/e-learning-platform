@@ -5,11 +5,7 @@ import { Centered } from 'shared/components/Container';
 import TaskCard from 'shared/components/TaskCard';
 import { isStudent, isTeacher } from 'shared/utils/user.utils';
 import { useAuth } from 'contexts/auth';
-import {
-  useTasksQuery,
-  useTaskSubmissionQuery,
-  useTaskSubmissionsQuery,
-} from 'shared/queries';
+import { useTasksQuery } from 'shared/queries';
 import PageLoading from 'shared/components/PageLoading';
 import TaskSubmissionStudentView from './features/TaskSubmissionStudentView';
 import TaskSubmissionTeacherView from './features/TaskSubmissionTeacherView';
@@ -23,20 +19,11 @@ export default function Task() {
   const {
     task: { task, update, deleteTask, isLoading, isSuccess },
   } = useTasksQuery({ taskId });
-  const { taskSubmission, isSuccess: isTaskSubmissionSuccess } =
-    useTaskSubmissionQuery(taskId, isUserStudent);
-  const { taskSubmissions } = useTaskSubmissionsQuery(taskId, isUserTeacher);
 
   if (!isLoading && !task) {
     navigate('/404');
     return null;
   }
-
-  const submissions = isUserTeacher
-    ? taskSubmissions
-    : taskSubmission
-    ? [taskSubmission]
-    : [];
 
   const handleFinishNow = (): void => {
     if (!subjectId || !taskId) return;
@@ -54,14 +41,11 @@ export default function Task() {
         <>
           <TaskCard
             task={task}
-            submissions={submissions}
             onFinishNow={handleFinishNow}
             onDelete={handleDelete}
           />
 
-          {isUserStudent && isTaskSubmissionSuccess && (
-            <TaskSubmissionStudentView task={task} />
-          )}
+          {isUserStudent && <TaskSubmissionStudentView task={task} />}
 
           {isUserTeacher && <TaskSubmissionTeacherView task={task} />}
         </>

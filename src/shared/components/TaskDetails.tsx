@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import { Box, Stack, Tooltip, Typography } from '@mui/material';
 import {
   AccessTime,
@@ -13,7 +12,7 @@ import { useTranslation } from 'react-i18next';
 import format from 'date-fns/format';
 
 import { Status } from 'shared/types/shared';
-import { Task, SimpleTaskSubmission } from 'shared/types/task';
+import { TaskWithSubmissions } from 'shared/types/task';
 import { User } from 'shared/types/user';
 import ItemCategory from './ItemCategory';
 import { isStudent, isTeacher } from 'shared/utils/user.utils';
@@ -21,9 +20,8 @@ import { isPastDate } from 'shared/utils/date.utils';
 import TimeLeft from './TimeLeft';
 
 interface TaskDetailsProps {
-  task: Task;
+  task: TaskWithSubmissions;
   currentUser: User;
-  submissions?: SimpleTaskSubmission[];
   subjectStudents?: User[];
 }
 
@@ -45,19 +43,14 @@ const statusColors: Record<Status, string> = {
 };
 
 export default function TaskDetails(props: TaskDetailsProps) {
-  const { task, currentUser, submissions = [], subjectStudents = [] } = props;
+  const { task, currentUser } = props;
   const { t } = useTranslation('task');
   const isUserTeacher = isTeacher(currentUser);
   const isUserStudent = isStudent(currentUser);
-  const status = submissions[0]?.status || Status.NOT_SUBMITTED;
+  const status = task.submission?.status || Status.NOT_SUBMITTED;
   const statusColor = statusColors[status];
   const StatusIcon = isUserStudent && getStatusIcon(status);
   const isPastDeadline = isPastDate(task.endTime);
-
-  const sentSubmissions = useMemo(
-    () => submissions.filter(({ createdAt }) => !!createdAt),
-    [submissions]
-  );
 
   return (
     <Typography
@@ -82,7 +75,10 @@ export default function TaskDetails(props: TaskDetailsProps) {
           </Tooltip>
         </Box>
 
-        <TimeLeft task={task} taskSubmission={submissions[0]} />
+        <TimeLeft
+          task={task}
+          isSubmitted={task.submission?.status !== Status.NOT_SUBMITTED}
+        />
 
         {StatusIcon && (
           <Box
@@ -98,9 +94,9 @@ export default function TaskDetails(props: TaskDetailsProps) {
           </Box>
         )}
 
-        {isUserTeacher && submissions && subjectStudents && (
+        {isUserTeacher && task.received !== null && task.expected !== null && (
           <Box sx={{ display: 'flex', alignItems: 'center', columnGap: 1 }}>
-            {sentSubmissions.length === submissions.length ? (
+            {task.received === task.expected ? (
               <CheckCircle sx={{ fontSize: 16 }} color="success" />
             ) : (
               <CheckCircleOutline
@@ -109,7 +105,7 @@ export default function TaskDetails(props: TaskDetailsProps) {
               />
             )}
 
-            <span>{`${sentSubmissions.length} / ${submissions.length}`}</span>
+            <span>{`${task.received} / ${task.expected}`}</span>
           </Box>
         )}
       </Stack>
