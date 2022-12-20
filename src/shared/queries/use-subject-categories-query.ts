@@ -1,11 +1,15 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMemo, useRef } from 'react';
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 
 import {
   CreateSubjectCategoryResponse,
-  GetSubjectCategoriesResponse,
   SubjectCategory,
   UpdateSubjectCategoryResponse,
 } from 'shared/types/subject';
@@ -15,29 +19,37 @@ import {
   getSubjectCategories,
   updateSubjectCategory,
 } from 'api/subject';
+import { SUBJECT_CATEGORIES_PAGE_SIZE } from 'shared/consts/subject';
+import { usePaginatedQuery } from 'shared/hooks';
 
 export function useSubjectCategoriesQuery() {
   const { t } = useTranslation('settings');
   const queryClient = useQueryClient();
+  const page = useRef(0);
+  const { getPreviousPageParam, getNextPageParam, getFetchedItemsCount } =
+    usePaginatedQuery(SUBJECT_CATEGORIES_PAGE_SIZE);
 
-  const fetchQuery = useQuery<
-    GetSubjectCategoriesResponse,
-    AxiosError,
-    SubjectCategory[]
-  >(['subject-categories'], getSubjectCategories, {
-    select: ({ data }) => data,
-  });
+  const fetchQuery = useInfiniteQuery(
+    ['subject-categories'],
+    async ({ pageParam = 1 }) => {
+      page.current = pageParam;
+      const { data } = await getSubjectCategories(pageParam);
+      return data;
+    },
+    {
+      getPreviousPageParam,
+      getNextPageParam,
+    }
+  );
 
   const { mutate: handleCreate } = useMutation<
     CreateSubjectCategoryResponse,
     AxiosError,
     string
   >(createSubjectCategory, {
-    onSuccess: async ({ data }) => {
+    onSuccess: async () => {
       toast.success(t('subjectCategories.toast.createSuccess'));
-      queryClient.setQueryData(['subject-categories'], {
-        data: fetchQuery.data ? [...fetchQuery.data, data] : [data],
-      });
+      await queryClient.invalidateQueries(['subject-categories']);
     },
     onError: (error) => {
       console.log(error.message);
@@ -52,11 +64,7 @@ export function useSubjectCategoriesQuery() {
   >(updateSubjectCategory, {
     onSuccess: async ({ data }) => {
       toast.success(t('subjectCategories.toast.updateSuccess'));
-      queryClient.setQueryData(['subject-categories'], {
-        data: fetchQuery.data?.map((category) =>
-          category.id === data.id ? data : category
-        ),
-      });
+      await queryClient.invalidateQueries(['subject-categories']);
     },
     onError: (error) => {
       toast.error(t(error.message));
@@ -72,8 +80,8 @@ export function useSubjectCategoriesQuery() {
       onSuccess: async (categoryId) => {
         toast.success(t('subjectCategories.toast.deleteSuccess'));
         queryClient.setQueryData(['subject-categories'], {
-          data: fetchQuery.data?.filter(
-            (category) => category.id !== categoryId
+          data: fetchQuery.data?.pages.map((page) =>
+            page.items.filter((category) => category.id !== categoryId)
           ),
         });
       },
@@ -83,8 +91,28 @@ export function useSubjectCategoriesQuery() {
     }
   );
 
+  const categoriesCount = useMemo(
+    () => fetchQuery.data?.pages[0].total_count || 0,
+    [fetchQuery.data]
+  );
+
+  const hasNextCategoriesPage = useMemo(
+    () =>
+      fetchQuery.data &&
+      getFetchedItemsCount(fetchQuery.data.pages) < categoriesCount,
+    [fetchQuery.data, getFetchedItemsCount, categoriesCount]
+  );
+
+  const subjectCategories = useMemo(
+    () => fetchQuery.data?.pages.map((page) => page.items),
+    [fetchQuery.data]
+  );
+
   return {
-    subjectCategories: fetchQuery.data,
+    subjectCategories,
+    isFetchingNextPage: fetchQuery.isFetchingNextPage,
+    fetchNextPage: fetchQuery.fetchNextPage,
+    hasNextCategoriesPage,
     isLoading: fetchQuery.isLoading,
     isSuccess: fetchQuery.isSuccess,
     createSubjectCategory: handleCreate,

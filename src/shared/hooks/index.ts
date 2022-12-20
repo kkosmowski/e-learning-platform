@@ -5,5 +5,6 @@ export * from './use-grade-form';
 export * from './use-group-by-subject';
 export * from './use-local-storage';
 export * from './use-notice-form';
+export * from './use-paginated-query';
 export * from './use-subject-form';
 export * from './use-task-form';

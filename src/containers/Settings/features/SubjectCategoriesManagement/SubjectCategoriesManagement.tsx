@@ -19,7 +19,7 @@ export default function SubjectCategoriesManagement() {
   );
   const { confirmAction, confirmationDialog } = useConfirmationDialog();
   const {
-    subjectCategories,
+    subjectCategories: paginatedSubjectCategories,
     isLoading,
     isSuccess,
     createSubjectCategory,
@@ -30,6 +30,11 @@ export default function SubjectCategoriesManagement() {
   const isEditMode = useCallback(
     (categoryId: string): boolean => categoryId === editedCategory?.id,
     [editedCategory]
+  );
+
+  const subjectCategories: SubjectCategory[] = useMemo(
+    () => paginatedSubjectCategories?.flat() || [],
+    [paginatedSubjectCategories]
   );
 
   const showCreateNewCategoryForm = () => {
@@ -103,7 +108,7 @@ export default function SubjectCategoriesManagement() {
     <CommonViewLayout
       headerTitle={t('title')}
       maxWidth={600}
-      CenteredProps={{ innerSx: { gap: 3 } }}
+      CenteredProps={{ innerSx: { gap: 3 }, scrollContainer: true }}
     >
       {isCreateMode ? (
         <CreateNewCategoryForm

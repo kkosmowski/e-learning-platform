@@ -1,31 +1,11 @@
 import { useCallback, useMemo, useState } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-import { TaskDto } from 'shared/types/task';
-import { getFinishedOrSubmittedTasks, getSubjectTasks } from 'api/task';
+import { getFinishedOrSubmittedTasks } from 'api/task';
 import { mapTaskDtoToTask } from 'shared/utils/task.utils';
 import { useAuth } from 'contexts/auth';
 import { TASK_LIST_PAGE_SIZE } from 'shared/consts/task';
-import { Paginated } from 'shared/types/shared';
-
-const getNextPageParam = (
-  { total_count }: Paginated<TaskDto>,
-  pages: Paginated<TaskDto>[]
-) =>
-  total_count > pages.length * TASK_LIST_PAGE_SIZE
-    ? pages.length + 1
-    : undefined;
-
-const getPreviousPageParam = (
-  { total_count }: Paginated<TaskDto>,
-  pages: Paginated<TaskDto>[]
-) =>
-  total_count > pages.length * TASK_LIST_PAGE_SIZE
-    ? pages.length - 1
-    : undefined;
-
-const getNumberOfFetchedTasks = (pages: Paginated<TaskDto>[]) =>
-  pages.reduce((sum, page) => sum + page.items.length, 0);
+import { usePaginatedQuery } from 'shared/hooks';
 
 export function useFinishedOrSubmittedTasksQuery() {
   const [fetchData, setFetchData] = useState<{
@@ -33,6 +13,8 @@ export function useFinishedOrSubmittedTasksQuery() {
     subjectId: string;
   } | null>(null);
   const { currentUser } = useAuth();
+  const { getPreviousPageParam, getNextPageParam, getFetchedItemsCount } =
+    usePaginatedQuery(TASK_LIST_PAGE_SIZE);
 
   const finishedOrSubmittedTasksQuery = useInfiniteQuery(
     [
@@ -73,9 +55,9 @@ export function useFinishedOrSubmittedTasksQuery() {
   const hasNextTasksPage = useMemo(
     () =>
       finishedOrSubmittedTasksQuery.data &&
-      getNumberOfFetchedTasks(finishedOrSubmittedTasksQuery.data.pages) <
+      getFetchedItemsCount(finishedOrSubmittedTasksQuery.data.pages) <
         tasksCount,
-    [finishedOrSubmittedTasksQuery.data, tasksCount]
+    [finishedOrSubmittedTasksQuery.data, getFetchedItemsCount, tasksCount]
   );
 
   const tasks = useMemo(

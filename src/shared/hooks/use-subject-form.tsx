@@ -43,7 +43,16 @@ export function useSubjectForm(props: UseSubjectFormProps) {
     onSubmit,
     disabled,
   } = props;
-  const { subjectCategories } = useSubjectCategoriesQuery();
+  const {
+    subjectCategories: paginatedSubjectCategories,
+    isFetchingNextPage,
+    hasNextCategoriesPage,
+    fetchNextPage,
+  } = useSubjectCategoriesQuery();
+  const subjectCategories = useMemo(
+    () => paginatedSubjectCategories?.flat(),
+    [paginatedSubjectCategories]
+  );
   const { classes } = useClassesQuery();
   const { users: teachers, fetchUsers } = useUsersQuery();
   const [isUntouched, setIsUntouched] = useState(true);
@@ -144,6 +153,20 @@ export function useSubjectForm(props: UseSubjectFormProps) {
           onBlur={handleBlur}
           onChange={handleCategoryChange}
           isOptionEqualToValue={(option, value) => option.id === value.id}
+          ListboxProps={{
+            onScroll: (event) => {
+              const node = event.currentTarget;
+              const scrolledEnough =
+                node.scrollTop + node.clientHeight === node.scrollHeight;
+              if (
+                scrolledEnough &&
+                hasNextCategoriesPage &&
+                !isFetchingNextPage
+              ) {
+                void fetchNextPage();
+              }
+            },
+          }}
         />
       )}
 

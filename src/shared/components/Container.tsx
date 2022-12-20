@@ -9,6 +9,7 @@ interface ContainerProps extends SystemProps<Theme> {
   children: ReactNode;
   bg?: string;
   sx?: SxProps;
+  scrollContainer?: boolean;
 }
 
 export interface CenteredProps extends ContainerProps {
@@ -16,7 +17,7 @@ export interface CenteredProps extends ContainerProps {
 }
 
 export default function Container(props: ContainerProps) {
-  const { children, bg, sx, ...systemProps } = props;
+  const { children, bg, sx, scrollContainer, ...systemProps } = props;
 
   return (
     <Box
@@ -26,6 +27,7 @@ export default function Container(props: ContainerProps) {
         ...(bg && { backgroundColor: bg }),
         ...sx,
       }}
+      {...(scrollContainer && { id: 'scroll-container' })}
       {...systemProps}
     >
       {children}
