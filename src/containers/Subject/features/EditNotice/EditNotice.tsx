@@ -7,13 +7,20 @@ import { useNavigate } from 'react-router-dom';
 import SectionTitle from 'shared/components/SectionTitle';
 import { useNoticeQuery } from 'shared/queries/use-notice-query';
 import EditNoticeForm from './components/EditNoticeForm';
+import { useAuth } from 'contexts/auth';
 
 export default function EditNotice() {
   const { subjectId, noticeId } = useParams();
   const navigate = useNavigate();
   const { t } = useTranslation('notice');
   const { notice, update, isError } = useNoticeQuery(noticeId);
+  const { currentUser } = useAuth();
+
   if (!subjectId || !noticeId || isError) {
+    navigate('/404');
+  }
+
+  if (notice && notice?.createdBy.id !== currentUser?.id) {
     navigate('/404');
   }
 
