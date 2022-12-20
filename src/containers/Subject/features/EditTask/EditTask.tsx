@@ -5,6 +5,7 @@ import { useParams } from 'react-router';
 import { useNavigate } from 'react-router-dom';
 
 import SectionTitle from 'shared/components/SectionTitle';
+import { useAuth } from 'contexts/auth';
 import { useTasksQuery } from 'shared/queries';
 import EditTaskForm from './components/EditTaskForm';
 
@@ -15,8 +16,14 @@ export default function EditTask() {
   const {
     task: { task, update },
   } = useTasksQuery({ taskId });
+  const { currentUser } = useAuth();
 
-  if (!subjectId) {
+  if (
+    !subjectId ||
+    !task ||
+    task.isFinished ||
+    task.createdBy.id !== currentUser?.id
+  ) {
     navigate('/404');
   }
 
