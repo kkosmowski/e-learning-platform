@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { SubjectCategory } from 'shared/types/subject';
 import EditCategoryForm from './EditCategoryForm';
 import { useSubjectCategoriesQuery } from 'shared/queries';
+import LoadMoreIndicator from 'shared/components/LoadMoreIndicator';
 
 interface SubjectCategoriesListProps {
   categories: SubjectCategory[];
@@ -21,7 +22,7 @@ export default function SubjectCategoriesList(
   props: SubjectCategoriesListProps
 ) {
   const { t } = useTranslation('settings', { keyPrefix: 'subjectCategories' });
-  const loadMoreRef = useRef<HTMLLIElement | null>(null);
+  const loadMoreRef = useRef<HTMLElement | null>(null);
   const {
     categories,
     isEditMode,
@@ -45,7 +46,7 @@ export default function SubjectCategoriesList(
         }
       },
       {
-        threshold: 1,
+        threshold: 0.1,
       }
     );
 
@@ -100,7 +101,7 @@ export default function SubjectCategoriesList(
             </ListItem>
           ))}
 
-          {hasNextCategoriesPage && <ListItem ref={loadMoreRef} />}
+          {hasNextCategoriesPage && <LoadMoreIndicator ref={loadMoreRef} />}
         </List>
       </CardContent>
     </Card>

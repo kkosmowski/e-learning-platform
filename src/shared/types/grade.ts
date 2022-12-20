@@ -2,6 +2,7 @@ import { Task, TaskDto } from './task';
 import { SimpleUser, SimpleUserDto } from './user';
 import { SimpleSubject, SimpleSubjectDto } from './subject';
 import { AxiosResponse } from 'axios';
+import { Paginated } from './shared';
 
 // export interface Grade extends BaseItem {
 //   source?: Task | Test;
@@ -126,4 +127,5 @@ export type CreateGradeResponse = AxiosResponse<GradeDto>;
 export type UpdateGradeResponse = AxiosResponse<GradeDto>;
 export type GetGradeResponse = AxiosResponse<GradeDto>;
 export type GetGradesResponse = AxiosResponse<GradeDto[]>;
+export type GetPaginatedGradesResponse = AxiosResponse<Paginated<GradeDto>>;
 export type GetGradesSummaryResponse = AxiosResponse<SubjectGradesDto[]>;

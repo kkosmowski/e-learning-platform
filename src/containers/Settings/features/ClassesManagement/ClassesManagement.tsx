@@ -61,7 +61,7 @@ export default function ClassesManagement() {
         }
       },
       {
-        threshold: 1,
+        threshold: 0.1,
       }
     );
 

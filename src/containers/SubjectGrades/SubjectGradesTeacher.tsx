@@ -7,11 +7,11 @@ import { Centered } from 'shared/components/Container';
 import GradeCard from 'shared/components/GradeCard';
 import TabPanel from 'shared/components/TabPanel';
 import SectionTitle from 'shared/components/SectionTitle';
-import { divideGrades } from 'shared/utils/grade.utils';
 import { useGradesQuery } from 'shared/queries/use-grades-query';
 import TextButton from 'shared/components/TextButton';
 import { useEditGrade } from 'shared/hooks';
-import PageLoading from '../../shared/components/PageLoading';
+import PageLoading from 'shared/components/PageLoading';
+import { GradeType } from 'shared/types/grade';
 
 enum TeacherGradesTab {
   Assignment = 'assignment',
@@ -21,18 +21,50 @@ enum TeacherGradesTab {
 export default function SubjectGradesTeacher() {
   const { subjectId } = useParams();
   const navigate = useNavigate();
-  const { subjectGrades, fetchSubjectGrades, isLoading, isSuccess } =
-    useGradesQuery();
+  const {
+    subjectGrades: paginatedAssignmentGrades,
+    fetchSubjectGrades: fetchAssignmentGrades,
+    isFetchingNextSubjectGradesPage: isFetchingNextAssignmentGradesPage,
+    hasNextSubjectGradesPage: hasNextAssignmentGradesPage,
+    fetchNextSubjectGradesPage: fetchNextAssignmentGradesPage,
+    isSuccess,
+    isLoading,
+  } = useGradesQuery();
+  const {
+    subjectGrades: paginatedNonAssignmentGrades,
+    fetchSubjectGrades: fetchNonAssignmentGrades,
+    isFetchingNextSubjectGradesPage: isFetchingNextNonAssignmentGradesPage,
+    hasNextSubjectGradesPage: hasNextNonAssignmentGradesPage,
+    fetchNextSubjectGradesPage: fetchNextNonAssignmentGradesPage,
+  } = useGradesQuery();
+  const assignmentGrades = useMemo(
+    () => paginatedAssignmentGrades?.flat() || [],
+    [paginatedAssignmentGrades]
+  );
+  const nonAssignmentGrades = useMemo(
+    () => paginatedNonAssignmentGrades?.flat() || [],
+    [paginatedNonAssignmentGrades]
+  );
+
+  useEffect(() => {
+    if (subjectId) {
+      fetchAssignmentGrades(subjectId, [GradeType.ASSIGNMENT]);
+      fetchNonAssignmentGrades(subjectId, [
+        GradeType.ACTIVITY,
+        GradeType.BEHAVIOUR,
+      ]);
+    }
+  }, [subjectId, fetchAssignmentGrades, fetchNonAssignmentGrades]);
+
   const [currentTab, setCurrentTab] = useState<TeacherGradesTab>(
     TeacherGradesTab.Assignment
   );
 
-  const { assignmentGrades, nonAssignmentGrades } = useMemo(
-    () => divideGrades(subjectGrades),
-    [subjectGrades]
+  const { options, Dialog } = useEditGrade(
+    currentTab === TeacherGradesTab.Assignment
+      ? assignmentGrades
+      : nonAssignmentGrades
   );
-
-  const { options, Dialog } = useEditGrade(subjectGrades);
   const { t } = useTranslation('grade');
 
   const handleTabChange = (event: SyntheticEvent, tab: TeacherGradesTab) => {
@@ -42,12 +74,6 @@ export default function SubjectGradesTeacher() {
   const handleAssignGrade = (): void => {
     navigate('./new');
   };
-
-  useEffect(() => {
-    if (subjectId) {
-      fetchSubjectGrades(subjectId);
-    }
-  }, [subjectId, fetchSubjectGrades]);
 
   return (
     <Centered>
@@ -79,7 +105,15 @@ export default function SubjectGradesTeacher() {
       <TabPanel value={TeacherGradesTab.Assignment} currentTab={currentTab}>
         {/* @todo: filter & sort */}
         {isSuccess && assignmentGrades.length ? (
-          <GradeCard grades={assignmentGrades} showNames options={options} />
+          <GradeCard
+            grades={assignmentGrades}
+            showNames
+            options={options}
+            paginated
+            isFetchingNextPage={isFetchingNextAssignmentGradesPage}
+            hasNextPage={hasNextAssignmentGradesPage}
+            fetchNextPage={fetchNextAssignmentGradesPage}
+          />
         ) : (
           <Card>
             {isLoading ? (
@@ -94,7 +128,15 @@ export default function SubjectGradesTeacher() {
       <TabPanel value={TeacherGradesTab.NonAssignment} currentTab={currentTab}>
         {/* @todo: filter & sort */}
         {nonAssignmentGrades.length ? (
-          <GradeCard grades={nonAssignmentGrades} showNames options={options} />
+          <GradeCard
+            grades={nonAssignmentGrades}
+            showNames
+            options={options}
+            paginated
+            isFetchingNextPage={isFetchingNextNonAssignmentGradesPage}
+            hasNextPage={hasNextNonAssignmentGradesPage}
+            fetchNextPage={fetchNextNonAssignmentGradesPage}
+          />
         ) : (
           <Card>
             <Typography sx={{ p: 2 }}>{t('noItems')}</Typography>

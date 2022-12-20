@@ -1,9 +1,10 @@
+import { useEffect, useMemo, useRef } from 'react';
 import { Box, Card, CardContent, SxProps, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 import { Grade, VirtualGradeType } from 'shared/types/grade';
 import GradeRow, { GradeRowOption } from './GradeRow';
-import { useMemo } from 'react';
+import LoadMoreIndicator from './LoadMoreIndicator';
 
 interface GradeCardProps {
   title?: string;
@@ -13,6 +14,10 @@ interface GradeCardProps {
   hideDate?: boolean;
   keepEmptyColumns?: boolean; // maintains alignment of different grade types
   options?: GradeRowOption[];
+  paginated?: boolean;
+  isFetchingNextPage?: boolean;
+  hasNextPage?: boolean;
+  fetchNextPage?: () => void;
   sx?: SxProps;
 }
 
@@ -26,8 +31,13 @@ export default function GradeCard(props: GradeCardProps) {
     keepEmptyColumns,
     sx,
     options,
+    paginated,
+    isFetchingNextPage,
+    hasNextPage,
+    fetchNextPage,
   } = props;
   const { t } = useTranslation('grade');
+  const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
   const filteredGrades = useMemo(
     () =>
@@ -37,6 +47,36 @@ export default function GradeCard(props: GradeCardProps) {
       ),
     [grades]
   );
+
+  useEffect(() => {
+    if (!paginated) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      async ([entry]) => {
+        console.log(entry);
+        if (
+          entry?.isIntersecting &&
+          !isFetchingNextPage &&
+          hasNextPage &&
+          fetchNextPage
+        ) {
+          await fetchNextPage();
+        }
+      },
+      {
+        threshold: 0.1,
+      }
+    );
+
+    if (loadMoreRef.current) {
+      observer.observe(loadMoreRef.current);
+    }
+    return () => {
+      observer.disconnect();
+    };
+  }, [isFetchingNextPage, hasNextPage, fetchNextPage, paginated]);
 
   const gradeRows = useMemo(
     () =>
@@ -62,7 +102,10 @@ export default function GradeCard(props: GradeCardProps) {
           {title && <Typography>{title}</Typography>}
 
           {filteredGrades.length ? (
-            gradeRows
+            <>
+              {gradeRows}
+              {hasNextPage && <LoadMoreIndicator ref={loadMoreRef} />}
+            </>
           ) : (
             <Typography sx={{ fontSize: 15, mt: 1 }} color="text.secondary">
               {t('noItems')}

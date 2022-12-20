@@ -1,25 +1,51 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 import { Centered } from 'shared/components/Container';
 import GradeCard from 'shared/components/GradeCard';
-import { divideGrades } from 'shared/utils/grade.utils';
 import { useGradesQuery } from 'shared/queries/use-grades-query';
 import VirtualGrades from 'shared/components/VirtualGrades';
+import { GradeType } from 'shared/types/grade';
 
 export default function SubjectGradesStudent() {
   const { subjectId } = useParams();
   const { t } = useTranslation('grade');
-  const { subjectGrades, fetchSubjectGrades } = useGradesQuery();
-  const { assignmentGrades, nonAssignmentGrades } = divideGrades(subjectGrades);
+  const {
+    subjectGrades: paginatedAssignmentGrades,
+    fetchSubjectGrades: fetchAssignmentGrades,
+    isFetchingNextSubjectGradesPage: isFetchingNextAssignmentGradesPage,
+    hasNextSubjectGradesPage: hasNextAssignmentGradesPage,
+    fetchNextSubjectGradesPage: fetchNextAssignmentGradesPage,
+    isSuccess,
+    isLoading,
+  } = useGradesQuery();
+  const {
+    subjectGrades: paginatedNonAssignmentGrades,
+    fetchSubjectGrades: fetchNonAssignmentGrades,
+    isFetchingNextSubjectGradesPage: isFetchingNextNonAssignmentGradesPage,
+    hasNextSubjectGradesPage: hasNextNonAssignmentGradesPage,
+    fetchNextSubjectGradesPage: fetchNextNonAssignmentGradesPage,
+  } = useGradesQuery();
+  const assignmentGrades = useMemo(
+    () => paginatedAssignmentGrades?.flat() || [],
+    [paginatedAssignmentGrades]
+  );
+  const nonAssignmentGrades = useMemo(
+    () => paginatedNonAssignmentGrades?.flat() || [],
+    [paginatedNonAssignmentGrades]
+  );
 
   useEffect(() => {
     if (subjectId) {
-      fetchSubjectGrades(subjectId);
+      fetchAssignmentGrades(subjectId, [GradeType.ASSIGNMENT]);
+      fetchNonAssignmentGrades(subjectId, [
+        GradeType.ACTIVITY,
+        GradeType.BEHAVIOUR,
+      ]);
     }
-  }, [subjectId, fetchSubjectGrades]);
+  }, [subjectId, fetchAssignmentGrades, fetchNonAssignmentGrades]);
 
   return (
     <Centered innerSx={{ gap: 2 }}>
@@ -29,6 +55,10 @@ export default function SubjectGradesStudent() {
           title={t('type.assignment')}
           grades={assignmentGrades}
           sx={{ flex: 2 }}
+          paginated
+          isFetchingNextPage={isFetchingNextAssignmentGradesPage}
+          hasNextPage={hasNextAssignmentGradesPage}
+          fetchNextPage={fetchNextAssignmentGradesPage}
         />
         <GradeCard
           hideDate
@@ -36,6 +66,10 @@ export default function SubjectGradesStudent() {
           title={t('type.nonAssignment')}
           grades={nonAssignmentGrades}
           sx={{ flex: 2 }}
+          paginated
+          isFetchingNextPage={isFetchingNextNonAssignmentGradesPage}
+          hasNextPage={hasNextNonAssignmentGradesPage}
+          fetchNextPage={fetchNextNonAssignmentGradesPage}
         />
       </Box>
 

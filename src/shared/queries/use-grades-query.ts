@@ -1,10 +1,15 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { AxiosError } from 'axios';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 
-import { GetGradesResponse, GradeDto } from 'shared/types/grade';
+import { GetGradesResponse, GradeDto, GradeType } from 'shared/types/grade';
 import {
   evaluateNotSubmitted,
   getStudentGrades,
@@ -15,23 +20,34 @@ import { useAuth } from 'contexts/auth';
 import { mapGradeDtoToGrade } from 'shared/utils/grade.utils';
 import { getErrorDetail } from 'shared/utils/common.utils';
 import { EmptyResponse } from 'shared/types/shared';
+import { usePaginatedQuery } from 'shared/hooks';
+import { GRADES_PAGE_SIZE } from 'shared/consts/grade';
 
 export function useGradesQuery() {
   const { currentUser } = useAuth();
   const [studentId, setStudentId] = useState('');
   const [taskId, setTaskId] = useState('');
   const [subjectId, setSubjectId] = useState('');
+  const [subjectGradesType, setSubjectGradesType] = useState<
+    GradeType[] | null
+  >(null);
   const { t } = useTranslation('grade');
   const queryClient = useQueryClient();
+  const { getPreviousPageParam, getNextPageParam, getFetchedItemsCount } =
+    usePaginatedQuery(GRADES_PAGE_SIZE);
 
-  const studentGradesQuery = useQuery<
-    GetGradesResponse,
-    AxiosError,
-    GradeDto[]
-  >(['grades', 'student', studentId], () => getStudentGrades(studentId), {
-    enabled: Boolean(currentUser && studentId),
-    select: ({ data }) => data,
-  });
+  const studentGradesQuery = useInfiniteQuery(
+    ['grades', 'student', studentId],
+    async ({ pageParam = 1 }) => {
+      const { data } = await getStudentGrades(studentId, pageParam);
+      return data;
+    },
+    {
+      getPreviousPageParam,
+      getNextPageParam,
+      enabled: Boolean(currentUser && studentId),
+    }
+  );
 
   const taskGradesQuery = useQuery<GetGradesResponse, AxiosError, GradeDto[]>(
     ['grades', 'task', taskId],
@@ -42,14 +58,35 @@ export function useGradesQuery() {
     }
   );
 
-  const subjectGradesQuery = useQuery<
-    GetGradesResponse,
-    AxiosError,
-    GradeDto[]
-  >(['grades', 'subject', subjectId], () => getSubjectGrades(subjectId), {
-    enabled: Boolean(currentUser && subjectId),
-    select: ({ data }) => data,
-  });
+  const subjectGradesQuery = useInfiniteQuery(
+    [
+      'grades',
+      'subject',
+      subjectId,
+      subjectGradesType ? subjectGradesType.join() : 'all',
+    ],
+    async ({ pageParam = 1 }) => {
+      const { data } = await getSubjectGrades(
+        subjectId,
+        subjectGradesType,
+        pageParam
+      );
+      return data;
+    },
+    {
+      getPreviousPageParam,
+      getNextPageParam,
+      enabled: Boolean(currentUser && subjectId),
+    }
+  );
+
+  const fetchSubjectGrades = useCallback(
+    (subjectId: string, type: GradeType[]) => {
+      setSubjectGradesType(type);
+      setSubjectId(subjectId);
+    },
+    []
+  );
 
   const { mutate: bulkEvaluate } = useMutation<
     EmptyResponse,
@@ -68,8 +105,23 @@ export function useGradesQuery() {
   });
 
   const studentGrades = useMemo(
-    () => studentGradesQuery.data?.map(mapGradeDtoToGrade),
+    () =>
+      studentGradesQuery.data?.pages.map((page) =>
+        page.items.map(mapGradeDtoToGrade)
+      ),
     [studentGradesQuery.data]
+  );
+
+  const studentGradesCount = useMemo(
+    () => studentGradesQuery.data?.pages[0].total_count || 0,
+    [studentGradesQuery.data]
+  );
+
+  const hasNextStudentGradesPage = useMemo(
+    () =>
+      studentGradesQuery.data &&
+      getFetchedItemsCount(studentGradesQuery.data.pages) < studentGradesCount,
+    [studentGradesQuery.data, getFetchedItemsCount, studentGradesCount]
   );
 
   const taskGrades = useMemo(
@@ -78,8 +130,23 @@ export function useGradesQuery() {
   );
 
   const subjectGrades = useMemo(
-    () => subjectGradesQuery.data?.map(mapGradeDtoToGrade),
+    () =>
+      subjectGradesQuery.data?.pages.map((page) =>
+        page.items.map(mapGradeDtoToGrade)
+      ),
     [subjectGradesQuery.data]
+  );
+
+  const subjectGradesCount = useMemo(
+    () => subjectGradesQuery.data?.pages[0].total_count || 0,
+    [subjectGradesQuery.data]
+  );
+
+  const hasNextSubjectGradesPage = useMemo(
+    () =>
+      subjectGradesQuery.data &&
+      getFetchedItemsCount(subjectGradesQuery.data.pages) < subjectGradesCount,
+    [subjectGradesQuery.data, getFetchedItemsCount, subjectGradesCount]
   );
 
   const isLoading = useMemo(
@@ -116,11 +183,17 @@ export function useGradesQuery() {
     studentGrades,
     taskGrades,
     subjectGrades,
+    isFetchingNextSubjectGradesPage: subjectGradesQuery.isFetchingNextPage,
+    hasNextSubjectGradesPage,
+    fetchNextSubjectGradesPage: subjectGradesQuery.fetchNextPage,
+    isFetchingNextStudentGradesPage: studentGradesQuery.isFetchingNextPage,
+    hasNextStudentGradesPage,
+    fetchNextStudentGradesPage: studentGradesQuery.fetchNextPage,
     isLoading,
     isSuccess,
     fetchStudentGrades: setStudentId,
     fetchTaskGrades: setTaskId,
-    fetchSubjectGrades: setSubjectId,
+    fetchSubjectGrades,
     bulkEvaluate,
   };
 }
