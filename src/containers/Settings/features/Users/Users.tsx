@@ -17,8 +17,18 @@ export default function Users() {
   const navigate = useNavigate();
   const { t } = useTranslation('settings');
   const { confirmAction, confirmationDialog } = useConfirmationDialog();
-  const { users, isFetching, isSuccess, fetchUsers, updateUser, deleteUser } =
-    useUsersQuery();
+  const {
+    users: paginatedUsers,
+    isFetching,
+    isFetchingNextPage,
+    isSuccess,
+    hasNextUsersPage,
+    fetchNextPage,
+    fetchUsers,
+    updateUser,
+    deleteUser,
+  } = useUsersQuery();
+  const users = useMemo(() => paginatedUsers?.flat() || [], [paginatedUsers]);
   const currentRole = useMemo(() => getRole(type), [type]);
 
   const handleView = (userId: string) => {
@@ -98,13 +108,19 @@ export default function Users() {
   }, [currentRole]);
 
   return (
-    <TableContainer component={Paper}>
-      {isFetching && <PageLoading sx={{ px: 4 }} />}
-      {!isFetching && isSuccess ? (
+    <TableContainer
+      component={Paper}
+      sx={{ display: 'flex', flexDirection: 'column', flex: 1, mb: 4 }}
+    >
+      {!isSuccess && isFetching && <PageLoading sx={{ px: 4 }} />}
+      {isSuccess ? (
         users?.length ? (
           <UsersTable
             users={users}
             target={actionMenuTarget}
+            hasNextPage={hasNextUsersPage}
+            isFetching={isFetchingNextPage}
+            fetchNextPage={fetchNextPage}
             setTarget={setActionsMenuTarget}
             onView={handleView}
             onEdit={handleEdit}

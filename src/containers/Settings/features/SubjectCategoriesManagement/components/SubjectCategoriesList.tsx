@@ -21,7 +21,6 @@ export default function SubjectCategoriesList(
   props: SubjectCategoriesListProps
 ) {
   const { t } = useTranslation('settings', { keyPrefix: 'subjectCategories' });
-  const rootRef = useRef<HTMLUListElement | null>(null);
   const loadMoreRef = useRef<HTMLLIElement | null>(null);
   const {
     categories,
@@ -35,77 +34,73 @@ export default function SubjectCategoriesList(
     useSubjectCategoriesQuery();
 
   useEffect(() => {
-    if (rootRef.current) {
-      const observer = new IntersectionObserver(
-        async (entries) => {
-          if (
-            entries[0]?.isIntersecting &&
-            !isFetchingNextPage &&
-            hasNextCategoriesPage
-          ) {
-            await fetchNextPage();
-          }
-        },
-        {
-          threshold: 1,
+    const observer = new IntersectionObserver(
+      async ([entry]) => {
+        if (
+          entry?.isIntersecting &&
+          !isFetchingNextPage &&
+          hasNextCategoriesPage
+        ) {
+          await fetchNextPage();
         }
-      );
-
-      if (loadMoreRef.current) {
-        observer.observe(loadMoreRef.current);
+      },
+      {
+        threshold: 1,
       }
-      return () => {
-        observer.disconnect();
-      };
+    );
+
+    if (loadMoreRef.current) {
+      observer.observe(loadMoreRef.current);
     }
+    return () => {
+      observer.disconnect();
+    };
   }, [isFetchingNextPage, hasNextCategoriesPage, fetchNextPage]);
 
   return (
     <Card>
       <CardContent>
-        <List sx={{ width: '100%' }} ref={rootRef}>
-          <>
-            {categories.map((category, index) => (
-              <ListItem
-                key={category.id}
-                divider={index !== categories.length - 1}
-                secondaryAction={
-                  <>
-                    <IconButton
-                      color="primary"
-                      aria-label={t('common:edit')}
-                      onClick={() => showEditCategoryForm(category)}
-                    >
-                      <EditIcon />
-                    </IconButton>
-                    <IconButton
-                      color="error"
-                      aria-label={t('common:delete')}
-                      onClick={() => showConfirmationDialog(category)}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </>
-                }
-                sx={{
-                  py: isEditMode(category.id) ? 0.5 : 1.5,
-                  pr: 16,
-                }}
-              >
-                {isEditMode(category.id) ? (
-                  <EditCategoryForm
-                    value={category.name}
-                    onSubmit={handleUpdate}
-                    onCancel={handleCancel}
-                  />
-                ) : (
-                  category.name
-                )}
-              </ListItem>
-            ))}
+        <List sx={{ width: '100%' }}>
+          {categories.map((category, index) => (
+            <ListItem
+              key={category.id}
+              divider={index !== categories.length - 1}
+              secondaryAction={
+                <>
+                  <IconButton
+                    color="primary"
+                    aria-label={t('common:edit')}
+                    onClick={() => showEditCategoryForm(category)}
+                  >
+                    <EditIcon />
+                  </IconButton>
+                  <IconButton
+                    color="error"
+                    aria-label={t('common:delete')}
+                    onClick={() => showConfirmationDialog(category)}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </>
+              }
+              sx={{
+                py: isEditMode(category.id) ? 0.5 : 1.5,
+                pr: 16,
+              }}
+            >
+              {isEditMode(category.id) ? (
+                <EditCategoryForm
+                  value={category.name}
+                  onSubmit={handleUpdate}
+                  onCancel={handleCancel}
+                />
+              ) : (
+                category.name
+              )}
+            </ListItem>
+          ))}
 
-            {hasNextCategoriesPage && <ListItem ref={loadMoreRef} />}
-          </>
+          {hasNextCategoriesPage && <ListItem ref={loadMoreRef} />}
         </List>
       </CardContent>
     </Card>

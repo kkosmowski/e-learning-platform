@@ -1,6 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { SimpleClass, SimpleClassDto } from './class';
 import { SimpleSubject, SimpleSubjectDto } from './subject';
+import { Paginated } from './shared';
 
 export interface Person {
   id: string;
@@ -83,6 +84,7 @@ export type UpdateUserPayload = Pick<UserDto, 'id'> &
 
 export type FetchMeResponse = AxiosResponse<UserDto>;
 export type CreateUserResponse = AxiosResponse<UserDto>;
-export type GetUsersResponse = AxiosResponse<UserDto[]>;
+export type GetUsersResponse = AxiosResponse<Paginated<UserDto>>;
+export type GetSubjectStudentsResponse = AxiosResponse<UserDto[]>;
 export type GetUserResponse = AxiosResponse<UserDto>;
 export type GetUserWithDetailsResponse = AxiosResponse<UserWithDetailsDto>;

@@ -42,21 +42,20 @@ export default function SubjectsManagement() {
         </Button>
       </Box>
 
-      <TableContainer component={Paper}>
-        {isLoading && <PageLoading />}
-        {!isLoading && isSuccess ? (
-          fullSubjects?.length ? (
-            <SubjectsTable
-              subjects={fullSubjects}
-              onClick={handleSubjectClick}
-              onClassClick={handleClassClick}
-              onTeacherClick={handleTeacherClick}
-            />
-          ) : (
-            t('subjects.noItems')
-          )
-        ) : null}
-      </TableContainer>
+      {isSuccess && fullSubjects?.length ? (
+        <TableContainer component={Paper}>
+          <SubjectsTable
+            subjects={fullSubjects}
+            onClick={handleSubjectClick}
+            onClassClick={handleClassClick}
+            onTeacherClick={handleTeacherClick}
+          />
+        </TableContainer>
+      ) : isLoading ? (
+        <PageLoading />
+      ) : (
+        t('subjects.noItems')
+      )}
     </CommonViewLayout>
   );
 }

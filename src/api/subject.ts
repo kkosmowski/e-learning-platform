@@ -14,7 +14,7 @@ import {
 } from 'shared/types/subject';
 import { EmptyResponse } from 'shared/types/shared';
 import { mapSubjectFormToCreatSubjectPayload } from 'shared/utils/subject.utils';
-import { GetUsersResponse } from 'shared/types/user';
+import { GetSubjectStudentsResponse } from 'shared/types/user';
 import { SUBJECT_CATEGORIES_PAGE_SIZE } from 'shared/consts/subject';
 
 export const getSubjectCategories = (
@@ -76,6 +76,6 @@ export const updateSubject = ({
 
 export const getSubjectStudents = (
   subjectId: string
-): Promise<GetUsersResponse> => {
+): Promise<GetSubjectStudentsResponse> => {
   return authorized((api) => api.get(`group-subject/${subjectId}/users`));
 };

@@ -8,9 +8,12 @@ import {
   ValidateClassNameResponse,
 } from 'shared/types/class';
 import { mapClassFormToCreateClassPayload } from 'shared/utils/class.utils';
+import { CLASS_PAGE_SIZE } from 'shared/consts/class';
 
-export const getClasses = (): Promise<GetClassesResponse> =>
-  authorized((api) => api.get('group'));
+export const getClasses = (offset: number): Promise<GetClassesResponse> =>
+  authorized((api) =>
+    api.get(`group?limit=${CLASS_PAGE_SIZE}&offset=${offset}`)
+  );
 
 export const createClass = (
   formValues: ClassForm

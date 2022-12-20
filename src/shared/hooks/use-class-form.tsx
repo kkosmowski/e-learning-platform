@@ -21,10 +21,8 @@ import {
 import { TFunction } from 'i18next';
 import { areArraysEqual } from '@mui/base';
 
-import { getUsers } from 'api/user';
 import { validateClassName } from 'api/class';
 import { Role, User } from 'shared/types/user';
-import { mapUserDtoToUser } from 'shared/utils/user.utils';
 import { ClassForm } from 'shared/types/class';
 import {
   classNameRequiredError,
@@ -32,6 +30,7 @@ import {
   classTeacherRequiredError,
 } from 'shared/consts/error';
 import { defaultDebounce } from 'shared/consts/shared';
+import { useUsersQuery } from 'shared/queries';
 
 export interface UseClassFormProps {
   initialValues: ClassForm;
@@ -53,47 +52,36 @@ export function useClassForm(props: UseClassFormProps) {
     error,
     onSubmit,
   } = props;
-  const [studentsList, setStudentsList] = useState<User[]>([]);
-  const [teachersList, setTeachersList] = useState<User[]>([]);
   const [isUntouched, setIsUntouched] = useState(true);
+  const {
+    users: students,
+    hasNextUsersPage: hasNextStudentsPage,
+    isFetchingNextPage: isFetchingNextStudentsPage,
+    fetchNextPage: fetchNextStudentsPage,
+    fetchUsers: fetchStudents,
+  } = useUsersQuery();
+  const studentsList = useMemo(() => students?.flat() || [], [students]);
+
+  const {
+    users: teachers,
+    hasNextUsersPage: hasNextTeachersPage,
+    isFetchingNextPage: isFetchingNextTeachersPage,
+    fetchNextPage: fetchNextTeachersPage,
+    fetchUsers: fetchTeachers,
+  } = useUsersQuery();
+  const teachersList = useMemo(() => teachers?.flat() || [], [teachers]);
+
   const initialRun = useRef(true);
 
-  const fetchUsers = useCallback(async () => {
-    // @todo: fetch only users that have no class assigned
-    const { data } = await getUsers({
-      role: [Role.Student, Role.Teacher],
-      withoutGroups: true,
-    });
-    let teachers: User[] = [];
-    let students: User[] = [];
-
-    if (initialValues) {
-      if (initialValues.teacher) {
-        teachers = [initialValues.teacher];
-      }
-
-      if (initialValues.students.length) {
-        students = [...initialValues.students];
-      }
-    }
-
-    for (const userDto of data) {
-      const user = mapUserDtoToUser(userDto);
-
-      if (user.role === Role.Student) {
-        students.push(user);
-      } else {
-        teachers.push(user);
-      }
-    }
-
-    setTeachersList(teachers);
-    setStudentsList(students);
-  }, [initialValues]);
-
   useEffect(() => {
-    void fetchUsers();
-  }, []);
+    fetchStudents({
+      role: Role.Student,
+    });
+
+    fetchTeachers({
+      role: Role.Teacher,
+    });
+  }, [fetchStudents, fetchTeachers]);
 
   const formik = useFormik<ClassForm>({
     initialValues,
@@ -200,6 +188,20 @@ export function useClassForm(props: UseClassFormProps) {
         onBlur={handleBlur}
         onChange={handleTeacherChange}
         isOptionEqualToValue={(option, value) => option.id === value.id}
+        ListboxProps={{
+          onScroll: (event) => {
+            const node = event.currentTarget;
+            const scrolledEnough =
+              node.scrollTop + node.clientHeight === node.scrollHeight;
+            if (
+              scrolledEnough &&
+              hasNextTeachersPage &&
+              !isFetchingNextTeachersPage
+            ) {
+              void fetchNextTeachersPage();
+            }
+          },
+        }}
       />
 
       <Autocomplete
@@ -218,6 +220,20 @@ export function useClassForm(props: UseClassFormProps) {
         onBlur={handleBlur}
         onChange={handleStudentsChange}
         isOptionEqualToValue={(option, value) => option.id === value.id}
+        ListboxProps={{
+          onScroll: (event) => {
+            const node = event.currentTarget;
+            const scrolledEnough =
+              node.scrollTop + node.clientHeight === node.scrollHeight;
+            if (
+              scrolledEnough &&
+              hasNextStudentsPage &&
+              !isFetchingNextStudentsPage
+            ) {
+              void fetchNextStudentsPage();
+            }
+          },
+        }}
       />
 
       {error && <Typography color="error">{t(error)}</Typography>}

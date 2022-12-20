@@ -45,16 +45,32 @@ export function useSubjectForm(props: UseSubjectFormProps) {
   } = props;
   const {
     subjectCategories: paginatedSubjectCategories,
-    isFetchingNextPage,
+    isFetchingNextPage: isFetchingNextCategoriesPage,
     hasNextCategoriesPage,
-    fetchNextPage,
+    fetchNextPage: fetchNextCategoriesPage,
   } = useSubjectCategoriesQuery();
   const subjectCategories = useMemo(
     () => paginatedSubjectCategories?.flat(),
     [paginatedSubjectCategories]
   );
-  const { classes } = useClassesQuery();
-  const { users: teachers, fetchUsers } = useUsersQuery();
+  const {
+    classes: paginatedClasses,
+    isFetchingNextPage: isFetchingNextClassesPage,
+    hasNextClassesPage,
+    fetchNextPage: fetchNextClassesPage,
+  } = useClassesQuery();
+  const classes = useMemo(() => paginatedClasses?.flat(), [paginatedClasses]);
+  const {
+    users: paginatedTeachers,
+    isFetchingNextPage: isFetchingNextTeachersPage,
+    hasNextUsersPage: hasNextTeachersPage,
+    fetchNextPage: fetchNextTeachersPage,
+    fetchUsers,
+  } = useUsersQuery();
+  const teachers = useMemo(
+    () => paginatedTeachers?.flat(),
+    [paginatedTeachers]
+  );
   const [isUntouched, setIsUntouched] = useState(true);
 
   useEffect(() => {
@@ -161,9 +177,9 @@ export function useSubjectForm(props: UseSubjectFormProps) {
               if (
                 scrolledEnough &&
                 hasNextCategoriesPage &&
-                !isFetchingNextPage
+                !isFetchingNextCategoriesPage
               ) {
-                void fetchNextPage();
+                void fetchNextCategoriesPage();
               }
             },
           }}
@@ -197,6 +213,20 @@ export function useSubjectForm(props: UseSubjectFormProps) {
           onBlur={handleBlur}
           onChange={handleClassChange}
           isOptionEqualToValue={(option, value) => option.id === value.id}
+          ListboxProps={{
+            onScroll: (event) => {
+              const node = event.currentTarget;
+              const scrolledEnough =
+                node.scrollTop + node.clientHeight === node.scrollHeight;
+              if (
+                scrolledEnough &&
+                hasNextClassesPage &&
+                !isFetchingNextClassesPage
+              ) {
+                void fetchNextClassesPage();
+              }
+            },
+          }}
         />
       )}
 
@@ -227,6 +257,20 @@ export function useSubjectForm(props: UseSubjectFormProps) {
           onBlur={handleBlur}
           onChange={handleTeacherChange}
           isOptionEqualToValue={(option, value) => option.id === value.id}
+          ListboxProps={{
+            onScroll: (event) => {
+              const node = event.currentTarget;
+              const scrolledEnough =
+                node.scrollTop + node.clientHeight === node.scrollHeight;
+              if (
+                scrolledEnough &&
+                hasNextTeachersPage &&
+                !isFetchingNextTeachersPage
+              ) {
+                void fetchNextTeachersPage();
+              }
+            },
+          }}
         />
       )}
 

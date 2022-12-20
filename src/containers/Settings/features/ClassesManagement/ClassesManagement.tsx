@@ -1,4 +1,4 @@
-import { MouseEvent } from 'react';
+import { MouseEvent, useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Box,
@@ -7,6 +7,7 @@ import {
   CardContent,
   IconButton,
   List,
+  ListItem,
   ListItemButton,
   Typography,
 } from '@mui/material';
@@ -21,7 +22,16 @@ import { useClassesQuery } from 'shared/queries';
 export default function ClassesManagement() {
   const { t } = useTranslation('settings', { keyPrefix: 'classes' });
   const navigate = useNavigate();
-  const { classes, isSuccess, isLoading } = useClassesQuery();
+  const {
+    classes: paginatedClasses,
+    isSuccess,
+    isLoading,
+    isFetchingNextPage,
+    hasNextClassesPage,
+    fetchNextPage,
+  } = useClassesQuery();
+  const loadMoreRef = useRef<HTMLLIElement | null>(null);
+  const classes = useMemo(() => paginatedClasses?.flat(), [paginatedClasses]);
 
   const navigateToClassCreatePage = () => {
     navigate('create');
@@ -38,6 +48,31 @@ export default function ClassesManagement() {
   const navigateToClassViewPage = (classId: string) => {
     navigate(`${classId}`);
   };
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      async ([entry]) => {
+        if (
+          entry?.isIntersecting &&
+          !isFetchingNextPage &&
+          hasNextClassesPage
+        ) {
+          await fetchNextPage();
+        }
+      },
+      {
+        threshold: 1,
+      }
+    );
+
+    if (loadMoreRef.current) {
+      observer.observe(loadMoreRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [fetchNextPage, hasNextClassesPage, isFetchingNextPage]);
 
   return (
     <CommonViewLayout headerTitle={t('title')} maxWidth={600}>
@@ -74,6 +109,8 @@ export default function ClassesManagement() {
                     </IconButton>
                   </ListItemButton>
                 ))}
+
+                <ListItem ref={loadMoreRef} />
               </List>
             </CardContent>
           </Card>
