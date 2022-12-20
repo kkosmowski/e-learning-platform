@@ -3,33 +3,27 @@ import {
   MouseEvent,
   ReactNode,
   SetStateAction,
+  useCallback,
+  useEffect,
   useMemo,
   useRef,
 } from 'react';
-import { useTranslation } from 'react-i18next';
+import { TFunction, useTranslation } from 'react-i18next';
 import { MoreVert } from '@mui/icons-material';
-import {
-  GlobalStyles,
-  IconButton,
-  Menu,
-  MenuItem,
-  styled,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  Typography,
-} from '@mui/material';
+import { IconButton, Menu, MenuItem, Typography } from '@mui/material';
 import { format } from 'date-fns';
+import { DataGrid, GridColDef, GridRowParams } from '@mui/x-data-grid';
 
-import { background, error } from 'colors';
+import colors, { error } from 'colors';
 import { User } from 'shared/types/user';
 import usePrevious from 'hooks/use-previous';
 
 interface UsersTableProps {
   users: User[];
   target: User | null;
+  hasNextPage: boolean | undefined;
+  isFetching: boolean;
+  fetchNextPage: () => void;
   setTarget: Dispatch<SetStateAction<User | null>>;
   onView: (userId: string) => void;
   onEdit: () => void;
@@ -37,26 +31,21 @@ interface UsersTableProps {
   showDeleteDialog: () => void;
 }
 
-const usersTableHeadRows = [
-  'common:firstName',
-  'common:lastName',
-  'common:email',
-  'users.table.createdAt',
-  'users.table.isActive',
-  'users.table.actions',
-];
-
 export default function UsersTable(props: UsersTableProps) {
   const {
     users,
     onView,
     target,
+    hasNextPage,
+    isFetching,
+    fetchNextPage,
     setTarget,
     onEdit,
     showStatusToggleDialog,
     showDeleteDialog,
   } = props;
-  const { t } = useTranslation();
+  const { t } = useTranslation('settings');
+  const dataGridRef = useRef<HTMLDivElement | null>(null);
 
   const previousTarget = usePrevious(target);
   const anyTarget = useMemo(
@@ -64,139 +53,172 @@ export default function UsersTable(props: UsersTableProps) {
     [target, previousTarget]
   );
 
-  const handleShowStatusToggleDialog = (event: MouseEvent) => {
+  useEffect(() => {
+    requestAnimationFrame(() => {
+      if (!dataGridRef.current) {
+        return;
+      }
+
+      const scrollContainer = dataGridRef.current?.querySelector(
+        '.MuiDataGrid-virtualScroller'
+      );
+
+      if (!scrollContainer) {
+        return;
+      }
+
+      const observer = new IntersectionObserver(
+        async ([entry]) => {
+          console.log(entry);
+          if (entry?.isIntersecting && !isFetching && hasNextPage) {
+            await fetchNextPage();
+          }
+        },
+        {
+          root: scrollContainer,
+          threshold: 0.9,
+        }
+      );
+
+      const lastRow = dataGridRef.current?.querySelector(
+        '.MuiDataGrid-row:last-child'
+      );
+
+      if (lastRow) {
+        observer.observe(lastRow);
+      }
+      return () => {
+        observer.disconnect();
+      };
+    });
+  }, [isFetching, hasNextPage, fetchNextPage]);
+
+  const handleShowStatusToggleDialog = useCallback(
+    (event: MouseEvent) => {
+      event.stopPropagation();
+      showStatusToggleDialog();
+    },
+    [showStatusToggleDialog]
+  );
+
+  const handleShowDeleteDialog = useCallback(
+    (event: MouseEvent) => {
+      event.stopPropagation();
+      showDeleteDialog();
+    },
+    [showDeleteDialog]
+  );
+
+  const handleView = ({ id }: GridRowParams, event: MouseEvent) => {
     event.stopPropagation();
-    showStatusToggleDialog();
+    onView(String(id));
   };
 
-  const handleShowDeleteDialog = (event: MouseEvent) => {
-    event.stopPropagation();
-    showDeleteDialog();
-  };
+  const handleEdit = useCallback(
+    (event: MouseEvent) => {
+      event.stopPropagation();
+      onEdit();
+    },
+    [onEdit]
+  );
 
-  const handleView = (event: MouseEvent, userId: string) => {
-    event.stopPropagation();
-    onView(userId);
-  };
+  const rows = useMemo(
+    () =>
+      users.map((user) => ({
+        ...user,
+        createdAt: format(new Date(user.createdAt), 'dd-MM-yyyy'),
+        isActive: user.active,
+        actions: user,
+      })),
+    [users]
+  );
 
-  const handleEdit = (event: MouseEvent) => {
-    event.stopPropagation();
-    onEdit();
-  };
+  const renderActions = useCallback(
+    (user: User) => (
+      <MoreButton
+        target={user}
+        currentTarget={target}
+        onClick={setTarget}
+        onClose={() => setTarget(null)}
+      >
+        <MenuItem onClick={handleEdit}>{t('common:edit')}</MenuItem>
+        <MenuItem
+          {...(anyTarget?.active && {
+            sx: { color: error[600] },
+          })}
+          onClick={handleShowStatusToggleDialog}
+        >
+          {anyTarget?.active ? t('common:deactivate') : t('common:activate')}
+        </MenuItem>
+        <MenuItem sx={{ color: error[600] }} onClick={handleShowDeleteDialog}>
+          {t('common:delete')}
+        </MenuItem>
+      </MoreButton>
+    ),
+    [
+      anyTarget?.active,
+      handleEdit,
+      handleShowDeleteDialog,
+      handleShowStatusToggleDialog,
+      setTarget,
+      t,
+      target,
+    ]
+  );
+
+  const renderIsActive = useCallback(
+    (isActive: boolean) =>
+      isActive ? (
+        <Typography color="text.success" fontSize="inherit">
+          {t('common:active')}
+        </Typography>
+      ) : (
+        <Typography color="text.error" fontSize="inherit">
+          {t('common:inactive')}
+        </Typography>
+      ),
+    [t]
+  );
+
+  const getColumns = useCallback(
+    (t: TFunction): GridColDef[] => [
+      { field: 'firstName', headerName: t('common:firstName'), flex: 18 },
+      { field: 'lastName', headerName: t('common:lastName'), flex: 22 },
+      { field: 'email', headerName: t('common:email'), flex: 30 },
+      {
+        field: 'createdAt',
+        headerName: t('users.table.createdAt'),
+        width: 140,
+      },
+      {
+        field: 'isActive',
+        headerName: t('users.table.isActive'),
+        width: 90,
+        renderCell: (params) => renderIsActive(params.value),
+      },
+      {
+        field: 'actions',
+        headerName: t('users.table.actions'),
+        width: 70,
+        renderCell: (params) => renderActions(params.value),
+      },
+    ],
+    [renderActions, renderIsActive]
+  );
+
+  const columns = useMemo(() => getColumns(t), [getColumns, t]);
 
   return (
-    <Table size="small">
-      <TableStyles />
-      <UsersTableHead />
-      <TableBody>
-        {users.map((user) => (
-          <StyledTableRow
-            key={user.id}
-            onClick={(event) => handleView(event, user.id)}
-          >
-            <TableCell className="users-table__row--firstName">
-              {user.firstName}
-            </TableCell>
-            <TableCell className="users-table__row--lastName">
-              {user.lastName}
-            </TableCell>
-            <TableCell className="users-table__row--email">
-              {user.email}
-            </TableCell>
-            <TableCell className="users-table__row--createdAt">
-              {format(new Date(user.createdAt), 'dd-MM-yyyy')}
-            </TableCell>
-            <TableCell className="users-table__row--active">
-              {user.active ? (
-                <Typography color="text.success" fontSize="inherit">
-                  {t('common:active')}
-                </Typography>
-              ) : (
-                <Typography color="text.error" fontSize="inherit">
-                  {t('common:inactive')}
-                </Typography>
-              )}
-            </TableCell>
-            <TableCell className="users-table__row--actions">
-              <MoreButton
-                target={user}
-                currentTarget={target}
-                onClick={setTarget}
-                onClose={() => setTarget(null)}
-              >
-                <MenuItem onClick={handleEdit}>{t('common:edit')}</MenuItem>
-                <MenuItem
-                  {...(anyTarget?.active && {
-                    sx: { color: error[600] },
-                  })}
-                  onClick={handleShowStatusToggleDialog}
-                >
-                  {anyTarget?.active
-                    ? t('common:deactivate')
-                    : t('common:activate')}
-                </MenuItem>
-                <MenuItem
-                  sx={{ color: error[600] }}
-                  onClick={handleShowDeleteDialog}
-                >
-                  {t('common:delete')}
-                </MenuItem>
-              </MoreButton>
-            </TableCell>
-          </StyledTableRow>
-        ))}
-      </TableBody>
-    </Table>
+    <DataGrid
+      ref={dataGridRef}
+      hideFooter
+      columns={columns}
+      rows={rows}
+      sx={{ color: colors.text.primary, flex: 1 }}
+      onRowClick={handleView}
+    />
   );
 }
-
-const UsersTableHead = () => {
-  const { t } = useTranslation('settings');
-  return (
-    <TableHead>
-      <TableRow>
-        {usersTableHeadRows.map((headRow) => (
-          <TableCell key={headRow} className={`users-table__row--${headRow}`}>
-            <Typography fontSize="inherit" color="secondary">
-              {t(headRow)}
-            </Typography>
-          </TableCell>
-        ))}
-      </TableRow>
-    </TableHead>
-  );
-};
-
-const TableStyles = () => (
-  <GlobalStyles
-    styles={{
-      '.MuiTableContainer-root': {
-        marginBottom: 16,
-      },
-      '.users-table__row--firstName': {
-        width: '15%',
-      },
-      '.users-table__row--lastName': {
-        width: '20%',
-      },
-      '.users-table__row--email': {
-        width: 'calc(40% - 80px)',
-      },
-      '.users-table__row--createdAt': {
-        width: '18%',
-      },
-      '.users-table__row--active': {
-        width: 'max(40px, 10%)',
-      },
-      '.users-table__row--actions': {
-        width: '40px',
-      },
-      '.--clickable:hover': {
-        textDecoration: 'underline',
-      },
-    }}
-  />
-);
 
 interface MoreButtonProps {
   children: ReactNode;
@@ -236,10 +258,3 @@ const MoreButton = (props: MoreButtonProps) => {
     </>
   );
 };
-
-const StyledTableRow = styled(TableRow)(() => ({
-  cursor: 'pointer',
-  '&:hover': {
-    backgroundColor: background[200],
-  },
-}));

@@ -10,6 +10,7 @@ import {
   GetUserWithDetailsResponse,
 } from 'shared/types/user';
 import { EmptyResponse } from 'shared/types/shared';
+import { USER_PAGE_SIZE } from 'shared/consts/user';
 
 export const createUser = (
   data: CreateUserPayload
@@ -21,9 +22,13 @@ export const fetchMe = (): Promise<FetchMeResponse> => {
   return authorized((api) => api.get('user/me'));
 };
 
-export const getUsers = (props: GetUsersProps): Promise<GetUsersResponse> => {
+export const getUsers = (
+  props: GetUsersProps,
+  offset: number
+): Promise<GetUsersResponse> => {
   let roleParam = '';
   let groupParam = '';
+  let paginationParams = '';
 
   if (props.role) {
     if (props.role instanceof Array) {
@@ -40,7 +45,12 @@ export const getUsers = (props: GetUsersProps): Promise<GetUsersResponse> => {
     groupParam += 'group=' + props.group;
   }
 
-  return authorized((api) => api.get(`user${roleParam}${groupParam}`));
+  paginationParams = roleParam || groupParam ? '&' : '?';
+  paginationParams += `limit=${USER_PAGE_SIZE}&offset=${offset}`;
+
+  return authorized((api) =>
+    api.get(`user${roleParam}${groupParam}${paginationParams}`)
+  );
 };
 
 export const getUser = (userId: string): Promise<GetUserResponse> =>

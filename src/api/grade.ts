@@ -7,10 +7,13 @@ import {
   GetGradeResponse,
   GetGradesResponse,
   GetGradesSummaryResponse,
+  GetPaginatedGradesResponse,
+  GradeType,
   UpdateGradePayload,
   UpdateGradeResponse,
 } from 'shared/types/grade';
 import { EmptyResponse } from 'shared/types/shared';
+import { GRADES_PAGE_SIZE } from 'shared/consts/grade';
 
 export const createGrade = (
   payload: CreateGradePayload
@@ -40,9 +43,12 @@ export const updateProposedGrade = (
   authorized((api) => api.put('grade/proposed', payload));
 
 export const getStudentGrades = (
-  studentId: string
-): Promise<GetGradesResponse> =>
-  authorized((api) => api.get(`grade/${studentId}`));
+  studentId: string,
+  offset: number
+): Promise<GetPaginatedGradesResponse> =>
+  authorized((api) =>
+    api.get(`grade/${studentId}?limit=${GRADES_PAGE_SIZE}&offset=${offset}`)
+  );
 
 export const getTaskGrades = (taskId: string): Promise<GetGradesResponse> =>
   authorized((api) => api.get(`grade/task/${taskId}`));
@@ -54,10 +60,17 @@ export const evaluateNotSubmitted = (taskId: string): Promise<EmptyResponse> =>
   authorized((api) => api.get(`grade/task/${taskId}/evaluate-not-submitted`));
 
 export const getSubjectGrades = (
-  subjectId: string
-): Promise<GetGradesResponse> =>
-  authorized((api) => api.get(`grade/group-subject/${subjectId}`));
-
+  subjectId: string,
+  type: GradeType[] | null,
+  offset: number
+): Promise<GetPaginatedGradesResponse> => {
+  const typeParams = type ? ['', ...type].join('&grade_type=') : '';
+  return authorized((api) =>
+    api.get(
+      `grade/group-subject/${subjectId}?limit=${GRADES_PAGE_SIZE}&offset=${offset}${typeParams}`
+    )
+  );
+};
 export const getLatestGrades = (
   subjectId: string,
   limit: number

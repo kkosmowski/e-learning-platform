@@ -11,16 +11,19 @@ import {
   CreateSubjectResponse,
   GetFullSubjectResponse,
   GetFullSubjectsResponse,
-  GetSubjectTasksResponse,
 } from 'shared/types/subject';
 import { EmptyResponse } from 'shared/types/shared';
 import { mapSubjectFormToCreatSubjectPayload } from 'shared/utils/subject.utils';
-import { GetUsersResponse } from 'shared/types/user';
+import { GetSubjectStudentsResponse } from 'shared/types/user';
+import { SUBJECT_CATEGORIES_PAGE_SIZE } from 'shared/consts/subject';
 
-export const getSubjectCategories =
-  (): Promise<GetSubjectCategoriesResponse> => {
-    return authorized((api) => api.get('subject'));
-  };
+export const getSubjectCategories = (
+  offset: number
+): Promise<GetSubjectCategoriesResponse> => {
+  return authorized((api) =>
+    api.get(`subject?limit=${SUBJECT_CATEGORIES_PAGE_SIZE}&offset=${offset}`)
+  );
+};
 
 export const createSubjectCategory = (
   name: string
@@ -73,6 +76,6 @@ export const updateSubject = ({
 
 export const getSubjectStudents = (
   subjectId: string
-): Promise<GetUsersResponse> => {
+): Promise<GetSubjectStudentsResponse> => {
   return authorized((api) => api.get(`group-subject/${subjectId}/users`));
 };

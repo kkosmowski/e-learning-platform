@@ -1,6 +1,7 @@
 import { AxiosResponse } from 'axios';
 
 import { User, UserDto } from 'shared/types/user';
+import { Paginated } from './shared';
 
 export interface SimpleClass {
   id: string;
@@ -54,7 +55,7 @@ export interface UpdateClassPayload extends CreateClassPayload {
 // responses
 
 export type CreateClassResponse = AxiosResponse<SimpleClassDto>;
-export type GetClassesResponse = AxiosResponse<SimpleClass[]>;
+export type GetClassesResponse = AxiosResponse<Paginated<SimpleClassDto>>;
 export type ValidateClassNameResponse = AxiosResponse<boolean>;
 export type GetClassResponse = AxiosResponse<ClassDto>;
 export type UpdateClassResponse = AxiosResponse<ClassDto>;

@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { Card, CardContent, IconButton, List, ListItem } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -5,6 +6,8 @@ import { useTranslation } from 'react-i18next';
 
 import { SubjectCategory } from 'shared/types/subject';
 import EditCategoryForm from './EditCategoryForm';
+import { useSubjectCategoriesQuery } from 'shared/queries';
+import LoadMoreIndicator from 'shared/components/LoadMoreIndicator';
 
 interface SubjectCategoriesListProps {
   categories: SubjectCategory[];
@@ -19,6 +22,7 @@ export default function SubjectCategoriesList(
   props: SubjectCategoriesListProps
 ) {
   const { t } = useTranslation('settings', { keyPrefix: 'subjectCategories' });
+  const loadMoreRef = useRef<HTMLElement | null>(null);
   const {
     categories,
     isEditMode,
@@ -27,6 +31,32 @@ export default function SubjectCategoriesList(
     showEditCategoryForm,
     showConfirmationDialog,
   } = props;
+  const { isFetchingNextPage, hasNextCategoriesPage, fetchNextPage } =
+    useSubjectCategoriesQuery();
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      async ([entry]) => {
+        if (
+          entry?.isIntersecting &&
+          !isFetchingNextPage &&
+          hasNextCategoriesPage
+        ) {
+          await fetchNextPage();
+        }
+      },
+      {
+        threshold: 0.1,
+      }
+    );
+
+    if (loadMoreRef.current) {
+      observer.observe(loadMoreRef.current);
+    }
+    return () => {
+      observer.disconnect();
+    };
+  }, [isFetchingNextPage, hasNextCategoriesPage, fetchNextPage]);
 
   return (
     <Card>
@@ -70,6 +100,8 @@ export default function SubjectCategoriesList(
               )}
             </ListItem>
           ))}
+
+          {hasNextCategoriesPage && <LoadMoreIndicator ref={loadMoreRef} />}
         </List>
       </CardContent>
     </Card>

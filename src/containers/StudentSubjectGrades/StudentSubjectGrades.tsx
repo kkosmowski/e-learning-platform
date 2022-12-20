@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
 import { Box, Button, Typography } from '@mui/material';
@@ -19,7 +19,7 @@ import FinalGradeDialog, {
 } from './components/FinalGradeDialog';
 import { getAverageGrade } from 'shared/utils/grade.utils';
 import colors from 'colors';
-import PageLoading from '../../shared/components/PageLoading';
+import PageLoading from 'shared/components/PageLoading';
 
 export default function StudentSubjectGrades() {
   const { subjectId, studentId } = useParams();
@@ -29,8 +29,19 @@ export default function StudentSubjectGrades() {
     handleUpdateProposed: updateProposedGrade,
     handleCreateFinal: createFinalGrade,
   } = useCreateGradeQuery();
-  const { fetchStudentGrades, studentGrades, isLoading, isSuccess } =
-    useGradesQuery();
+  const {
+    studentGrades: paginatedStudentGrades,
+    isFetchingNextStudentGradesPage: isFetchingNextPage,
+    hasNextStudentGradesPage: hasNextPage,
+    fetchNextStudentGradesPage: fetchNextPage,
+    isLoading,
+    isSuccess,
+    fetchStudentGrades,
+  } = useGradesQuery();
+  const studentGrades = useMemo(
+    () => paginatedStudentGrades?.flat(),
+    [paginatedStudentGrades]
+  );
   const averageGrade = studentGrades?.length
     ? getAverageGrade(studentGrades)
     : 0;
@@ -159,7 +170,14 @@ export default function StudentSubjectGrades() {
 
       {isSuccess && studentGrades?.length && !!subjectId ? (
         <>
-          <GradeCard grades={studentGrades} sx={{ overflow: 'hidden' }} />
+          <GradeCard
+            grades={studentGrades}
+            sx={{ overflow: 'hidden' }}
+            paginated
+            isFetchingNextPage={isFetchingNextPage}
+            hasNextPage={hasNextPage}
+            fetchNextPage={fetchNextPage}
+          />
 
           <VirtualGrades grades={studentGrades} subjectId={subjectId} />
 

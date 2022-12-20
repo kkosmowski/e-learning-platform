@@ -2,6 +2,7 @@ import { AxiosResponse } from 'axios';
 import { Class, ClassDto, SubjectClass } from './class';
 import { User, UserDto } from './user';
 import { TaskDto } from './task';
+import { Paginated } from './shared';
 
 export interface SubjectCategory {
   id: string;
@@ -77,7 +78,9 @@ export interface UpdateSubjectPayload {
 
 // responses
 
-export type GetSubjectCategoriesResponse = AxiosResponse<SubjectCategory[]>;
+export type GetSubjectCategoriesResponse = AxiosResponse<
+  Paginated<SubjectCategory>
+>;
 export type CreateSubjectCategoryResponse = AxiosResponse<SubjectCategory>;
 export type UpdateSubjectCategoryResponse = AxiosResponse<SubjectCategory>;
 

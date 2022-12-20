@@ -1,7 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 
 import {
@@ -23,6 +28,8 @@ import {
   mapUserDtoToUser,
 } from 'shared/utils/user.utils';
 import { getErrorDetail } from 'shared/utils/common.utils';
+import { usePaginatedQuery } from 'shared/hooks';
+import { USER_PAGE_SIZE } from 'shared/consts/user';
 
 export interface UpdateUserData extends Partial<User> {
   id: User['id'];
@@ -41,13 +48,25 @@ export function useUsersQuery() {
   const [getUserEnabled, setGetUserEnabled] = useState(false);
   const { t } = useTranslation('settings');
   const queryClient = useQueryClient();
+  const { getPreviousPageParam, getNextPageParam, getFetchedItemsCount } =
+    usePaginatedQuery(USER_PAGE_SIZE);
 
-  const usersQuery = useQuery<GetUsersResponse, AxiosError, UserDto[]>(
-    ['users'],
-    () => getUsers(getUsersProps),
+  const usersQuery = useInfiniteQuery(
+    [
+      'users',
+      getUsersProps.role || 'all',
+      getUsersProps.group || getUsersProps.withoutGroups
+        ? 'no-group'
+        : undefined,
+    ],
+    async ({ pageParam = 1 }) => {
+      const { data } = await getUsers(getUsersProps, pageParam);
+      return data;
+    },
     {
+      getPreviousPageParam,
+      getNextPageParam,
       enabled: getUsersEnabled,
-      select: ({ data }) => data,
     }
   );
 
@@ -92,7 +111,9 @@ export function useUsersQuery() {
       onSuccess: ({ data, onSuccess }) => {
         queryClient.setQueryData(['users'], {
           data: usersQuery.data
-            ? usersQuery.data.map((user) => (user.id === data.id ? data : user))
+            ? usersQuery.data.pages.map((page) =>
+                page.items.map((user) => (user.id === data.id ? data : user))
+              )
             : [],
         });
         queryClient.setQueryData(['user', data.id], { data });
@@ -115,7 +136,9 @@ export function useUsersQuery() {
       onSuccess: (deletedUserId) => {
         queryClient.setQueryData(['users'], {
           data: usersQuery.data
-            ? usersQuery.data.filter((user) => user.id !== deletedUserId)
+            ? usersQuery.data.pages.map((page) =>
+                page.items.filter((user) => user.id !== deletedUserId)
+              )
             : [],
         });
         void queryClient.invalidateQueries(['userWithDetails', deletedUserId]);
@@ -130,12 +153,25 @@ export function useUsersQuery() {
   );
 
   const users = useMemo(
-    () => usersQuery.data?.map(mapUserDtoToUser),
+    () =>
+      usersQuery.data?.pages.map((page) => page.items.map(mapUserDtoToUser)),
     [usersQuery.data]
   );
   const currentUser = useMemo(
     () => userQuery.data && mapUserDtoToUser(userQuery.data),
     [userQuery.data]
+  );
+
+  const usersCount = useMemo(
+    () => usersQuery.data?.pages[0].total_count || 0,
+    [usersQuery.data]
+  );
+
+  const hasNextUsersPage = useMemo(
+    () =>
+      usersQuery.data &&
+      getFetchedItemsCount(usersQuery.data.pages) < usersCount,
+    [usersQuery.data, getFetchedItemsCount, usersCount]
   );
 
   const isLoading = useMemo(() => {
@@ -193,6 +229,9 @@ export function useUsersQuery() {
 
   return {
     users,
+    isFetchingNextPage: usersQuery.isFetchingNextPage,
+    fetchNextPage: usersQuery.fetchNextPage,
+    hasNextUsersPage,
     currentUser,
     isLoading,
     isSuccess,
