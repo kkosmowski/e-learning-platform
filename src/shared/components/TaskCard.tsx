@@ -10,7 +10,7 @@ import {
 import { Fragment, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Task, SimpleTaskSubmission } from 'shared/types/task';
+import { TaskWithSubmissions, SimpleTaskSubmission } from 'shared/types/task';
 import { isPastDate } from 'shared/utils/date.utils';
 import { Role, User } from 'shared/types/user';
 import ActionToolbar from './ActionToolbar';
@@ -19,7 +19,7 @@ import { TASK_VISIBLE_SHORT_TITLE_LENGTH } from 'shared/consts/task';
 import TaskDetails from './TaskDetails';
 
 interface TaskCardProps {
-  task: Task;
+  task: TaskWithSubmissions;
   submissions?: SimpleTaskSubmission[];
   subjectStudents?: User[];
   short?: boolean;
@@ -123,7 +123,6 @@ export default function TaskCard(props: TaskCardProps) {
             <TaskDetails
               task={task}
               currentUser={currentUser}
-              submissions={submissions}
               subjectStudents={subjectStudents}
             />
           )}

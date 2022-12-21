@@ -19,6 +19,7 @@ import {
   LatestTasks,
   UpdateTaskResponse,
   TaskForm,
+  TaskWithSubmissionsDto,
 } from 'shared/types/task';
 import {
   deleteTask,
@@ -30,7 +31,7 @@ import {
 import {
   mapTaskDtoToTask,
   mapTaskFormToUpdateTaskPayload,
-  mapTaskSubmissionDtoToTaskSubmission,
+  mapTaskWithSubmissionsDtoToTaskWithSubmissions,
 } from 'shared/utils/task.utils';
 import { useAuth } from 'contexts/auth';
 import { TASK_LIST_PAGE_SIZE, VISIBLE_LATEST_TASKS } from 'shared/consts/task';
@@ -121,14 +122,14 @@ export function useTasksQuery(options: {
     }
   );
 
-  const taskQuery = useQuery<GetTaskResponse, AxiosError, TaskDto>(
-    ['task', taskId],
-    () => getTask(taskId || ''),
-    {
-      select: ({ data }) => data,
-      enabled: Boolean(currentUser && taskId),
-    }
-  );
+  const taskQuery = useQuery<
+    GetTaskResponse,
+    AxiosError,
+    TaskWithSubmissionsDto
+  >(['task', taskId], () => getTask(taskId || ''), {
+    select: ({ data }) => data,
+    enabled: Boolean(currentUser && taskId),
+  });
 
   const { mutate: update } = useMutation<
     UpdateTaskResponse,
@@ -144,7 +145,7 @@ export function useTasksQuery(options: {
     },
     {
       onSuccess: async ({ data }) => {
-        queryClient.setQueryData(['task', taskId], { data });
+        await queryClient.invalidateQueries(['task', taskId]);
         await queryClient.invalidateQueries(['tasks']);
         navigate(-1);
         toast.success(t('toast.updateSuccess', { name: data.name }));
@@ -172,7 +173,9 @@ export function useTasksQuery(options: {
 
   const tasks = useMemo(
     () =>
-      tasksQuery.data?.pages.map((page) => page.items.map(mapTaskDtoToTask)),
+      tasksQuery.data?.pages.map((page) =>
+        page.items.map(mapTaskWithSubmissionsDtoToTaskWithSubmissions)
+      ),
     [tasksQuery.data]
   );
 
@@ -190,7 +193,9 @@ export function useTasksQuery(options: {
 
   const homework = useMemo(
     () =>
-      homeworkQuery.data?.pages.map((page) => page.items.map(mapTaskDtoToTask)),
+      homeworkQuery.data?.pages.map((page) =>
+        page.items.map(mapTaskWithSubmissionsDtoToTaskWithSubmissions)
+      ),
     [homeworkQuery.data]
   );
 
@@ -208,20 +213,21 @@ export function useTasksQuery(options: {
 
   const latestTasks: LatestTasks = useMemo(
     () => ({
-      tasks: latestTasksQuery.data?.tasks.map(mapTaskDtoToTask),
-      homework: latestTasksQuery.data?.homework.map(mapTaskDtoToTask),
-      taskSubmissions: latestTasksQuery.data?.task_submissions.map(
-        mapTaskSubmissionDtoToTaskSubmission
+      tasks: latestTasksQuery.data?.tasks.map(
+        mapTaskWithSubmissionsDtoToTaskWithSubmissions
       ),
-      homeworkSubmissions: latestTasksQuery.data?.homework_submissions.map(
-        mapTaskSubmissionDtoToTaskSubmission
+      homework: latestTasksQuery.data?.homework.map(
+        mapTaskWithSubmissionsDtoToTaskWithSubmissions
       ),
     }),
     [latestTasksQuery.data]
   );
 
   const task = useMemo(
-    () => (taskQuery.data ? mapTaskDtoToTask(taskQuery.data) : undefined),
+    () =>
+      taskQuery.data
+        ? mapTaskWithSubmissionsDtoToTaskWithSubmissions(taskQuery.data)
+        : undefined,
     [taskQuery.data]
   );
 

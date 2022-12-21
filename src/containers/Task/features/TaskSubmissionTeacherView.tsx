@@ -18,7 +18,8 @@ export default function TaskSubmissionTeacherView(
 ) {
   const { task } = props;
   const { taskSubmissions, isLoading, isSuccess } = useTaskSubmissionsQuery(
-    task.id
+    task.id,
+    true
   );
   const { bulkEvaluate } = useGradesQuery();
   const { t } = useTranslation('task');
