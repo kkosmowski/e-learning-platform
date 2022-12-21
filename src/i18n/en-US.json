@@ -115,7 +115,8 @@
     "task": "Task",
     "homework": "Homework",
     "statuses": {
-      "not_submitted": "To be submitted",
+      "to_submit": "To be submitted",
+      "not_submitted": "Not submitted",
       "submitted": "Submitted",
       "graded": "Graded"
     },
