@@ -78,13 +78,9 @@ export function useSubjectCategoriesQuery() {
       return categoryId;
     },
     {
-      onSuccess: async (categoryId) => {
+      onSuccess: async () => {
         toast.success(t('subjectCategories.toast.deleteSuccess'));
-        queryClient.setQueryData(['subject-categories'], {
-          data: fetchQuery.data?.pages.map((page) =>
-            page.items.filter((category) => category.id !== categoryId)
-          ),
-        });
+        await queryClient.invalidateQueries(['subject-categories']);
       },
       onError: (error) => {
         toast.error(t(getErrorDetail(error)), {
