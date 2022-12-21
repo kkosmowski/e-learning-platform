@@ -8,6 +8,7 @@ import { createNotice } from 'api/notice';
 import { getErrorDetail } from 'shared/utils/common.utils';
 import { CreateNoticeResponse, NoticeForm } from 'shared/types/notice';
 import { mapNoticeFormToCreateNoticePayload } from 'shared/utils/notice.utils';
+import { ERROR_TOAST_DURATION } from 'shared/consts/error';
 
 export function useCreateNoticeQuery() {
   const { t } = useTranslation('notice');
@@ -24,9 +25,8 @@ export function useCreateNoticeQuery() {
       await queryClient.invalidateQueries(['notices']);
       navigate(`../${data.id}`);
     },
-    onError: (err) => {
-      const error = getErrorDetail(err);
-      toast.error(t(error));
+    onError: (error) => {
+      toast.error(t(getErrorDetail(error)), { duration: ERROR_TOAST_DURATION });
     },
   });
 

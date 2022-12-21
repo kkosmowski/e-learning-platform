@@ -8,6 +8,7 @@ import { createTask } from 'api/task';
 import { getErrorDetail } from 'shared/utils/common.utils';
 import { CreateTaskResponse, TaskForm, TaskType } from 'shared/types/task';
 import { mapTaskFormToCreateTaskPayload } from 'shared/utils/task.utils';
+import { ERROR_TOAST_DURATION } from 'shared/consts/error';
 
 export function useCreateTaskQuery() {
   const { t } = useTranslation('task');
@@ -28,9 +29,8 @@ export function useCreateTaskQuery() {
         }`
       );
     },
-    onError: (err) => {
-      const error = getErrorDetail(err);
-      toast.error(t(error));
+    onError: (error) => {
+      toast.error(t(getErrorDetail(error)), { duration: ERROR_TOAST_DURATION });
     },
   });
 

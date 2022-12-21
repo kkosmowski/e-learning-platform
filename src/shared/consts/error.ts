@@ -1,3 +1,5 @@
+import { SECOND } from './date';
+
 export const unknownError = 'error:UNKNOWN_ERROR';
 
 export const invalidFormError = 'error:INVALID_FORM';
@@ -29,3 +31,5 @@ export const classTeacherRequiredError = 'error:Class_TEACHER_REQUIRED';
 export const subjectRequiredError = 'error:SUBJECT_REQUIRED';
 export const studentRequiredError = 'error:STUDENT_REQUIRED';
 export const gradeValueRequiredError = 'error:GRADE_VALUE_REQUIRED';
+
+export const ERROR_TOAST_DURATION = 10 * SECOND;

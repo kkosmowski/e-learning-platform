@@ -8,6 +8,8 @@ import { useFormik } from 'formik';
 import { createUser } from 'api/user';
 import { CreateUserForm, CreateUserResponse } from 'shared/types/user';
 import { mapCreateUserFormToCreateUserPayload } from 'shared/utils/user.utils';
+import { getErrorDetail } from 'shared/utils/common.utils';
+import { ERROR_TOAST_DURATION } from 'shared/consts/error';
 
 export default function useCreateUserQuery(
   formik: ReturnType<typeof useFormik<CreateUserForm>>
@@ -27,8 +29,8 @@ export default function useCreateUserQuery(
       await formik.validateForm();
     },
     onError: (error) => {
-      setErrorText(t(error.message));
-      toast.error(t(error.message));
+      setErrorText(t(getErrorDetail(error)));
+      toast.error(t(getErrorDetail(error)), { duration: ERROR_TOAST_DURATION });
     },
   });
 

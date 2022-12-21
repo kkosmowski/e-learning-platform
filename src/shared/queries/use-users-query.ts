@@ -30,6 +30,7 @@ import {
 import { getErrorDetail } from 'shared/utils/common.utils';
 import { usePaginatedQuery } from 'shared/hooks';
 import { USER_PAGE_SIZE } from 'shared/consts/user';
+import { ERROR_TOAST_DURATION } from 'shared/consts/error';
 
 export interface UpdateUserData extends Partial<User> {
   id: User['id'];
@@ -120,9 +121,10 @@ export function useUsersQuery() {
         void queryClient.invalidateQueries(['userWithDetails', data.id]);
         if (onSuccess) onSuccess(mapUserDtoToUser(data));
       },
-      onError: (err) => {
-        const error = getErrorDetail(err);
-        toast.error(t(error));
+      onError: (error) => {
+        toast.error(t(getErrorDetail(error)), {
+          duration: ERROR_TOAST_DURATION,
+        });
       },
     }
   );
@@ -145,9 +147,10 @@ export function useUsersQuery() {
         void queryClient.invalidateQueries(['user', deletedUserId]);
         toast.success(t('users.deleteSuccessToast'));
       },
-      onError: (err) => {
-        const error = getErrorDetail(err);
-        toast.error(t(error));
+      onError: (error) => {
+        toast.error(t(getErrorDetail(error)), {
+          duration: ERROR_TOAST_DURATION,
+        });
       },
     }
   );

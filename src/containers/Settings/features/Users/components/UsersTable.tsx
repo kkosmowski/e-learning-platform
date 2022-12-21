@@ -150,9 +150,9 @@ export default function UsersTable(props: UsersTableProps) {
         >
           {anyTarget?.active ? t('common:deactivate') : t('common:activate')}
         </MenuItem>
-        <MenuItem sx={{ color: error[600] }} onClick={handleShowDeleteDialog}>
-          {t('common:delete')}
-        </MenuItem>
+        {/*<MenuItem sx={{ color: error[600] }} onClick={handleShowDeleteDialog}>*/}
+        {/*  {t('common:delete')}*/}
+        {/*</MenuItem>*/}
       </MoreButton>
     ),
     [

@@ -554,6 +554,8 @@
     "NOTICE_NOT_FOUND": "Nie znaleziono ogłoszenia",
     "TASK_DURATION_TOO_SHORT": "Czas trwania zadania jest zbyt krótki. Wymagane minimum to {{ min }} minut.",
     "TASK_DURATION_TOO_LONG": "Czas trwania zadania jest zbyt długi. Zwykłe zadanie nie może trwać dłużej niż {{ max }} godzin.",
-    "HOMEWORK_DURATION_TOO_LONG": "Czas trwania zadania dmowego jest zbyt długo. Nie powinien wynosić więcej niż 12 miesięcy."
+    "HOMEWORK_DURATION_TOO_LONG": "Czas trwania zadania dmowego jest zbyt długo. Nie powinien wynosić więcej niż 12 miesięcy.",
+    "SUBJECT_CATEGORY_IN_USE": "Nie można usunąć kategorii, gdyż jest ona w użyciu (co najmniej 1 przedmiot z niej korzysta)",
+    "SUBJECT_CATEGORY_NAME_TAKEN": "Kategoria z taką nazwą już istnieje"
   }
 }

@@ -554,6 +554,8 @@
     "NOTICE_NOT_FOUND": "Notice not found",
     "TASK_DURATION_TOO_SHORT": "Task duration is too short. At least {{ min }} min is required.",
     "TASK_DURATION_TOO_LONG": "Task duration is too long. Regular task duration cannot be greater than {{ max }} hours.",
-    "HOMEWORK_DURATION_TOO_LONG": "Homework duration is too long. It should not be greater than 12 months."
+    "HOMEWORK_DURATION_TOO_LONG": "Homework duration is too long. It should not be greater than 12 months.",
+    "SUBJECT_CATEGORY_IN_USE": "Cannot delete this category, as it is in use (at least 1 subject is using it)",
+    "SUBJECT_CATEGORY_NAME_TAKEN": "This category name is already in use"
   }
 }
