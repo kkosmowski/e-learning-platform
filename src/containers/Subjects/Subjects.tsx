@@ -1,6 +1,6 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import PageLoading from 'shared/components/PageLoading';
 import { useSubjectsQuery } from 'shared/queries';
@@ -13,10 +13,14 @@ import LayoutFix from 'layouts/LayoutFix';
 import CommonViewLayout from 'layouts/CommonView';
 import HomeSidenav from 'containers/HomeSidenav';
 import { useGroupBySubject } from 'shared/hooks';
+import { groupByKey, GroupSubjectsBy } from 'shared/consts/shared';
+import { usePreferences } from 'contexts/preferences';
 
 export default function Subjects() {
   const navigate = useNavigate();
   const { currentUser } = useAuth();
+  const [, setSearchParams] = useSearchParams();
+  const { groupBy } = usePreferences();
   const { subjects, isLoading, isSuccess } = useSubjectsQuery({
     simple: true,
   });
@@ -29,6 +33,14 @@ export default function Subjects() {
     isTeacher
   );
   const { t } = useTranslation('subjects');
+
+  useEffect(() => {
+    if (isTeacher) {
+      setSearchParams(
+        groupBy === GroupSubjectsBy.None ? {} : { [groupByKey]: groupBy }
+      );
+    }
+  }, [groupBy, isTeacher, setSearchParams]);
 
   const handleSubjectClick = (subjectId: string): void => {
     navigate(subjectId);
