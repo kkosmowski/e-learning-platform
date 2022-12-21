@@ -18,6 +18,7 @@ import ItemCategory from './ItemCategory';
 import { isStudent, isTeacher } from 'shared/utils/user.utils';
 import { isPastDate } from 'shared/utils/date.utils';
 import TimeLeft from './TimeLeft';
+import TaskStatus from './TaskStatus';
 
 interface TaskDetailsProps {
   task: TaskWithSubmissions;
@@ -25,31 +26,12 @@ interface TaskDetailsProps {
   subjectStudents?: User[];
 }
 
-const getStatusIcon = (status: Status): SvgIconComponent => {
-  switch (status) {
-    case Status.NOT_SUBMITTED:
-      return CheckBoxOutlineBlank;
-    case Status.SUBMITTED:
-      return CheckBoxOutlined;
-    case Status.GRADED:
-      return CheckBox;
-  }
-};
-
-const statusColors: Record<Status, string> = {
-  [Status.NOT_SUBMITTED]: '',
-  [Status.SUBMITTED]: 'text.info',
-  [Status.GRADED]: 'text.success',
-};
-
 export default function TaskDetails(props: TaskDetailsProps) {
   const { task, currentUser } = props;
   const { t } = useTranslation('task');
   const isUserTeacher = isTeacher(currentUser);
   const isUserStudent = isStudent(currentUser);
   const status = task.submission?.status || Status.NOT_SUBMITTED;
-  const statusColor = statusColors[status];
-  const StatusIcon = isUserStudent && getStatusIcon(status);
   const isPastDeadline = isPastDate(task.endTime);
 
   return (
@@ -80,18 +62,8 @@ export default function TaskDetails(props: TaskDetailsProps) {
           isSubmitted={task.submission?.status !== Status.NOT_SUBMITTED}
         />
 
-        {StatusIcon && (
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              columnGap: 1,
-              color: statusColor,
-            }}
-          >
-            <StatusIcon sx={{ fontSize: 16 }} />
-            <span>{t(`statuses.${status}`)}</span>
-          </Box>
+        {isUserStudent && (
+          <TaskStatus status={status} isFinished={task.isFinished} />
         )}
 
         {isUserTeacher && task.received !== null && task.expected !== null && (
