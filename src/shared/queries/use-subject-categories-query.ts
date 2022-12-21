@@ -21,6 +21,8 @@ import {
 } from 'api/subject';
 import { SUBJECT_CATEGORIES_PAGE_SIZE } from 'shared/consts/subject';
 import { usePaginatedQuery } from 'shared/hooks';
+import { getErrorDetail } from 'shared/utils/common.utils';
+import { ERROR_TOAST_DURATION } from 'shared/consts/error';
 
 export function useSubjectCategoriesQuery() {
   const { t } = useTranslation('settings');
@@ -52,8 +54,7 @@ export function useSubjectCategoriesQuery() {
       await queryClient.invalidateQueries(['subject-categories']);
     },
     onError: (error) => {
-      console.log(error.message);
-      toast.error(t(error.message));
+      toast.error(t(getErrorDetail(error)), { duration: ERROR_TOAST_DURATION });
     },
   });
 
@@ -62,12 +63,12 @@ export function useSubjectCategoriesQuery() {
     AxiosError,
     SubjectCategory
   >(updateSubjectCategory, {
-    onSuccess: async ({ data }) => {
+    onSuccess: async () => {
       toast.success(t('subjectCategories.toast.updateSuccess'));
       await queryClient.invalidateQueries(['subject-categories']);
     },
     onError: (error) => {
-      toast.error(t(error.message));
+      toast.error(t(getErrorDetail(error)), { duration: ERROR_TOAST_DURATION });
     },
   });
 
@@ -86,7 +87,9 @@ export function useSubjectCategoriesQuery() {
         });
       },
       onError: (error) => {
-        toast.error(t(error.message));
+        toast.error(t(getErrorDetail(error)), {
+          duration: ERROR_TOAST_DURATION,
+        });
       },
     }
   );

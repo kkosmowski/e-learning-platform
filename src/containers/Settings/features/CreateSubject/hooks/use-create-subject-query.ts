@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { SimpleSubjectDto, SubjectForm } from 'shared/types/subject';
 import { createSubject } from 'api/subject';
 import { getErrorDetail } from 'shared/utils/common.utils';
+import { ERROR_TOAST_DURATION } from 'shared/consts/error';
 
 type MutationFnPayload = { values: SubjectForm; show?: boolean };
 type MutationFnReturnData = { data: SimpleSubjectDto; show?: boolean };
@@ -38,9 +39,10 @@ export default function useCreateSubjectQuery() {
         await queryClient.invalidateQueries(['subjects']);
         navigate(show ? `../${data.id}` : '..');
       },
-      onError: (err) => {
-        const error = getErrorDetail(err);
-        toast.error(t(error));
+      onError: (error) => {
+        toast.error(t(getErrorDetail(error)), {
+          duration: ERROR_TOAST_DURATION,
+        });
       },
     }
   );

@@ -131,7 +131,7 @@ export function useClassForm(props: UseClassFormProps) {
       void validateName(values.name);
     }
     initialRun.current = false;
-  }, [validateName, values.name]);
+  }, [validateName, values]);
 
   const handleTeacherChange = (event: SyntheticEvent, value: User | null) => {
     setFieldValue('teacher', value);
@@ -189,16 +189,20 @@ export function useClassForm(props: UseClassFormProps) {
         onChange={handleTeacherChange}
         isOptionEqualToValue={(option, value) => option.id === value.id}
         ListboxProps={{
-          onScroll: (event) => {
+          onScroll: async (event) => {
             const node = event.currentTarget;
+            const scrollTop = node.scrollTop;
             const scrolledEnough =
-              node.scrollTop + node.clientHeight === node.scrollHeight;
+              scrollTop + node.clientHeight === node.scrollHeight;
             if (
               scrolledEnough &&
               hasNextTeachersPage &&
               !isFetchingNextTeachersPage
             ) {
-              void fetchNextTeachersPage();
+              await fetchNextTeachersPage();
+              requestIdleCallback(() => {
+                node.scrollTo(0, scrollTop);
+              });
             }
           },
         }}
@@ -221,16 +225,20 @@ export function useClassForm(props: UseClassFormProps) {
         onChange={handleStudentsChange}
         isOptionEqualToValue={(option, value) => option.id === value.id}
         ListboxProps={{
-          onScroll: (event) => {
+          onScroll: async (event) => {
             const node = event.currentTarget;
+            const scrollTop = node.scrollTop;
             const scrolledEnough =
-              node.scrollTop + node.clientHeight === node.scrollHeight;
+              scrollTop + node.clientHeight === node.scrollHeight;
             if (
               scrolledEnough &&
               hasNextStudentsPage &&
               !isFetchingNextStudentsPage
             ) {
-              void fetchNextStudentsPage();
+              await fetchNextStudentsPage();
+              requestIdleCallback(() => {
+                node.scrollTo(0, scrollTop);
+              });
             }
           },
         }}

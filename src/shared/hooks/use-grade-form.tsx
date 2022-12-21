@@ -254,12 +254,16 @@ export function useGradeForm(props: UseGradeFormProps) {
             onBlur={handleBlur}
             onChange={handleTaskChange}
             ListboxProps={{
-              onScroll: (event) => {
+              onScroll: async (event) => {
                 const node = event.currentTarget;
+                const scrollTop = node.scrollTop;
                 const scrolledEnough =
-                  node.scrollTop + node.clientHeight === node.scrollHeight;
+                  scrollTop + node.clientHeight === node.scrollHeight;
                 if (scrolledEnough && hasNextTasksPage && !isFetchingNextPage) {
-                  void fetchNextPage();
+                  await fetchNextPage();
+                  requestIdleCallback(() => {
+                    node.scrollTo(0, scrollTop);
+                  });
                 }
               },
             }}

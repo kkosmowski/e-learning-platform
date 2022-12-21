@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { ClassForm, SimpleClassDto } from 'shared/types/class';
 import { createClass } from 'api/class';
 import { getErrorDetail } from 'shared/utils/common.utils';
+import { ERROR_TOAST_DURATION } from 'shared/consts/error';
 
 type MutationFnPayload = { values: ClassForm; show?: boolean };
 type MutationFnReturnData = { data: SimpleClassDto; show?: boolean };
@@ -34,9 +35,10 @@ export default function useCreateClassQuery() {
         await queryClient.invalidateQueries(['classes']);
         navigate(show ? `../${data.id}` : '..');
       },
-      onError: (err) => {
-        const error = getErrorDetail(err);
-        toast.error(t(error));
+      onError: (error) => {
+        toast.error(t(getErrorDetail(error)), {
+          duration: ERROR_TOAST_DURATION,
+        });
       },
     }
   );

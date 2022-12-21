@@ -23,6 +23,7 @@ import {
   CreateProposedGrade,
   UpdateGradePayload,
 } from 'shared/types/grade';
+import { ERROR_TOAST_DURATION } from 'shared/consts/error';
 
 export function useCreateGradeQuery() {
   const { t } = useTranslation('grade');
@@ -38,9 +39,8 @@ export function useCreateGradeQuery() {
       await queryClient.invalidateQueries(['grades']);
       await queryClient.invalidateQueries(['task-submissions']);
     },
-    onError: (err) => {
-      const error = getErrorDetail(err);
-      toast.error(t(error));
+    onError: (error) => {
+      toast.error(t(getErrorDetail(error)), { duration: ERROR_TOAST_DURATION });
     },
   });
 
@@ -54,9 +54,8 @@ export function useCreateGradeQuery() {
       await queryClient.invalidateQueries(['grades']);
       await queryClient.invalidateQueries(['task-submissions']);
     },
-    onError: (err) => {
-      const error = getErrorDetail(err);
-      toast.error(t(error));
+    onError: (error) => {
+      toast.error(t(getErrorDetail(error)), { duration: ERROR_TOAST_DURATION });
     },
   });
 
@@ -74,9 +73,10 @@ export function useCreateGradeQuery() {
         toast.success(t('update.toast.proposedSuccess'));
         await queryClient.invalidateQueries(['grades']);
       },
-      onError: (err) => {
-        const error = getErrorDetail(err);
-        toast.error(t(error));
+      onError: (error) => {
+        toast.error(t(getErrorDetail(error)), {
+          duration: ERROR_TOAST_DURATION,
+        });
       },
     }
   );
@@ -95,9 +95,10 @@ export function useCreateGradeQuery() {
         toast.success(t('create.toast.proposedSuccess'));
         await queryClient.invalidateQueries(['grades']);
       },
-      onError: (err) => {
-        const error = getErrorDetail(err);
-        toast.error(t(error));
+      onError: (error) => {
+        toast.error(t(getErrorDetail(error)), {
+          duration: ERROR_TOAST_DURATION,
+        });
       },
     }
   );
@@ -114,9 +115,10 @@ export function useCreateGradeQuery() {
         toast.success(t('create.toast.finalSuccess'));
         await queryClient.invalidateQueries(['grades']);
       },
-      onError: (err) => {
-        const error = getErrorDetail(err);
-        toast.error(t(error));
+      onError: (error) => {
+        toast.error(t(getErrorDetail(error)), {
+          duration: ERROR_TOAST_DURATION,
+        });
       },
     }
   );

@@ -17,6 +17,7 @@ import {
   mapClassToUpdateClassPayload,
 } from 'shared/utils/class.utils';
 import { getErrorDetail } from 'shared/utils/common.utils';
+import { ERROR_TOAST_DURATION } from 'shared/consts/error';
 
 interface UseClassQueryData {
   currentClass: Class | undefined;
@@ -75,9 +76,11 @@ export default function useClassQuery(
         navigateBack();
         toast.success(t('classes.toast.updateSuccess'));
       },
-      onError: (e) => {
-        setError(getErrorDetail(e));
-        toast.error(t('classes.toast.updateError'));
+      onError: (error) => {
+        setError(t(getErrorDetail(error)));
+        toast.error(t(getErrorDetail(error)), {
+          duration: ERROR_TOAST_DURATION,
+        });
       },
     }
   );

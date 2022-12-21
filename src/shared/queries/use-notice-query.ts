@@ -17,6 +17,8 @@ import {
   mapNoticeFormToUpdateNoticePayload,
 } from 'shared/utils/notice.utils';
 import { useAuth } from 'contexts/auth';
+import { getErrorDetail } from 'shared/utils/common.utils';
+import { ERROR_TOAST_DURATION } from 'shared/consts/error';
 
 export function useNoticeQuery(noticeId: string | undefined) {
   const { currentUser } = useAuth();
@@ -53,8 +55,10 @@ export function useNoticeQuery(noticeId: string | undefined) {
         navigate(-1);
         toast.success(t('toast.updateSuccess', { name: data.name }));
       },
-      onError: (e) => {
-        toast.error(t('error:ERROR'));
+      onError: (error) => {
+        toast.error(t(getErrorDetail(error)), {
+          duration: ERROR_TOAST_DURATION,
+        });
       },
     }
   );

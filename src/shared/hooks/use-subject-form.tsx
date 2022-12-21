@@ -170,16 +170,20 @@ export function useSubjectForm(props: UseSubjectFormProps) {
           onChange={handleCategoryChange}
           isOptionEqualToValue={(option, value) => option.id === value.id}
           ListboxProps={{
-            onScroll: (event) => {
+            onScroll: async (event) => {
               const node = event.currentTarget;
+              const scrollTop = node.scrollTop;
               const scrolledEnough =
-                node.scrollTop + node.clientHeight === node.scrollHeight;
+                scrollTop + node.clientHeight === node.scrollHeight;
               if (
                 scrolledEnough &&
                 hasNextCategoriesPage &&
                 !isFetchingNextCategoriesPage
               ) {
-                void fetchNextCategoriesPage();
+                await fetchNextCategoriesPage();
+                requestIdleCallback(() => {
+                  node.scrollTo(0, scrollTop);
+                });
               }
             },
           }}
@@ -214,16 +218,20 @@ export function useSubjectForm(props: UseSubjectFormProps) {
           onChange={handleClassChange}
           isOptionEqualToValue={(option, value) => option.id === value.id}
           ListboxProps={{
-            onScroll: (event) => {
+            onScroll: async (event) => {
               const node = event.currentTarget;
+              const scrollTop = node.scrollTop;
               const scrolledEnough =
-                node.scrollTop + node.clientHeight === node.scrollHeight;
+                scrollTop + node.clientHeight === node.scrollHeight;
               if (
                 scrolledEnough &&
                 hasNextClassesPage &&
                 !isFetchingNextClassesPage
               ) {
-                void fetchNextClassesPage();
+                await fetchNextClassesPage();
+                requestIdleCallback(() => {
+                  node.scrollTo(0, scrollTop);
+                });
               }
             },
           }}
@@ -258,16 +266,20 @@ export function useSubjectForm(props: UseSubjectFormProps) {
           onChange={handleTeacherChange}
           isOptionEqualToValue={(option, value) => option.id === value.id}
           ListboxProps={{
-            onScroll: (event) => {
+            onScroll: async (event) => {
               const node = event.currentTarget;
+              const scrollTop = node.scrollTop;
               const scrolledEnough =
-                node.scrollTop + node.clientHeight === node.scrollHeight;
+                scrollTop + node.clientHeight === node.scrollHeight;
               if (
                 scrolledEnough &&
                 hasNextTeachersPage &&
                 !isFetchingNextTeachersPage
               ) {
-                void fetchNextTeachersPage();
+                await fetchNextTeachersPage();
+                requestIdleCallback(() => {
+                  node.scrollTo(0, scrollTop);
+                });
               }
             },
           }}

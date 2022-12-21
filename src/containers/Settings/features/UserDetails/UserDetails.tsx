@@ -165,14 +165,14 @@ export default function UserDetails(props: UserDetailsProps) {
             : t('users.details.activate')}
         </Button>
 
-        <Button
-          variant="contained"
-          color="error"
-          disabled={!userWithDetails}
-          onClick={showDeleteDialog}
-        >
-          {t('common:delete')}
-        </Button>
+        {/*<Button*/}
+        {/*  variant="contained"*/}
+        {/*  color="error"*/}
+        {/*  disabled={!userWithDetails}*/}
+        {/*  onClick={showDeleteDialog}*/}
+        {/*>*/}
+        {/*  {t('common:delete')}*/}
+        {/*</Button>*/}
       </Box>
 
       {/*{ error && <Typography color="error.500">{ error }</Typography> }*/}

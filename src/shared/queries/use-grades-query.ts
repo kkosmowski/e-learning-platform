@@ -22,6 +22,7 @@ import { getErrorDetail } from 'shared/utils/common.utils';
 import { EmptyResponse } from 'shared/types/shared';
 import { usePaginatedQuery } from 'shared/hooks';
 import { GRADES_PAGE_SIZE } from 'shared/consts/grade';
+import { ERROR_TOAST_DURATION } from 'shared/consts/error';
 
 export function useGradesQuery() {
   const { currentUser } = useAuth();
@@ -98,9 +99,8 @@ export function useGradesQuery() {
       await queryClient.invalidateQueries(['grades']);
       await queryClient.invalidateQueries(['task-submissions']);
     },
-    onError: (err) => {
-      const error = getErrorDetail(err);
-      toast.error(t(error));
+    onError: (error) => {
+      toast.error(t(getErrorDetail(error)), { duration: ERROR_TOAST_DURATION });
     },
   });
 

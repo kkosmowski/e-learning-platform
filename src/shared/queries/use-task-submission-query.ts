@@ -13,6 +13,8 @@ import {
 } from 'shared/types/task';
 import { getTaskSubmission, updateTaskSubmission } from 'api/task';
 import { mapSimpleTaskSubmissionDtoToSimpleTaskSubmission } from 'shared/utils/task.utils';
+import { getErrorDetail } from 'shared/utils/common.utils';
+import { ERROR_TOAST_DURATION } from 'shared/consts/error';
 
 export function useTaskSubmissionQuery(taskId?: string, enabled?: boolean) {
   const { currentUser } = useAuth();
@@ -49,8 +51,8 @@ export function useTaskSubmissionQuery(taskId?: string, enabled?: boolean) {
       });
       toast.success(t('toast.submitSuccess'));
     },
-    onError: () => {
-      toast.error(t('error:ERROR'));
+    onError: (error) => {
+      toast.error(t(getErrorDetail(error)), { duration: ERROR_TOAST_DURATION });
     },
   });
 

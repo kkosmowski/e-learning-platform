@@ -1,5 +1,4 @@
 import { Box } from '@mui/material';
-import { Status } from '../types/shared';
 import {
   CheckBox,
   CheckBoxOutlineBlank,
@@ -8,6 +7,8 @@ import {
   SvgIconComponent,
 } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
+
+import { Status } from 'shared/types/shared';
 
 const getStatusIconAndColor = (
   status: Status,

@@ -21,6 +21,7 @@ import {
 import { getErrorDetail } from 'shared/utils/common.utils';
 import { User } from 'shared/types/user';
 import { useAuth } from 'contexts/auth';
+import { ERROR_TOAST_DURATION } from 'shared/consts/error';
 
 export function useSubjectQuery(
   subjectId: string | undefined,
@@ -50,8 +51,10 @@ export function useSubjectQuery(
         setErrorText('');
       },
       onError: (error) => {
-        setErrorText(t(error.message));
-        toast.error(t(error.message));
+        setErrorText(t(getErrorDetail(error)));
+        toast.error(t(getErrorDetail(error)), {
+          duration: ERROR_TOAST_DURATION,
+        });
       },
     }
   );
@@ -68,8 +71,8 @@ export function useSubjectQuery(
       setErrorText('');
     },
     onError: (error) => {
-      setErrorText(t(error.message));
-      toast.error(t(error.message));
+      setErrorText(t(getErrorDetail(error)));
+      toast.error(t(getErrorDetail(error)), { duration: ERROR_TOAST_DURATION });
     },
   });
 
@@ -94,9 +97,11 @@ export function useSubjectQuery(
         navigateBack();
         toast.success(t('subjects.toast.updateSuccess'));
       },
-      onError: (e) => {
-        setErrorText(getErrorDetail(e));
-        toast.error(t('subjects.toast.updateError'));
+      onError: (error) => {
+        setErrorText(t(getErrorDetail(error)));
+        toast.error(t(getErrorDetail(error)), {
+          duration: ERROR_TOAST_DURATION,
+        });
       },
     }
   );

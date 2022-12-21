@@ -29,13 +29,14 @@ import {
   updateTask,
 } from 'api/task';
 import {
-  mapTaskDtoToTask,
   mapTaskFormToUpdateTaskPayload,
   mapTaskWithSubmissionsDtoToTaskWithSubmissions,
 } from 'shared/utils/task.utils';
 import { useAuth } from 'contexts/auth';
 import { TASK_LIST_PAGE_SIZE, VISIBLE_LATEST_TASKS } from 'shared/consts/task';
 import { EmptyResponse, Paginated } from 'shared/types/shared';
+import { getErrorDetail } from 'shared/utils/common.utils';
+import { ERROR_TOAST_DURATION } from 'shared/consts/error';
 
 const getNextPageParam = (
   { total_count }: Paginated<TaskDto>,
@@ -150,8 +151,10 @@ export function useTasksQuery(options: {
         navigate(-1);
         toast.success(t('toast.updateSuccess', { name: data.name }));
       },
-      onError: (e) => {
-        toast.error(t('error:ERROR'));
+      onError: (error) => {
+        toast.error(t(getErrorDetail(error)), {
+          duration: ERROR_TOAST_DURATION,
+        });
       },
     }
   );
@@ -165,8 +168,10 @@ export function useTasksQuery(options: {
         navigate('./..', { replace: true });
         toast.success(t('toast.deleteSuccess'));
       },
-      onError: () => {
-        toast.error(t('error:ERROR'));
+      onError: (error) => {
+        toast.error(t(getErrorDetail(error)), {
+          duration: ERROR_TOAST_DURATION,
+        });
       },
     }
   );
