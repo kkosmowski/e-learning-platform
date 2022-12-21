@@ -1,5 +1,5 @@
 import { Box, Button, TextField, Tooltip } from '@mui/material';
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 interface CreateNewCategoryFormProps {
@@ -12,6 +12,7 @@ export default function CreateNewCategoryForm(
 ) {
   const { onSubmit, onCancel } = props;
   const [newCategoryName, setNewCategoryName] = useState('');
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const { t } = useTranslation('settings', { keyPrefix: 'subjectCategories' });
 
   const handleNewCategoryNameChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -22,6 +23,9 @@ export default function CreateNewCategoryForm(
     e.preventDefault();
     onSubmit(newCategoryName);
     setNewCategoryName('');
+    requestAnimationFrame(() => {
+      inputRef.current?.focus();
+    });
   };
 
   return (
@@ -35,6 +39,7 @@ export default function CreateNewCategoryForm(
       }}
     >
       <TextField
+        inputRef={inputRef}
         value={newCategoryName}
         placeholder={t('placeholder.name')}
         autoFocus
