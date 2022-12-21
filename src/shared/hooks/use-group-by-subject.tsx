@@ -1,5 +1,4 @@
-import { useSearchParams } from 'react-router-dom';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import {
   Box,
@@ -12,7 +11,7 @@ import {
 
 import { SimpleSubject } from 'shared/types/subject';
 import { usePreferences } from 'contexts/preferences';
-import { groupByKey, GroupSubjectsBy } from 'shared/consts/shared';
+import { GroupSubjectsBy } from 'shared/consts/shared';
 
 const getSubjectsBatch = (
   key: 'category' | 'subjectClass',
@@ -31,7 +30,6 @@ export const useGroupBySubject = (
   subjects: SimpleSubject[] | undefined,
   isTeacher: boolean
 ) => {
-  const [searchParams, setSearchParams] = useSearchParams();
   const { groupBy, setGroupBy } = usePreferences();
   const { t } = useTranslation('subjects');
 
@@ -61,12 +59,6 @@ export const useGroupBySubject = (
     },
     [setGroupBy]
   );
-
-  useEffect(() => {
-    setSearchParams(
-      groupBy === GroupSubjectsBy.None ? {} : { [groupByKey]: groupBy }
-    );
-  }, [groupBy, setSearchParams]);
 
   const GroupSubjects = useMemo(
     () => (
