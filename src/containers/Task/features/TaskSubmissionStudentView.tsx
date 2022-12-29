@@ -27,7 +27,10 @@ export default function TaskSubmissionStudentView(
 ) {
   const { task } = props;
   const [isSubmitFormVisible, setIsSubmitFormVisible] = useState(false);
-  const { taskSubmission, submitSolution } = useTaskSubmissionQuery(task.id);
+  const { taskSubmission, submitSolution } = useTaskSubmissionQuery(
+    task.id,
+    true
+  );
   const { grade } = useGradeQuery(task.id);
   const { t } = useTranslation('task');
 
