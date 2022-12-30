@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { Centered } from 'shared/components/Container';
 import SectionTitle from 'shared/components/SectionTitle';
-import NoticeCard from 'shared/components/NoticeCard';
+import { NoticeCard } from 'containers/Subject/components';
 import { useNoticesQuery } from 'shared/queries/use-notices-query';
 import { useAuth } from 'contexts/auth';
 import PageLoading from 'shared/components/PageLoading';

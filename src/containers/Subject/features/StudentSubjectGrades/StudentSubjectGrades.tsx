@@ -8,8 +8,7 @@ import {
   useGradesQuery,
   useUsersQuery,
 } from 'shared/queries';
-import GradeCard from 'shared/components/GradeCard';
-import VirtualGrades from 'shared/components/VirtualGrades';
+import { GradeCard, VirtualGrades } from 'containers/Subject/components';
 import { Centered } from 'shared/components/Container';
 import SectionTitle from 'shared/components/SectionTitle';
 import { VirtualGradeType } from 'shared/types/grade';

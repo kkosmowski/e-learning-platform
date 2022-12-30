@@ -29,7 +29,6 @@ const subjectsTableHeadRows = [
 
 export default function SubjectsTable(props: SubjectsTableProps) {
   const { subjects, onClick, onClassClick, onTeacherClick } = props;
-  const { t } = useTranslation();
 
   const handleClassClick = (event: MouseEvent, classId: string) => {
     event.stopPropagation();

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Grade } from 'shared/types/grade';
 import { useCreateGradeQuery } from 'shared/queries';
-import EditGradeDialog from 'shared/components/EditGradeDialog';
+import { EditGradeDialog } from 'containers/Subject/components';
 
 export function useEditGrade(grades: Grade[] | undefined, showOptions = true) {
   const [editedGrade, setEditedGrade] = useState<Grade | null>(null);

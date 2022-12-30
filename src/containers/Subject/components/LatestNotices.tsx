@@ -8,7 +8,7 @@ import {
 } from 'shared/consts/notice';
 import { isTeacher } from 'shared/utils/user.utils';
 import SectionTitle from 'shared/components/SectionTitle';
-import NoticeCard from 'shared/components/NoticeCard';
+import { NoticeCard } from 'containers/Subject/components';
 import TextButton from 'shared/components/TextButton';
 import { useNoticesQuery } from 'shared/queries/use-notices-query';
 import { useAuth } from 'contexts/auth';

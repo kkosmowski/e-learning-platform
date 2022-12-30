@@ -5,12 +5,9 @@ import {
   NoticeForm,
   UpdateNoticePayload,
 } from 'shared/types/notice';
-import {
-  mapSimpleSubjectDtoToSimpleSubject,
-  mapSubjectDtoToSubject,
-} from './subject.utils';
+import { mapSimpleSubjectDtoToSimpleSubject } from './subject.utils';
 import { dateStringToUTCString } from './date.utils';
-import { mapSimpleUserDtoToSimpleUser, mapUserDtoToUser } from './user.utils';
+import { mapSimpleUserDtoToSimpleUser } from './user.utils';
 
 export const mapNoticeFormToCreateNoticePayload = (
   noticeForm: NoticeForm

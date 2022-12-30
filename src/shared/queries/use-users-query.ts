@@ -12,7 +12,6 @@ import { AxiosError } from 'axios';
 import {
   GetUserResponse,
   GetUsersProps,
-  GetUsersResponse,
   UpdateUserPayload,
   User,
   UserDto,

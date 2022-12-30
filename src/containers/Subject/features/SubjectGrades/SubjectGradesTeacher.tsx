@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useParams, useNavigate } from 'react-router-dom';
 
 import { Centered } from 'shared/components/Container';
-import GradeCard from 'shared/components/GradeCard';
+import { GradeCard } from 'containers/Subject/components';
 import TabPanel from 'shared/components/TabPanel';
 import SectionTitle from 'shared/components/SectionTitle';
 import { useGradesQuery } from 'shared/queries/use-grades-query';

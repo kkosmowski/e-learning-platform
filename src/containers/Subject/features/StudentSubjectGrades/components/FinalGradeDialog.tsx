@@ -1,20 +1,12 @@
 import { useMemo, useState } from 'react';
-import {
-  Box,
-  Button,
-  Stack,
-  styled,
-  ToggleButton,
-  ToggleButtonGroup,
-  Typography,
-} from '@mui/material';
+import { Box, Button, Stack, Typography } from '@mui/material';
 import { Trans, useTranslation } from 'react-i18next';
 
 import Dialog from 'shared/components/Dialog';
 import { User } from 'shared/types/user';
 import LabelledCheckbox from 'shared/components/LabelledCheckbox';
 import colors from 'colors';
-import GradeValueSelect from 'shared/components/GradeValueSelect';
+import { GradeValueSelect } from 'containers/Subject/components';
 
 export type FinalGradeDialogType = 'propose' | 'change' | 'confirm';
 

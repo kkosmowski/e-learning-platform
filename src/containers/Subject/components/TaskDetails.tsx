@@ -1,12 +1,8 @@
 import { Box, Stack, Tooltip, Typography } from '@mui/material';
 import {
   AccessTime,
-  CheckBox,
-  CheckBoxOutlineBlank,
-  CheckBoxOutlined,
   CheckCircle,
   CheckCircleOutline,
-  SvgIconComponent,
 } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import format from 'date-fns/format';
@@ -14,7 +10,7 @@ import format from 'date-fns/format';
 import { Status } from 'shared/types/shared';
 import { TaskWithSubmissions } from 'shared/types/task';
 import { User } from 'shared/types/user';
-import ItemCategory from './ItemCategory';
+import ItemCategory from '../../../shared/components/ItemCategory';
 import { isStudent, isTeacher } from 'shared/utils/user.utils';
 import { isPastDate } from 'shared/utils/date.utils';
 import TimeLeft from './TimeLeft';

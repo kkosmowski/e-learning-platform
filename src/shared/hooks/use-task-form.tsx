@@ -32,8 +32,8 @@ import {
   isPastDate,
 } from 'shared/utils/date.utils';
 import { MINUTE } from 'shared/consts/date';
-import DurationDropdown from 'shared/components/DurationDropdown';
-import LabelledCheckbox from '../components/LabelledCheckbox';
+import { DurationDropdown } from 'containers/Subject/components';
+import LabelledCheckbox from 'shared/components/LabelledCheckbox';
 
 interface UseTaskFormProps {
   type: TaskType;

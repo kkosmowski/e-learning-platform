@@ -4,9 +4,8 @@ import { Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 import { Centered } from 'shared/components/Container';
-import GradeCard from 'shared/components/GradeCard';
+import { GradeCard, VirtualGrades } from 'containers/Subject/components';
 import { useGradesQuery } from 'shared/queries/use-grades-query';
-import VirtualGrades from 'shared/components/VirtualGrades';
 import { GradeType } from 'shared/types/grade';
 
 export default function SubjectGradesStudent() {
@@ -18,8 +17,6 @@ export default function SubjectGradesStudent() {
     isFetchingNextSubjectGradesPage: isFetchingNextAssignmentGradesPage,
     hasNextSubjectGradesPage: hasNextAssignmentGradesPage,
     fetchNextSubjectGradesPage: fetchNextAssignmentGradesPage,
-    isSuccess,
-    isLoading,
   } = useGradesQuery();
   const {
     subjectGrades: paginatedNonAssignmentGrades,

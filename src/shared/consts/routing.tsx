@@ -17,24 +17,24 @@ import Settings, {
 } from 'containers/Settings';
 import SubjectOverview, {
   SubjectLayout,
+  AssignGrade,
   CreateNotice,
   CreateTask,
   EditNotice,
   EditTask,
+  Notice,
+  NoticeBoard,
+  StudentSubjectGrades,
+  SubjectGrades,
+  Task,
+  TaskList,
 } from 'containers/Subject';
-import NoticeBoard from 'containers/NoticeBoard';
-import Notice from 'containers/Notice';
-import TaskList from 'containers/TaskList';
-import Task from 'containers/Task';
-import SubjectGrades from 'containers/SubjectGrades';
 import Subjects from 'containers/Subjects';
-import AssignGrade from 'containers/AssignGrade';
+import Grades from 'containers/Grades';
 import TeacherGuard from 'shared/guards/TeacherGuard';
 import { RouteObjectWithId } from 'shared/types/routing';
 import { TaskType } from 'shared/types/task';
 import { Role } from 'shared/types/user';
-import StudentSubjectGrades from 'containers/StudentSubjectGrades';
-import Grades from 'containers/Grades';
 
 export const features: RouteObjectWithId[] = [
   {

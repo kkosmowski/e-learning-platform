@@ -26,8 +26,10 @@ import {
   useSubjectStudentsQuery,
 } from 'shared/queries';
 import { SimpleSubject } from 'shared/types/subject';
-import GradeTypeSelect from 'shared/components/GradeTypeSelect';
-import GradeValueSelect from 'shared/components/GradeValueSelect';
+import {
+  GradeTypeSelect,
+  GradeValueSelect,
+} from 'containers/Subject/components';
 
 interface UseGradeFormProps {
   initialValues: CreateGradeForm;

@@ -158,7 +158,6 @@ export default function UsersTable(props: UsersTableProps) {
     [
       anyTarget?.active,
       handleEdit,
-      handleShowDeleteDialog,
       handleShowStatusToggleDialog,
       setTarget,
       t,

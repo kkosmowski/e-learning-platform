@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Grade, VirtualGradeType } from 'shared/types/grade';
 import GradeRow, { GradeRowOption } from './GradeRow';
-import LoadMoreIndicator from './LoadMoreIndicator';
+import LoadMoreIndicator from '../../../shared/components/LoadMoreIndicator';
 
 interface GradeCardProps {
   title?: string;

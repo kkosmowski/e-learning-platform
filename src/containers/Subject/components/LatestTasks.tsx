@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import SectionTitle from 'shared/components/SectionTitle';
 import TextButton from 'shared/components/TextButton';
-import TaskCard from 'shared/components/TaskCard';
+import { TaskCard } from 'containers/Subject/components';
 import { TaskType } from 'shared/types/task';
 import { isTeacher } from 'shared/utils/user.utils';
 import { VISIBLE_LATEST_TASKS } from 'shared/consts/task';

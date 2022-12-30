@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { Centered } from 'shared/components/Container';
-import NoticeCard from 'shared/components/NoticeCard';
+import { NoticeCard } from 'containers/Subject/components';
 import { useNoticeQuery } from 'shared/queries/use-notice-query';
 import PageLoading from 'shared/components/PageLoading';
 

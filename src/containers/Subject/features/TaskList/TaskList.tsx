@@ -7,7 +7,7 @@ import { useInView } from 'react-intersection-observer';
 import { useNavigate } from 'react-router-dom';
 
 import { Centered } from 'shared/components/Container';
-import TaskCard from 'shared/components/TaskCard';
+import { TaskCard } from 'containers/Subject/components';
 import { TaskType } from 'shared/types/task';
 import { useTasksQuery } from 'shared/queries';
 import PageLoading from 'shared/components/PageLoading';

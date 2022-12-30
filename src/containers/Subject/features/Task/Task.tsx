@@ -2,7 +2,7 @@ import { useParams } from 'react-router';
 import { useNavigate } from 'react-router-dom';
 
 import { Centered } from 'shared/components/Container';
-import TaskCard from 'shared/components/TaskCard';
+import { TaskCard } from 'containers/Subject/components';
 import { isStudent, isTeacher } from 'shared/utils/user.utils';
 import { useAuth } from 'contexts/auth';
 import { useTasksQuery } from 'shared/queries';

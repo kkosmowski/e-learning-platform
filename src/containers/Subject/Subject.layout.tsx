@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import CommonViewLayout from 'layouts/CommonView';
 import { useSubjectQuery } from 'shared/queries';
 import PageLoading from 'shared/components/PageLoading';
-import SubjectSidenav from 'containers/SubjectSidenav';
+import SubjectSidenav from './features/SubjectSidenav';
 import LayoutFix from 'layouts/LayoutFix';
 import { useAuth } from 'contexts/auth';
 import { isTeacher } from 'shared/utils/user.utils';

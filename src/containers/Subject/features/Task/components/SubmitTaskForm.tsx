@@ -28,8 +28,7 @@ interface SubmitTaskFormProps {
 }
 
 export default function SubmitTaskForm(props: SubmitTaskFormProps) {
-  //@todo use `task` later to choose what options to display, like attaching an images, files and so on
-  const { task, onCancel, onSubmit } = props;
+  const { onCancel, onSubmit } = props;
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const { t } = useTranslation('task');
 

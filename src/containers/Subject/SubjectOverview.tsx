@@ -2,9 +2,7 @@ import { useParams } from 'react-router';
 import { useNavigate } from 'react-router-dom';
 
 import { TaskType } from 'shared/types/task';
-import LatestGrades from './components/LatestGrades';
-import LatestNotices from './components/LatestNotices';
-import LatestTasks from './components/LatestTasks';
+import { LatestGrades, LatestNotices, LatestTasks } from './components';
 
 const getTaskRoute = (type: TaskType): string =>
   type === TaskType.Task ? 'tasks' : 'homework';

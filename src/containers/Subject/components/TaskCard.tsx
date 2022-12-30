@@ -29,15 +29,8 @@ interface TaskCardProps {
 }
 
 export default function TaskCard(props: TaskCardProps) {
-  const {
-    task,
-    submissions,
-    subjectStudents,
-    short,
-    onClick,
-    onFinishNow,
-    onDelete,
-  } = props;
+  const { task, subjectStudents, short, onClick, onFinishNow, onDelete } =
+    props;
   const { currentUser } = useAuth();
   const navigate = useNavigate();
 

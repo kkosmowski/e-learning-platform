@@ -6,7 +6,7 @@ import format from 'date-fns/format';
 import Dialog from 'shared/components/Dialog';
 import { Grade } from 'shared/types/grade';
 import colors from 'colors';
-import GradeValueSelect from 'shared/components/GradeValueSelect';
+import { GradeValueSelect } from 'containers/Subject/components';
 
 interface EditGradeDialogProps {
   grade: Grade;

@@ -3,7 +3,7 @@ import { Typography } from '@mui/material';
 
 import SectionTitle from 'shared/components/SectionTitle';
 import TextButton from 'shared/components/TextButton';
-import GradeCard from 'shared/components/GradeCard';
+import { GradeCard } from 'containers/Subject/components';
 import { isTeacher } from 'shared/utils/user.utils';
 import { useAuth } from 'contexts/auth';
 import { useLatestGradesQuery } from 'shared/queries';
