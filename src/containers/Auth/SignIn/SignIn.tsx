@@ -108,7 +108,7 @@ export default function SignIn() {
 
         <Typography align="center">
           {t('forgotPassword')}{' '}
-          <Link to="/auth/register">{t('resetPassword')}</Link>
+          <Link to="/auth/forgot-password">{t('resetPasswordLink')}</Link>
           {/*<br />*/}
           {/*Nie masz konta? <Link to="/auth/register">Zarejestruj się</Link>*/}
         </Typography>

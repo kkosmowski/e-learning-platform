@@ -7,8 +7,16 @@ import {
   useState,
 } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
-import { authenticate, refreshToken } from 'api/auth';
+import {
+  authenticate,
+  refreshToken,
+  resetPassword,
+  setPassword,
+} from 'api/auth';
 import { fetchMe } from 'api/user';
 import { clearToken, setToken } from 'api/axios';
 import { AuthenticationData, LoginCredentials } from 'shared/types/auth';
@@ -30,6 +38,8 @@ interface AuthContextState {
   error: string;
   signIn: (credentials: LoginCredentials) => void;
   signOut: () => void;
+  resetPassword: (username: string) => void;
+  changePassword: (newPassword: string, authToken: string) => void;
 }
 
 export const AuthContext = createContext<AuthContextState>({
@@ -37,6 +47,8 @@ export const AuthContext = createContext<AuthContextState>({
   error: '',
   signIn: () => {},
   signOut: () => {},
+  resetPassword: () => {},
+  changePassword: () => {},
 });
 
 interface AuthProviderProps {
@@ -56,6 +68,8 @@ export function AuthProvider(props: AuthProviderProps) {
     null
   );
   const queryClient = useQueryClient();
+  const { t } = useTranslation('auth');
+  const navigate = useNavigate();
 
   const tryToSaveData = useCallback((data: AuthenticationData): void => {
     if (data.user && data.access_token) {
@@ -85,6 +99,30 @@ export function AuthProvider(props: AuthProviderProps) {
     setCurrentUser(null);
     setTokenExpirationTime(null);
     queryClient.clear();
+  };
+
+  const handlePasswordReset = async (username: string): Promise<void> => {
+    try {
+      await resetPassword(username);
+      toast.success(t('toast.resetPassword.success'), { duration: 10000 });
+      navigate('/auth');
+    } catch (error) {
+      toast.error(t(getErrorDetail(error)), { duration: 10000 });
+    }
+  };
+
+  const changePassword = async (
+    newPassword: string,
+    authToken: string
+  ): Promise<void> => {
+    try {
+      await setPassword(newPassword, authToken);
+      toast.success(t('toast.changePassword.success'), { duration: 10000 });
+      navigate('/auth');
+    } catch (error) {
+      toast.error(t(getErrorDetail(error)), { duration: 10000 });
+      navigate('/auth');
+    }
   };
 
   useInterceptors(signOut);
@@ -139,6 +177,8 @@ export function AuthProvider(props: AuthProviderProps) {
     error,
     signIn,
     signOut,
+    resetPassword: handlePasswordReset,
+    changePassword,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

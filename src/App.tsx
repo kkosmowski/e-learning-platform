@@ -5,11 +5,13 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import enUSLocale from 'date-fns/locale/en-US';
 import plLocale from 'date-fns/locale/pl';
 import { GlobalStyles } from '@mui/material';
+import { Toaster } from 'react-hot-toast';
 
 import routes from 'routes';
 import createQueryClient from 'shared/utils/create-query-client';
 import i18next from './i18n/i18next';
 import { PreferencesProvider } from 'contexts/preferences';
+import { defaultToastDuration } from 'shared/consts/shared';
 
 const globalStyles = (
   <GlobalStyles
@@ -31,7 +33,18 @@ export default function App() {
       <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={locale}>
         <PreferencesProvider>
           {useRoutes(routes)}
+
           {globalStyles}
+
+          <Toaster
+            position="bottom-right"
+            toastOptions={{
+              duration: defaultToastDuration,
+              style: {
+                borderRadius: 0,
+              },
+            }}
+          />
         </PreferencesProvider>
       </LocalizationProvider>
     </QueryClientProvider>

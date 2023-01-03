@@ -2,13 +2,25 @@
   "auth": {
     "signIn": "Zaloguj się",
     "forgotPassword": "Nie pamiętasz hasła?",
-    "resetPassword": "Resetuj",
+    "resetPasswordLink": "Resetuj",
+    "resetPassword": "Zresetuj hasło",
+    "changePassword": "Ustaw nowe hasło",
     "tooltip": {
       "fillDataToSignIn": "Uzupełnij brakujące dane aby się zalogować"
     },
     "placeholder": {
       "email": "Adres e-mail",
-      "password": "Hasło"
+      "password": "Hasło",
+      "newPassword": "Nowe hasło",
+      "repeatPassword": "Powtórz hasło"
+    },
+    "toast": {
+      "resetPassword": {
+        "success": "Na podany adres e-mail wysłana została wiadomość z instrukcją resetowania hasła."
+      },
+      "changePassword": {
+        "success": "Twoje hasło zostało zmienione. Użyj nowego hasła aby się zalogować."
+      }
     }
   },
   "nav": {
@@ -537,11 +549,12 @@
     "PASSWORD_REQUIRED": "Pole hasło nie może być puste.",
     "PASSWORD_TOO_SHORT": "Hasło jest zbyt krótkie.",
     "PASSWORD_TOO_LONG": "Hasło jest zbyt długie.",
+    "PASSWORDS_MUST_MATCH": "Hasła muszą być takie same.",
     "FIRST_NAME_REQUIRED": "Nie można utworzyć użytkownika bez imienia.",
     "ROLE_REQUIRED": "Rodzaj użytkownika musi zostać określony.",
     "EMAIL_TAKEN": "Ten adres e-mail istnieje już w bazie danych.",
     "SUBJECT_NAME_TAKEN": "Kategoria przedmiotu o tej nazwie już istnieje.",
-    "INCORRECT CREDENTIALS": "Niepoprawny e-mail bądź hasło.",
+    "INCORRECT_CREDENTIALS": "Niepoprawny e-mail bądź hasło.",
     "USER_NOT_FOUND": "Nie znaleziono użytkownika.",
     "USER_INACTIVE": "Konto nieaktywne.",
     "Class_NAME_REQUIRED": "Nazwa klasy jest wymagana.",
@@ -556,6 +569,7 @@
     "TASK_DURATION_TOO_LONG": "Czas trwania zadania jest zbyt długi. Zwykłe zadanie nie może trwać dłużej niż {{ max }} godzin.",
     "HOMEWORK_DURATION_TOO_LONG": "Czas trwania zadania dmowego jest zbyt długo. Nie powinien wynosić więcej niż 12 miesięcy.",
     "SUBJECT_CATEGORY_IN_USE": "Nie można usunąć kategorii, gdyż jest ona w użyciu (co najmniej 1 przedmiot z niej korzysta)",
-    "SUBJECT_CATEGORY_NAME_TAKEN": "Kategoria z taką nazwą już istnieje"
+    "SUBJECT_CATEGORY_NAME_TAKEN": "Kategoria z taką nazwą już istnieje",
+    "RESET_PASSWORD_TOKEN_EXPIRED": "Czas na zmianę hasła minął. Zresetuj hasło jeszcze raz i postępuj zgodnie z instrukcjami."
   }
 }

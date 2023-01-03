@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom';
 import Root from 'containers/Root';
 import ApplicationLayout from 'layouts/Application';
 import NotFound from 'containers/NotFound';
-import AuthHome from 'containers/Auth';
+import AuthHome, { ChangePassword, ForgotPassword } from 'containers/Auth';
 import SignIn from 'containers/Auth/SignIn';
 import AuthGuard from 'shared/guards/AuthGuard';
 import { features } from 'shared/consts/routing';
@@ -45,7 +45,14 @@ const routes: RouteObject[] = [
             path: 'login',
             element: <SignIn />,
           },
-          {},
+          {
+            path: 'forgot-password',
+            element: <ForgotPassword />,
+          },
+          {
+            path: 'new-password/:authToken',
+            element: <ChangePassword />,
+          },
         ],
       },
     ],

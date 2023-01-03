@@ -2,13 +2,25 @@
   "auth": {
     "signIn": "Sign in",
     "forgotPassword": "Forgot password?",
-    "resetPassword": "Reset",
+    "resetPasswordLink": "Reset",
+    "resetPassword": "Reset password",
+    "changePassword": "Confirm new password",
     "tooltip": {
       "fillDataToSignIn": "Fill out the inputs to sign in"
     },
     "placeholder": {
       "email": "Email address",
-      "password": "Password"
+      "password": "Password",
+      "newPassword": "New password",
+      "repeatPassword": "Repeat new password"
+    },
+    "toast": {
+      "resetPassword": {
+        "success": "Message with instructions on how to reset the password was sent to the email address provided."
+      },
+      "changePassword": {
+        "success": "Your password was successfully changed. You can use it now to log in."
+      }
     }
   },
   "nav": {
@@ -537,11 +549,12 @@
     "PASSWORD_REQUIRED": "Password cannot be empty.",
     "PASSWORD_TOO_SHORT": "Password is too short.",
     "PASSWORD_TOO_LONG": "Password is too long.",
+    "PASSWORDS_MUST_MATCH": "Passwords must match.",
     "FIRST_NAME_REQUIRED": "Cannot create a user without first name.",
     "ROLE_REQUIRED": "User's role must be selected.",
     "EMAIL_TAKEN": "This email is already in use.",
     "SUBJECT_NAME_TAKEN": "This category subject name is already in use.",
-    "INCORRECT CREDENTIALS": "Incorrect email or password.",
+    "INCORRECT_CREDENTIALS": "Incorrect email or password.",
     "USER_NOT_FOUND": "User not found.",
     "USER_INACTIVE": "Inactive account.",
     "Class_NAME_REQUIRED": "Class name is required.",
@@ -556,6 +569,7 @@
     "TASK_DURATION_TOO_LONG": "Task duration is too long. Regular task duration cannot be greater than {{ max }} hours.",
     "HOMEWORK_DURATION_TOO_LONG": "Homework duration is too long. It should not be greater than 12 months.",
     "SUBJECT_CATEGORY_IN_USE": "Cannot delete this category, as it is in use (at least 1 subject is using it)",
-    "SUBJECT_CATEGORY_NAME_TAKEN": "This category name is already in use"
+    "SUBJECT_CATEGORY_NAME_TAKEN": "This category name is already in use",
+    "RESET_PASSWORD_TOKEN_EXPIRED": "Time for resetting password is up. For security reasons, reset the password again and follow the instructions."
   }
 }

@@ -18,6 +18,7 @@ export const passwordTooLongError = 'error:PASSWORD_TOO_LONG';
 export const firstNameRequiredError = 'error:FIRST_NAME_REQUIRED';
 export const roleRequiredError = 'error:ROLE_REQUIRED';
 export const publishTimeRequiredError = 'error:PUBLISH_TIME_REQUIRED';
+export const passwordsMustMatch = 'error:PASSWORDS_MUST_MATCH';
 
 // user errors
 export const emailTakenError = 'error:EMAIL_TAKEN';
