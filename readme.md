@@ -14,20 +14,17 @@ for English, please see `readme-en.md`
 
 ---
 
-
-
 ## Spis treści
 
-* [Opis](#opis)
-* [Zastosowane technologie](#zastosowane-technologie)
-* [Instalacja](#instalacja)
-* [Używanie](#używanie)
-* [Dostępne funkcjonalności](#dostępne-funkcjonalności)
-* [Autor i licencja](#autor-i-licencja)
+- [Opis](#opis)
+- [Aplikacja serwerowa](#aplikacja-serwerowa)
+- [Zastosowane technologie](#zastosowane-technologie)
+- [Instalacja](#instalacja)
+- [Używanie](#używanie)
+- [Dostępne funkcjonalności](#dostępne-funkcjonalności)
+- [Autor i licencja](#autor-i-licencja)
 
 ---
-
-
 
 ## Opis
 
@@ -39,77 +36,82 @@ Wówczas uczniowie mający dostep do tego przedmiotu mogą go przeglądać, wysy
 
 Aplikacja powstała w oparciu o posiadaną oraz zdobytą w trakcie implementacji wiedzę, w celach edukacyjnych oraz zaliczeniowych. Kod znajdujący się w tym repozytorium nie jest na sprzedaż oraz nie ma prawa zostać wykorzystany bez wiedzy autora.
 
+## Aplikacja serwerowa
 
+Do działania niniejszej aplikacji klienckiej wymagane jest także uruchomienie aplikacji serwerowej. Razem stanowią one pełny twór, opisany w sekcji powyżej.
+
+Uruchmienie jedynie tej oto aplikacji klienckiej nie będzie wystarczające do skorzystania z Platformy E-Learningowej.
 
 ## Zastosowane technologie
-* `react` jako fundamentalna biblioteka UI
-* `typescript` do usprawnienia implementacji (statyczne typowanie)
-* `react-query` do obsługi żądań (requestów) do aplikacji serwerowej
-* `@mui/material`, `@mui/icons-material` i pochodne, a także `@emotion` do tworzenia i stylowania komponentów
-* `i18next` i `react-i18next` do obsługi tłumaczeń
 
-
+- `react` jako fundamentalna biblioteka UI
+- `typescript` do usprawnienia implementacji (statyczne typowanie)
+- `react-query` do obsługi żądań (requestów) do aplikacji serwerowej
+- `@mui/material`, `@mui/icons-material` i pochodne, a także `@emotion` do tworzenia i stylowania komponentów
+- `i18next` i `react-i18next` do obsługi tłumaczeń
 
 ## Instalacja
 
 W celu poprawnego zainstalowania aplikacji i jej zależności, należy posiadać na swojej maszynie:
+
 - środowisko Node
 - menadżera paczek: `yarn` lub `npm`
 
 Aby zainstalować aplikację i wszelkie jej zależności należy wykonać jedną z poniższych komend:
-* `yarn install`
-* `npm install`
+
+- `yarn install`
+- `npm install`
 
 w zależności od stosowanego menadżera paczek.
-
-
 
 ## Używanie
 
 Po zainstalowaniu aplikacja jest gotowa do uruchomienia. Aby to zrobić, należy wykonać jedną z poniższych komend:
-* `yarn start`
-* `npm start`
+
+- `yarn start`
+- `npm start`
 
 Wynikiem tych komend powinna być kompilacja kodu w języku Typescript, a także kodu biblioteki React do zwykłego kodu Javascript. Po zakończeniu, domyślna przeglądarka powinna uruchomić aplikację, najprawdopodobniej pod adresem http://localhost:3000
 
+Gdy aplikacja kliencka zostanie uruchomiona, należy również uruchomić aplikację serwerową – obie ściśle ze sobą współpracują.
 
 ## Dostępne funkcjonalności
+
 - Administrator
-    - Tworzenie, wyświetlanie, modyfikowanie i archiwizacj/aktywacja użytkowników
-    - Tworzenie, wyświetlanie i modyfikowanie kategorii przedmiotów
-    - Usuwanie kategorii przedmiotów (pod warunkiem, że nie są używane)
-    - Tworzenie, wyświetlanie i modyfikowanie klas (przypisywanie nauczyciela i uczniów)
-    - Tworzenie, wyświetlanie i modyfikowanie przedmiotów (przypisywanie kategorii przedmiotu i konkretnej klasy, a także nauczyciela prowadzącego)
+  - Tworzenie, wyświetlanie, modyfikowanie i archiwizacj/aktywacja użytkowników
+  - Tworzenie, wyświetlanie i modyfikowanie kategorii przedmiotów
+  - Usuwanie kategorii przedmiotów (pod warunkiem, że nie są używane)
+  - Tworzenie, wyświetlanie i modyfikowanie klas (przypisywanie nauczyciela i uczniów)
+  - Tworzenie, wyświetlanie i modyfikowanie przedmiotów (przypisywanie kategorii przedmiotu i konkretnej klasy, a także nauczyciela prowadzącego)
 - Nauczyciel
-    - Przeglądanie i zarządzanie danymi przedmiotami
-    - Tworzenie, modyfikacja i usuwanie ogłoszeń
-    - Tworzenie, modyfikacja i usuwanie zadań oraz zadań domowych
-    - Wyświetlanie przesłanych przez uczniów rozwiązań zadań oraz zadań domowych
-    - Wystawianie i modyfikowanie ocen za zadania i zadania domowe, a także za zachowanie bądź aktywność
-    - Grupowe wystawianie oceny negatywnej uczniom, którzy nie przesłali rozwiązania
-    - Wystawianie i modyfikowanie proponowanej oceny końcowej uczniom
-    - Wystawianie oceny końcowej uczniom
+  - Przeglądanie i zarządzanie danymi przedmiotami
+  - Tworzenie, modyfikacja i usuwanie ogłoszeń
+  - Tworzenie, modyfikacja i usuwanie zadań oraz zadań domowych
+  - Wyświetlanie przesłanych przez uczniów rozwiązań zadań oraz zadań domowych
+  - Wystawianie i modyfikowanie ocen za zadania i zadania domowe, a także za zachowanie bądź aktywność
+  - Grupowe wystawianie oceny negatywnej uczniom, którzy nie przesłali rozwiązania
+  - Wystawianie i modyfikowanie proponowanej oceny końcowej uczniom
+  - Wystawianie oceny końcowej uczniom
 - Uczeń
-    - Przeglądanie danych przedmiotów
-    - Przeglądanie opublikowanych ogłoszeń
-    - Przeglądanie i odpowiadanie na opublikowane zadania oraz zadania domowe
-    - Wysyłanie tekstu oraz pliku w odpowiedzi na zadanie
-    - Przeglądanie posiadanych ocen przedmiotu oraz ocen: proponowanej końcowej i końcowej
-    - Przeglądanie ocen: średniej, proponowanej i końcowej wszystkich przedmiotów (podsumowanie roku)
+  - Przeglądanie danych przedmiotów
+  - Przeglądanie opublikowanych ogłoszeń
+  - Przeglądanie i odpowiadanie na opublikowane zadania oraz zadania domowe
+  - Wysyłanie tekstu oraz pliku w odpowiedzi na zadanie
+  - Przeglądanie posiadanych ocen przedmiotu oraz ocen: proponowanej końcowej i końcowej
+  - Przeglądanie ocen: średniej, proponowanej i końcowej wszystkich przedmiotów (podsumowanie roku)
 - Wspólne
-    - System logowania i wylogowania
+  - System logowania i wylogowania
+  - Odzyskiwanie hasła
 
 Aplikacja została zaimplementowana z myślą o urządzeniach desktopowych (komputerach i laptopach).<br />
 Nie została przewidziana wersja mobilna.
 
 Aplikacja dostępna jest w języku Polskim i Angielskim. Istnieje możliwość dodania wiekszej ilości języków.
 
-
-
 ## Autor i licencja
 
 **Platforma E-learningowa** to wynik pracy Krzysztofa Kosmowskiego.
 
-Zabronione jest korzystanie z aplikacji jak i kodu bez wyraźnego zezwolenia. Zabroniona jest sprzedaż i dystrybucja kodu. 
+Zabronione jest korzystanie z aplikacji jak i kodu bez wyraźnego zezwolenia. Zabroniona jest sprzedaż i dystrybucja kodu.
 
 **Wyjątek stanowi przesyłanie i procesowanie kodu w ramach weryfikacji i oceny pracy inżynierskiej.**
