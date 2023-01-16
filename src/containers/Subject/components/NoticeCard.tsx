@@ -34,24 +34,6 @@ interface NoticeCardProps {
   onClick?: () => void;
 }
 
-const getContentToRender = (
-  content: string,
-  preview?: boolean,
-  longerPreview?: boolean,
-  boardPreview?: boolean
-): string => {
-  if (!boardPreview && !longerPreview && !preview) {
-    return content;
-  }
-
-  const sliceTo = boardPreview
-    ? BOARD_NOTICE_CONTENT_LENGTH
-    : longerPreview
-    ? PREVIEW_NOTICE_CONTENT_LENGTH * NOTICE_CONTENT_RATIO
-    : PREVIEW_NOTICE_CONTENT_LENGTH;
-  return content.slice(0, sliceTo) + '...';
-};
-
 export default function NoticeCard(props: NoticeCardProps) {
   const { notice, preview, longerPreview, boardPreview, onClick } = props;
   const { createdBy, content, name, publishTime, isPublished } = notice;
@@ -60,13 +42,6 @@ export default function NoticeCard(props: NoticeCardProps) {
   const navigate = useNavigate();
   const { t } = useTranslation('notice');
   const queryClient = useQueryClient();
-
-  const contentToRender = getContentToRender(
-    content,
-    longerPreview,
-    preview,
-    boardPreview
-  );
 
   const isAnyPreview = useMemo(
     () => Boolean(preview || longerPreview || boardPreview),
@@ -160,7 +135,7 @@ export default function NoticeCard(props: NoticeCardProps) {
                 flex: 1,
               }}
             >
-              {contentToRender}
+              {content}
             </Typography>
 
             <Divider sx={{ my: 1 }} />
