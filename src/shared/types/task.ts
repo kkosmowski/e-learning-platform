@@ -122,6 +122,7 @@ export interface UpdateTaskPayload {
   mandatory?: boolean;
   name?: string;
   content?: string;
+  start_time?: Date;
   end_time?: Date;
 }
 
